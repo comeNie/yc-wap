@@ -23,7 +23,7 @@ public class FileUtils {
             byte[] buffer = new byte[1024*1024];  
             int lens;
             while ((lens = input.read(buffer)) > -1 ) {  
-                baos.write(buffer, 0, lens);  
+                baos.write(buffer, 0, lens); 
             }  
             baos.flush();
             
