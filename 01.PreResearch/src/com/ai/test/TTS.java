@@ -4,10 +4,10 @@ public class TTS {
 	public static String FILE = "assets/TTS.mp3";
 	public static String FILE1 = "assets/TTS1.txt";
 	
-	public static void main(String args[]){
+	public static void main(String[] args){
 		long begintime = System.currentTimeMillis();
 		
-		byte[] resp = HttpUtil.httpReq("吃葡萄不吐葡萄皮不吃葡萄到吐葡萄皮");
+		byte[] resp = HttpUtil.TTShttpReq("吃葡萄不吐葡萄皮不吃葡萄到吐葡萄皮");
 		
 		String result = new String(resp);
 		String[] splits = result.split("</ResponseInfo>");

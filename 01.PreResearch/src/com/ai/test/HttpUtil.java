@@ -13,7 +13,7 @@ public class HttpUtil {
 	public static String DEVKEY = "2f4f930a5acae2e86f5c313cccefb856";
 	public static String REQURL = "http://test.api.hcicloud.com:8880/tts/SynthText";
 	
-	public static byte[] httpReq(String parameter) {
+	public static byte[] TTShttpReq(String parameter) {
 		Date now = new Date();
 		SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = d.format(now);
