@@ -1,46 +1,35 @@
-buildscript {
-	ext {
-		springBootVersion = '1.4.1.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
-}
-
 apply plugin: 'java'
-apply plugin: 'eclipse-wtp'
-apply plugin: 'spring-boot'
-apply plugin: 'war'
+apply plugin: 'maven'
 
+group = 'com.yc'
+version = '1.0.0-BUILD-SNAPSHOT'
 
-war {
-	baseName = 'wap'
-	version = '0.0.1-SNAPSHOT'
-}
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+description = """yc-wap"""
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 
 repositories {
-	mavenCentral()
+     maven { url "http://10.1.228.199:18081/nexus/content/groups/public" }
 }
-
-configurations {
-	providedRuntime
-}
-
 dependencies {
-	compile('org.springframework.cloud:spring-cloud-starter-zookeeper-config')
-	compile('org.springframework.cloud:spring-cloud-starter-zookeeper-discovery')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR1"
-	}
+    compile(group: 'org.springframework', name: 'spring-context', version:'3.1.1.RELEASE') {
+		exclude(module: 'commons-logging')
+    }
+    compile group: 'org.springframework', name: 'spring-webmvc', version:'3.1.1.RELEASE'
+    compile group: 'org.aspectj', name: 'aspectjrt', version:'1.6.10'
+    compile group: 'org.slf4j', name: 'slf4j-api', version:'1.6.6'
+    compile group: 'javax.inject', name: 'javax.inject', version:'1'
+    compile group: 'javax.servlet', name: 'jstl', version:'1.2'
+    runtime group: 'org.slf4j', name: 'jcl-over-slf4j', version:'1.6.6'
+    runtime group: 'org.slf4j', name: 'slf4j-log4j12', version:'1.6.6'
+    runtime(group: 'log4j', name: 'log4j', version:'1.2.15') {
+		exclude(module: 'mail')
+		exclude(module: 'jms')
+		exclude(module: 'jmxtools')
+		exclude(module: 'jmxri')
+    }
+    testCompile group: 'junit', name: 'junit', version:'4.7'
+	compile "javax.servlet:javax.servlet-api:3.1.0"
+	compile "javax.servlet.jsp:javax.servlet.jsp-api:2.3.1"
 }
