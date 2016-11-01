@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
-
-import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory.Zephyr;
-
 import net.sf.json.JSONObject;
 
 public class YeeTranslate {
