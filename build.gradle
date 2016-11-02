@@ -1,0 +1,30 @@
+apply plugin: 'java'
+
+group = 'com.yc'
+version = '1.0.0-BUILD-SNAPSHOT'
+
+description = """yc-wap"""
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+    maven { url "http://10.1.228.199:18081/nexus/content/groups/public" }
+}
+dependencies {
+    //spring
+    compile 'org.springframework:spring-core:3.2.5.RELEASE'
+    compile 'org.springframework:spring-beans:3.2.5.RELEASE'
+    compile 'org.springframework:spring-context:3.2.5.RELEASE'
+    compile 'org.springframework:spring-context-support:3.2.5.RELEASE'
+    compile 'org.springframework:spring-web:3.2.5.RELEASE'
+    compile 'org.springframework:spring-webmvc:3.2.5.RELEASE'
+
+    //servlet
+    compile "javax.servlet:javax.servlet-api:3.1.0"
+    compile "javax.servlet.jsp:javax.servlet.jsp-api:2.3.1"
+
+    //json
+    compile 'com.alibaba:fastjson:1.1.37'
+    compile 'org.json:json:20140107'
+}
