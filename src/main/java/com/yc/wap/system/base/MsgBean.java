@@ -14,6 +14,7 @@ public class MsgBean {
     private String status;
     private String msg;
     private Map dto;
+
     public MsgBean() {
         //默认的数据
         this.success=true;
@@ -24,6 +25,7 @@ public class MsgBean {
         dto.put(Constants.AjaxReturn.STATUS_INFO, msg);
         dto.put(Constants.AjaxReturn.STATUS_CODE, this.status);
     }
+
     public MsgBean(boolean success,String msg,String status) {
         //默认的数据
         this.success=success;
@@ -34,17 +36,18 @@ public class MsgBean {
         dto.put(Constants.AjaxReturn.STATUS_INFO, msg);
         dto.put(Constants.AjaxReturn.STATUS_CODE, this.status);
     }
-    /**
-     */
+
     public void putData(Object value){
         dto.put(Constants.AjaxReturn.RETURN_DATA, value);
     }
+
     /**
      * 公开的插入数据的接口
      */
     public void put(String key,Object value){
         dto.put(key, value);
     }
+
     /**
      * map的键值对放入到返回数据
      */
@@ -54,6 +57,7 @@ public class MsgBean {
             dto.put(key, msg.get(key));
         }
     }
+
     /**
      * 设置错误信息 标记为后台出错 自定义错误信息
      */
@@ -62,6 +66,7 @@ public class MsgBean {
         dto.put(Constants.AjaxReturn.STATUS_INFO, errorMsg);
         dto.put(Constants.AjaxReturn.STATUS_CODE, Constants.AjaxStatus.STATUS_FAILURE);
     }
+
     /**
      * 设置错误信息 标记为后台出错 自定义错误信息
      */
@@ -69,6 +74,7 @@ public class MsgBean {
         dto.put(Constants.AjaxReturn.STATUS_INFO, errorMsg);
         dto.put(Constants.AjaxReturn.STATUS_CODE, errCode);
     }
+
     /**
      * 返回给前台信息
      */
