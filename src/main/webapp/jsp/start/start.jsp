@@ -5,9 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!-- 什么版本的浏览器就用什么渲染 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <!-- 用户不能手动缩放 -->
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>首页</title>
     <link href="/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
@@ -16,9 +14,7 @@
     <link href="/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 </head>
-<script type="text/javascript">
 
-</script>
 <body>
 <!--分享弹出框-->
 <div class="eject-big" style="display:none">
@@ -68,7 +64,7 @@
 </section>
 <nav class="wap-nav">
     <ul>
-        <li class="logo"><img src="images/logo.png" /></li>
+        <li class="logo"><img src="/ui/images/start/logo.png" /></li>
         <li class="right"><input type="button" class="btn login-btn" value="登录"></li>
     </ul>
 </nav>
@@ -137,8 +133,8 @@
 
     </section>
     <!--banner-->
-    <section class="banner"><a href="#"><img src="images/banner-1.png"></a></section>
-    <section class="banner"><a href="#"><img src="images/banner-2.png"></a></section>
+    <section class="banner"><a href="#"><img src="/ui/images/start/banner-1.png"></a></section>
+    <section class="banner"><a href="#"><img src="/ui/images/start/banner-2.png"></a></section>
 
 </section>
 
@@ -147,15 +143,15 @@
     <section class="terminal">
         <ul>
             <li>
-                <p><img src="images/icon-1.png" /></p>
+                <p><img src="/ui/images/start/icon-1.png" /></p>
                 <p>客户端</p>
             </li>
             <li class="current">
-                <p><img src="images/icon-2.png" /></p>
+                <p><img src="/ui/images/start/icon-2.png" /></p>
                 <p>触屏版</p>
             </li>
             <li class="none-ml">
-                <p><img src="images/icon-3.png" /></p>
+                <p><img src="/ui/images/start/icon-3.png" /></p>
                 <p>电脑版</p>
             </li>
         </ul>
@@ -170,7 +166,13 @@
 
 </body>
 </html>
-<script type="text/javascript" src="scripts/modular/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="scripts/modular/global.js"></script>
-<script type="text/javascript" src="scripts/modular/frame.js"></script>
-<script type="text/javascript" src="scripts/modular/eject.js"></script>
+<script type="text/javascript" src="/js/start/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/js/start/global.js"></script>
+<script type="text/javascript" src="/js/start/frame.js"></script>
+<script type="text/javascript" src="/js/start/eject.js"></script>
+
+<script type="text/javascript">
+/////////////////////
+
+
+</script>

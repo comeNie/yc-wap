@@ -1,0 +1,29 @@
+.dialog {
+    font-size: 12px;
+}
+ 
+.dialog .btn {
+    border: 1px solid white;
+    min-width: 25%;
+    width: auto;
+}
+ 
+.dialog .ok-btn {
+    background-color: #ccc;
+    height:35px;
+    font-size:18px;
+    width:70px;
+}
+ 
+.dialog .cancel-btn { 
+    /*background-color: #aeface;*/
+}
+
+/**±¨´í**/
+.wap_baocuo{ width:100%;}
+.wap_baocuo ul{ width:100%; float:left;}
+.wap_baocuo ul li{ text-align:center; margin-top:16px; font-size:18px;}
+.wap_baocuo ul .alzt{ text-align:center; font-size:15px;}
+.wap_baocuo ul .abc{ width:100%; float:left; line-height:100px; }
+.wap_baocuo ul .abc p{ text-align:center;}
+.wap_baocuo ul .abc p .qud_button {margin-left:-30px; background:#e5e5e5;width:180px;height:30px;border:1px solid #036eb8; font-size:13px; color:#020000;  }
