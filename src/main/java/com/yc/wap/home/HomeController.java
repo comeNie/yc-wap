@@ -22,9 +22,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-
 		logger.info("HomeController-home invoked");
-		System.out.println("HomeController-home invoked");
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
