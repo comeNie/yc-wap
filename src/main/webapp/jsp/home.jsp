@@ -1,14 +1,9 @@
-<%@ page language="java" contentType="text/html; utf-8" pageEncoding="utf-8"%>
-<%@ page session="false" %>
+<%@ page language="java" contentType="text/html; utf-8" pageEncoding="utf-8" session="false"%>
 <html>
 <head>
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
-
-<P>  The time on the server is ${serverTime}. </P>
+    <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
