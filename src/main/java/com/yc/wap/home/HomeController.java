@@ -1,4 +1,4 @@
-package com.yc.wap;
+package com.yc.wap.home;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
