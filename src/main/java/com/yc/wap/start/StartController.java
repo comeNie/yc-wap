@@ -1,10 +1,12 @@
 package com.yc.wap.start;
 
 import com.yc.wap.system.base.BaseController;
+import com.yc.wap.system.base.MsgBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -29,6 +31,11 @@ public class StartController extends BaseController{
         request.setAttribute("languagepairs",pairs);
 
         return "start/start";
+    }
+    @RequestMapping(value="translate")
+    public @ResponseBody Object translate(){
+        MsgBean result=new MsgBean();
+        return result.returnMsg();
     }
 
 }

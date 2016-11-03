@@ -101,7 +101,7 @@
     </section>
     <!--翻译按钮-->
     <section class="translate-btn" id="chick-btn">
-        <input type="button" class="btn btn-big" value="翻译">
+        <input type="button" class="btn btn-big" value="翻译" id="translate-btn">
     </section>
     <!--翻译结果-->
     <section class="translation-content-english" id="results">
@@ -193,7 +193,15 @@
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 
 <script type="text/javascript">
-/////////////////////
+    $(document).ready(function () {
+        $("#translate-btn").bind("click",function () {
+            $.ajax({
+                async:true,
+                type:"POST",
+                url:<%=path%>/
+            })
+        })
+    });
 
 
 </script>
