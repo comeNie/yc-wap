@@ -82,7 +82,7 @@
 </section>
 <nav class="wap-nav">
     <ul>
-        <li class="logo"><img src="<%=path%>/ui/images/start/logo.png" /></li>
+        <li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>
         <li class="right"><input type="button" class="btn login-btn" value="登录"></li>
     </ul>
 </nav>
@@ -155,8 +155,8 @@
 
     </section>
     <!--banner-->
-    <section class="banner"><a href="#"><img src="<%=path%>/ui/images/start/banner-1.png"></a></section>
-    <section class="banner"><a href="#"><img src="<%=path%>/ui/images/start/banner-2.png"></a></section>
+    <section class="banner"><a href="#"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
+    <section class="banner"><a href="#"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
 
 </section>
 
@@ -165,15 +165,15 @@
     <section class="terminal">
         <ul>
             <li class="none">
-                <p><img src="<%=path%>/ui/images/start/icon-1.png" /></p>
+                <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
                 <p>客户端</p>
             </li>
             <li class="tow current">
-                <p><img src="<%=path%>/ui/images/start/icon-2.png" /></p>
+                <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
                 <p>触屏版</p>
             </li>
             <li class="three none-ml">
-                <p><img src="<%=path%>/ui/images/start/icon-3.png" /></p>
+                <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
                 <p>电脑版</p>
             </li>
         </ul>

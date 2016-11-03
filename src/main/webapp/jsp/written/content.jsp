@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
@@ -156,26 +155,21 @@
         </ul>
     </div>
     <div class="wap-btn"><a href="#"><input type="button" class="btn submit-btn btn-blue" value="提交"></a></div>
-
-
-
-
-
 </section>
 <!--底部-->
 <section class="footer-big">
     <section class="terminal">
         <ul>
             <li class="none">
-                <p><img src="<%=path%>/ui/images/start/icon-1.png" /></p>
+                <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
                 <p>客户端</p>
             </li>
             <li class="tow current">
-                <p><img src="<%=path%>/ui/images/start/icon-2.png" /></p>
+                <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
                 <p>触屏版</p>
             </li>
             <li class="three none-ml">
-                <p><img src="<%=path%>/ui/images/start/icon-3.png" /></p>
+                <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
                 <p>电脑版</p>
             </li>
         </ul>
@@ -195,5 +189,12 @@
 <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script type="text/javascript">
+    $(document).ready(function() {
+
+    });
+
+    $(function () {
+
+    });
 
 </script>

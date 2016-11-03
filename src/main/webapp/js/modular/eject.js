@@ -1,4 +1,4 @@
-//提示弹出框 
+//分享弹出框 
 jQuery(document).ready(function($) {
 	$('#share-icon').click(function(){
 	$('#eject-mask').fadeIn(100);
@@ -9,4 +9,14 @@ jQuery(document).ready(function($) {
 	$('#share-eject').slideUp(200);
 	})
 })
-
+//提示弹出框 
+jQuery(document).ready(function($) {
+	$('#upload').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#prompt').slideDown(100);
+	})
+	$('#prompt-btn').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#prompt').slideUp(200);
+	})
+})
