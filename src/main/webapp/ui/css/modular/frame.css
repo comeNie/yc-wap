@@ -1,5 +1,5 @@
 /**公告**/
-.notice{width:100%;height:0.85rem;background:#f7f7f7;text-align: center;line-height:0.85rem;position:rabsolute;}
+.notice{width:100%;height:0.85rem;background:#f7f7f7;text-align: center;line-height:0.85rem;position:absolute;}
 .notice p{font-size:0.46rem;color:#999}
 .notice label{position:absolute;top:-0.05rem;right:0;font-size:0.46rem;color:#999;cursor:pointer;}
 /**导航**/

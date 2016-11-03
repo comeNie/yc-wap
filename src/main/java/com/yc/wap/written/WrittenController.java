@@ -19,4 +19,16 @@ public class WrittenController {
         return "written/content";
     }
 
+    @RequestMapping(value = "contact")
+    public String contact() {
+        log.info("WrittenController-contact invoked");
+        return "written/contact";
+    }
+
+    @RequestMapping(value = "confirm")
+    public String confirm() {
+        log.info("WrittenController-confirm invoked");
+        return "written/confirm";
+    }
+
 }
