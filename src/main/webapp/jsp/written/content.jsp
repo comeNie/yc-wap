@@ -5,11 +5,12 @@
   Time: 2:11 PM
   To change this template use File | Settings | File Templates.
 --%>
+<!DOCTYPE html>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
 %>
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -166,15 +167,15 @@
     <section class="terminal">
         <ul>
             <li>
-                <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
+                <p><img src="<%=path%>/ui/images/start/icon-1.png" /></p>
                 <p>客户端</p>
             </li>
             <li class="current">
-                <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
+                <p><img src="<%=path%>/ui/images/start/icon-2.png" /></p>
                 <p>触屏版</p>
             </li>
             <li class="none-ml">
-                <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
+                <p><img src="<%=path%>/ui/images/start/icon-3.png" /></p>
                 <p>电脑版</p>
             </li>
         </ul>
