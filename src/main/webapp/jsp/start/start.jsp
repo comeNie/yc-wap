@@ -90,16 +90,20 @@
     <!--转换语言-->
     <section class="testing">
         <p>
-            <select class="select testing-select">
-                <option>检测语言：中文</option>
-                <option>检测语言：英文</option>
+            <select class="select testing-select" id="source-lan">
+                <%--<option>检测语言：中文</option>--%>
+                <c:forEach items="${requestScope.languagepairs}" var="pair">
+                    <option>${pair}</option>
+                </c:forEach>
             </select>
             <span>|</span>
         </p>
         <p class="test-icon"><i class="icon iconfont">&#xe621;</i></p>
         <p>
-            <select class="select testing-select">
-                <option>英文</option>
+            <select class="select testing-select" id="target-lan">
+                <c:forEach items="${requestScope.languagepairs}" var="pair">
+                    <option>${pair}</option>
+                </c:forEach>
             </select>
             <span>|</span>
         </p>
@@ -190,8 +194,35 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#translate-btn").bind("click",function () {
+        $("#chick-btn").bind("click",function () {
             var sourcetext=$("#chick-int").val();
+            var srctext=$("#source-lan option:selected").text();
+            var srcvalue;
+            if (srctext=="中文"){
+                srcvalue="zh";
+            }else if (srctext=="英语"){
+                srcvalue="en";
+            }else if (srctext=="法语"){
+                srcvalue="fr";
+            }else if (srctext=="俄语"){
+                srcvalue="ru";
+            }else {
+                srcvalue="pt";
+            }
+
+            var tartext=$("#target-lan option:selected").text();
+            var tarvalue;
+            if (srctext=="中文"){
+                tarvalue="zh";
+            }else if (srctext=="英语"){
+                tarvalue="en";
+            }else if (srctext=="法语"){
+                tarvalue="fr";
+            }else if (srctext=="俄语"){
+                tarvalue="ru";
+            }else {
+                tarvalue="pt";
+            }
             $.ajax({
                 async:true,
                 type:"POST",
@@ -200,9 +231,22 @@
                 showBusi:false,
                 timeout:30000,
                 data:{
+                    srcl:srcvalue,
+                    tgtl:tarvalue,
+                    text:sourcetext
+                },
+                success : function(data) {
+                    if (data.status==1) {//成功
+                        var aaa= data.translate;
+                        console.log(aaa);
+                    }else{
+
+                    }
+                },
+                error:function(){
 
                 }
-            })
+            });
         })
     });
 
