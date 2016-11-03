@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WrittenController {
     private Log log = LogFactory.getLog(WrittenController.class);
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "")
     public String content() {
-
+        log.info("WrittenController-content invoked");
         return "written/content";
     }
 
