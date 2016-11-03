@@ -74,14 +74,18 @@
         <p>
             <select class="select testing-select">
                 <option>检测语言：中文</option>
-                <option>检测语言：英文</option>
+                <c:forEach items="${requestScope.languagepairs}" var="pair">
+                    <option>${pair}</option>
+                </c:forEach>
             </select>
             <span>|</span>
         </p>
         <p class="test-icon"><i class="icon iconfont">&#xe621;</i></p>
         <p>
             <select class="select testing-select">
-                <option>英文</option>
+                <c:forEach items="${requestScope.languagepairs}" var="pair">
+                <option>${pair}</option>
+                </c:forEach>
             </select>
             <span>|</span>
         </p>
