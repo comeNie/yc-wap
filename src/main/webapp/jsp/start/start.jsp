@@ -1,18 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+    String path = request.getContextPath();
+%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>首页</title>
-    <link href="/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
-    <link href="/ui/css/modular/iconfont.css" rel="stylesheet" type="text/css">
-    <link href="/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
-    <link href="/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
-    <link href="/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="<%=path%>/ui/css/modular/iconfont.css" rel="stylesheet" type="text/css">
+    <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
@@ -64,7 +68,7 @@
 </section>
 <nav class="wap-nav">
     <ul>
-        <li class="logo"><img src="/ui/images/start/logo.png" /></li>
+        <li class="logo"><img src="<%=path%>/ui/images/start/logo.png" /></li>
         <li class="right"><input type="button" class="btn login-btn" value="登录"></li>
     </ul>
 </nav>
@@ -137,8 +141,8 @@
 
     </section>
     <!--banner-->
-    <section class="banner"><a href="#"><img src="/ui/images/start/banner-1.png"></a></section>
-    <section class="banner"><a href="#"><img src="/ui/images/start/banner-2.png"></a></section>
+    <section class="banner"><a href="#"><img src="<%=path%>/ui/images/start/banner-1.png"></a></section>
+    <section class="banner"><a href="#"><img src="<%=path%>/ui/images/start/banner-2.png"></a></section>
 
 </section>
 
@@ -147,15 +151,15 @@
     <section class="terminal">
         <ul>
             <li>
-                <p><img src="/ui/images/start/icon-1.png" /></p>
+                <p><img src="<%=path%>/ui/images/start/icon-1.png" /></p>
                 <p>客户端</p>
             </li>
             <li class="current">
-                <p><img src="/ui/images/start/icon-2.png" /></p>
+                <p><img src="<%=path%>/ui/images/start/icon-2.png" /></p>
                 <p>触屏版</p>
             </li>
             <li class="none-ml">
-                <p><img src="/ui/images/start/icon-3.png" /></p>
+                <p><img src="<%=path%>/ui/images/start/icon-3.png" /></p>
                 <p>电脑版</p>
             </li>
         </ul>
@@ -170,10 +174,10 @@
 
 </body>
 </html>
-<script type="text/javascript" src="/js/start/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="/js/start/global.js"></script>
-<script type="text/javascript" src="/js/start/frame.js"></script>
-<script type="text/javascript" src="/js/start/eject.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 
 <script type="text/javascript">
 /////////////////////

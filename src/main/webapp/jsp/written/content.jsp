@@ -6,17 +6,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>翻译内容页</title>
-    <link href="css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
-    <link href="css/iconfont.css" rel="stylesheet" type="text/css">
-    <link href="css/modular/global.css" rel="stylesheet" type="text/css"/>
-    <link href="css/modular/modular.css" rel="stylesheet" type="text/css"/>
-    <link href="css/modular/frame.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
+    <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <!--上传提示弹出框-->
@@ -163,15 +166,15 @@
     <section class="terminal">
         <ul>
             <li>
-                <p><img src="images/icon-1.png" /></p>
+                <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
                 <p>客户端</p>
             </li>
             <li class="current">
-                <p><img src="images/icon-2.png" /></p>
+                <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
                 <p>触屏版</p>
             </li>
             <li class="none-ml">
-                <p><img src="images/icon-3.png" /></p>
+                <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
                 <p>电脑版</p>
             </li>
         </ul>
@@ -186,3 +189,10 @@
 
 </body>
 </html>
+<script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
+<script type="text/javascript">
+
+</script>
