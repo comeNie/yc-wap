@@ -26,8 +26,9 @@ public class StartController extends BaseController{
         pairs.add("法语");
         pairs.add("俄语");
         pairs.add("葡萄牙语");
-
         request.setAttribute("languagepairs",pairs);
+
+
 
         return "start/start";
     }
