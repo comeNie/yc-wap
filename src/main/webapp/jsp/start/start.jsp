@@ -21,40 +21,54 @@
 
 <body>
 <!--分享弹出框-->
-<div class="eject-big" style="display:none">
+<div class="eject-big">
     <div class="prompt-share" id="share-eject">
         <div class="prompt-share-title">请选择</div>
         <!--确认删除-->
         <div class="prompt-share-confirm">
             <ul>
-                <li class="weix">
-                    <p><i class="icon iconfont">&#xe61a;</i></p>
-                    <p>微信</p>
-                </li>
-                <li class="weixq">
-                    <p><i class="icon iconfont">&#xe61f;</i></p>
-                    <p>微信朋友圈</p>
-                </li>
-                <li class="blog">
-                    <p><i class="icon iconfont">&#xe627;</i></p>
-                    <p>微博</p>
-                </li>
-                <li class="qq">
-                    <p><i class="icon iconfont">&#xe61e;</i></p>
-                    <p>QQ</p>
-                </li>
-                <li class="watercress">
-                    <p><i class="icon iconfont">&#xe625;</i></p>
-                    <p>豆瓣</p>
-                </li>
-                <li class="message">
-                    <p><i class="icon iconfont">&#xe622;</i></p>
-                    <p>短信</p>
-                </li>
-                <li class="copy">
-                    <p><i class="icon iconfont">&#xe620;</i></p>
-                    <p>复制链接</p>
-                </li>
+                <a href="#">
+                    <li class="weix">
+                        <p><i class="icon iconfont">&#xe61a;</i></p>
+                        <p>微信</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="weixq">
+                        <p><i class="icon iconfont">&#xe61f;</i></p>
+                        <p>微信朋友圈</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="blog">
+                        <p><i class="icon iconfont">&#xe627;</i></p>
+                        <p>微博</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="qq">
+                        <p><i class="icon iconfont">&#xe61e;</i></p>
+                        <p>QQ</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="watercress">
+                        <p><i class="icon iconfont">&#xe625;</i></p>
+                        <p>豆瓣</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="message">
+                        <p><i class="icon iconfont">&#xe622;</i></p>
+                        <p>短信</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="copy">
+                        <p><i class="icon iconfont">&#xe620;</i></p>
+                        <p>复制链接</p>
+                    </li>
+                </a>
             </ul>
         </div>
         <div class="close-icon"><i class="icon iconfont" id="close-icon">&#xe611;</i></div>
@@ -62,7 +76,7 @@
     <div class="mask" id="eject-mask"></div>
 </div>
 <!--弹出框结束-->
-<section class="notice" style="display: none">
+<section class="notice">
     <p>公告信息等等等等</p>
     <label><i class="icon iconfont">&#xe618;</i></label>
 </section>
@@ -78,18 +92,14 @@
         <p>
             <select class="select testing-select">
                 <option>检测语言：中文</option>
-                <c:forEach items="${requestScope.languagepairs}" var="pair">
-                    <option>${pair}</option>
-                </c:forEach>
+                <option>检测语言：英文</option>
             </select>
             <span>|</span>
         </p>
         <p class="test-icon"><i class="icon iconfont">&#xe621;</i></p>
         <p>
             <select class="select testing-select">
-                <c:forEach items="${requestScope.languagepairs}" var="pair">
-                <option>${pair}</option>
-                </c:forEach>
+                <option>英文</option>
             </select>
             <span>|</span>
         </p>
@@ -101,7 +111,7 @@
     </section>
     <!--翻译按钮-->
     <section class="translate-btn" id="chick-btn">
-        <input type="button" class="btn btn-big" value="翻译" id="translate-btn">
+        <input type="button" class="btn btn-big" value="翻译">
     </section>
     <!--翻译结果-->
     <section class="translation-content-english" id="results">
@@ -113,7 +123,7 @@
     </section>
 
 </section>
-<section id="wrapper-hide" style="display: none">
+<section id="wrapper-hide" >
     <section class="index-wrapper">
         <!--历史纪录-->
         <section class="history">
@@ -151,24 +161,14 @@
     <section class="terminal">
         <ul>
             <li class="none">
-                <p><img src="images/icon-1.png" /></p>
-                <p>客户端</p>
-            </li>
-            <li class="tow current">
-                <p><img src="images/icon-2.png" /></p>
-                <p>触屏版</p>
-            </li>
-            <li class="three none-ml">
-                <p><img src="images/icon-3.png" /></p>
-            <li>
                 <p><img src="<%=path%>/ui/images/start/icon-1.png" /></p>
                 <p>客户端</p>
             </li>
-            <li class="current">
+            <li class="tow current">
                 <p><img src="<%=path%>/ui/images/start/icon-2.png" /></p>
                 <p>触屏版</p>
             </li>
-            <li class="none-ml">
+            <li class="three none-ml">
                 <p><img src="<%=path%>/ui/images/start/icon-3.png" /></p>
                 <p>电脑版</p>
             </li>
@@ -181,7 +181,6 @@
         </ul>
     </footer>
 </section>
-
 </body>
 </html>
 <script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>

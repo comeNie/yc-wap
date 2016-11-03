@@ -166,15 +166,15 @@
 <section class="footer-big">
     <section class="terminal">
         <ul>
-            <li>
+            <li class="none">
                 <p><img src="<%=path%>/ui/images/start/icon-1.png" /></p>
                 <p>客户端</p>
             </li>
-            <li class="current">
+            <li class="tow current">
                 <p><img src="<%=path%>/ui/images/start/icon-2.png" /></p>
                 <p>触屏版</p>
             </li>
-            <li class="none-ml">
+            <li class="three none-ml">
                 <p><img src="<%=path%>/ui/images/start/icon-3.png" /></p>
                 <p>电脑版</p>
             </li>
