@@ -9,7 +9,7 @@
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>首页</title>
     <link href="/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
-    <link href="/ui/css/iconfont.css" rel="stylesheet" type="text/css">
+    <link href="/ui/css/modular/iconfont.css" rel="stylesheet" type="text/css">
     <link href="/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
