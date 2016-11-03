@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('font/iconfont.eot?t=1477382663'); /* IE9*/
-  src: url('font/iconfont.eot?t=1477382663#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('font/iconfont.woff?t=1477382663') format('woff'), /* chrome, firefox */
-  url('font/iconfont.ttf?t=1477382663') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('font/iconfont.svg?t=1477382663#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('../font/iconfont.eot?t=1477382663'); /* IE9*/
+  src: url('../font/iconfont.eot?t=1477382663#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../font/iconfont.woff?t=1477382663') format('woff'), /* chrome, firefox */
+  url('../font/iconfont.ttf?t=1477382663') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../font/iconfont.svg?t=1477382663#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -16,7 +16,9 @@
 }
 .nav-icon .icon{color:#fff;font-size:24px;}
 /****/
+.icon-fanhui:before { content: "\e626"; }
 .icon-weixin:before { content: "\e61a"; }
+.icon-qianjin:before { content: "\e62c"; }
 .icon-guanbi:before { content: "\e618"; }
 .icon-shouji:before { content: "\e613"; }
 .icon-doubanyin:before { content: "\e625"; }
@@ -31,6 +33,8 @@
 .icon-anquan:before { content: "\e609"; }
 .icon-jinlingyingcaiwangtubiao29:before { content: "\e6bc"; }
 .icon-jinlingyingcaiwangtubiao49:before { content: "\e754"; }
+.icon-bianji:before { content: "\e62a"; }
+.icon-caidan01:before { content: "\e629"; }
 .icon-fenxiang:before { content: "\e61c"; }
 .icon-qq:before { content: "\e61e"; }
 .icon-pengyouquan:before { content: "\e61f"; }
@@ -49,8 +53,10 @@
 .icon-geren-copy:before { content: "\e60c"; }
 .icon-014:before { content: "\e68e"; }
 .icon-wodezhanghuai01:before { content: "\e602"; }
+.icon-shibai1:before { content: "\e628"; }
 .icon-jibiequanxian:before { content: "\e604"; }
 .icon-tongzhi:before { content: "\e60a"; }
+.icon-shibai2:before { content: "\e62b"; }
 .icon-youhuiquan:before { content: "\e603"; }
 .icon-wodedingdan:before { content: "\e601"; }
 .icon-fanyi:before { content: "\e619"; }
@@ -59,6 +65,7 @@
 .icon-laba:before { content: "\e61b"; }
 .icon-jibie:before { content: "\e605"; }
 .icon-queren:before { content: "\e60e"; }
+
 
 
 
