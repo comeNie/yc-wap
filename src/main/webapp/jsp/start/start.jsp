@@ -150,7 +150,6 @@
 <section class="footer-big">
     <section class="terminal">
         <ul>
-<<<<<<< HEAD
             <li class="none">
                 <p><img src="images/icon-1.png" /></p>
                 <p>客户端</p>
@@ -161,7 +160,6 @@
             </li>
             <li class="three none-ml">
                 <p><img src="images/icon-3.png" /></p>
-=======
             <li>
                 <p><img src="<%=path%>/ui/images/start/icon-1.png" /></p>
                 <p>客户端</p>
@@ -172,7 +170,6 @@
             </li>
             <li class="none-ml">
                 <p><img src="<%=path%>/ui/images/start/icon-3.png" /></p>
->>>>>>> 480c6b44e3d2001c98000feddedd8d64f4382582
                 <p>电脑版</p>
             </li>
         </ul>
@@ -195,10 +192,17 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#translate-btn").bind("click",function () {
+            var sourcetext=$("#chick-int").val();
             $.ajax({
                 async:true,
                 type:"POST",
-                url:<%=path%>/
+                url:"<%=path%>/translate",
+                modal:true,
+                showBusi:false,
+                timeout:30000,
+                data:{
+
+                }
             })
         })
     });
