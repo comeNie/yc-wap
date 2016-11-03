@@ -1,7 +1,8 @@
 package com.yc.wap.start;
 
 import com.yc.wap.system.base.BaseController;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,12 +15,11 @@ import java.util.List;
  */
 @Controller
 public class StartController extends BaseController{
-    private static Logger logger = Logger.getLogger(StartController.class);
+    private Log log = LogFactory.getLog(StartController.class);
 
     @RequestMapping(value = "index")
     public  String start(HttpServletRequest request) {
-        logger.info("StartController-index invoked");
-        System.out.println("StartController-index invoked");
+        log.info("StartController-index invoked");
         List<String> pairs=new ArrayList<>();
         pairs.add("中文");
         pairs.add("英语");

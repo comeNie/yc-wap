@@ -1,6 +1,7 @@
 package com.yc.wap.system.base;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +14,7 @@ import java.io.PrintWriter;
  * Created by Nozomi on 11/2/2016.
  */
 public class BaseController {
-    private Logger logger = Logger.getLogger(BaseController.class);
+    private Log log = LogFactory.getLog(BaseController.class);
 
     @Autowired
     protected HttpServletRequest request;
@@ -65,7 +66,7 @@ public class BaseController {
             printWriter.flush();
 
         } catch (Exception e) {
-            logger.error("BaseController.responseSuccess错误>>>>>>>>>>>>>", e);
+            log.error("BaseController.responseSuccess错误>>>>>>>>>>>>>", e);
             throw new RuntimeException(e.getMessage());
         } finally {
             printWriter.close();
@@ -89,7 +90,7 @@ public class BaseController {
             printWriter.flush();
             printWriter.close();
         } catch (Exception e) {
-            logger.error("BaseController.responseSuccess错误>>>>>>>>>>>>>", e);
+            log.error("BaseController.responseSuccess错误>>>>>>>>>>>>>", e);
             throw new RuntimeException(e.getMessage());
         } finally {
             printWriter.close();
