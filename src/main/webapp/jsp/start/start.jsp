@@ -58,7 +58,7 @@
     <div class="mask" id="eject-mask"></div>
 </div>
 <!--弹出框结束-->
-<section class="notice">
+<section class="notice" style="display: none">
     <p>公告信息等等等等</p>
     <label><i class="icon iconfont">&#xe618;</i></label>
 </section>
@@ -109,7 +109,7 @@
     </section>
 
 </section>
-<section id="wrapper-hide" >
+<section id="wrapper-hide" style="display: none">
     <section class="index-wrapper">
         <!--历史纪录-->
         <section class="history">
@@ -146,16 +146,16 @@
 <section class="footer-big">
     <section class="terminal">
         <ul>
-            <li>
-                <p><img src="/ui/images/start/icon-1.png" /></p>
+            <li class="none">
+                <p><img src="images/icon-1.png" /></p>
                 <p>客户端</p>
             </li>
-            <li class="current">
-                <p><img src="/ui/images/start/icon-2.png" /></p>
+            <li class="tow current">
+                <p><img src="images/icon-2.png" /></p>
                 <p>触屏版</p>
             </li>
-            <li class="none-ml">
-                <p><img src="/ui/images/start/icon-3.png" /></p>
+            <li class="three none-ml">
+                <p><img src="images/icon-3.png" /></p>
                 <p>电脑版</p>
             </li>
         </ul>
