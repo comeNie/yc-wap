@@ -31,4 +31,14 @@ public class SafeController extends BaseController {
         log.info("safe-changephone invoked");
         return "safe/changephone";
     }
+    @RequestMapping(value = "changemail")
+    public String changemail() {
+        log.info("safe-changemail invoked");
+        return "safe/changemail";
+    }
+    @RequestMapping(value = "safesuccess")
+    public String safesuccess() {
+        log.info("safe-safesuccess invoked");
+        return "safe/safesuccess";
+    }
 }

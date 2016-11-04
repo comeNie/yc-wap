@@ -54,7 +54,7 @@
     <section class="order-content ">
         <div class="setting-list">
             <ul>
-                <a href="#">
+                <a href="#" onclick="changepsd()">
                     <li>修改密码</li>
                     <li class="right"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
@@ -101,4 +101,29 @@
     </section>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
 
+    });
+    function changepsd() {
+        var tourl = "<%=path%>/safe/changepsd";
+        window.location.href=tourl;
+        <%--$.ajax({--%>
+            <%--async : true,--%>
+            <%--type : "POST",--%>
+            <%--url : "<%=path%>/safe/changepsd",--%>
+            <%--modal : true,--%>
+            <%--timeout: 30000,--%>
+            <%--data : {--%>
+
+            <%--},--%>
+            <%--success : function(data) {--%>
+                <%----%>
+            <%--},--%>
+            <%--error : function(data){--%>
+                <%--console.log("fail");--%>
+                <%--console.log(data);--%>
+            <%--}--%>
+        <%--});--%>
+    }
+</script>

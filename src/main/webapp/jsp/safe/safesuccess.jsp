@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: ldy
   Date: 2016/11/4
-  Time: 下午2:55
+  Time: 下午4:58
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -17,7 +17,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>修改密码</title>
+    <title>修改手机号</title>
     <script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -30,35 +30,24 @@
 
 </head>
 <body>
+
     <nav class="wap-second-nav">
         <ul>
-            <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-            <li>修改密码</li>
+            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+            <li>安全设置</li>
         </ul>
 
     </nav>
 
     <!--订单内容-->
     <section class="index-wrapper ">
-        <div class="set-password">
-            <div class="set-int">
-                <ul>
-                    <li>
-                        <p><input type="text" class="input input-large" placeholder="原密码"></p>
-
-                    </li>
-                    <li>
-                        <p><input type="text" class="input input-large" placeholder="新密码"></p>
-
-                    </li>
-                    <li>
-                        <p><input type="text" class="input input-large" placeholder="确认密码"></p>
-                        <label>两次密码输入不一致，请重新输入</label>
-                    </li>
-                    <li><a href="#"><input type="button" class="btn submit-btn btn-blue" value="确定"></a></li>
-                </ul>
-            </div>
-        </div>
+        <section class="tij-cg">
+            <ul>
+                <li><i class="icon iconfont">&#xe612;</i></li>
+                <li class="word">密码设置成功</li>
+                <li><span class="red">5s</span>内自动回到<a href="#">登录页面</a></li>
+            </ul>
+        </section>
     </section>
 
     <!--底部-->
@@ -88,4 +77,3 @@
     </section>
 </body>
 </html>
-<script></script>
