@@ -18,6 +18,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import static com.yc.wap.start.StartController.FILE;
+
 /**
  * Handles requests for the application home page.
  */
@@ -26,9 +28,7 @@ import java.util.Locale;
 public class HomeController {
 	private Log log = LogFactory.getLog(HomeController.class);
 
-	public static String FILE = "assets/TTS.mp3";
-	public static String FILE1 = "assets/TTS1.txt";
-	public static String TRANSREQ = "https://translateport.yeekit.com/translate";
+
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -48,38 +48,38 @@ public class HomeController {
 		return "home";
 	}
 
-	public void tts() {
-		byte[] resp = HttpUtil.TTShttpReq("吃葡萄不吐葡萄皮不吃葡萄到吐葡萄皮");
+//	public void tts() {
+//		byte[] resp = HttpUtil.TTShttpReq("吃葡萄不吐葡萄皮不吃葡萄到吐葡萄皮");
+//
+//		String result = new String(resp);
+//		String[] splits = result.split("</ResponseInfo>");
+//		String xml = splits[0] + "</ResponseInfo>";
+//		int offset = xml.getBytes().length;
+//
+//		FileUtil.ByteinfoFile(resp, FILE, offset);
+//	}
 
-		String result = new String(resp);
-		String[] splits = result.split("</ResponseInfo>");
-		String xml = splits[0] + "</ResponseInfo>";
-		int offset = xml.getBytes().length;
-
-		FileUtil.ByteinfoFile(resp, FILE, offset);
-	}
-
-	public void translate() {
-//		String paramter = "{\"srcl\":zh,\"tgtl\":en,\"text\":%E4%B8%AD%E5%9B%BD,\"detoken\":true,\"align\":true}";
-
-		JSONObject jsonObject=new JSONObject();
-		jsonObject.put("srcl", "zh");
-		jsonObject.put("tgtl", "en");
-		jsonObject.put("text", "你很漂亮");
-		jsonObject.put("detoken", true);
-		jsonObject.put("align", true);
-
-		String resp = null;
-		try {
-			resp = HttpsUtil.HttpsPost(TRANSREQ, jsonObject.toString(), "UTF-8");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (KeyManagementException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(resp);
-	}
+//	public void translate() {
+////		String paramter = "{\"srcl\":zh,\"tgtl\":en,\"text\":%E4%B8%AD%E5%9B%BD,\"detoken\":true,\"align\":true}";
+//
+//		JSONObject jsonObject=new JSONObject();
+//		jsonObject.put("srcl", "zh");
+//		jsonObject.put("tgtl", "en");
+//		jsonObject.put("text", "你很漂亮");
+//		jsonObject.put("detoken", true);
+//		jsonObject.put("align", true);
+//
+////		String resp = null;
+////		try {
+////			resp = HttpsUtil.HttpsPost(TRANSREQ, jsonObject.toString(), "UTF-8");
+////		} catch (NoSuchAlgorithmException e) {
+////			e.printStackTrace();
+////		} catch (KeyManagementException e) {
+////			e.printStackTrace();
+////		} catch (IOException e) {
+////			e.printStackTrace();
+////		}
+//		System.out.println(resp);
+//	}
 	
 }

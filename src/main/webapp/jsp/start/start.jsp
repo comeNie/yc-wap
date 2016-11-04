@@ -196,11 +196,18 @@
     $(document).ready(function () {
         $("#btn-translate").bind("click",function () {
             $("#chick-btn").css("display", "none");
+            choosePairs();
             translated();
         });
+
+//        $("#target-lan").bind("click",function () {
+//
+//        });
+
         $(".none").bind("click",function () {
            downloadApp(); 
         });
+//        跳转到笔译下单
         $("#banner1").bind("click",function () {
             window.location.href="<%=path%>/written";
         });
@@ -217,35 +224,41 @@
             window.location.href=ioslink;
         }
     }
-
-    var sourcetext=$("#chick-int").val();
-    log.info(sourcetext);
-    var srctext=$("#source-lan option:selected").text();
-    log.info(srctext);
-    var srcvalue=null;
-    if (srctext=="中文"){
-        srcvalue="zh";
-    }else if (srctext=="英语"){
-        srcvalue="en";
-    }else if (srctext=="法语"){
-        srcvalue="fr";
-    }else if (srctext=="俄语"){
-        srcvalue="ru";
-    }else {
-        srcvalue="pt";
-    }
-    var tartext=$("#target-lan option:selected").text();
+    var srcvalue;
     var tarvalue;
-    if (srctext=="中文"){
-        tarvalue="zh";
-    }else if (srctext=="英语"){
-        tarvalue="en";
-    }else if (srctext=="法语"){
-        tarvalue="fr";
-    }else if (srctext=="俄语"){
-        tarvalue="ru";
-    }else {
-        tarvalue="pt";
+    var sourcetext;
+    function choosePairs() {
+        sourcetext=$("#chick-int").val();
+        srctext=$("#source-lan option:selected").text();
+        console.info("sourcetext--------"+sourcetext);
+        console.info("srctext-----"+srctext);
+        if (srctext=="中文"){
+            srcvalue="zh";
+        }else if (srctext=="英语"){
+            srcvalue="en";
+        }else if (srctext=="法语"){
+            srcvalue="fr";
+        }else if (srctext=="俄语"){
+            srcvalue="ru";
+        }else {
+            srcvalue="pt";
+        }
+        var tartext=$("#target-lan option:selected").text();
+        console.info("tartext-------"+tartext);
+
+        if (tartext=="中文"){
+            tarvalue="zh";
+        }else if (tartext=="英语"){
+            tarvalue="en";
+        }else if (tartext=="法语"){
+            tarvalue="fr";
+        }else if (tartext=="俄语"){
+            tarvalue="ru";
+        }else {
+            tarvalue="pt";
+        }
+        console.info("srcvalue-----"+srcvalue);
+        console.info("tarvalue-----"+tarvalue);
     }
 
     function translated() {
@@ -257,20 +270,20 @@
             showBusi: false,
             timeout: 30000,
             data: {
-                srcl: "zh",
-                tgtl: "en",
-                text: sourcetext
+                srcl:srcvalue,
+                tgtl:tarvalue,
+                text:sourcetext
             },
             success: function (data) {
+                console.info(data);
                 if (data.status == 1) {//成功
-                    var aaa = data.translate;
-                    console.log(aaa);
+
                 } else {
 
                 }
             },
-            error: function () {
-
+            error: function (data) {
+                console.info(data);
             }
         });
     }
