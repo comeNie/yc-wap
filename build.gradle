@@ -26,6 +26,8 @@ dependencies {
     //json
     compile 'com.alibaba:fastjson:1.2.9'
     compile 'org.json:json:20160212'
+
+    //converter
     compile "com.fasterxml.jackson.core:jackson-core:2.8.4"
     compile "com.fasterxml.jackson.core:jackson-databind:2.8.4"
 
@@ -37,5 +39,7 @@ dependencies {
     compile 'avalon-framework:avalon-framework:4.1.5'
     compile 'commons-logging:commons-logging:1.2'
 
-    //
+    //international
+    compile 'com.ai:dubbo-ext:0.3.1' //dubbo service
+    compile "com.ai:ipaas-i18n-spring:0.3.1"
 }
