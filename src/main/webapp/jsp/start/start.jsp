@@ -76,7 +76,7 @@
     <div class="mask" id="eject-mask"></div>
 </div>
 <!--弹出框结束-->
-<section class="notice">
+<section class="notice" style="display: none">
     <p>公告信息等等等等</p>
     <label><i class="icon iconfont">&#xe618;</i></label>
 </section>
@@ -115,7 +115,7 @@
     </section>
     <!--翻译按钮-->
     <section class="translate-btn" id="chick-btn">
-        <input type="button" class="btn btn-big" value="翻译">
+        <input type="button" class="btn btn-big" value="翻译" id="btn-translate">
     </section>
     <!--翻译结果-->
     <section class="translation-content-english" id="results">
@@ -130,7 +130,7 @@
 <section id="wrapper-hide" >
     <section class="index-wrapper">
         <!--历史纪录-->
-        <section class="history">
+        <section class="history" style="display: none">
             <div class="history-list">
                 <ul>
                     <a href="javascript:">
@@ -155,7 +155,7 @@
 
     </section>
     <!--banner-->
-    <section class="banner"><a href="#"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
+    <section class="banner"><a href="#" id="banner1"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
     <section class="banner"><a href="#"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
 
 </section>
@@ -187,68 +187,93 @@
 </section>
 </body>
 </html>
-<script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#chick-btn").bind("click",function () {
-            var sourcetext=$("#chick-int").val();
-            var srctext=$("#source-lan option:selected").text();
-            var srcvalue;
-            if (srctext=="中文"){
-                srcvalue="zh";
-            }else if (srctext=="英语"){
-                srcvalue="en";
-            }else if (srctext=="法语"){
-                srcvalue="fr";
-            }else if (srctext=="俄语"){
-                srcvalue="ru";
-            }else {
-                srcvalue="pt";
-            }
+        $("#btn-translate").bind("click",function () {
+            $("#chick-btn").css("display", "none");
+            translated();
+        });
+        $(".none").bind("click",function () {
+           downloadApp(); 
+        });
+        $("#banner1").bind("click",function () {
+            window.location.href="<%=path%>/written";
+        });
 
-            var tartext=$("#target-lan option:selected").text();
-            var tarvalue;
-            if (srctext=="中文"){
-                tarvalue="zh";
-            }else if (srctext=="英语"){
-                tarvalue="en";
-            }else if (srctext=="法语"){
-                tarvalue="fr";
-            }else if (srctext=="俄语"){
-                tarvalue="ru";
-            }else {
-                tarvalue="pt";
-            }
-            $.ajax({
-                async:true,
-                type:"POST",
-                url:"<%=path%>/translate",
-                modal:true,
-                showBusi:false,
-                timeout:30000,
-                data:{
-                    srcl:srcvalue,
-                    tgtl:tarvalue,
-                    text:sourcetext
-                },
-                success : function(data) {
-                    if (data.status==1) {//成功
-                        var aaa= data.translate;
-                        console.log(aaa);
-                    }else{
 
-                    }
-                },
-                error:function(){
+    });
+
+    function downloadApp() {
+        var andlink="http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt";
+        var ioslink="https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8";
+        if (/android/i.test(navigator.userAgent)){
+            window.location.href=andlink;
+        }else{
+            window.location.href=ioslink;
+        }
+    }
+
+    var sourcetext=$("#chick-int").val();
+    log.info(sourcetext);
+    var srctext=$("#source-lan option:selected").text();
+    log.info(srctext);
+    var srcvalue=null;
+    if (srctext=="中文"){
+        srcvalue="zh";
+    }else if (srctext=="英语"){
+        srcvalue="en";
+    }else if (srctext=="法语"){
+        srcvalue="fr";
+    }else if (srctext=="俄语"){
+        srcvalue="ru";
+    }else {
+        srcvalue="pt";
+    }
+    var tartext=$("#target-lan option:selected").text();
+    var tarvalue;
+    if (srctext=="中文"){
+        tarvalue="zh";
+    }else if (srctext=="英语"){
+        tarvalue="en";
+    }else if (srctext=="法语"){
+        tarvalue="fr";
+    }else if (srctext=="俄语"){
+        tarvalue="ru";
+    }else {
+        tarvalue="pt";
+    }
+
+    function translated() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/translate",
+            modal: true,
+            showBusi: false,
+            timeout: 30000,
+            data: {
+                srcl: "zh",
+                tgtl: "en",
+                text: sourcetext
+            },
+            success: function (data) {
+                if (data.status == 1) {//成功
+                    var aaa = data.translate;
+                    console.log(aaa);
+                } else {
 
                 }
-            });
-        })
-    });
+            },
+            error: function () {
+
+            }
+        });
+    }
 
 
 </script>
