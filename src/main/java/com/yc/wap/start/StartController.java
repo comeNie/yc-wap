@@ -1,8 +1,12 @@
 package com.yc.wap.start;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
+import com.yc.wap.system.utils.FileUtil;
+import com.yc.wap.system.utils.HttpUtil;
 import com.yc.wap.system.utils.HttpsUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import static javafx.scene.input.KeyCode.J;
 
 
 /**
@@ -25,8 +30,6 @@ import java.util.Set;
  */
 @Controller
 public class StartController extends BaseController{
-    public static String FILE = "assets/TTS.mp3";
-    public static String FILE1 = "assets/TTS1.txt";
     public static String TRANSREQ = "https://translateport.yeekit.com/translate";
 
     private Log log = LogFactory.getLog(StartController.class);
@@ -58,10 +61,6 @@ public class StartController extends BaseController{
         jsonObject.put("tgtl",tgtl);
         jsonObject.put("text",text);
 
-//        Set<String> keys=request.getParameterMap().keySet();
-//        for (String key:keys){
-//            jsonObject.put(key,request.getParameter(key)==null?"":request.getParameter(key));
-//        }
         jsonObject.put("detoken",true);
         jsonObject.put("align",true);
 
@@ -76,7 +75,35 @@ public class StartController extends BaseController{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        String textw = json.getJSONObject("translation").getJSONObject("translated").getString("text");
+        JSONObject json = (JSONObject) JSONObject.parse(resp);
+        JSONObject json2 = (JSONObject) json.getJSONArray("translation").get(0);
+        JSONObject fin = (JSONObject) json2.getJSONArray("translated").get(0);
+        log.info("fin.get--------"+fin.get("text"));
+        String target=fin.getString("text");
+        log.info("target=--------"+target);
         log.info("resp-----"+resp);
+        result.put("target",target);
+
+        return result.returnMsg();
+
+    }
+
+    @RequestMapping(value="/ttsSync")
+    public @ResponseBody Object ttsSync(String languages ,String beRead){
+        MsgBean result=new MsgBean();
+        languages=request.getParameter("languages");
+        beRead=request.getParameter("beRead");
+        //根据目标语言语种选择调用灵云能力
+        String config="";
+        String audioformat=",audioformat=mp3_16";
+        if (languages.equals("zh")){
+            config+="capkey=tts.cloud.wangjing";
+        }else if (languages.equals("en")) {
+            config+="capkey=tts.cloud.serena";
+        }//// TODO: 2016/11/4  增加俄语 法语 葡萄牙语的capkey
+
 
         return result.returnMsg();
     }

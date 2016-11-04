@@ -18,7 +18,6 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.yc.wap.start.StartController.FILE;
 
 /**
  * Handles requests for the application home page.
@@ -59,27 +58,6 @@ public class HomeController {
 //		FileUtil.ByteinfoFile(resp, FILE, offset);
 //	}
 
-//	public void translate() {
-////		String paramter = "{\"srcl\":zh,\"tgtl\":en,\"text\":%E4%B8%AD%E5%9B%BD,\"detoken\":true,\"align\":true}";
-//
-//		JSONObject jsonObject=new JSONObject();
-//		jsonObject.put("srcl", "zh");
-//		jsonObject.put("tgtl", "en");
-//		jsonObject.put("text", "你很漂亮");
-//		jsonObject.put("detoken", true);
-//		jsonObject.put("align", true);
-//
-////		String resp = null;
-////		try {
-////			resp = HttpsUtil.HttpsPost(TRANSREQ, jsonObject.toString(), "UTF-8");
-////		} catch (NoSuchAlgorithmException e) {
-////			e.printStackTrace();
-////		} catch (KeyManagementException e) {
-////			e.printStackTrace();
-////		} catch (IOException e) {
-////			e.printStackTrace();
-////		}
-//		System.out.println(resp);
-//	}
+
 	
 }

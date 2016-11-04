@@ -119,9 +119,9 @@
     </section>
     <!--翻译结果-->
     <section class="translation-content-english" id="results">
-        <textarea class="textarea textarea-xlarge"></textarea>
+        <textarea class="textarea textarea-xlarge" id="result-text"></textarea>
         <p>
-            <a href="#"><i class="icon iconfont">&#xe61b;</i></a>
+            <a href="#"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
             <a href="#" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
         </p>
     </section>
@@ -197,12 +197,18 @@
         $("#btn-translate").bind("click",function () {
             $("#chick-btn").css("display", "none");
             choosePairs();
-            translated();
+            translate();
         });
 
 //        $("#target-lan").bind("click",function () {
+//            if (){
 //
+//            }
 //        });
+
+        $("#toAudio").bind("click",function () {
+           textToAudio();
+        });
 
         $(".none").bind("click",function () {
            downloadApp(); 
@@ -214,6 +220,33 @@
 
 
     });
+        var beRead=$("#result-text").val();
+    function textToAudio() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/ttsSync",
+            modal: true,
+            showBusi: false,
+            timeout: 30000,
+            data: {
+                languages:tarvalue,
+                beRead:beRead
+            },
+            success: function (data) {
+                console.info(data);
+                if (data.status == 1) {//成功
+
+                } else {
+
+                }
+            },
+            error: function (data) {
+                console.info(data);
+            }
+            });
+
+    }
 
     function downloadApp() {
         var andlink="http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt";
@@ -261,7 +294,7 @@
         console.info("tarvalue-----"+tarvalue);
     }
 
-    function translated() {
+    function translate() {
         $.ajax({
             async: true,
             type: "POST",
@@ -277,7 +310,8 @@
             success: function (data) {
                 console.info(data);
                 if (data.status == 1) {//成功
-
+                    $("#result-text").val(data.target);
+                    console.info("data.msg.target...."+data.target);
                 } else {
 
                 }
