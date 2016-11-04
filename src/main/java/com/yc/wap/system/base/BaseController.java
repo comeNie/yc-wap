@@ -23,8 +23,8 @@ public class BaseController {
     @Autowired
     protected HttpSession session;
 
-    @Autowired
-    ResWebBundle rb;
+//    @Autowired
+//    ResWebBundle rb;
 
     /**
      * 响应客户端结果 成功、失败、错误
