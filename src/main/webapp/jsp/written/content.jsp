@@ -154,7 +154,7 @@
             </li>
         </ul>
     </div>
-    <div class="wap-btn"><a href="#"><input type="button" class="btn submit-btn btn-blue" value="提交"></a></div>
+    <div class="wap-btn"><a href="#"><input type="button" id="submit" class="btn submit-btn btn-blue" value="提交"></a></div>
 </section>
 <!--底部-->
 <section class="footer-big">
@@ -184,17 +184,41 @@
 
 </body>
 </html>
-<script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-
+        $("#submit").bind("click", function () {
+            onSubmit();
+        })
     });
 
     $(function () {
 
     });
+
+    function onSubmit() {
+        var test = "haha";
+        $.ajax({
+            async : true,
+            type : "POST",
+            url : "<%=path%>/written/onsubmit",
+            modal : true,
+            timeout: 30000,
+            data : {
+                test:test
+            },
+            success : function(data) {
+                console.log("success");
+                console.log(data);
+            },
+            error : function(data){
+                console.log("fail");
+                console.log(data);
+            }
+        });
+    }
 
 </script>

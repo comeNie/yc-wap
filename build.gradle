@@ -26,6 +26,8 @@ dependencies {
     //json
     compile 'com.alibaba:fastjson:1.2.9'
     compile 'org.json:json:20160212'
+    compile "com.fasterxml.jackson.core:jackson-core:2.8.4"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.8.4"
 
     //utils
     compile 'jstl:jstl:1.2'
