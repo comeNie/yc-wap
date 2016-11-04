@@ -1,9 +1,6 @@
 package com.yc.wap.home;
 
-import com.alibaba.fastjson.JSONObject;
-import com.yc.wap.system.utils.FileUtil;
-import com.yc.wap.system.utils.HttpUtil;
-import com.yc.wap.system.utils.HttpsUtil;
+import com.yc.wap.system.base.BaseController;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -11,9 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -24,10 +18,8 @@ import java.util.Locale;
  */
 @Controller
 @RequestMapping(value = "home")
-public class HomeController {
+public class HomeController extends BaseController{
 	private Log log = LogFactory.getLog(HomeController.class);
-
-
 
 	/**
 	 * Simply selects the home view to render by returning its name.

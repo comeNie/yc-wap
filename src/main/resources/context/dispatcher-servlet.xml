@@ -11,7 +11,7 @@
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
     <!-- Enables the Spring MVC @Controller programming model -->
-    <annotation-driven />
+    <!--<annotation-driven />-->
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
     <!--<resources mapping="/resources/**" location="/resources/" />-->
@@ -20,12 +20,21 @@
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/jsp/" />
         <beans:property name="suffix" value=".jsp" />
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
     </beans:bean>
 
-    <context:component-scan base-package="com.yc" />
+    <!--<context:component-scan base-package="com.yc" />-->
+
+    <!-- 启动注解扫描 -->
+    <context:annotation-config/>
+    <!-- 设定注解扫描基础包 -->
+    <context:component-scan base-package="com.yc.wap">
+        <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation" />
+    </context:component-scan>
 
     <mvc:default-servlet-handler/>
 
     <mvc:annotation-driven/>
+
 
 </beans:beans>
