@@ -20,6 +20,5 @@
     </bean>
 
     <import resource="classpath:i18n/context/springmvc-locale.xml"/>
-    <import resource="classpath:i18n/context/spring-locale.xml"/>
 
 </beans>

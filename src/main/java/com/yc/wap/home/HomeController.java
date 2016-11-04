@@ -35,6 +35,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
+		System.out.print("aasdasd");
 		log.info("HomeController-home invoked");
 
 		Date date = new Date();
