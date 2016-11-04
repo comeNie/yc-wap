@@ -5,8 +5,8 @@ apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 apply plugin: "APIJarProcess"
 
-sourceCompatibility = 1.7   //JDK Version
-sourceSets.main.java.srcDir 'src'   //Java sourcecode dictionary
+sourceCompatibility = 1.7   // 设置 JDK 版本
+sourceSets.main.java.srcDir 'src'   // 设置 Java 源码所在目录
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 configurations.all {
@@ -39,7 +39,7 @@ sourceSets {
         }
     }
 }
-
+// 设置依赖
 dependencies {
     //spring
     compile 'org.springframework:spring-core:4.3.3.RELEASE'
@@ -80,17 +80,17 @@ dependencies {
 }
 
 def getUedTemplate=task("getUedTemplate",type:com.ai.runner.gradle.plugin.jar.APIJarProcessTask){
-    jarPaths=configurations.optUedTemplate.files.asType(List)
-    destinationDir file("src/main/webapp/resources/template") //suggest default
+	jarPaths=configurations.optUedTemplate.files.asType(List)
+    destinationDir file("src/main/webapp/resources/template") //这里面的路径建议保持默认
 }
 
 
 def getJsCommonLibs=task("getJsCommonLibs",type:com.ai.runner.gradle.plugin.jar.APIJarProcessTask){
-    jarPaths=configurations.jsCommonLibs.files.asType(List)
-    destinationDir file("src/main/webapp/resources/spm_modules") //suggest default
+	jarPaths=configurations.jsCommonLibs.files.asType(List)
+    destinationDir file("src/main/webapp/resources/spm_modules") //这里面的路径建议保持默认
 }
 
-// Set Project Facets
+// 设置 Project Facets
 eclipse {
     wtp {
         facet {
