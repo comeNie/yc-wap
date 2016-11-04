@@ -17,9 +17,18 @@ public class SafeController extends BaseController {
     private Log log = LogFactory.getLog(SafeController.class);
 
     @RequestMapping(value = "safe")
-    public String safe(HttpServletRequest request) {
+    public String safe() {
         log.info("safe-safe invoked");
         return "safe/safe";
     }
-
+    @RequestMapping(value = "changepsd")
+    public String changepsd() {
+        log.info("safe-changepsd invoked");
+        return "safe/changepsd";
+    }
+    @RequestMapping(value = "changephone")
+    public String changephone() {
+        log.info("safe-changephone invoked");
+        return "safe/changephone";
+    }
 }

@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: ldy
+  Date: 2016/11/4
+  Time: 下午3:15
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -6,19 +13,11 @@
 <%
     String path = request.getContextPath();
 %>
-<%--
-  Created by IntelliJ IDEA.
-  User: ldy
-  Date: 2016/11/4
-  Time: 上午10:58
-  To change this template use File | Settings | File Templates.
---%>
-
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>安全设置</title>
+    <title>修改手机号</title>
     <script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -28,52 +27,45 @@
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
-    
+
 </head>
 <body>
 
     <nav class="wap-second-nav">
         <ul>
             <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>安全设置</li>
-            <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
+            <li>修改手机</li>
         </ul>
-        <div class="pop-nav">
-            <ul>
-                <li>
-                    <a href="#">译云首页</a>|
-                    <a href="#">个人中心</a>|
-                    <a href="#">我的订单</a>|
-                    <a href="#">安全退出</a>
-                </li>
-            </ul>
-        </div>
+
     </nav>
-    
+
     <!--订单内容-->
-    <section class="order-content ">
-        <div class="setting-list">
-            <ul>
-                <a href="#">
-                    <li>修改密码</li>
-                    <li class="right"><i class="icon iconfont">&#xe62c;</i></li>
-                </a>
-            </ul>
-            <ul>
-                <a href="#">
-                    <li>手机验证</li>
-                    <li class="right">138****1234<i class="icon iconfont">&#xe62c;</i></li>
-                </a>
-            </ul>
-            <ul class="none-border">
-                <a href="#">
-                    <li>邮箱验证</li>
-                    <li class="right">您还没有通过邮箱验证，请验证<i class="icon iconfont">&#xe62c;</i></li>
-                </a>
-            </ul>
+    <section class="index-wrapper ">
+        <div class="set-password">
+            <div class="set-int">
+                <ul>
+                    <li>
+                        <p>
+                            <select class="select testing-select-big">
+                                <option>中国大陆 +86</option>
+                                <option>中国大陆 +86</option>
+                            </select>
+                            <span>|</span>
+                        </p>
+                    </li>
+                    <li>
+                        <p><input type="text" class="input input-large" placeholder="手机号"></p>
+                    </li>
+                    <li>
+                        <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
+                        <p class="yzm"><input type="text" class="btn bnt-yzm" value="获取动态码"></p>
+                        <label>动态码有误，请重新获取</label>
+                    </li>
+                    <li><a href="#"><input type="button" class="btn submit-btn btn-blue" value="下一步"></a></li>
+                </ul>
+            </div>
         </div>
     </section>
-
     <!--底部-->
     <section class="footer-big">
         <section class="terminal">
@@ -101,4 +93,3 @@
     </section>
 </body>
 </html>
-
