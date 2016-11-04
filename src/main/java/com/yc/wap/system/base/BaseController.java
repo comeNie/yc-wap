@@ -1,5 +1,6 @@
 package com.yc.wap.system.base;
 
+import com.ai.paas.ipaas.i18n.ResWebBundle;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
@@ -21,6 +22,9 @@ public class BaseController {
 
     @Autowired
     protected HttpSession session;
+
+    @Autowired
+    ResWebBundle rb;
 
     /**
      * 响应客户端结果 成功、失败、错误
