@@ -27,7 +27,11 @@ public class HomeController extends BaseController{
 	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		log.info("HomeController-home invoked");
+
+		// 从字库取出文字
+		log.info(rb.getMessage("written.title"));
 		log.info(rb.getMessage("test.test1"));
+		log.info(rb.getMessage("test.test1", "en_US"));
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);

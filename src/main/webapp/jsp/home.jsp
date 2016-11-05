@@ -9,6 +9,14 @@
 </head>
 <body>
     <P>  The time on the server is ${serverTime}. </P>
-    <p>  <spring:message code="test.test1"/></p>
+    <p>  <spring:message code="test.test2"/></p>
+    <p>  The local language is ${pageContext.response.locale}</p>
 </body>
 </html>
+<script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+    var Language = "${pageContext.response.locale}";
+    $(function () {
+        console.log("Local language:" + Language);
+    });
+</script>
