@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+		   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!-- 加载配置文件 -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:**/*.properties</value>
+            </list>
+        </property>
+    </bean>
 
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
@@ -11,6 +24,7 @@
             </list>
         </property>
     </bean>
+
     <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>
@@ -18,6 +32,7 @@
             </list>
         </property>
     </bean>
+<<<<<<< HEAD:src/main/resources/context/applicationContext.xml
     <import resource="classpath:i18n/context/springmvc-locale.xml"/>
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
@@ -32,5 +47,15 @@
         <property name="maxUploadSize" value="10485760000"></property>
         <property name="maxInMemorySize" value="40960"></property>
     </bean>
+=======
+
+    <!-- 启动注解扫描 -->
+    <context:annotation-config/>
+    <!-- 设定注解扫描基础包 -->
+    <context:component-scan base-package="com.yc.wap">
+        <context:exclude-filter expression="org.springframework.stereotype.Controller"
+                                type="annotation" />
+    </context:component-scan>
+>>>>>>> 4840cd0eb20b1c616556ca5c68ef32bb3a352819:src/main/resources/context/core-context.xml
 
 </beans>
