@@ -212,11 +212,9 @@
             },
             success : function(data) {
                 console.log("success");
-                console.log(data);
             },
             error : function(data){
                 console.log("fail");
-                console.log(data);
             }
         });
     }
