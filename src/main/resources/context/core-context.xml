@@ -7,8 +7,7 @@
            http://www.springframework.org/schema/context
 		   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<!-- 加载配置文件 -->
-    <bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:**/*.properties</value>
@@ -32,22 +31,7 @@
             </list>
         </property>
     </bean>
-<<<<<<< HEAD:src/main/resources/context/applicationContext.xml
-    <import resource="classpath:i18n/context/springmvc-locale.xml"/>
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:**/*.properties</value>
-            </list>
-        </property>
-    </bean>
 
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="defaultEncoding" value="utf-8"></property>
-        <property name="maxUploadSize" value="10485760000"></property>
-        <property name="maxInMemorySize" value="40960"></property>
-    </bean>
-=======
 
     <!-- 启动注解扫描 -->
     <context:annotation-config/>
@@ -56,6 +40,5 @@
         <context:exclude-filter expression="org.springframework.stereotype.Controller"
                                 type="annotation" />
     </context:component-scan>
->>>>>>> 4840cd0eb20b1c616556ca5c68ef32bb3a352819:src/main/resources/context/core-context.xml
 
 </beans>
