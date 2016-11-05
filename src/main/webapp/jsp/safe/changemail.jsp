@@ -7,6 +7,7 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -35,7 +36,7 @@
     <nav class="wap-second-nav">
         <ul>
             <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-            <li>${mailTitle}邮箱</li>
+            <li>${mailTitle}<spring:message code="safe.changemail.navli"/></li>
         </ul>
 
     </nav>
@@ -45,15 +46,15 @@
             <div class="set-int">
                 <ul>
                     <li>
-                        <p><input type="text" class="input input-large" placeholder="邮箱"></p>
+                        <p><input type="text" class="input input-large" placeholder=<spring:message code="safe.changemail.navli"/>></p>
                     </li>
                     <li>
-                        <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
+                        <p><input type="text" class="input input-small" placeholder=<spring:message code="safe.changemail.small_input"/>></p>
 
-                        <p class="yzm"><input type="text" class="btn bnt-yzm" value="获取动态码"></p>
-                        <label>动态码有误，请重新获取</label>
+                        <p class="yzm"><input type="text" class="btn bnt-yzm" value=<spring:message code="safe.changemail.bntyzm_input"/>></p>
+                        <label><spring:message code="safe.changemail.code_label"/></label>
                     </li>
-                    <li><a href="#" onclick="confirmBtn()"><input type="button" class="btn submit-btn btn-blue" value="下一步"></a></li>
+                    <li><a href="#" onclick="confirmBtn()"><input type="button" class="btn submit-btn btn-blue" value=<spring:message code="safe.changemail.nextbtn"/>></a></li>
                 </ul>
             </div>
         </div>
@@ -66,24 +67,24 @@
                 <li class="none">
                     <p><img src="<%=path%>/ui/images/icon-1.png"/></p>
 
-                    <p>客户端</p>
+                    <p><spring:message code="all.project.public.icon-1"/></p>
                 </li>
                 <li class="tow current">
                     <p><img src="<%=path%>/ui/images/icon-2.png"/></p>
 
-                    <p>触屏版</p>
+                    <p><spring:message code="all.project.public.icon-2"/></p>
                 </li>
                 <li class="three none-ml">
                     <p><img src="<%=path%>/ui/images/icon-3.png"/></p>
 
-                    <p>电脑版</p>
+                    <p><spring:message code="all.project.public.icon-3"/></p>
                 </li>
             </ul>
         </section>
         <footer class="footer">
             <ul>
-                <li><a hrel="#">关于我们</a>|<a hrel="#">译云招募</a>|<a hrel="#">意见反馈</a>|<a hrel="#">ENGLISH</a></li>
-                <li class="ash">中译语通科技（北京）有限公司版权所有</li>
+                <li><a hrel="#"><spring:message code="all.project.public.footer.about"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.find"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.idea"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.language"/></a></li>
+                <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
             </ul>
         </footer>
     </section>
@@ -97,7 +98,7 @@
     });
     function confirmBtn() {
 
-        var tourl = "<%=path%>/safe/safesuccess?name=邮箱";
+        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changemail.navli"/>";
         window.location.href=tourl;
     }
 </script>
