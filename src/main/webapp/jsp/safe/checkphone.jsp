@@ -1,24 +1,24 @@
 <%--
   Created by IntelliJ IDEA.
   User: ldy
-  Date: 2016/11/4
-  Time: 下午5:28
+  Date: 2016/11/5
+  Time: 下午12:09
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String path = request.getContextPath();
-    String mailTitle = (String) request.getAttribute("mailTitle");
+    String jump = (String) request.getAttribute("jump");
 %>
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>修改邮箱</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>验证手机号</title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -31,29 +31,29 @@
 
 </head>
 <body>
-
     <nav class="wap-second-nav">
         <ul>
             <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-            <li>${mailTitle}邮箱</li>
+            <li>验证手机</li>
         </ul>
 
     </nav>
+
     <!--订单内容-->
     <section class="index-wrapper ">
         <div class="set-password">
+            <div class="set-phone">
+                <p>已验证手机</p>
+                <p class="word">138****1234</p>
+            </div>
             <div class="set-int">
                 <ul>
                     <li>
-                        <p><input type="text" class="input input-large" placeholder="邮箱"></p>
-                    </li>
-                    <li>
                         <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-
                         <p class="yzm"><input type="text" class="btn bnt-yzm" value="获取动态码"></p>
                         <label>动态码有误，请重新获取</label>
                     </li>
-                    <li><a href="#" onclick="confirmBtn()"><input type="button" class="btn submit-btn btn-blue" value="下一步"></a></li>
+                    <li><a href="#" onclick="confirmBtn()"><input type="button" class="btn submit-btn btn-blue" value="提交"></a></li>
                 </ul>
             </div>
         </div>
@@ -64,18 +64,15 @@
         <section class="terminal">
             <ul>
                 <li class="none">
-                    <p><img src="<%=path%>/ui/images/icon-1.png"/></p>
-
+                    <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
                     <p>客户端</p>
                 </li>
                 <li class="tow current">
-                    <p><img src="<%=path%>/ui/images/icon-2.png"/></p>
-
+                    <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
                     <p>触屏版</p>
                 </li>
                 <li class="three none-ml">
-                    <p><img src="<%=path%>/ui/images/icon-3.png"/></p>
-
+                    <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
                     <p>电脑版</p>
                 </li>
             </ul>
@@ -96,8 +93,17 @@
         });
     });
     function confirmBtn() {
+        var s = "${jump}";
+        if (s=="psd"){
+            var tourl = "<%=path%>/safe/installpsd";
+            window.location.href=tourl;
+        }else if(s == "mail") {
+            var tourl = "<%=path%>/safe/changemail?mailTitle=修改";
+            window.location.href=tourl;
+        }else if(s == "phone") {
+            var tourl = "<%=path%>/safe/changephone?phoneTitle=修改";
+            window.location.href=tourl;
+        }
 
-        var tourl = "<%=path%>/safe/safesuccess?name=邮箱";
-        window.location.href=tourl;
     }
 </script>

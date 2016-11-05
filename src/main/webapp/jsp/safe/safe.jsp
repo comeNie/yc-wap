@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>安全设置</title>
-    <script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
@@ -60,12 +60,12 @@
                 </a>
             </ul>
             <ul>
-                <a href="#">
+                <a href="#" onclick="changePhone()">
                     <li>手机验证</li>
                     <li class="right">138****1234<i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
-            <ul class="none-border">
+            <ul class="none-border" onclick="changeMail()">
                 <a href="#">
                     <li>邮箱验证</li>
                     <li class="right">您还没有通过邮箱验证，请验证<i class="icon iconfont">&#xe62c;</i></li>
@@ -106,8 +106,15 @@
 
     });
     function changepsd() {
-        var tourl = "<%=path%>/safe/changepsd";
-        window.location.href=tourl;
+        var c = confirm("是否有密码");
+        if (c == true) {
+            var tourl = "<%=path%>/safe/changepsd";
+            window.location.href=tourl;
+        }else {
+            var tourl = "<%=path%>/safe/checkphone?jump=psd";
+            window.location.href=tourl;
+        }
+
         <%--$.ajax({--%>
             <%--async : true,--%>
             <%--type : "POST",--%>
@@ -125,5 +132,25 @@
                 <%--console.log(data);--%>
             <%--}--%>
         <%--});--%>
+    }
+    function changeMail() {
+        var c = confirm("是否已验证邮箱");
+        if (c == true) {
+            var tourl = "<%=path%>/safe/checkphone?jump=mail";
+            window.location.href = tourl;
+        } else {
+            var tourl = "<%=path%>/safe/changemail?mailTitle=绑定";
+            window.location.href = tourl;
+        }
+    }
+    function changePhone() {
+        var c = confirm("是否已验证手机号");
+        if (c == true) {
+            var tourl = "<%=path%>/safe/checkphone?jump=phone";
+            window.location.href = tourl;
+        } else {
+            var tourl = "<%=path%>/safe/changephone?phoneTitle=绑定";
+            window.location.href = tourl;
+        }
     }
 </script>

@@ -18,7 +18,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>修改密码</title>
-    <script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
@@ -55,7 +55,7 @@
                         <p><input type="text" class="input input-large" placeholder="确认密码"></p>
                         <label>两次密码输入不一致，请重新输入</label>
                     </li>
-                    <li><a href="#"><input type="button" class="btn submit-btn btn-blue" value="确定"></a></li>
+                    <li><a href="#" onclick="finishChange()"><input type="button" class="btn submit-btn btn-blue" value="确定"></a></li>
                 </ul>
             </div>
         </div>
@@ -88,4 +88,15 @@
     </section>
 </body>
 </html>
-<script></script>
+<script>
+    $(document).ready(function() {
+       $("#leftRe").click(function() {
+            window.history.go(-1);
+       });
+    });
+    function finishChange() {
+
+        var tourl = "<%=path%>/safe/safesuccess?name=密码";
+        window.location.href=tourl;
+    }
+</script>

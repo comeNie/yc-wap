@@ -12,13 +12,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String path = request.getContextPath();
+    String phoneTitle = (String)request.getAttribute("phoneTitle");
 %>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>修改手机号</title>
-    <script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
@@ -33,8 +34,8 @@
 
     <nav class="wap-second-nav">
         <ul>
-            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>修改手机</li>
+            <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
+            <li>${phoneTitle}手机</li>
         </ul>
 
     </nav>
@@ -61,7 +62,7 @@
                         <p class="yzm"><input type="text" class="btn bnt-yzm" value="获取动态码"></p>
                         <label>动态码有误，请重新获取</label>
                     </li>
-                    <li><a href="#"><input type="button" class="btn submit-btn btn-blue" value="下一步"></a></li>
+                    <li><a href="#" onclick="confirmBtn()"><input type="button" class="btn submit-btn btn-blue" value="下一步"></a></li>
                 </ul>
             </div>
         </div>
@@ -93,3 +94,15 @@
     </section>
 </body>
 </html>
+<script>
+    $(document).ready(function() {
+        $("#leftRe").click(function() {
+            window.history.go(-1);
+        });
+    });
+    function confirmBtn() {
+
+        var tourl = "<%=path%>/safe/safesuccess?name=手机号";
+        window.location.href=tourl;
+    }
+</script>

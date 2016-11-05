@@ -12,13 +12,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String path = request.getContextPath();
+    String name = (String) request.getAttribute("name");
 %>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>修改手机号</title>
-    <script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
@@ -33,7 +34,7 @@
 
     <nav class="wap-second-nav">
         <ul>
-            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+            <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
             <li>安全设置</li>
         </ul>
 
@@ -44,7 +45,7 @@
         <section class="tij-cg">
             <ul>
                 <li><i class="icon iconfont">&#xe612;</i></li>
-                <li class="word">密码设置成功</li>
+                <li class="word">${name}设置成功</li>
                 <li><span class="red">5s</span>内自动回到<a href="#">登录页面</a></li>
             </ul>
         </section>
@@ -77,3 +78,13 @@
     </section>
 </body>
 </html>
+<script>
+    $(document).ready(function() {
+        $("#leftRe").click(function() {
+            window.history.go(-1);
+        });
+    });
+    $(function() {
+    });
+
+</script>
