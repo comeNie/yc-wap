@@ -26,8 +26,8 @@ public class HomeController extends BaseController{
 	 */
 	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		System.out.print("aasdasd");
 		log.info("HomeController-home invoked");
+		log.info(rb.getMessage("test.test1"));
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);

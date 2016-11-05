@@ -23,7 +23,7 @@
 	<dubbo:consumer timeout="${dubbo.provider.timeout}" />
 
 	<!-- 订单信息 -->
-	<dubbo:reference id="iOrderSubmissionSV" registry="ycRegistry"
-					 interface="com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV" />
+	<!--<dubbo:reference id="iOrderSubmissionSV" registry="ycRegistry"-->
+					 <!--interface="com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV" />-->
 
 </beans>
