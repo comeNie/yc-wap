@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title><spring:message code="written.title"/></title>
+    <title><spring:message code="written.content.title"/></title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -26,14 +26,14 @@
 <!--上传提示弹出框-->
 <div class="eject-big">
     <div class="prompt" id="prompt">
-        <div class="prompt-title">请选择</div>
+        <div class="prompt-title"><spring:message code="written.content.ptitle"/></div>
         <div class="prompt-confirm">
             <ul>
-                <li>IOS端不支持上传附件请前往PC端</li>
+                <li><spring:message code="written.content.iosts"/></li>
             </ul>
         </div>
         <div class="prompt-confirm-btn">
-            <input  type="button" class="btn btn-white" id="prompt-btn" value="确认"/>
+            <input  type="button" class="btn btn-white" id="prompt-btn" value=<spring:message code="written.content.confirm"/>/>
         </div>
 
     </div>
@@ -43,7 +43,7 @@
 <nav class="wap-second-nav">
     <ul>
         <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
-        <li>翻译下单</li>
+        <li><spring:message code="written.content.ltitle"/></li>
         <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
     </ul>
     <div class="pop-nav">
@@ -159,7 +159,7 @@
 </section>
 <!--底部-->
 <section class="footer-big">
-    <section class="terminal">
+    <section class="terminal" style="display: none">
         <ul>
             <li class="none">
                 <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
@@ -205,17 +205,24 @@
         $.ajax({
             async : true,
             type : "POST",
-            url : "<%=path%>/written/onsubmit",
+            url : "<%=path%>/written/oncontentsubmit",
             modal : true,
             timeout: 30000,
             data : {
                 test:test
             },
             success : function(data) {
-                console.log("success");
+                var tourl = "<%=path%>/written/confirm";
+                window.location.href=tourl;
             },
             error : function(data){
-                console.log("fail");
+
+            },
+            beforeSend:function(){
+
+            },
+            complete:function(){
+
             }
         });
     }

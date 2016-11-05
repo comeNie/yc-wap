@@ -14,7 +14,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>新增联系方式</title>
+    <title>联系方式</title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -56,7 +56,7 @@
             <li>邮箱:</li>
             <li><input type="text" class="input input-medium" placeholder="请输入接收译文的邮箱"></li>
         </ul>
-        <ul class="none-border">
+        <ul class="none-border" style="display: none">
             <li class="width-large">
                 <p>设为默认地址</p>
                 <p class="right-multi"><input type="checkbox" class="multi-switch" value="0" /></p>
@@ -66,20 +66,50 @@
     </div>
 </section>
 <section class="add-btn">
-    <a href="#"><input type="button" class="btn submit-btn btn-blue" value="保存"></a>
+    <a href="#"><input type="button" id="submit" class="btn submit-btn btn-blue" value="下一步"></a>
 </section>
 </body>
 </html>
-<script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
 <script src="<%=path%>/js/modular/multi-switch.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('.multi-switch').multiSwitch();
+        $("#submit").bind("click", function () {
+            onSubmit();
+        });
     });
 
     $(function () {
 
     });
+
+    function onSubmit() {
+        var test = "haha";
+        $.ajax({
+            async : true,
+            type : "POST",
+            url : "<%=path%>/written/onnewcontactsubmit",
+            modal : true,
+            timeout: 30000,
+            data : {
+                test:test
+            },
+            success : function(data) {
+                var tourl = "<%=path%>/written/payment";
+                window.location.href=tourl;
+            },
+            error : function(data){
+                console.log(data);
+            },
+            beforeSend:function(){
+
+            },
+            complete:function(){
+
+            }
+        });
+    }
 
 </script>

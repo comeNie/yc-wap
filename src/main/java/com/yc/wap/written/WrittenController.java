@@ -18,34 +18,50 @@ public class WrittenController extends BaseController{
 
     @RequestMapping(value = "")
     public String content() {
-        log.info("WrittenController-content invoked");
         return "written/content";
     }
 
-    @RequestMapping(value = "onsubmit")
+    @RequestMapping(value = "oncontentsubmit")
     @ResponseBody
-    public Object onsubmit() {
-        log.info(request.getParameter("test"));
+    public Object oncontentsubmit() {
         MsgBean result = new MsgBean();
-        result.put("test", "a");
+        result.put("result", true);
         return result.returnMsg();
     }
 
     @RequestMapping(value = "contact")
     public String contact() {
-        log.info("WrittenController-contact invoked");
         return "written/contact";
     }
 
     @RequestMapping(value = "confirm")
     public String confirm() {
-        log.info("WrittenController-confirm invoked");
         return "written/confirm";
+    }
+
+    @RequestMapping(value = "onconfirmsubmit")
+    @ResponseBody
+    public Object onconfirmsubmit() {
+        MsgBean result = new MsgBean();
+        result.put("result", true);
+        return result.returnMsg();
     }
 
     @RequestMapping(value = "newcontact")
     public String newcontact() {
-        log.info("WrittenController-newcontact invoked");
         return "written/newcontact";
+    }
+
+    @RequestMapping(value = "onnewcontactsubmit")
+    @ResponseBody
+    public Object onnewcontactsubmit() {
+        MsgBean result = new MsgBean();
+        result.put("result", true);
+        return result.returnMsg();
+    }
+
+    @RequestMapping(value = "payment")
+    public String paymen() {
+        return "written/payment";
     }
 }

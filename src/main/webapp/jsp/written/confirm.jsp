@@ -40,7 +40,7 @@
     </div>
 </nav>
 <!--新增联系方式-->
-<section class="add-contact">
+<section class="add-contact" style="display: none">
     <a href="#"><i class="icon-plus"></i>新增联系方式</a>
 </section>
 <!--订单内容-->
@@ -80,21 +80,50 @@
 <!--底部-->
 <section class="order-submit">
     <p class="left">总价:1111元</p>
-    <p class="right"><a href="#">提交订单</a></p>
+    <p class="right"><a href="#" id="submit">提交订单</a></p>
 </section>
 </body>
 </html>
-<script type="text/javascript" src="<%=path%>/js/modular/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-
+        $("#submit").bind("click", function () {
+            onSubmit();
+        });
     });
 
     $(function () {
 
     });
+
+    function onSubmit() {
+        var test = "haha";
+        $.ajax({
+            async : true,
+            type : "POST",
+            url : "<%=path%>/written/onconfirmsubmit",
+            modal : true,
+            timeout: 30000,
+            data : {
+                test:test
+            },
+            success : function(data) {
+                var tourl = "<%=path%>/written/newcontact";
+                window.location.href=tourl;
+            },
+            error : function(data){
+                console.log(data);
+            },
+            beforeSend:function(){
+
+            },
+            complete:function(){
+
+            }
+        });
+    }
 
 </script>
