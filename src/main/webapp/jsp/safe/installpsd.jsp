@@ -1,24 +1,23 @@
 <%--
   Created by IntelliJ IDEA.
   User: ldy
-  Date: 2016/11/4
-  Time: 下午5:28
+  Date: 2016/11/5
+  Time: 下午12:04
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String path = request.getContextPath();
-    String mailTitle = (String) request.getAttribute("mailTitle");
 %>
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>修改邮箱</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>设置初始密码</title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -31,27 +30,26 @@
 
 </head>
 <body>
-
     <nav class="wap-second-nav">
         <ul>
             <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-            <li>${mailTitle}邮箱</li>
+            <li>设置新密码</li>
         </ul>
 
     </nav>
+
     <!--订单内容-->
     <section class="index-wrapper ">
         <div class="set-password">
             <div class="set-int">
                 <ul>
                     <li>
-                        <p><input type="text" class="input input-large" placeholder="邮箱"></p>
+                        <p><input type="text" class="input input-large" placeholder="新密码"></p>
+
                     </li>
                     <li>
-                        <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-
-                        <p class="yzm"><input type="text" class="btn bnt-yzm" value="获取动态码"></p>
-                        <label>动态码有误，请重新获取</label>
+                        <p><input type="text" class="input input-large" placeholder="确认密码"></p>
+                        <label>两次密码输入不一致，请重新输入</label>
                     </li>
                     <li><a href="#" onclick="confirmBtn()"><input type="button" class="btn submit-btn btn-blue" value="下一步"></a></li>
                 </ul>
@@ -64,18 +62,15 @@
         <section class="terminal">
             <ul>
                 <li class="none">
-                    <p><img src="<%=path%>/ui/images/icon-1.png"/></p>
-
+                    <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
                     <p>客户端</p>
                 </li>
                 <li class="tow current">
-                    <p><img src="<%=path%>/ui/images/icon-2.png"/></p>
-
+                    <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
                     <p>触屏版</p>
                 </li>
                 <li class="three none-ml">
-                    <p><img src="<%=path%>/ui/images/icon-3.png"/></p>
-
+                    <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
                     <p>电脑版</p>
                 </li>
             </ul>
@@ -97,7 +92,7 @@
     });
     function confirmBtn() {
 
-        var tourl = "<%=path%>/safe/safesuccess?name=邮箱";
+        var tourl = "<%=path%>/safe/safesuccess?name=密码";
         window.location.href=tourl;
     }
 </script>
