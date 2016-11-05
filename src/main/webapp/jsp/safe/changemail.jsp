@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>修改邮箱</title>
+    <title><spring:message code="safe.changemail.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
