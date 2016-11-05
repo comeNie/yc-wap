@@ -83,7 +83,7 @@
 <nav class="wap-nav">
     <ul>
         <li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>
-        <li class="right"><input type="button" class="btn login-btn" value="登录"></li>
+        <li class="right"><input type="button" class="btn login-btn" value="登录" id="btn-login"></li>
     </ul>
 </nav>
 <section class="index-wrapper">
@@ -124,7 +124,7 @@
             <a href="#"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
             <a href="#" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
             <audio controls="controls" preload="true" id="audio" style="display: none">
-                <source src="<%=path%>/ttsSync/?languages:tarvalue&beRead:beRead"  />
+                <source src="<%=path%>/ttsSync?languages=en&beRead=hello world today somg weather"/>
             </audio>
         </p>
     </section>
@@ -197,12 +197,22 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#btn-login").bind("click",function () {
+            <!--跳转到登录页面-->
+        });
+        <!--选择源语言-->
+        $("#source-lan").bind("click",function () {
+            chooseSourLan();
+        });
+        <!--选择目标语言-->
+        $("#target-lan").bind("click",function () {
+            chooseTarLan();
+        });
         $("#btn-translate").bind("click",function () {
             $("#chick-btn").css("display", "none");
-            choosePairs();
             translate();
-
-            console.info("beRead-------"+beRead);
+            var beRead=$("#result-text").val();
+            console.info("beRead................."+beRead);
         });
 
 //        $("#target-lan").bind("click",function () {
@@ -240,18 +250,15 @@
         var ioslink="https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8";
         if (/android/i.test(navigator.userAgent)){
             window.location.href=andlink;
-        }else{
+        }else if(/iphone/i.test(navigator.userAgent)){
             window.location.href=ioslink;
         }
     }
+    <!--手动选择源语言-->
     var srcvalue;
-    var tarvalue;
-    var sourcetext;
-    function choosePairs() {
-        sourcetext=$("#chick-int").val();
+    var srctext;
+    function chooseSourLan() {
         srctext=$("#source-lan option:selected").text();
-        console.info("sourcetext--------"+sourcetext);
-        console.info("srctext-----"+srctext);
         if (srctext=="中文"){
             srcvalue="zh";
         }else if (srctext=="英语"){
@@ -263,9 +270,15 @@
         }else {
             srcvalue="pt";
         }
-        var tartext=$("#target-lan option:selected").text();
-        console.info("tartext-------"+tartext);
+        console.info("srcvalue-----"+srcvalue);
+    }
 
+    <!--手动选择目标语种-->
+    var tarvalue;
+    var tartext;
+    function chooseTarLan() {
+        tartext=$("#target-lan option:selected").text();
+        console.info("tartext-------"+tartext);
         if (tartext=="中文"){
             tarvalue="zh";
         }else if (tartext=="英语"){
@@ -277,12 +290,11 @@
         }else {
             tarvalue="pt";
         }
-        console.info("srcvalue-----"+srcvalue);
         console.info("tarvalue-----"+tarvalue);
     }
-    var beRead=null;
-
+    <!--翻译按钮的点击事件-->
     function translate() {
+        var sourcetext=$("#chick-int").val();
         $.ajax({
             async: true,
             type: "POST",
@@ -299,8 +311,6 @@
                 console.info(data);
                 if (data.status == 1) {//成功
                     $("#result-text").val(data.target);
-                    beRead=data.target;
-                    console.info("data.msg.target...."+data.target);
                 } else {
 
                 }

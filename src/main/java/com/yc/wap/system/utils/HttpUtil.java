@@ -35,6 +35,12 @@ public class HttpUtil {
             OutputStream os = con.getOutputStream();
             os.write(parameter.getBytes("UTF-8"));
             os.close();
+//            OutputStream os = con.getOutputStream();
+//            con.addRequestProperty("Accept-Ranges", "bytes");
+//            con.addRequestProperty("Content-Length", audioByte.length + "");
+//            con.addRequestProperty("Content-Type", "audio/mpeg;charset=UTF-8");
+//            os.write(audioByte);
+//            os.close();
 
             String encoding = con.getContentEncoding();
             InputStream is = con.getInputStream();

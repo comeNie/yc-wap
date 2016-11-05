@@ -27,9 +27,7 @@ public class FileUtil {
             while ((len = is.read(b)) != -1){
                 audioStream.write(b,0,len);
             }
-
             audioByte = audioStream.toByteArray();
-
             is.close();
         } catch (IOException e) {
             e.printStackTrace();
