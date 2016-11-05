@@ -22,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sun.org.apache.bcel.internal.classfile.JavaClass.FILE;
 import static javafx.scene.input.KeyCode.J;
 
 
@@ -104,6 +105,18 @@ public class StartController extends BaseController{
             config+="capkey=tts.cloud.serena";
         }//// TODO: 2016/11/4  增加俄语 法语 葡萄牙语的capkey
 
+        byte[] lanresp = HttpUtil.TTShttpReq(beRead,config);
+
+        String lanresponse= new String(lanresp);
+        String[] splits = lanresponse.split("</ResponseInfo>");
+        String xml = splits[0] + "</ResponseInfo>";
+        int offset = xml.getBytes().length;
+
+        log.info("offset----------"+offset);
+
+        byte[] audioBlock = FileUtil.ByteinfoFile(lanresp, offset);
+        log.info("audioBlock-------"+audioBlock);
+        result.put("audioBlock",audioBlock);
 
         return result.returnMsg();
     }

@@ -16,7 +16,7 @@ public class HttpUtil {
     public static String DEVKEY = "2f4f930a5acae2e86f5c313cccefb856";
     public static String REQURL = "http://test.api.hcicloud.com:8880/tts/SynthText";
 
-    public static byte[] TTShttpReq(String parameter) {
+    public static byte[] TTShttpReq(String parameter,String config) {
         Date now = new Date();
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = d.format(now);
@@ -28,7 +28,7 @@ public class HttpUtil {
             con.setRequestProperty("x-app-key", "cd5d5472");
             con.setRequestProperty("x-sdk-version", "3.6");
             con.setRequestProperty("x-request-date", date);
-            con.setRequestProperty("x-task-config", "capkey=tts.cloud.wangjing,audioformat=mp3_16");
+            con.setRequestProperty("x-task-config", config);
             con.setRequestProperty("x-session-key", MD5Util.encodePassword(date+DEVKEY));
             con.setRequestProperty("x-udid", "101:1234567890");
             con.setDoOutput(true);
