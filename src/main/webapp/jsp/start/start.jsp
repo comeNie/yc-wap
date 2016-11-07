@@ -210,8 +210,8 @@
         $("#chick-int").blur(function () {
             $("#btn-textarea-clear").bind("click",function () {
                 $("#results").css("display","none");
-                $("#btn-translate").css("display","block");
-                $("#chick-int").focus();
+                $("#chick-int").css("display","block");
+//                $("#chick-int").focus();
             });
         });
 
@@ -309,7 +309,9 @@
             srcvalue="fr";
         }else if (srctext=="俄语"){
             srcvalue="ru";
-        }else {
+        }else if (srctext=="西班牙语"){
+            srcvalue="es";
+        }else if(srctext=="葡萄牙语"){
             srcvalue="pt";
         }
         console.info("srcvalue-----"+srcvalue);
@@ -330,14 +332,16 @@
             tarvalue="fr";
         }else if (tartext=="俄语"){
             tarvalue="ru";
-        }else {
-            tarvalue="pt";
+        }else if (tartext=="西班牙语"){
+            srcvalue="es";
+        }else if(tartext=="葡萄牙语"){
+            srcvalue="pt";
         }
         console.info("tarvalue-----"+tarvalue);
     }
     <!--翻译按钮的点击事件-->
     function translate() {
-        $("#chick-int").blur();
+
         var sourcetext=$("#chick-int").val();
         $.ajax({
             async: true,
