@@ -7,6 +7,7 @@
     String path = request.getContextPath();
 %>
 <html>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -83,7 +84,10 @@
 <nav class="wap-nav">
     <ul>
         <li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>
-        <li class="right"><input type="button" class="btn login-btn" value="登录" id="btn-login"></li>
+        <li class="right">
+            <%--<input type="button" class="btn login-btn" value="登录" id="btn-login">--%>
+            <a href="#" class="btn login-btn" id="btn-login">登录</a>
+        </li>
     </ul>
 </nav>
 <section class="index-wrapper">
@@ -91,31 +95,32 @@
     <section class="testing">
         <p>
             <select class="select testing-select" id="source-lan">
-                <%--<option>检测语言：中文</option>--%>
+                <option id="auto-zh" style="display: none">检测语言：中文</option>
+                <option id="auto-en" style="display: none">检测语言：英语</option>
                 <c:forEach items="${requestScope.languagepairs}" var="pair">
                     <option>${pair}</option>
                 </c:forEach>
             </select>
             <span>|</span>
         </p>
-        <p class="test-icon"><i class="icon iconfont">&#xe621;</i></p>
+        <p class="test-icon" style="vertical-align: middle"><i class="icon iconfont" id="change-lan">&#xe621;</i></p>
         <p>
             <select class="select testing-select" id="target-lan">
                 <c:forEach items="${requestScope.languagepairs}" var="pair">
                     <option>${pair}</option>
                 </c:forEach>
             </select>
-            <span>|</span>
+            <span >|</span>
         </p>
     </section>
     <!--翻译内容-->
     <section class="translation-content">
         <textarea class="textarea textarea-large" name="chick-int" id="chick-int"></textarea>
-        <a hrel="#"><i class="icon iconfont">&#xe618;</i></a>
+        <a hrel="#"><i class="icon iconfont" id="btn-textarea-clear">&#xe618;</i></a>
     </section>
     <!--翻译按钮-->
     <section class="translate-btn" id="chick-btn">
-        <input type="button" class="btn btn-big" value="翻译" id="btn-translate">
+        <a href="#" class="btn btn-big" id="btn-translate">翻译</a>
     </section>
     <!--翻译结果-->
     <section class="translation-content-english" id="results">
@@ -123,9 +128,9 @@
         <p>
             <a href="#"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
             <a href="#" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
-            <audio controls="controls" preload="true" id="audio" style="display: none">
-                <source src="<%=path%>/ttsSync?languages=en&beRead=hello world today somg weather"/>
-            </audio>
+            <%--<audio controls="controls" preload="true" id="audio" style="display: none">--%>
+                <%--<source src=ttsUrl/>--%>
+            <%--</audio>--%>
         </p>
     </section>
 
@@ -183,7 +188,7 @@
     </section>
     <footer class="footer">
         <ul>
-            <li><a hrel="#">关于我们</a>|<a hrel="#">译云招募</a>|<a hrel="#">意见反馈</a>|<a hrel="#">ENGLISH</a></li>
+            <li><a hrel="#">关于我们</a>|<a hrel="#">译云招募</a>|<a hrel="#">意见反馈</a>|<a hrel="#" id="english-btn">ENGLISH</a></li>
             <li class="ash">中译语通科技（北京）有限公司版权所有</li>
         </ul>
     </footer>
@@ -197,6 +202,44 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        <!--点击切换到英语版-->
+        $("#english-btn").bind("click",function () {
+
+        });
+        <!--翻译源内容失去焦点-->
+        $("#chick-int").blur(function () {
+            $("#btn-textarea-clear").bind("click",function () {
+                $("#results").css("display","none");
+                $("#btn-translate").css("display","block");
+                $("#chick-int").focus();
+            });
+        });
+
+        <!--翻译源内容文本框获取焦点-->
+        $("#chick-int").focus(function () {
+            $("#results").css("display","none");
+            $("#chick-btn").css("display","block");
+            $("#btn-textarea-clear").bind("click",function () {
+                window.location.href="<%=path%>";
+            });
+        });
+
+        var Language = "${pageContext.response.locale}";
+        console.info("locallanguage:"+Language);
+        if (Language=="zh_CN"){
+            $("#auto-zh").css("display","block");
+            $("#auto-en").css("display", "none");
+            srcvalue="zh";
+            tarvalue="zh";
+        }else if (Language=="en_US"){
+            $("#source-lan option:selected").attr("selected","");
+            $("#auto-en").css("display","block");
+            $("#auto-en").attr("selected","selected");
+            $("#auto-zh").css("display","none");
+            srcvalue="en";
+            tarvalue="zh";
+        }
+
         $("#btn-login").bind("click",function () {
             <!--跳转到登录页面-->
         });
@@ -208,18 +251,16 @@
         $("#target-lan").bind("click",function () {
             chooseTarLan();
         });
+        <!--交换语言-->
+        $("#change-lan").bind("click",function () {
+//            $("#source-lan option:selected")=$("#target-lan option:selected");
+//            tartext=srctext;
+        });
+        <!--翻译-->
         $("#btn-translate").bind("click",function () {
             $("#chick-btn").css("display", "none");
             translate();
-            var beRead=$("#result-text").val();
-            console.info("beRead................."+beRead);
         });
-
-//        $("#target-lan").bind("click",function () {
-//
-//
-//            }
-//        });
 
         $("#toAudio").bind("click",function () {
            textToAudio();
@@ -228,7 +269,7 @@
         $(".none").bind("click",function () {
            downloadApp(); 
         });
-//        跳转到笔译下单
+        <!--跳转到笔译下单-->
         $("#banner1").bind("click",function () {
             window.location.href="<%=path%>/written";
         });
@@ -258,6 +299,7 @@
     var srcvalue;
     var srctext;
     function chooseSourLan() {
+        $("#auto-zh").css("display","none");
         srctext=$("#source-lan option:selected").text();
         if (srctext=="中文"){
             srcvalue="zh";
@@ -277,6 +319,7 @@
     var tarvalue;
     var tartext;
     function chooseTarLan() {
+        $("#auto-en").css("display","none");
         tartext=$("#target-lan option:selected").text();
         console.info("tartext-------"+tartext);
         if (tartext=="中文"){
@@ -294,6 +337,7 @@
     }
     <!--翻译按钮的点击事件-->
     function translate() {
+        $("#chick-int").blur();
         var sourcetext=$("#chick-int").val();
         $.ajax({
             async: true,
@@ -319,6 +363,10 @@
                 console.info(data);
             }
         });
+        var beRead=$("#result-text").text();
+        console.info("lastbeRead........."+beRead);
+        var ttsUrl=<%=path%>+"/ttsSync?languages="+tarvalue+"&beRead="+beRead;
+        console.info("ttsUrl..."+ttsUrl);
     }
 
 

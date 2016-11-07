@@ -77,7 +77,6 @@ public class StartController extends BaseController{
             e.printStackTrace();
         }
 
-//        String textw = json.getJSONObject("translation").getJSONObject("translated").getString("text");
         JSONObject json = (JSONObject) JSONObject.parse(resp);
         JSONObject json2 = (JSONObject) json.getJSONArray("translation").get(0);
         JSONObject fin = (JSONObject) json2.getJSONArray("translated").get(0);
@@ -94,8 +93,6 @@ public class StartController extends BaseController{
     @RequestMapping(value="/ttsSync")
     public @ResponseBody Object ttsSync(String languages ,String beRead){
         MsgBean result=new MsgBean();
-        languages=request.getParameter("languages");
-        beRead=request.getParameter("beRead");
         //根据目标语言语种选择调用灵云能力
         String config="";
         String audioformat=",audioformat=mp3_16";
@@ -103,21 +100,28 @@ public class StartController extends BaseController{
             config+="capkey=tts.cloud.wangjing";
         }else if (languages.equals("en")) {
             config+="capkey=tts.cloud.serena";
-        }//// TODO: 2016/11/4  增加俄语 法语 葡萄牙语的capkey
+        }else if (languages.equals("fr")) {
+            // TODO: 2016/11/4  增加俄语 法语 葡萄牙语的capkey
+            config+="capkey=tts.cloud.thomas";
+        }else if (languages.equals("ru")){
+            config+="capkey=tts.cloud.narae";
+        }else if (languages.equals("pt")){
+            config+="capkey=tts.cloud.vera";
+        }
 
+        //得到带xml的语音块
         byte[] lanresp = HttpUtil.TTShttpReq(beRead,config);
-
+        //得到需要去掉的长度
         String lanresponse= new String(lanresp);
         String[] splits = lanresponse.split("</ResponseInfo>");
         String xml = splits[0] + "</ResponseInfo>";
         int offset = xml.getBytes().length;
 
         log.info("offset----------"+offset);
-
+        //得到完整的语音块
         byte[] audioBlock = FileUtil.ByteinfoFile(lanresp, offset);
         log.info("audioBlock-------"+audioBlock);
         result.put("audioBlock",audioBlock);
-
         return result.returnMsg();
     }
 
