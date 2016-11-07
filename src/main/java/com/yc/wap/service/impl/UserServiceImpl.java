@@ -7,4 +7,5 @@ import com.yc.wap.service.interfaces.InterfaceUserService;
  */
 public class UserServiceImpl implements InterfaceUserService{
 
+
 }

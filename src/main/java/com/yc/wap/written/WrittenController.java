@@ -1,5 +1,9 @@
 package com.yc.wap.written;
 
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
+import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
+import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import org.apache.commons.logging.Log;
@@ -14,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "written")
 public class WrittenController extends BaseController{
+
+    private IUcMembersSV iUcMembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
+
     private Log log = LogFactory.getLog(WrittenController.class);
 
     @RequestMapping(value = "")
@@ -25,7 +32,10 @@ public class WrittenController extends BaseController{
     @ResponseBody
     public Object onContentSubmit() {
         MsgBean result = new MsgBean();
+        String test = request.getParameter("test");
+        log.info("test" + test);
         result.put("result", true);
+        result.put("haha", 123456);
         return result.returnMsg();
     }
 
@@ -64,4 +74,5 @@ public class WrittenController extends BaseController{
     public String payment() {
         return "written/payment";
     }
+
 }

@@ -10,12 +10,11 @@
 				http://www.springframework.org/schema/mvc 
 				http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<!-- 自动扫描的包名 -->
+    <context:annotation-config/>
 	<context:component-scan base-package="com.yc.wap">
         <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation" />
     </context:component-scan>
 	
-	<!-- 默认的注解映射的支持 -->
 	<mvc:annotation-driven />
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -24,15 +23,14 @@
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     </bean>
 	
-	<!-- 对静态资源文件的访问 -->
 	<mvc:default-servlet-handler />
 	
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="utf-8"></property>
         <property name="maxUploadSize" value="10485760000"></property>
         <property name="maxInMemorySize" value="40960"></property>
     </bean>
 
     <import resource="classpath:i18n/context/springmvc-locale.xml"/>
+    <import resource="classpath:dubbo/consumer/dubbo-consumer.xml"/>
 </beans>

@@ -6,6 +6,12 @@
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:context/core-context.xml
+        </param-value>
+    </context-param>
     <!-- 编码过滤器 -->
     <filter>
         <filter-name>encoding</filter-name>
@@ -78,6 +84,7 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
