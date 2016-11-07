@@ -33,7 +33,8 @@
             </ul>
         </div>
         <div class="prompt-confirm-btn">
-            <input  type="button" class="btn btn-white" id="prompt-btn" value=<spring:message code="written.content.confirm"/>/>
+            <%--<input  type="button" class="btn btn-white" id="prompt-btn" value=<spring:message code="written.content.confirm"/>/>--%>
+            <a href="#" class="btn btn-white" id="prompt-btn"><spring:message code="written.content.confirm"/></a>
         </div>
 
     </div>
@@ -91,7 +92,7 @@
                     <li>
                         <p><i class="icon iconfont">&#xe601;</i></p>
                         <p class="word-large">上传二十文件名称上传文件名称上传文件名称.docx</p>
-                        <p class="right"><input type="button" class="btn btn-red btn-mini" value="删除"></p>
+                        <p class="right"><a href="#" class="btn btn-red btn-mini">删除</a></p>
                     </li>
                 </a>
             </ul>
@@ -155,11 +156,11 @@
             </li>
         </ul>
     </div>
-    <div class="wap-btn"><a href="#"><input type="button" id="submit" class="btn submit-btn btn-blue" value="提交"></a></div>
+    <div class="wap-btn"><a href="#" id="submit" class="btn submit-btn btn-blue">提交</a></div>
 </section>
 <!--底部-->
 <section class="footer-big">
-    <section class="terminal" style="display: none">
+    <section class="terminal">
         <ul>
             <li class="none">
                 <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
