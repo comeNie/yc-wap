@@ -201,6 +201,7 @@
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 
 <script type="text/javascript">
+    var IsTranslated = false;
     $(document).ready(function () {
         <!--点击切换到英语版-->
         $("#english-btn").bind("click",function () {
@@ -208,21 +209,47 @@
         });
         <!--翻译源内容失去焦点-->
         $("#chick-int").blur(function () {
-            $("#btn-textarea-clear").bind("click",function () {
+            var text = $("#chick-int").val();
+            if(text == "" || text == null) {
                 $("#results").css("display","none");
-                $("#chick-int").css("display","block");
-//                $("#chick-int").focus();
-            });
+                $("#chick-btn").css("display","block");
+                return;
+            }
+            var sourcetext=$("#chick-int").val();
+            if(sourcetext=="" || sourcetext==null) {
+                return;
+            }
+            translate(sourcetext);
+        });
+
+        $("#btn-textarea-clear").bind("click",function () {
+            if(IsTranslated == true) {
+                $("#results").css("display","none");
+                $("#btn-translate").css("display","block");
+                $("#chick-int").focus();
+                IsTranslated = false;
+            } else {
+                window.location.href="<%=path%>";
+            }
         });
 
         <!--翻译源内容文本框获取焦点-->
         $("#chick-int").focus(function () {
             $("#results").css("display","none");
             $("#chick-btn").css("display","block");
-            $("#btn-textarea-clear").bind("click",function () {
-                window.location.href="<%=path%>";
-            });
         });
+
+        $("#chick-int").bind('input propertychange', function () {
+            if($("#chick-int").val()!="" || $("#chick-int").val()!=null) {
+
+            } else {
+                
+            }
+        });
+
+        <%--$("#btn-textarea-clear").bind("click",function () {--%>
+            <%--window.location.href="<%=path%>";--%>
+        <%--});--%>
 
         var Language = "${pageContext.response.locale}";
         console.info("locallanguage:"+Language);
@@ -258,8 +285,12 @@
         });
         <!--翻译-->
         $("#btn-translate").bind("click",function () {
+            var sourcetext=$("#chick-int").val();
+            if(sourcetext=="" || sourcetext==null) {
+                return;
+            }
             $("#chick-btn").css("display", "none");
-            translate();
+            translate(sourcetext);
         });
 
         $("#toAudio").bind("click",function () {
@@ -309,9 +340,7 @@
             srcvalue="fr";
         }else if (srctext=="俄语"){
             srcvalue="ru";
-        }else if (srctext=="西班牙语"){
-            srcvalue="es";
-        }else if(srctext=="葡萄牙语"){
+        }else {
             srcvalue="pt";
         }
         console.info("srcvalue-----"+srcvalue);
@@ -332,17 +361,15 @@
             tarvalue="fr";
         }else if (tartext=="俄语"){
             tarvalue="ru";
-        }else if (tartext=="西班牙语"){
-            srcvalue="es";
-        }else if(tartext=="葡萄牙语"){
-            srcvalue="pt";
+        }else {
+            tarvalue="pt";
         }
         console.info("tarvalue-----"+tarvalue);
     }
     <!--翻译按钮的点击事件-->
-    function translate() {
+    function translate(sourcetext) {
+//        $("#chick-int").blur();
 
-        var sourcetext=$("#chick-int").val();
         $.ajax({
             async: true,
             type: "POST",
@@ -359,6 +386,7 @@
                 console.info(data);
                 if (data.status == 1) {//成功
                     $("#result-text").val(data.target);
+                    IsTranslated = true;
                 } else {
 
                 }
