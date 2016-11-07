@@ -51,7 +51,7 @@
                 <ul>
                     <li>
                         <p><input type="text" class="input input-small" placeholder="<spring:message code="safe.checkphone.small_input"/>"></p>
-                        <p class="yzm"><input type="text" class="btn bnt-yzm" value="<spring:message code="safe.checkphone.yzm_input"/>"></p>
+                        <p class="yzm"><input type="button" class="btn bnt-yzm" value="<spring:message code="safe.checkphone.yzm_input"/>"></p>
                         <label><spring:message code="safe.checkphone.code_label"/></label>
                     </li>
                     <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>

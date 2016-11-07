@@ -45,18 +45,20 @@
             <div class="set-int">
                 <ul>
                     <li>
-                        <p><input type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input1"/>"></p>
-
+                        <p><input id="oldPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input1"/>"></p>
+                        <label id="oldLable"></label>
                     </li>
                     <li>
-                        <p><input type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input2"/>"></p>
-
+                        <p><input id="newPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input2"/>"></p>
+                        <label id="newLable"></label>
                     </li>
                     <li>
-                        <p><input type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input3"/>"></p>
-                        <label><spring:message code="safe.changepsd.tip_lable"/></label>
+                        <p><input id="confirmPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input3"/>"></p>
+                        <label id="confirmLable"></label>
                     </li>
-                    <li><a class="btn submit-btn btn-blue" href="#" onclick="finishChange()"><spring:message code="safe.changepsd.enter_input"/></a></li>
+                    <li>
+                        <a class="btn submit-btn btn-blue" href="#" onclick="finishChange()"><spring:message code="safe.changepsd.enter_input"/></a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -99,8 +101,50 @@
        });
     });
     function finishChange() {
-
-        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.change_jump"/>密码";
+        var oldpsd = $("#oldPsdID").val();
+        var newpsd = $("#newPsdID").val();
+        var confirmpsd = $("#confirmPsdID").val();
+//        原密码
+        if(oldpsd == null || oldpsd == ""){
+            $("#oldLable").html("<spring:message code="safe.changepsd.alert_oldPsd"/>");
+            $("#oldLable").css("display","block");
+            return;
+        }else {
+            $("#oldLable").css("display","none");
+        }
+//        新密码
+        if(newpsd == null || newpsd == "") {
+            $("#newLable").html("<spring:message code="safe.changepsd.alert_newPsd"/>");
+            $("#newLable").css("display","block");
+            return;
+        }else {
+            $("#newLable").css("display","none");
+        }
+        var t = /^[0-9a-zA-Z]{6,16}$/;
+        if (!t.test(newpsd)){
+            $("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+            $("#newLable").css("display","block");
+            return;
+        }else {
+            $("#newLable").css("display","none");
+        }
+//        确认密码
+        if(confirmpsd == null || confirmpsd == "") {
+            $("#confirmLable").html("<spring:message code="safe.changepsd.alert_newPsd"/>");
+            $("#confirmLable").css("display","block");
+            return;
+        }else {
+            $("#confirmLable").css("display","none");
+        }
+//        判断新密码是否相同
+        if (newpsd != confirmpsd) {
+            $("#confirmLable").html("<spring:message code="safe.changepsd.tip_lable"/>");
+            $("#confirmLable").css("display","block");
+            return;
+        }else {
+            $("#confirmLable").css("display","none");
+        }
+        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.change_jump"/>";
         window.location.href=tourl;
     }
 </script>
