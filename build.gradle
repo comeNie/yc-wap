@@ -12,6 +12,8 @@ sourceSets.main.java.srcDir 'src'   // 设置 Java 源码所在目录
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+    exclude group: 'log4j', module: 'log4j'
+    exclude group: "org.slf4j", module: "slf4j-log4j12"
 }
 
 configurations {
@@ -39,7 +41,7 @@ sourceSets {
         }
     }
 }
-// 设置依赖
+
 dependencies {
     //spring
     compile 'org.springframework:spring-core:4.3.3.RELEASE'
@@ -90,7 +92,6 @@ def getJsCommonLibs=task("getJsCommonLibs",type:com.ai.runner.gradle.plugin.jar.
     destinationDir file("src/main/webapp/resources/spm_modules") //这里面的路径建议保持默认
 }
 
-// 设置 Project Facets
 eclipse {
     wtp {
         facet {
