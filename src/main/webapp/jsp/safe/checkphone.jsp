@@ -7,6 +7,7 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>验证手机号</title>
+    <title><spring:message code="safe.checkphone.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -34,7 +35,7 @@
     <nav class="wap-second-nav">
         <ul>
             <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-            <li>验证手机</li>
+            <li><spring:message code="safe.checkphone.title"/></li>
         </ul>
 
     </nav>
@@ -43,17 +44,17 @@
     <section class="index-wrapper ">
         <div class="set-password">
             <div class="set-phone">
-                <p>已验证手机</p>
+                <p><spring:message code="safe.checkphone.psd_p"/></p>
                 <p class="word">138****1234</p>
             </div>
             <div class="set-int">
                 <ul>
                     <li>
-                        <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-                        <p class="yzm"><input type="text" class="btn bnt-yzm" value="获取动态码"></p>
-                        <label>动态码有误，请重新获取</label>
+                        <p><input type="text" class="input input-small" placeholder="<spring:message code="safe.checkphone.small_input"/>"></p>
+                        <p class="yzm"><input type="text" class="btn bnt-yzm" value="<spring:message code="safe.checkphone.yzm_input"/>"></p>
+                        <label><spring:message code="safe.checkphone.code_label"/></label>
                     </li>
-                    <li><a href="#" onclick="confirmBtn()"><input type="button" class="btn submit-btn btn-blue" value="提交"></a></li>
+                    <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
                 </ul>
             </div>
         </div>
@@ -64,23 +65,26 @@
         <section class="terminal">
             <ul>
                 <li class="none">
-                    <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
-                    <p>客户端</p>
+                    <p><img src="<%=path%>/ui/images/icon-1.png"/></p>
+
+                    <p><spring:message code="all.project.public.icon-1"/></p>
                 </li>
                 <li class="tow current">
-                    <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
-                    <p>触屏版</p>
+                    <p><img src="<%=path%>/ui/images/icon-2.png"/></p>
+
+                    <p><spring:message code="all.project.public.icon-2"/></p>
                 </li>
                 <li class="three none-ml">
-                    <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
-                    <p>电脑版</p>
+                    <p><img src="<%=path%>/ui/images/icon-3.png"/></p>
+
+                    <p><spring:message code="all.project.public.icon-3"/></p>
                 </li>
             </ul>
         </section>
         <footer class="footer">
             <ul>
-                <li><a hrel="#">关于我们</a>|<a hrel="#">译云招募</a>|<a hrel="#">意见反馈</a>|<a hrel="#">ENGLISH</a></li>
-                <li class="ash">中译语通科技（北京）有限公司版权所有</li>
+                <li><a hrel="#"><spring:message code="all.project.public.footer.about"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.find"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.idea"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.language"/></a></li>
+                <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
             </ul>
         </footer>
     </section>
@@ -98,10 +102,10 @@
             var tourl = "<%=path%>/safe/installpsd";
             window.location.href=tourl;
         }else if(s == "mail") {
-            var tourl = "<%=path%>/safe/changemail?mailTitle=修改";
+            var tourl = "<%=path%>/safe/changemail?mailTitle=<spring:message code="safe.checkphone.change_jump"/>";
             window.location.href=tourl;
         }else if(s == "phone") {
-            var tourl = "<%=path%>/safe/changephone?phoneTitle=修改";
+            var tourl = "<%=path%>/safe/changephone?phoneTitle=<spring:message code="safe.checkphone.change_jump"/>";
             window.location.href=tourl;
         }
 
