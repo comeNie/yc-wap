@@ -56,7 +56,7 @@
                         <p><input type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input3"/>"></p>
                         <label><spring:message code="safe.changepsd.tip_lable"/></label>
                     </li>
-                    <li><a href="#" onclick="finishChange()"><input type="button" class="btn submit-btn btn-blue" value="<spring:message code="safe.changepsd.enter_input"/>"></a></li>
+                    <li><a class="btn submit-btn btn-blue" href="#" onclick="finishChange()"><spring:message code="safe.changepsd.enter_input"/></a></li>
                 </ul>
             </div>
         </div>
@@ -100,7 +100,7 @@
     });
     function finishChange() {
 
-        var tourl = "<%=path%>/safe/safesuccess?name=密码";
+        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.change_jump"/>密码";
         window.location.href=tourl;
     }
 </script>

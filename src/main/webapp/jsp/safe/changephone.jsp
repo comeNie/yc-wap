@@ -63,7 +63,7 @@
                         <p class="yzm"><input type="text" class="btn bnt-yzm" value="<spring:message code="safe.changephone.bntyzm_input"/>"></p>
                         <label><spring:message code="safe.changephone.code_label"/></label>
                     </li>
-                    <li><a href="#" onclick="confirmBtn()"><input type="button" class="btn submit-btn btn-blue" value="<spring:message code="safe.changephone.nextbtn"/>"></a></li>
+                    <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.changephone.nextbtn"/></a></li>
                 </ul>
             </div>
         </div>
