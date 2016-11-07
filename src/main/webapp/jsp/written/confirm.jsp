@@ -104,15 +104,15 @@
         $.ajax({
             async : true,
             type : "POST",
-            url : "<%=path%>/written/onconfirmsubmit",
+            url : "<%=path%>/written/onConfirmSubmit",
             modal : true,
             timeout: 30000,
             data : {
                 test:test
             },
             success : function(data) {
-                var tourl = "<%=path%>/written/newcontact";
-                window.location.href=tourl;
+                var ToUrl = "<%=path%>/written/newContact";
+                window.location.href=ToUrl;
             },
             error : function(data){
                 console.log(data);

@@ -90,15 +90,15 @@
         $.ajax({
             async : true,
             type : "POST",
-            url : "<%=path%>/written/onnewcontactsubmit",
+            url : "<%=path%>/written/onNewContactSubmit",
             modal : true,
             timeout: 30000,
             data : {
                 test:test
             },
             success : function(data) {
-                var tourl = "<%=path%>/written/payment";
-                window.location.href=tourl;
+                var ToUrl = "<%=path%>/written/payment";
+                window.location.href=ToUrl;
             },
             error : function(data){
                 console.log(data);

@@ -21,9 +21,9 @@ public class WrittenController extends BaseController{
         return "written/content";
     }
 
-    @RequestMapping(value = "oncontentsubmit")
+    @RequestMapping(value = "onContentSubmit")
     @ResponseBody
-    public Object oncontentsubmit() {
+    public Object onContentSubmit() {
         MsgBean result = new MsgBean();
         result.put("result", true);
         return result.returnMsg();
@@ -39,29 +39,29 @@ public class WrittenController extends BaseController{
         return "written/confirm";
     }
 
-    @RequestMapping(value = "onconfirmsubmit")
+    @RequestMapping(value = "onConfirmSubmit")
     @ResponseBody
-    public Object onconfirmsubmit() {
+    public Object onConfirmSubmit() {
         MsgBean result = new MsgBean();
         result.put("result", true);
         return result.returnMsg();
     }
 
-    @RequestMapping(value = "newcontact")
-    public String newcontact() {
+    @RequestMapping(value = "newContact")
+    public String newContact() {
         return "written/newcontact";
     }
 
-    @RequestMapping(value = "onnewcontactsubmit")
+    @RequestMapping(value = "onNewContactSubmit")
     @ResponseBody
-    public Object onnewcontactsubmit() {
+    public Object onNewContactSubmit() {
         MsgBean result = new MsgBean();
         result.put("result", true);
         return result.returnMsg();
     }
 
     @RequestMapping(value = "payment")
-    public String paymen() {
+    public String payment() {
         return "written/payment";
     }
 }
