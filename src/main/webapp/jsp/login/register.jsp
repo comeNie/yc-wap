@@ -163,6 +163,13 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
+        if(!(/^[0-9]$/.test(phone))){
+            $("#phoneLabel").html("请输入正确手机号");
+            $("#phoneLabel").css("display","block");
+            return;
+        }else {
+            $("#phoneLabel").css("display","none");
+        }
 
         if (codeid == "" || codeid == null){
             $("#codeLabel").html("请输入验证码");
@@ -221,6 +228,13 @@
         var phone = $("#phone").val();
         if (phone == "" || phone == null){
             $("#phoneLabel").html("请输入手机号");
+            $("#phoneLabel").css("display","block");
+            return;
+        }else {
+            $("#phoneLabel").css("display","none");
+        }
+        if(!(/^[0-9]$/.test(phone))){
+            $("#phoneLabel").html("请输入正确手机号");
             $("#phoneLabel").css("display","block");
             return;
         }else {

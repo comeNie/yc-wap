@@ -25,6 +25,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="<%=path%>/ui/css/modular/code.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
@@ -93,8 +94,8 @@
                         </li>
                         <li class="int-border">
                             <p><input id="codeid" type="text" class="input input-yzm" placeholder="验证码"></p>
-                            <p><img src="../ui/images/yzm.jpg"/></p>
-                            <p><a href="#"><i class="icon-refresh"></i></a></p>
+                            <p><div id="checkCode"></div></p>
+                            <p><a href="#"><i class="icon-refresh" onclick="createCode()"></i></a></p>
                             <label id="codeLabel"></label>
                         </li>
                         <li><a href="#" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
@@ -153,7 +154,9 @@
 </body>
 </html>
 <script>
-
+    $(function() {
+        createCode();
+    })
     function login() {
         var phone = $("#phoneid").val();
         var psd = $("#psdid").val();
@@ -189,6 +192,8 @@
         }else {
             $("#codeLabel").css("display","none");
         }
+        //校验验证码
+        validateCode();
 
         alert("该跳走了");
     }
@@ -199,5 +204,46 @@
     function registJump() {
         var tourl = "<%=path%>/login/register";
         window.location.href=tourl;
+    }
+    //验证码代码
+    var code;
+    function createCode() {
+        code = "";
+        var codeLength = 6; //验证码的长度
+        var checkCode = document.getElementById("checkCode");
+        var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //所有候选组成验证码的字符，当然也可以用中文的
+        for (var i = 0; i < codeLength; i++)
+        {
+            var charNum = Math.floor(Math.random() * 52);
+            code += codeChars[charNum];
+        }
+        if (checkCode)
+        {
+            checkCode.className = "code";
+            checkCode.innerHTML = code;
+        }
+    }
+    function validateCode()
+    {
+        var inputCode = document.getElementById("codeid").value;
+        if (inputCode.length <= 0)
+        {
+            $("#codeLabel").html("请输入验证码");
+            $("#codeLabel").css("display","block");
+            return;
+        }
+        else if (inputCode.toUpperCase() != code.toUpperCase())
+        {
+            $("#codeLabel").html("请输入验证码");
+            $("#codeLabel").css("display","block");
+            createCode();
+            return;
+        }
+        else
+        {
+            $("#codeLabel").css("display","none");
+        }
     }
 </script>
