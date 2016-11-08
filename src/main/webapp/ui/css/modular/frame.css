@@ -1,15 +1,15 @@
 /**公告**/
-.notice{width:100%;height:0.85rem;background:#f7f7f7;text-align: center;line-height:0.85rem;position:absolute;}
+.notice{width:100%;height:0.85rem;background:#f7f7f7;text-align: center;line-height:0.85rem;position: absolute;}
 .notice p{font-size:0.46rem;color:#999}
 .notice label{position:absolute;top:-0.05rem;right:0;font-size:0.46rem;color:#999;cursor:pointer;}
 /**导航**/
-.wap-nav{width:100%;float:left;height:1.87rem;background:#1780e3;}
+.wap-nav{width:100%;float:left;height:1.87rem;background:#1780e3;margin-top:0.85rem;}
 .wap-nav ul{width:100%;float:left}
 .wap-nav ul li{float:left}
 .wap-nav ul li img{width:3.13rem;height:1.06rem;}
 .wap-nav ul .logo{margin:0.42rem 0 0 0.64rem;}
 .wap-nav ul .right{float:right}
-.login-btn{width:1.57rem;height:0.85rem;border:1px solid #fff;border-radius:5px; background:none;color:#fff;font-size:0.46rem;margin:0.5rem 0.64rem 0 0;cursor:pointer}
+.login-btn{width:1.57rem;height:0.85rem;border:1px solid #fff;border-radius:5px; background:none;color:#fff;font-size:0.46rem;margin:0.5rem 0.64rem 0 0;cursor:pointer;text-align: center;}
 /**底部**/
 .footer-big{position:absolute;bottom:0;}
 /**终端**/

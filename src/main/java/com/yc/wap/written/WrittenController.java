@@ -1,16 +1,18 @@
 package com.yc.wap.written;
 
-import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
-import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
-import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
+import com.yc.wap.service.impl.SearchServiceImpl;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
+import com.yc.wap.system.constants.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Nozomi on 11/3/2016.
@@ -18,13 +20,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "written")
 public class WrittenController extends BaseController{
-
-    private IUcMembersSV iUcMembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
-
     private Log log = LogFactory.getLog(WrittenController.class);
+
+    @Resource
+    private SearchServiceImpl searchService;
 
     @RequestMapping(value = "")
     public String content() {
+        log.info("WrittenControllerInvoked");
+        Locale local = rb.getDefaultLocale();
+        String country = local.getCountry();
+        List DualList = searchService.GetDualList(country, Constants.OrderType.DOC);
         return "written/content";
     }
 
@@ -32,10 +38,7 @@ public class WrittenController extends BaseController{
     @ResponseBody
     public Object onContentSubmit() {
         MsgBean result = new MsgBean();
-        String test = request.getParameter("test");
-        log.info("test" + test);
         result.put("result", true);
-        result.put("haha", 123456);
         return result.returnMsg();
     }
 
@@ -74,5 +77,4 @@ public class WrittenController extends BaseController{
     public String payment() {
         return "written/payment";
     }
-
 }

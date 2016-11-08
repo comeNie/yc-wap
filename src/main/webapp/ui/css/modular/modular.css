@@ -29,13 +29,13 @@
 .index-wrapper{width:14.8rem;margin:0 auto;}
 .testing{width:100%;float:left;margin-top:0.42rem;}
 .testing p{float:left;position:relative;}
-.testing p span{position:absolute;top:0.25rem;right:1.42rem;color:#c4c4c4;font-size:0.42rem}
-.testing-select{width:6.69rem;height:1.32rem;border:1px solid #c4c4c4;font-size:0.42rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
+.testing p span{position:absolute;top:0.25rem;right:1.42rem;color:#c4c4c4;font-size:0.52rem}
+.testing-select{width:6.69rem;height:1.49rem;border:1px solid #c4c4c4;font-size:0.42rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.46rem 0.12rem;border-radius:0.21rem;font-size:0.51rem;color:#666}
 .testing .test-icon{margin:0.22rem 0.4rem;color:#666;font-size:0.34rem;}
 /**翻译内容**/
 .translation-content{width:100%;height:2.85rem;float:left;margin-top:0.42rem;position:relative;}
-.textarea-large{width:100%;border:none;height:2.85rem;background:none;padding:0 0.21rem;font-size:0.51rem;border:1px solid #c4c4c4;border-radius:0.21rem; background:#fff;word-break:break-all;color:#666}
+.textarea-large{width:100%;border:none;height:2.85rem;background:none;padding:0 0.21rem;font-size:0.64rem;border:1px solid #c4c4c4;border-radius:0.21rem; background:#fff;word-break:break-all;color:#666}
 .translation-content i{position:absolute;top:0.05rem;right:0.15rem;cursor:pointer;font-size:0.42rem;color:#999}
 /**按钮**/
 .translate-btn{width:100%;float:left;margin-top:0.42rem;display: none;}
@@ -69,7 +69,7 @@
 .choice-list{width:100%;float:left;margin-top:0.85rem;}
 .choice-list ul{width:100%;float:left}
 .choice-list ul li{width:100%;float:left;margin-bottom:0.59rem;}
-.choice-list ul li p{float:left;position:relative;}
+.choice-list ul li p{float:left;position:relative;line-height:1.32rem;font-size:0.51rem;}
 .choice-list ul li p span{position:absolute;top:0.25rem;right:1.42rem;color:#c4c4c4;font-size:0.42rem}
 .choice-list ul li .word{width:2.98rem;float:left;font-size:0.51rem;line-height:1.32rem;color:#666}
 .testing-select-small{width:5.56rem;height:1.32rem;border:1px solid #c4c4c4;font-size:0.42rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
@@ -82,6 +82,8 @@
 .choice-list ul li .a-link a{color:#1780e3;font-size:0.55rem}
 .choice-list ul li .a-link{color:#999}
 .wap-btn{width:100%;}
+.choice-list ul li img{width:2.66rem;height:0.76rem;}
+.choice-list ul li .ml-a{margin-left:1rem;}
 /**联系方式**/
 .add-contact{width:100%;float:left;height:2.92rem;margin-top:0.42rem;background:url(../../images/add-contact-bj.png) no-repeat;background-size:100%;}
 .add-contact a{width:4.82rem;height:1.2rem;border:2px solid #1780e3;border-radius:5px;float:left;margin:0.74rem 0 0  0.74rem;text-align: center;line-height:1.17rem;font-size:0.51rem;color:#666}
@@ -150,7 +152,7 @@
 .confirm-list ul{width:100%;float:left;padding:0 0.64rem;}
 .confirm-list ul li{float:left;margin-top:0.55rem;color:#666}
 .confirm-list ul li p{position:relative;}
-.confirm-list ul li p span{position:absolute;top:0.25rem;right:1.42rem;color:#c4c4c4;font-size:0.42rem}
+.confirm-list ul li p span{position:absolute;top:0.55rem;right:1.42rem;color:#c4c4c4;font-size:0.52rem}
 .testing-select-big{width:11.3rem;height:1.32rem;border:1px solid #c4c4c4;font-size:0.42rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.46rem 0.12rem;border-radius:0.21rem;font-size:0.51rem;color:#666}
 .confirm-list ul .word{width:3.2rem;line-height:1.32rem;font-size:0.55rem;color:#666}
@@ -181,10 +183,44 @@
 .set-phone .word{font-size:0.76rem;color:#1780e3}
 .set-int{width:100%;float:left;margin-top:0.5rem;}
 .set-int ul{width:100%;display: inline-block;}
-.set-int ul li{width:100%;margin-bottom:0.64rem;float:left;}
+.set-int ul li{width:100%;margin-bottom:0.64rem;float:left;height:1.9rem;}
 .set-int ul li p{float:left;position:relative;}
 .set-int ul li .yzm{float:right}
 .set-int ul li label{width:100%;float:left;color:#ff4949;font-size:0.42rem;}
-.set-int ul li p span{position:absolute;top:0.25rem;right:1.42rem;color:#c4c4c4;font-size:0.62rem}
+.set-int ul li p span{position:absolute;top:0.35rem;right:1.42rem;color:#c4c4c4;font-size:0.62rem}
 .testing-select-big{width:14.8rem;height:1.7rem;border:1px solid #c4c4c4;font-size:0.42rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.46rem 0.12rem;border-radius:0.21rem;font-size:0.51rem;color:#666}
+.set-int ul .int-border{width:14.8rem;height:1.7rem;border:1px solid #c4c4c4;background:#fff;border-radius:5px;padding:0 0.42rem;}
+.set-int ul li img{width:2.81rem;height:1.55rem;}
+.set-int ul li i{font-size:0.85rem;color:#c7c7c7;margin-top:0.4rem;float:right;}
+.set-int ul .left a{font-size:0.46rem;color:#1780e3;}
+.set-int ul .left{font-size:0.46rem;}
+/**登录注册**/
+.login-tab{width:16rem;float:left;height:1.92rem;background:#fff;}
+.login-tab ul{width:16rem;float:left;border-bottom:1px solid #eee;height:1.92rem;}
+.login-tab ul li{width:8rem;float:left;text-align:center;line-height:1.84rem;border-right:1px solid #eee;}
+.login-tab ul li a{color:#999;font-size:0.64rem;}
+.login-tab ul li .current{width:100%;border-bottom:1px solid #1780e3;float:left;color:#666;height:1.92rem;}
+.login-prompt{width:100%;float:left;margin-top:0.38rem;text-align:center;font-size:0.46rem;font-size:0.46rem}
+.form-big{width:100%;float:left;padding:0 0.55rem;}
+.login-form{width:100%;float:left;}
+.login-form ul{width:100%;float:left;}
+.login-form ul li{width:100%;float:left;}
+.set-int ul .right{text-align: right;}
+.set-int ul .right a{color:#1780e3;font-size:0.46rem;}
+.other-big{width:100%;padding:0 0.55rem;}
+.other-login{width:100%;float:left;margin-top:0.7rem;}
+.other-login p{float:left;font-size:0.48rem;color:#666}
+.other-login .line{width:5.76rem;border:1px dashed #ccc;float:left;margin-top:0.31rem;}
+.other-login .word{margin:0 0.54rem;line-height:0.64rem;}
+.other-login-icon{width:12.16rem;margin:0 auto;}
+.other-login-icon ul{width:100%;float:left;margin-top:1.15rem;}
+.other-login-icon ul li{width:1.7rem;height:1.7rem;float:left;margin-left:0.85rem;}
+.other-login-icon ul li img{width:1.7rem;height:1.7rem;float:left;}
+.other-login-icon ul .none-ml{margin-left:0;}
+/**找回密码**/
+#next2{display:none;}
+#next3{display:none;}
+#next4{display:none;}
+/**充值**/
+.set-int ul li .word{color:#666;margin-right:0.64rem;}

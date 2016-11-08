@@ -3,4 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="searchService" class="com.yc.wap.service.impl.SearchServiceImpl" autowire="byName">
+        <property name="iQuerySysDuadSV" ref="iQuerySysDuadSV" />
+    </bean>
 </beans>
