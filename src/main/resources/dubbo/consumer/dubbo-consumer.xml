@@ -24,5 +24,7 @@
 	<dubbo:reference id="iQuerySysDuadSV" registry="ycRegistry" interface="com.ai.yc.common.api.sysduad.interfaces.IQuerySysDuadSV" />
 	<dubbo:reference id="iQuerySysPurposeSV" registry="ycRegistry" interface="com.ai.yc.common.api.syspurpose.interfaces.IQuerySysPurposeSV" />
 
+	<dubbo:reference id="iGnCountrySV" registry="ycRegistry" interface="com.ai.yc.common.api.country.interfaces.IGnCountrySV" />
+	<dubbo:reference id="iUcMembersOperationSV" registry="ycRegistry" interface="com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV" />
 
 </beans>
