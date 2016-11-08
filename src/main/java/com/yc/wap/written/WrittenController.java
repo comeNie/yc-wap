@@ -1,6 +1,8 @@
 package com.yc.wap.written;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.yc.common.api.sysdomain.interfaces.IQuerySysDomainSV;
+import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListRes;
 import com.ai.yc.common.api.sysduad.interfaces.IQuerySysDuadSV;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListReq;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListRes;
@@ -29,14 +31,18 @@ public class WrittenController extends BaseController{
 
     private IQuerySysDuadSV iQuerySysDuadSV = DubboConsumerFactory.getService(IQuerySysDuadSV.class);
     private IQuerySysPurposeSV iQuerySysPurposeSV = DubboConsumerFactory.getService(IQuerySysPurposeSV.class);
+    private IQuerySysDomainSV iQuerySysDomainSV = DubboConsumerFactory.getService(IQuerySysDomainSV.class);
 
     @RequestMapping(value = "")
     public String content() {
-        log.info("WrittenControllerInvoked");
         Locale local = rb.getDefaultLocale();
         String country = local.getCountry();
         List DualList = GetDualList(country, Constants.OrderType.DOC);
         List PurposeList = GetPurposeList(country);
+        List DomainList = GetDomainList(country);
+        request.setAttribute("DualList", DualList);
+        request.setAttribute("PurposeList", PurposeList);
+        request.setAttribute("DomainList", DomainList);
         return "written/content";
     }
 
@@ -55,12 +61,20 @@ public class WrittenController extends BaseController{
     public List GetPurposeList(String Language) {
         QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList(Language);
         if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
-            throw new RuntimeException("GetGetPurposeListFailed");
+            throw new RuntimeException("GetPurposeListFailed");
         }
         log.info("Get PurposeList Return: " + resp.getPurposes().toString());
         return resp.getPurposes();
     }
 
+    public List GetDomainList(String Language) {
+        QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList(Language);
+        if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+            throw new RuntimeException("GetDomainListFailed");
+        }
+        log.info("Get DomainList Return: " + resp.getDomainVos().toString());
+        return resp.getDomainVos();
+    }
 
     @RequestMapping(value = "onContentSubmit")
     @ResponseBody

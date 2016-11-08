@@ -90,6 +90,7 @@ dependencies {
 
     compile "com.ai.yc.common:sysduad:${version}"
     compile "com.ai.yc.common:syspurpose:${version}"
+    compile "com.ai.yc.common:sysdomain:${version}"
 
 }
 

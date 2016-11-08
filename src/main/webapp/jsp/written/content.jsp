@@ -159,33 +159,7 @@
     <div class="wap-btn"><a href="#" id="submit" class="btn submit-btn btn-blue">提交</a></div>
 </section>
 <!--底部-->
-<section class="footer-big">
-    <section class="terminal">
-        <ul>
-            <li class="none">
-                <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
-                <p><spring:message code="all.project.public.icon-1"/></p>
-            </li>
-            <li class="tow current">
-                <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
-                <p><spring:message code="all.project.public.icon-2"/></p>
-            </li>
-            <li class="three none-ml">
-                <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
-                <p><spring:message code="all.project.public.icon-3"/></p>
-            </li>
-        </ul>
-    </section>
-    <footer class="footer">
-        <ul>
-            <li><a hrel="#"><spring:message code="all.project.public.footer.about"/></a>|
-                <a hrel="#"><spring:message code="all.project.public.footer.find"/></a>|
-                <a hrel="#"><spring:message code="all.project.public.footer.idea"/></a>|
-                <a hrel="#"><spring:message code="all.project.public.footer.language"/></a></li>
-            <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
-        </ul>
-    </footer>
-</section>
+<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
 </body>
 </html>
@@ -222,10 +196,10 @@
             error : function(data){
 
             },
-            beforeSend:function(){
+            beforeSend : function(){
 
             },
-            complete:function(){
+            complete : function(){
 
             }
         });
