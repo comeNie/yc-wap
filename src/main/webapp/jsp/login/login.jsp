@@ -32,21 +32,21 @@
 
 </head>
 <body>
-    <!--登录-->
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>登录</li>
-            <a href="#" class="btn login-btn right1">注册</a>
-        </ul>
-    </nav>
-    <!--tab-->
-    <section class="login-tab">
-        <ul>
-            <li><a href="#" class="current">快速登录</a></li>
-            <li><a href="#">普通登录</a></li>
-        </ul>
-    </section>
+ <!--登录-->
+ <nav class="wap-second-nav">
+     <ul>
+         <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+         <li>登录</li>
+         <a href="#" class="btn login-btn right1" onclick="registJump()">注册</a>
+     </ul>
+ </nav>
+ <%--<!--tab-->
+ <section class="login-tab">
+     <ul>
+         <li><a href="#" class="current">快速登录</a></li>
+         <li><a href="#">普通登录</a></li>
+     </ul>
+ </section>
     <!--tab1-->
     <section id="tab1">
         <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
@@ -56,20 +56,19 @@
                     <ul>
                         <li>
                             <p>
-                                <select class="select testing-select-big">
-                                    <option>中国大陆 +86</option>
-                                    <option>中国大陆 +86</option>
+                                <select class="select testing-select-big" id="selectid">
                                 </select>
                                 <span>|</span>
                             </p>
                         </li>
                         <li>
                             <p><input type="text" class="input input-large" placeholder="手机号"></p>
+                            <label id="phoneLabel"></label>
                         </li>
                         <li>
                             <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
                             <p class="yzm"><a href="#" class="btn bnt-yzm">获取动态码</a></p>
-                            <label>动态码有误，请重新获取</label>
+                            <label id="phonetips"></label>
                         </li>
                         <li><a href="#" class="submit-btn btn-blue">立即登录</a></li>
                         <li class="right"><a href="#">忘记密码 </a></li>
@@ -78,32 +77,34 @@
             </div>
         </section>
     </section>
-    <!--tab1-->
-    <section id="tab2" style="display:none;">
+    <!--tab1-->--%>
+    <section id="tab2" style="display:block;">
         <section class="form-big">
             <div class="set-password">
                 <div class="set-int">
                     <ul>
                         <li>
-                            <p><input type="text" class="input input-large" placeholder="用户名/邮箱/手机号"></p>
-                            <label>动态码有误，请重新获取</label>
+                            <p><input id="phoneid" type="text" class="input input-large" placeholder="用户名/邮箱/手机号"></p>
+                            <label id="phoneLabel"></label>
                         </li>
                         <li>
-                            <p><input type="password" class="input input-large" placeholder="密码"></p>
+                            <p><input id="psdid" type="password" class="input input-large" placeholder="密码"></p>
+                            <label id="psdLabel"></label>
                         </li>
                         <li class="int-border">
-                            <p><input type="text" class="input input-yzm" placeholder="验证码"></p>
-                            <p><img src="../images/yzm.jpg"/></p>
+                            <p><input id="codeid" type="text" class="input input-yzm" placeholder="验证码"></p>
+                            <p><img src="../ui/images/yzm.jpg"/></p>
                             <p><a href="#"><i class="icon-refresh"></i></a></p>
+                            <label id="codeLabel"></label>
                         </li>
-                        <li><a href="#" class="submit-btn btn-blue">立即登录</a></li>
-                        <li class="right"><a href="#">忘记密码 </a></li>
+                        <li><a href="#" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
+                        <li class="right"><a href="#" onclick="forgetpsd()">忘记密码 </a></li>
                     </ul>
                 </div>
             </div>
         </section>
     </section>
-    <!--其他登录-->
+    <%--<!--其他登录-->
     <section class="other-big">
         <div class="other-login">
             <p class="line"></p>
@@ -112,38 +113,91 @@
         </div>
         <div class="other-login-icon">
             <ul>
-                <li class="none-ml"><a href="#"><img src="../images/iocn-4.png" /></a></li>
-                <li><a href="#"><img src="../images/iocn-5.png" /></a></li>
-                <li><a href="#"><img src="../images/iocn-6.png" /></a></li>
-                <li><a href="#"><img src="../images/iocn-7.png" /></a></li>
-                <li><a href="#"><img src="../images/iocn-8.png" /></a></li>
+                <li class="none-ml"><a href="#"><img src="../ui/images/iocn-4.png" /></a></li>
+                <li><a href="#"><img src="../ui/images/iocn-5.png" /></a></li>
+                <li><a href="#"><img src="../ui/images/iocn-6.png" /></a></li>
+                <li><a href="#"><img src="../ui/images/iocn-7.png" /></a></li>
+                <li><a href="#"><img src="../ui/images/iocn-8.png" /></a></li>
             </ul>
         </div>
-    </section>
+    </section>--%>
+
     <!--底部-->
     <section class="footer-big">
         <section class="terminal">
             <ul>
                 <li class="none">
-                    <p><img src="../images/icon-1.png" /></p>
-                    <p>客户端</p>
+                    <p><img src="<%=path%>/ui/images/icon-1.png"/></p>
+
+                    <p><spring:message code="all.project.public.icon-1"/></p>
                 </li>
                 <li class="tow current">
-                    <p><img src="../images/icon-2.png" /></p>
-                    <p>触屏版</p>
+                    <p><img src="<%=path%>/ui/images/icon-2.png"/></p>
+
+                    <p><spring:message code="all.project.public.icon-2"/></p>
                 </li>
                 <li class="three none-ml">
-                    <p><img src="../images/icon-3.png" /></p>
-                    <p>电脑版</p>
+                    <p><img src="<%=path%>/ui/images/icon-3.png"/></p>
+
+                    <p><spring:message code="all.project.public.icon-3"/></p>
                 </li>
             </ul>
         </section>
         <footer class="footer">
             <ul>
-                <li><a hrel="#">关于我们</a>|<a hrel="#">译云招募</a>|<a hrel="#">意见反馈</a>|<a hrel="#">ENGLISH</a></li>
-                <li class="ash">中译语通科技（北京）有限公司版权所有</li>
+                <li><a hrel="#"><spring:message code="all.project.public.footer.about"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.find"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.idea"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.language"/></a></li>
+                <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
             </ul>
         </footer>
     </section>
 </body>
 </html>
+<script>
+
+    function login() {
+        var phone = $("#phoneid").val();
+        var psd = $("#psdid").val();
+        var code = $("#codeid").val();
+        if (phone == "" || phone == null) {
+            $("#phoneLabel").html("请输入用户名/邮箱/手机号");
+            $("#phoneLabel").css("display","block");
+            return;
+        }else {
+            $("#phoneLabel").css("display","none");
+        }
+
+        if (psd == "" || psd == null) {
+            $("#psdLabel").html("请输入密码");
+            $("#psdLabel").css("display","block");
+            return;
+        }else {
+            $("#psdLabel").css("display","none");
+        }
+        var t = /^[0-9a-zA-Z]{6,16}$/;
+        if (!t.test(psd)){
+            $("#psdLabel").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+            $("#psdLabel").css("display","block");
+            return;
+        }else {
+            $("#psdLabel").css("display","none");
+        }
+
+        if (code == "" || code == null) {
+            $("#codeLabel").html("请输入验证码");
+            $("#codeLabel").css("display","block");
+            return;
+        }else {
+            $("#codeLabel").css("display","none");
+        }
+
+        alert("该跳走了");
+    }
+    function forgetpsd() {
+        var tourl = "<%=path%>/login/findpsd";
+        window.location.href=tourl;
+    }
+    function registJump() {
+        var tourl = "<%=path%>/login/register";
+        window.location.href=tourl;
+    }
+</script>

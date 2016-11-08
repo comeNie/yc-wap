@@ -158,9 +158,6 @@ public class SafeController extends BaseController {
             CountryResponse resp = iGnCountrySV.queryCountry(res);
             List<CountryVo> lists = resp.getResult();
 
-            for (CountryVo vo:lists) {
-                log.info(vo.getCountryNameCn()+ vo.getCountryCode() + vo.getCountryValue() + vo.getCountryNameEn());
-            }
             result.put("list",lists);
         }catch (Exception e) {
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
@@ -180,7 +177,7 @@ public class SafeController extends BaseController {
 
         UcMembersCheckeMobileRequest res = new UcMembersCheckeMobileRequest();
         res.setTenantId("yeecloud");
-        res.setUid(0);
+//        res.setUid(0);
         res.setMobilephone(phone);
 
         try {
@@ -207,6 +204,7 @@ public class SafeController extends BaseController {
         res.setUid(0);
         try {
             UcMembersResponse resp = iUcMembersSV.ucCheckeEmail(res);
+
             log.info(resp.getMessage());
             log.info(resp.getDate());
         }catch (Exception e) {
