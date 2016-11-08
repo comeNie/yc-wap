@@ -86,7 +86,8 @@ dependencies {
 
     //yc
     compile "com.ai.yc.ucenter:members:${version}"
-
+    compile "com.ai.yc.common:country:${version}"
+    compile "com.ai.yc.ucenter:members:${version}"
 }
 
 def getUedTemplate=task("getUedTemplate",type:com.ai.runner.gradle.plugin.jar.APIJarProcessTask){

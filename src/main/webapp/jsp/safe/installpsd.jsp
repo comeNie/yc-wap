@@ -45,12 +45,12 @@
             <div class="set-int">
                 <ul>
                     <li>
-                        <p><input type="text" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input1"/>"></p>
-
+                        <p><input id="newPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input1"/>"></p>
+                        <label id="newLable"></label>
                     </li>
                     <li>
-                        <p><input type="text" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input2"/>"></p>
-                        <label><spring:message code="safe.installpsd.code_label"/></label>
+                        <p><input id="confirmPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input2"/>"></p>
+                        <label id="confirmLable"></label>
                     </li>
                     <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.installpsd.nextbtn"/></a></li>
                 </ul>
@@ -95,7 +95,42 @@
         });
     });
     function confirmBtn() {
+        var newpsd = $("#newPsdID").val();
+        var confirmpsd = $("#confirmPsdID").val();
+//        新密码
+        if(newpsd == null || newpsd == "") {
+            $("#newLable").html("<spring:message code="safe.changepsd.alert_newPsd"/>");
+            $("#newLable").css("display","block");
+            return;
+        }else {
+            $("#newLable").css("display","none");
+        }
+        var t = /^[0-9a-zA-Z]{6,16}$/;
+        if (!t.test(newpsd)){
+            $("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+            $("#newLable").css("display","block");
+            return;
+        }else {
+            $("#newLable").css("display","none");
+        }
+//        确认密码
+        if(confirmpsd == null || confirmpsd == "") {
+            $("#confirmLable").html("<spring:message code="safe.changepsd.alert_newPsd"/>");
+            $("#confirmLable").css("display","block");
+            return;
+        }else {
+            $("#confirmLable").css("display","none");
+        }
+//        判断新密码是否相同
+        if (newpsd != confirmpsd) {
+            $("#confirmLable").html("<spring:message code="safe.changepsd.tip_lable"/>");
+            $("#confirmLable").css("display","block");
+            return;
+        }else {
+            $("#confirmLable").css("display","none");
+        }
 
+//        跳转
         var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.installpsd.change_jump"/>";
         window.location.href=tourl;
     }
