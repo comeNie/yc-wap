@@ -5,9 +5,11 @@ import com.ai.yc.common.api.sysduad.interfaces.IQuerySysDuadSV;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListReq;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListRes;
 import com.ai.yc.common.api.syspurpose.interfaces.IQuerySysPurposeSV;
+import com.ai.yc.common.api.syspurpose.param.QuerySysPurposeListRes;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
+import com.yc.wap.system.constants.ConstantsResultCode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -34,16 +36,29 @@ public class WrittenController extends BaseController{
         Locale local = rb.getDefaultLocale();
         String country = local.getCountry();
         List DualList = GetDualList(country, Constants.OrderType.DOC);
+        List PurposeList = GetPurposeList(country);
         return "written/content";
     }
 
-    public List GetDualList(String country, String OrderType) {
+    public List GetDualList(String Language, String OrderType) {
         QuerySysDuadListReq req = new QuerySysDuadListReq();
-        req.setLanguage(country);
+        req.setLanguage(Language);
         req.setOrderType(OrderType);
         QuerySysDuadListRes resp = iQuerySysDuadSV.querySysDuadList(req);
+        if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+            throw new RuntimeException("GetDualListFailed");
+        }
         log.info("Get DualList Return: " + resp.getDuads().toString());
         return resp.getDuads();
+    }
+
+    public List GetPurposeList(String Language) {
+        QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList(Language);
+        if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+            throw new RuntimeException("GetGetPurposeListFailed");
+        }
+        log.info("Get PurposeList Return: " + resp.getPurposes().toString());
+        return resp.getPurposes();
     }
 
 

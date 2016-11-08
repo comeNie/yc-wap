@@ -31,3 +31,40 @@ $(function () {
             });
 
   });
+  
+//登录 table
+$(function(){
+$(".login-tab ul li a").click(function () {
+                $(".login-tab ul li a").each(function () {
+                    $(this).removeClass("current");
+                });
+                $(this).addClass("current");
+            });
+$('.login-tab ul li a').click(function(){
+  var index=$('.login-tab ul li a').index(this);
+     if(index==0){
+     $('#tab1').show();
+  	 $('#tab2').hide();
+   }
+   if(index==1){
+   $('#tab2').show();
+   $('#tab1').hide();
+   }
+  }); 
+});
+
+//找回密码
+$(function(){
+  $("#next-btn1").click(function(){
+  $("#next1").hide();
+  $("#next2").show();
+  });
+  $("#next-btn2").click(function(){
+  $("#next2").hide();
+  $("#next3").show();
+  });
+  $("#next-btn3").click(function(){
+  $("#next3").hide();
+  $("#next4").show();
+  });
+});
