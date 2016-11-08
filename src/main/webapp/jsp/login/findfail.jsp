@@ -51,23 +51,26 @@
         <section class="terminal">
             <ul>
                 <li class="none">
-                    <p><img src="../images/icon-1.png" /></p>
-                    <p>客户端</p>
+                    <p><img src="<%=path%>/ui/images/icon-1.png"/></p>
+
+                    <p><spring:message code="all.project.public.icon-1"/></p>
                 </li>
                 <li class="tow current">
-                    <p><img src="../images/icon-2.png" /></p>
-                    <p>触屏版</p>
+                    <p><img src="<%=path%>/ui/images/icon-2.png"/></p>
+
+                    <p><spring:message code="all.project.public.icon-2"/></p>
                 </li>
                 <li class="three none-ml">
-                    <p><img src="../images/icon-3.png" /></p>
-                    <p>电脑版</p>
+                    <p><img src="<%=path%>/ui/images/icon-3.png"/></p>
+
+                    <p><spring:message code="all.project.public.icon-3"/></p>
                 </li>
             </ul>
         </section>
         <footer class="footer">
             <ul>
-                <li><a hrel="#">关于我们</a>|<a hrel="#">译云招募</a>|<a hrel="#">意见反馈</a>|<a hrel="#">ENGLISH</a></li>
-                <li class="ash">中译语通科技（北京）有限公司版权所有</li>
+                <li><a hrel="#"><spring:message code="all.project.public.footer.about"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.find"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.idea"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.language"/></a></li>
+                <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
             </ul>
         </footer>
     </section>
