@@ -33,5 +33,5 @@
 
     <import resource="classpath:i18n/context/springmvc-locale.xml"/>
     <import resource="classpath:dubbo/consumer/dubbo-consumer.xml"/>
-    <import resource="classpath:service/services_wap.xml"/>
+    <!--<import resource="classpath:service/services_wap.xml"/>-->
 </beans>

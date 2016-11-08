@@ -1,6 +1,10 @@
 package com.yc.wap.written;
 
-import com.yc.wap.service.impl.SearchServiceImpl;
+import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.yc.common.api.sysduad.interfaces.IQuerySysDuadSV;
+import com.ai.yc.common.api.sysduad.param.QuerySysDuadListReq;
+import com.ai.yc.common.api.sysduad.param.QuerySysDuadListRes;
+import com.ai.yc.common.api.syspurpose.interfaces.IQuerySysPurposeSV;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -10,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,17 +25,27 @@ import java.util.Locale;
 public class WrittenController extends BaseController{
     private Log log = LogFactory.getLog(WrittenController.class);
 
-    @Resource
-    private SearchServiceImpl searchService;
+    private IQuerySysDuadSV iQuerySysDuadSV = DubboConsumerFactory.getService(IQuerySysDuadSV.class);
+    private IQuerySysPurposeSV iQuerySysPurposeSV = DubboConsumerFactory.getService(IQuerySysPurposeSV.class);
 
     @RequestMapping(value = "")
     public String content() {
         log.info("WrittenControllerInvoked");
         Locale local = rb.getDefaultLocale();
         String country = local.getCountry();
-        List DualList = searchService.GetDualList(country, Constants.OrderType.DOC);
+        List DualList = GetDualList(country, Constants.OrderType.DOC);
         return "written/content";
     }
+
+    public List GetDualList(String country, String OrderType) {
+        QuerySysDuadListReq req = new QuerySysDuadListReq();
+        req.setLanguage(country);
+        req.setOrderType(OrderType);
+        QuerySysDuadListRes resp = iQuerySysDuadSV.querySysDuadList(req);
+        log.info("Get DualList Return: " + resp.getDuads().toString());
+        return resp.getDuads();
+    }
+
 
     @RequestMapping(value = "onContentSubmit")
     @ResponseBody
