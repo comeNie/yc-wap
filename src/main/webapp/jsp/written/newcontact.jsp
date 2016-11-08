@@ -66,7 +66,7 @@
     </div>
 </section>
 <section class="add-btn">
-    <a href="#"><input type="button" id="submit" class="btn submit-btn btn-blue" value="下一步"></a>
+    <a href="#" id="submit" class="btn submit-btn btn-blue">提交订单</a>
 </section>
 </body>
 </html>

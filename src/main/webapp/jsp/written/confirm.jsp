@@ -80,7 +80,7 @@
 <!--底部-->
 <section class="order-submit">
     <p class="left">总价:1111元</p>
-    <p class="right"><a href="#" id="submit">提交订单</a></p>
+    <p class="right"><a href="#" id="submit">下一步</a></p>
 </section>
 </body>
 </html>
