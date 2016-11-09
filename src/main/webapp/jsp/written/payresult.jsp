@@ -54,7 +54,7 @@
 </c:if>
 
 <!--底部-->
-<jsp:include page="/jsp/common/bottom.jsp"/>
+<%--<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>--%>
 </body>
 </html>
 <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>

@@ -145,7 +145,7 @@
     <div class="wap-btn"><a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交</a></div>
 </section>
 <!--底部-->
-<%--<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>--%>
+<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
 </body>
 </html>

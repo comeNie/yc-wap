@@ -86,7 +86,7 @@
         <li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>
         <li class="right">
             <%--<input type="button" class="btn login-btn" value="登录" id="btn-login">--%>
-            <a href="#" class="btn login-btn" id="btn-login">登录</a>
+            <a href="javascript:window.location.href='<%=path%>/login/login'" class="btn login-btn" id="btn-login">登录</a>
         </li>
     </ul>
 </nav>
@@ -169,7 +169,11 @@
 </section>
 
 <!--底部-->
+
+
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+<a onclick="javascript:window.location.href='<%=path%>/safe/safe'">安全设置</a>
+<a onclick="javascript:window.location.href='<%=path%>/account/recharge'">充值</a>
 
 </body>
 </html>
