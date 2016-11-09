@@ -58,4 +58,9 @@ public class Constants {
         // 出版级
         public static final String Publish = "100230";
     }
+
+    /**
+     * 租户ID
+     */
+    public static final String TenantID = "yeecloud";
 }

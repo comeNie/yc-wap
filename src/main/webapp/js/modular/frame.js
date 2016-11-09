@@ -53,21 +53,6 @@ $('.login-tab ul li a').click(function(){
   }); 
 });
 
-//找回密码
-$(function(){
-  $("#next-btn1").click(function(){
-  $("#next1").hide();
-  $("#next2").show();
-  });
-  $("#next-btn2").click(function(){
-  $("#next2").hide();
-  $("#next3").show();
-  });
-  $("#next-btn3").click(function(){
-  $("#next3").hide();
-  $("#next4").show();
-  });
-});
 
 /**去掉最后的线条**/
 $(function () {

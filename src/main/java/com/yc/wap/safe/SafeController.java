@@ -10,12 +10,17 @@ import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
+import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
+import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
+import com.ai.yc.ucenter.api.members.param.editpass.UcMembersEditPassRequest;
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetRequest;
 import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
+import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeResponse;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
+import com.yc.wap.system.constants.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -47,34 +52,12 @@ public class SafeController extends BaseController {
         try {
 
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.info("~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
         }
         log.info("safe-safe invoked");
         return "safe/safe";
-    }
-    /**
-     * 获取用户信息
-     */
-    @RequestMapping(value = "userinfo")
-    public @ResponseBody Object userinfo() {
-        MsgBean result = new MsgBean();
-
-        String mode = request.getParameter("mode");
-        UcMembersGetRequest res = new UcMembersGetRequest();
-        res.setTenantId("yeecloud");
-        res.setGetmode(mode);
-        try {
-            UcMembersGetResponse resp = iUcMembersSV.ucGetMember(res);
-            UcMembersGetResponse.UcMembersGetDate date = resp.getDate();
-            log.info(date.getLoginmode());
-
-        }catch (Exception e) {
-            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
-        }
-        return  result.returnMsg();
     }
 
     /**
@@ -146,20 +129,70 @@ public class SafeController extends BaseController {
         request.setAttribute("jump",jump);
         return "safe/checkphone";
     }
+
     /**
-     * 获取国家区号
+     * 获取用户信息接口
+     */
+    @RequestMapping(value = "userinfo")
+    public @ResponseBody Object userinfo() {
+        MsgBean result = new MsgBean();
+
+        String mode = request.getParameter("mode");
+        String username = request.getParameter("username");
+        UcMembersGetRequest res = new UcMembersGetRequest();
+        res.setTenantId("yeecloud");
+        res.setGetmode(mode);
+        res.setUsername(username);
+        try {
+            UcMembersGetResponse resp = iUcMembersSV.ucGetMember(res);
+            UcMembersGetResponse.UcMembersGetDate date = resp.getDate();
+            log.info(date.getLoginmode());
+
+        }catch (Exception e) {
+            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            result.setFailure(e.getMessage());
+        }
+        return  result.returnMsg();
+    }
+
+    /**
+     * 获取国家区号接口
      */
     @RequestMapping(value = "countryid")
     public @ResponseBody Object countryid() {
         MsgBean result = new MsgBean();
         CountryRequest res = new CountryRequest();
-        res.setTenantId("yeecloud");
+        res.setTenantId(Constants.TenantID);
         try {
             CountryResponse resp = iGnCountrySV.queryCountry(res);
             List<CountryVo> lists = resp.getResult();
 
             result.put("list",lists);
         }catch (Exception e) {
+            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            result.setFailure(e.getMessage());
+        }
+
+        return  result.returnMsg();
+    }
+    /**
+     * 修改用户密码接口
+     */
+    @RequestMapping(value = "editpssword")
+    public @ResponseBody Object editpssword() {
+        MsgBean result = new MsgBean();
+        String checke_code = request.getParameter("code");  //旧密码或验证码
+        String newpw = request.getParameter("newpw");
+        String checke_mode = request.getParameter("mode");  // 1：旧密码 2：验证码（密码操作验证码）
+        UcMembersEditPassRequest res = new UcMembersEditPassRequest();
+        res.setTenantId(Constants.TenantID);
+        res.setChecke_code(checke_code);
+        res.setChecke_mode(checke_mode);
+        res.setNewpw(newpw);
+        try {
+            UcMembersResponse resp = iUcMembersSV.ucEditPassword(res);
+            log.info(resp.getMessage().isSuccess());
+        }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
         }
@@ -176,17 +209,40 @@ public class SafeController extends BaseController {
         String phone = request.getParameter("phone");
 
         UcMembersCheckeMobileRequest res = new UcMembersCheckeMobileRequest();
-        res.setTenantId("yeecloud");
+        res.setTenantId(Constants.TenantID);
 //        res.setUid(0);
         res.setMobilephone(phone);
 
         try {
             UcMembersResponse resp = iUcMembersSV.ucCheckeMobilephone(res);
-            log.info(resp.getDate());
+            log.info(resp.getMessage().isSuccess());
         }catch (Exception e) {
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
         }
+        return  result.returnMsg();
+    }
+    /**
+     * 修改/绑定手机接口
+     */
+    @RequestMapping(value = "editphone")
+    public @ResponseBody Object editphone() {
+        MsgBean result = new MsgBean();
+        String code = request.getParameter("code");
+        String phone = request.getParameter("phone");
+
+        UcMembersEditMobileRequest res = new UcMembersEditMobileRequest();
+        res.setTenantId(Constants.TenantID);
+        res.setOperationcode(code);
+        res.setMobilephone(phone);
+        try {
+            UcMembersResponse resp = iUcMembersSV.ucEditMobilephone(res);
+            log.info(resp.getMessage().isSuccess());
+        }catch (Exception e){
+            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            result.setFailure(e.getMessage());
+        }
+
         return  result.returnMsg();
     }
     /**
@@ -199,7 +255,7 @@ public class SafeController extends BaseController {
         String mail = request.getParameter("mail");
 
         UcMembersCheckEmailRequest res = new UcMembersCheckEmailRequest();
-        res.setTenantId("yeecloud");
+        res.setTenantId(Constants.TenantID);
         res.setEmail(mail);
         res.setUid(0);
         try {
@@ -214,7 +270,32 @@ public class SafeController extends BaseController {
         return  result.returnMsg();
     }
     /**
+     * 修改/绑定邮箱接口
+     */
+    @RequestMapping(value = "editmail")
+    public @ResponseBody Object editmail() {
+        MsgBean result = new MsgBean();
+        String code = request.getParameter("code");
+        String mail = request.getParameter("mail");
+
+        UcMembersEditEmailRequest res = new UcMembersEditEmailRequest();
+        res.setTenantId(Constants.TenantID);
+        res.setOperationcode(code);
+        res.setEmail(mail);
+        try {
+            UcMembersResponse resp = iUcMembersSV.ucEditEmail(res);
+            log.info(resp.getMessage().isSuccess());
+        }catch (Exception e){
+            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            result.setFailure(e.getMessage());
+        }
+
+        return  result.returnMsg();
+    }
+    /**
      * 发送验证码
+     * 激活码:注册时发的    验证码:修改邮箱手机等
+     *
      */
     @RequestMapping(value = "sendTestCode")
     public @ResponseBody Object sendTestCode() {
@@ -222,7 +303,7 @@ public class SafeController extends BaseController {
         String type = request.getParameter("type");
         String info = request.getParameter("info");
         UcMembersGetOperationcodeRequest res = new UcMembersGetOperationcodeRequest();
-        res.setTenantId("yeecloud");
+        res.setTenantId(Constants.TenantID);
         res.setOperationtype(type);
         res.setUserinfo(info);
         try {
@@ -235,4 +316,28 @@ public class SafeController extends BaseController {
 
         return  result.returnMsg();
     }
+    /**
+     * 校验验证码接口
+     */
+    @RequestMapping(value = "checkTestCode")
+    public @ResponseBody Object checkTestCode() {
+        MsgBean result = new MsgBean();
+        String type = request.getParameter("type");
+        String code = request.getParameter("code");
+        UcMembersActiveRequest res = new UcMembersActiveRequest();
+        res.setTenantId(Constants.TenantID);
+        res.setOperationtype(type);
+        res.setOperationcode(code);
+        try {
+            UcMembersResponse resp = iUcMembersOperationSV.ucActiveMember(res);
+            log.info(resp.getMessage().isSuccess());
+        }catch (Exception e){
+            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            result.setFailure(e.getMessage());
+        }
+
+        return  result.returnMsg();
+    }
+
+
 }

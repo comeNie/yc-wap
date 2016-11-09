@@ -67,13 +67,14 @@
                     <li>
                         <p class="word">充值方式:</p>
                         <p>
-                            <input type="radio" class="radio" name="way">
+                            <input type="radio" class="radio" name="way" value="1" checked>
                             <img src="<%=path%>/ui/images/zhifb.png">
                         </p>
                         <p class="ml-a">
-                            <input type="radio" class="radio" name="way">
+                            <input type="radio" class="radio" name="way" value="2">
                             <img src="<%=path%>/ui/images/unionpay.png">
                         </p>
+                        <label id="inputid"></label>
                     </li>
                 </ul>
             </div>
@@ -99,12 +100,22 @@
         }else {
             $("#pricetip").css("display","none");
         }
-        if (!(/^[0-9]$/.test(price))){
+        if (!(/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(price))){
             $("#pricetip").html("请输入正确的充值金额");
             $("#pricetip").css("display","block");
             return;
         }else {
             $("#pricetip").css("display","none");
         }
+        var a = $("input[name='way']:checked").val();
+        if (a == null || a == "" || a == 0){
+            $("#inputid").html("请选择支付方式");
+            $("#inputid").css("display","block");
+            return;
+        }else {
+            $("#inputid").css("display","none");
+        }
+        var tourl = "<%=path%>/account/rechargesuccess";
+        window.location.href=tourl;
     }
 </script>
