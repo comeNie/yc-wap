@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: ldy
-  Date: 2016/11/8
-  Time: 下午4:36
+  Date: 2016/11/9
+  Time: 上午10:24
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>注册成功</title>
+    <title>充值成功</title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -32,50 +32,22 @@
 
 </head>
 <body>
-
     <nav class="wap-second-nav">
         <ul>
-            <a href="javascript:" onclick="leftRe()"><i  class="icon iconfont left">&#xe626;</i></a>
-            <li>注册</li>
+            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+            <li>支付</li>
         </ul>
     </nav>
     <section class="tij-cg">
         <ul>
             <li><i class="icon iconfont">&#xe612;</i></li>
-            <li class="word">恭喜您注册成功</li>
-            <li><span id="spanTime">5s</span>内自动回到<a href="#" onclick="goLogin()">登录页面</a>恭喜您获得平台赠送的翻译体验金，欢迎您体验人工翻译服务</li>
+            <li class="word">充值成功！账户余额为123123元</li>
+            <li>充值单号:<a href="#">414214</a> 查看<a href="#">我的账户</a></li>
         </ul>
     </section>
-
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
 </body>
 </html>
-<script>
-    $(document).ready(function() {
-        $("#leftRe").click(function() {
-            window.history.go(-1);
-        });
-
-
-    });
-    $(function() {
-        countDown();
-    })
-    function goLogin() {
-        var tourl = "<%=path%>/login/login";
-        window.location.href=tourl;
-    }
-    var wait = 5;
-    function countDown() {
-        if (wait == 0) {
-            goLogin();
-        }else {
-            wait --;
-           $("#spanTime").html(wait+"s");
-            setTimeout(function(){countDown();},1000);
-        }
-    }
-</script>
