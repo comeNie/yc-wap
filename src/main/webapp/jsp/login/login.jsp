@@ -94,7 +94,7 @@
                         </li>
                         <li class="int-border">
                             <p><input id="codeid" type="text" class="input input-yzm" placeholder="验证码"></p>
-                            <p><div id="checkCode"></div></p>
+                            <p><div class="code" id="checkCode"></div></p>
                             <p><a href="#"><i class="icon-refresh" onclick="createCode()"></i></a></p>
                             <label id="codeLabel"></label>
                         </li>
@@ -123,34 +123,9 @@
         </div>
     </section>--%>
 
-    <!--底部-->
-    <section class="footer-big">
-        <section class="terminal">
-            <ul>
-                <li class="none">
-                    <p><img src="<%=path%>/ui/images/icon-1.png"/></p>
 
-                    <p><spring:message code="all.project.public.icon-1"/></p>
-                </li>
-                <li class="tow current">
-                    <p><img src="<%=path%>/ui/images/icon-2.png"/></p>
-
-                    <p><spring:message code="all.project.public.icon-2"/></p>
-                </li>
-                <li class="three none-ml">
-                    <p><img src="<%=path%>/ui/images/icon-3.png"/></p>
-
-                    <p><spring:message code="all.project.public.icon-3"/></p>
-                </li>
-            </ul>
-        </section>
-        <footer class="footer">
-            <ul>
-                <li><a hrel="#"><spring:message code="all.project.public.footer.about"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.find"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.idea"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.language"/></a></li>
-                <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
-            </ul>
-        </footer>
-    </section>
+     <%--底部視圖--%>
+     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -193,7 +168,9 @@
             $("#codeLabel").css("display","none");
         }
         //校验验证码
-        validateCode();
+        if(!validateCode()) {
+            return;
+        }
 
         alert("该跳走了");
     }
@@ -232,18 +209,19 @@
         {
             $("#codeLabel").html("请输入验证码");
             $("#codeLabel").css("display","block");
-            return;
+            return false;
         }
         else if (inputCode.toUpperCase() != code.toUpperCase())
         {
-            $("#codeLabel").html("请输入验证码");
+            $("#codeLabel").html("验证码错误");
             $("#codeLabel").css("display","block");
             createCode();
-            return;
+            return false;
         }
         else
         {
             $("#codeLabel").css("display","none");
+            return true;
         }
     }
 </script>
