@@ -27,4 +27,10 @@ public class AccountController extends BaseController {
 
         return "account/rechargesuccess";
     }
+    @RequestMapping(value = "balance")
+    public String balance() {
+        log.info("account-balance invoked");
+
+        return "account/balance";
+    }
 }

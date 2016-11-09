@@ -21,6 +21,7 @@ import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRespon
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
+import com.yc.wap.system.utils.RegexUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -136,11 +137,23 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "userinfo")
     public @ResponseBody Object userinfo() {
         MsgBean result = new MsgBean();
-
-        String mode = request.getParameter("mode");
         String username = request.getParameter("username");
+        String mode;
+        boolean isEmail = RegexUtils.checkIsEmail(username);
+        boolean isPhone = RegexUtils.checkIsPhone(username);
+        if (isEmail) {
+            mode = "2";
+        }
+        else if (isPhone) {
+            mode = "3";
+        }else {
+            mode = "4";
+        }
+        log.info(mode);
+
         UcMembersGetRequest res = new UcMembersGetRequest();
         res.setTenantId("yeecloud");
+
         res.setGetmode(mode);
         res.setUsername(username);
         try {
@@ -295,7 +308,7 @@ public class SafeController extends BaseController {
     /**
      * 发送验证码
      * 激活码:注册时发的    验证码:修改邮箱手机等
-     *
+     *操作类型 1：手机激活码 2：手机验证码 3：手机动态密码 4：邮箱激活码 5：邮箱验证码 6：密码操作验证码
      */
     @RequestMapping(value = "sendTestCode")
     public @ResponseBody Object sendTestCode() {
@@ -318,6 +331,7 @@ public class SafeController extends BaseController {
     }
     /**
      * 校验验证码接口
+     * 操作类型 1：手机激活码 2：手机验证码 3：手机动态密码 4：邮箱激活码 5：邮箱验证码 6：密码操作验证码
      */
     @RequestMapping(value = "checkTestCode")
     public @ResponseBody Object checkTestCode() {

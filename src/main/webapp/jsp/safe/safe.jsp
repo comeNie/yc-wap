@@ -36,7 +36,7 @@
 
     <nav class="wap-second-nav">
         <ul>
-            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+            <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
             <li><spring:message code="safe.safe.title"/></li>
             <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
         </ul>
@@ -83,6 +83,9 @@
     $(document).ready(function () {
 
     });
+    function retLeft(){
+        window.history.go(-1);
+    }
     function changepsd() {
         var c = confirm("是否有密码");
         if (c == true) {
