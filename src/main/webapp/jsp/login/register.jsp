@@ -37,7 +37,7 @@
         <ul>
             <a href="javascript:" onclick="leftRe()"><i class="icon iconfont left">&#xe626;</i></a>
             <li>注册</li>
-            <a href="#" class="btn login-btn right1" onclick="jumpLogin()">登录</a>
+            <a href="javascript:void(0)" class="btn login-btn right1" onclick="jumpLogin()">登录</a>
         </ul>
     </nav>
 
@@ -59,7 +59,7 @@
                     </li>
                     <li>
                         <p><input id="codeid" type="text" class="input input-small" placeholder="请输入动态码"></p>
-                        <p class="yzm"><a id="getnumber" href="#" class="btn bnt-yzm" onclick="getnumberonclick()">获取动态码</a></p>
+                        <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm" onclick="getnumberonclick()">获取动态码</a></p>
                         <label id="codeLabel"></label>
                     </li>
                     <li>
@@ -70,9 +70,9 @@
                         <p><input id="confimid" type="password" class="input input-large" placeholder="请再输入密码"></p>
                         <label id="confimPsd"></label>
                     </li>
-                    <li><a href="#" class="submit-btn btn-blue" onclick="confirmAction()">立即注册</a></li>
+                    <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()">立即注册</a></li>
                     <li class="left">
-                        <p><input id="checkid" type="checkbox" class="checkbox"></p>我已经阅读并同意<a href="#">《译云用户协议》</a>
+                        <p><input id="checkid" type="checkbox" class="checkbox"></p>我已经阅读并同意<a href="javascript:void(0)">《译云用户协议》</a>
                         <label id="agreeLabel"></label>
                     </li>
 
@@ -139,7 +139,7 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
-        if(!(/^[0-9]$/.test(phone))){
+        if(!(/^[0-9]*$/.test(phone))){
             $("#phoneLabel").html("请输入正确手机号");
             $("#phoneLabel").css("display","block");
             return;
@@ -196,8 +196,64 @@
             $("#agreeLabel").css("display", "none");
         }
 
-        var tourl = "<%=path%>/login/registersuccess";
-        window.location.href=tourl;
+//        登录验证
+        checkPhoneWithJump(phone,codeid,psdid);
+
+    }
+    function checkPhoneWithJump(phone,codeid,psdid) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/phoneenable",
+            modal: true,
+            timeout: 30000,
+            data: {
+                phone: phone,
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#phoneLabel").css("display","none");
+                    toJump(phone,codeid,psdid);
+                } else {
+                    $("#phoneLabel").html("服务返回错误");
+                    $("#phoneLabel").css("display", "block");
+                }
+            },
+            error: function () {
+                $("#phoneLabel").html("网络请求超时，请稍候再试");
+                $("#phoneLabel").css("display", "block");
+            }
+        });
+    }
+    function toJump(phone,codeid,psdid) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/login/checkregister",
+            modal: true,
+            timeout: 30000,
+            data: {
+                phone: phone,
+                password:psdid,
+                code:codeid
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#confimPsd").css("display","none");
+
+                    var tourl = "<%=path%>/login/registersuccess";
+                    window.location.href=tourl;
+                } else {
+                    $("#confimPsd").html("请输入密码");
+                    $("#confimPsd").css("display","block");
+                    return;
+                }
+            },
+            error: function () {
+                $("#confimPsd").html("网络请求超时，请稍候再试");
+                $("#confimPsd").css("display", "block");
+            }
+        });
     }
 
     function getnumberonclick(){
@@ -209,7 +265,7 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
-        if(!(/^[0-9]$/.test(phone))){
+        if(!(/^[0-9]*$/.test(phone))){
             $("#phoneLabel").html("请输入正确手机号");
             $("#phoneLabel").css("display","block");
             return;
@@ -218,9 +274,32 @@
         }
 //        调用接口校验合法性
 
-//        getTestCode("123123123");
-        //倒计时
-        countDown();
+        checkPhoneWithCode(phone)
+    }
+    function checkPhoneWithCode(phone) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/phoneenable",
+            modal: true,
+            timeout: 30000,
+            data: {
+                phone: phone,
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#phoneLabel").css("display","none");
+                    getTestCode(phone);
+                } else {
+                    $("#phoneLabel").html("服务返回错误");
+                    $("#phoneLabel").css("display", "block");
+                }
+            },
+            error: function () {
+                $("#phoneLabel").html("网络请求超时，请稍候再试");
+                $("#phoneLabel").css("display", "block");
+            }
+        });
     }
     //    发送验证码
     function getTestCode(phone) {
@@ -233,26 +312,20 @@
             showBusi: false,
             timeout: 30000,
             data: {
-                telPhone: phone
+                type: 1,
+                info:phone
             },
             success: function (data) {
                 if (data.status == 1) {
-                    if (data.result == "true") {
-                        $("#phonetips").html("请验证码发送成功");
-                        $("#phonetips").css("display", "block");
-                        countDown(60);
-                    } else {
-                        $("#phonetips").html("短信验证码错误");
-                        $("#phonetips").css("display", "block");
-                    }
+                    countDown(60);
                 } else {
-                    $("#phonetips").html("短信验证码错误");
-                    $("#phonetips").css("display", "block");
+                    $("#codeLabel").html("短信验证码错误");
+                    $("#codeLabel").css("display", "block");
                 }
             },
             error: function () {
-                $("#phonetips").html("网络请求超时，请稍候再试");
-                $("#phonetips").css("display", "block");
+                $("#codeLabel").html("网络请求超时，请稍候再试");
+                $("#codeLabel").css("display", "block");
             }
         });
     }

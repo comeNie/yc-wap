@@ -95,8 +95,6 @@
     <section class="testing">
         <p>
             <select class="select testing-select" id="source-lan">
-                <option id="auto-zh" style="display: none">检测语言：中文</option>
-                <option id="auto-en" style="display: none">检测语言：英语</option>
                 <c:forEach items="${requestScope.languagepairs}" var="pair">
                     <option>${pair}</option>
                 </c:forEach>
@@ -107,7 +105,15 @@
         <p>
             <select class="select testing-select" id="target-lan">
                 <c:forEach items="${requestScope.languagepairs}" var="pair">
-                    <option>${pair}</option>
+                    <c:choose>
+                        <c:when test="${pair=='英语'}">
+                            <option selected="selected">${pair}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option>${pair}</option>
+                        </c:otherwise>
+                    </c:choose>
+
                 </c:forEach>
             </select>
             <span >|</span>
@@ -128,9 +134,9 @@
         <p>
             <a href="#"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
             <a href="#" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
-            <%--<audio controls="controls" preload="true" id="audio" style="display: none">--%>
-                <%--<source src=ttsUrl/>--%>
-            <%--</audio>--%>
+            <audio controls="controls" preload="true" id="audio" style="display: none">
+                <source src=ttsUrl/>
+            </audio>
         </p>
     </section>
 
@@ -184,25 +190,53 @@
 
 <script type="text/javascript">
     var IsTranslated = false;
+    var sourcetext="";
+    var ttsUrl;
+    var srctext;
+    var tartext;
+    var srcvalue="zh";
+    var tarvalue="en";
+    var landetec;
+    var xmlHttpRequest;
     $(document).ready(function () {
-        <!--点击切换到英语版-->
-        $("#english-btn").bind("click",function () {
 
+        <!--监听输入的文本内容-->
+        $("#chick-int").bind("input propertychange",function () {
+            landetec=$("#chick-int").val();
+            console.info("landetec....."+landetec);
+            contentDetection(landetec);
         });
-        <!--翻译源内容失去焦点-->
-        $("#chick-int").blur(function () {
-            var text = $("#chick-int").val();
-            if(text == "" || text == null) {
-                $("#results").css("display","none");
-                $("#chick-btn").css("display","block");
+        function contentDetection(landetec) {
+            if (landetec==""||landetec==null){
                 return;
             }
-            var sourcetext=$("#chick-int").val();
-            if(sourcetext=="" || sourcetext==null) {
-                return;
+            var detecUrl="http://translateport.yeekit.com:9006/detection?text="+landetec;
+            xmlHttpRequest=new XMLHttpRequest();
+            xmlHttpRequest.onreadystatechange=finish();
+            xmlHttpRequest.open("GET",detecUrl,true);
+            xmlHttpRequest.send(null);
+
+        }
+        
+        function finish() {
+            if(xmlHttpRequest.readyState==4){
+                var result=xmlHttpRequest.responseText;
+                var detecResult=result.result;
+                console.info("result..."+result);
+                console.info("detecResult..."+detecResult);
             }
-            translate(sourcetext);
-        });
+        }
+
+//        <!--翻译源内容失去焦点-->
+//        var sourcetext;
+//        $("#chick-int").blur(function () {
+//            sourcetext = $("#chick-int").val();
+//            if(sourcetext == "" || sourcetext == null) {
+//                $("#results").css("display","none");
+//                $("#chick-btn").css("display","block");
+//                return;
+//            }
+//        });
 
         $("#btn-textarea-clear").bind("click",function () {
             if(IsTranslated == true) {
@@ -221,33 +255,6 @@
             $("#chick-btn").css("display","block");
         });
 
-        $("#chick-int").bind('input propertychange', function () {
-            if($("#chick-int").val()!="" || $("#chick-int").val()!=null) {
-
-            } else {
-                
-            }
-        });
-
-        <%--$("#btn-textarea-clear").bind("click",function () {--%>
-            <%--window.location.href="<%=path%>";--%>
-        <%--});--%>
-
-        var Language = "${pageContext.response.locale}";
-        console.info("locallanguage:"+Language);
-        if (Language=="zh_CN"){
-            $("#auto-zh").css("display","block");
-            $("#auto-en").css("display", "none");
-            srcvalue="zh";
-            tarvalue="zh";
-        }else if (Language=="en_US"){
-            $("#source-lan option:selected").attr("selected","");
-            $("#auto-en").css("display","block");
-            $("#auto-en").attr("selected","selected");
-            $("#auto-zh").css("display","none");
-            srcvalue="en";
-            tarvalue="zh";
-        }
 
         $("#btn-login").bind("click",function () {
             <!--跳转到登录页面-->
@@ -260,18 +267,16 @@
         $("#target-lan").bind("click",function () {
             chooseTarLan();
         });
-        <!--交换语言-->
-        $("#change-lan").bind("click",function () {
-//            $("#source-lan option:selected")=$("#target-lan option:selected");
-//            tartext=srctext;
-        });
+
         <!--翻译-->
-        $("#btn-translate").bind("click",function () {
-            var sourcetext=$("#chick-int").val();
-            if(sourcetext=="" || sourcetext==null) {
+        $("#chick-btn").bind("click",function () {
+            sourcetext=$("#chick-int").val();
+            if(sourcetext==""||sourcetext==null){
+                $('#results').css("display","none");
                 return;
             }
             $("#chick-btn").css("display", "none");
+            $('#results').css("display","block");
             translate(sourcetext);
         });
 
@@ -309,10 +314,8 @@
         }
     }
     <!--手动选择源语言-->
-    var srcvalue;
-    var srctext;
+
     function chooseSourLan() {
-        $("#auto-zh").css("display","none");
         srctext=$("#source-lan option:selected").text();
         if (srctext=="中文"){
             srcvalue="zh";
@@ -322,17 +325,16 @@
             srcvalue="fr";
         }else if (srctext=="俄语"){
             srcvalue="ru";
-        }else {
+        }else if (srctext=="葡萄牙语"){
             srcvalue="pt";
+        }else{
+            srcvalue="es";
         }
         console.info("srcvalue-----"+srcvalue);
     }
 
     <!--手动选择目标语种-->
-    var tarvalue;
-    var tartext;
     function chooseTarLan() {
-        $("#auto-en").css("display","none");
         tartext=$("#target-lan option:selected").text();
         console.info("tartext-------"+tartext);
         if (tartext=="中文"){
@@ -343,15 +345,17 @@
             tarvalue="fr";
         }else if (tartext=="俄语"){
             tarvalue="ru";
-        }else {
+        }else if(tartext=="葡萄牙语"){
             tarvalue="pt";
+        }else{
+            tarvalue="es";
         }
         console.info("tarvalue-----"+tarvalue);
     }
+
     <!--翻译按钮的点击事件-->
     function translate(sourcetext) {
-//        $("#chick-int").blur();
-
+        console.info("sourcetext...."+sourcetext);
         $.ajax({
             async: true,
             type: "POST",
@@ -368,6 +372,8 @@
                 console.info(data);
                 if (data.status == 1) {//成功
                     $("#result-text").val(data.target);
+                    ttsUrl="<%=path%>/ttsSync?languages="+tarvalue+"&beRead="+data.target;
+                    console.info("ttsUrl..."+ttsUrl);
                     IsTranslated = true;
                 } else {
 
@@ -377,10 +383,7 @@
                 console.info(data);
             }
         });
-        var beRead=$("#result-text").text();
-        console.info("lastbeRead........."+beRead);
-        var ttsUrl=<%=path%>+"/ttsSync?languages="+tarvalue+"&beRead="+beRead;
-        console.info("ttsUrl..."+ttsUrl);
+
     }
 
 

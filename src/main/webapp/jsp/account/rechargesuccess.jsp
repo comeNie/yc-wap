@@ -34,7 +34,7 @@
 <body>
     <nav class="wap-second-nav">
         <ul>
-            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+            <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
             <li>支付</li>
         </ul>
     </nav>
@@ -51,3 +51,11 @@
 
 </body>
 </html>
+<script>
+    $(function() {
+
+    })
+    function retLeft(){
+        window.history.go(-1);
+    }
+</script>

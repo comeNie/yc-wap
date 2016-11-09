@@ -95,7 +95,7 @@
                         <li class="int-border">
                             <p><input id="codeid" type="text" class="input input-yzm" placeholder="验证码"></p>
                             <p><div class="code" id="checkCode"></div></p>
-                            <p><a href="#"><i class="icon-refresh" onclick="createCode()"></i></a></p>
+                            <p><a href="#" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
                             <label id="codeLabel"></label>
                         </li>
                         <li><a href="#" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
@@ -172,8 +172,58 @@
             return;
         }
 
-        alert("该跳走了");
+        toJump(phone,psd);
+//        alert("该跳走了");
     }
+    function toJump(phone,psd) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/phoneenable",
+            modal: true,
+            timeout: 30000,
+            data: {
+                phone:phone
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#phoneLabel").css("display","none");
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        url: "<%=path%>/login/checklogin",
+                        modal: true,
+                        timeout: 30000,
+                        data: {
+                            username: phone,
+                            password:psd
+                        },
+                        success: function (data) {
+                            if (data.status == 1) {
+                                alert("登录成功")
+                            } else {
+                                alert("登录失败")
+                            }
+                        },
+                        error: function () {
+                            $("#codeLabel").html("网络请求超时，请稍候再试");
+                            $("#codeLabel").css("display", "block");
+                        }
+                    });
+                } else {
+                    $("#phoneLabel").html("服务返回数据");
+                    $("#phoneLabel").css("display","block");
+                    return;
+                }
+            },
+            error: function () {
+                $("#phoneLabel").html("网络请求超时，请稍候再试");
+                $("#phoneLabel").css("display", "block");
+            }
+        });
+
+    }
+
     function forgetpsd() {
         var tourl = "<%=path%>/login/findpsd";
         window.location.href=tourl;
@@ -182,6 +232,7 @@
         var tourl = "<%=path%>/login/register";
         window.location.href=tourl;
     }
+
     //验证码代码
     var code;
     function createCode() {
