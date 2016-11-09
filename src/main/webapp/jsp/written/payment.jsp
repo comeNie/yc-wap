@@ -101,9 +101,9 @@
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        var ToUrl = "<%=path%>/jsp/written/payresult.jsp";
+        var ToUrl = "<%=path%>/written/PayResult";
         $("#submit").bind("click", function () {
-            window.location.href=ToUrl+"?result=success";
+            window.location.href=ToUrl;
         });
 
         $("#imgAliPay").bind("click", function () {

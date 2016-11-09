@@ -9,8 +9,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
-    String result = request.getParameter("result");
-    request.setAttribute("result", result);
 %>
 <html>
 <head>
@@ -27,7 +25,7 @@
 
 <nav class="wap-second-nav">
     <ul>
-        <a href="javascript:window.location.href='<%=path%>/written'"><i class="icon iconfont left">&#xe626;</i></a>
+        <a href="javascript:window.location.href='<%=path%>'"><i class="icon iconfont left">&#xe626;</i></a>
         <li>支付结果</li>
     </ul>
 </nav>
@@ -48,13 +46,13 @@
     <ul>
         <li><i class="icon iconfont red">&#xe62b;</i></li>
         <li class="word red">您的订单支付失败！</li>
-        <li>您的订单号:<a href="#">3333333333</a>，您可以在“<a href="#">我的订单</a>”中查看您的订单信息，若有任何疑问，欢迎致电咨询:<br>400-119-8080</li>
+        <li>您的订单号:<a href="#">5000020965</a>，您可以在“<a href="#">我的订单</a>”中查看您的订单信息，若有任何疑问，欢迎致电咨询:<br>400-119-8080</li>
     </ul>
 </section>
 </c:if>
 
 <!--底部-->
-<%--<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>--%>
+<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>
 </html>
 <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>

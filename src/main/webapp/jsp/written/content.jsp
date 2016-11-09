@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
@@ -30,11 +31,11 @@
         <div class="prompt-title">请选择</div>
         <div class="prompt-confirm">
             <ul>
-                <li>IOS端不支持上传附件请前往PC端</li>
+                <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
             </ul>
         </div>
         <div class="prompt-confirm-btn">
-            <input  type="button" class="btn btn-white" id="prompt-btn" value="确认"/>
+            <a class="btn btn-white" id="prompt-btn">确认</a>
         </div>
 
     </div>
@@ -92,8 +93,8 @@
             <li>
                 <p class="word">用途:</p>
                 <p>
-                    <select class="select testing-select-small">
-                        <option>不限时</option>
+                    <select id="purpose" class="select testing-select-small">
+                        <option purposeId="111">哈哈</option>
                     </select>
                     <span>|</span>
                 </p>
@@ -101,8 +102,10 @@
             <li>
                 <p class="word">领域:</p>
                 <p>
-                    <select class="select testing-select-small">
-                        <option>不限时</option>
+                    <select id="domain" class="select testing-select-small">
+                        <c:forEach items="${DomainList}" var="pair">
+                            <option domainId="${pair.domainId}">${pair.domainCn}</option>
+                        </c:forEach>
                     </select>
                     <span>|</span>
                 </p>
@@ -110,14 +113,16 @@
             <li>
                 <p class="word">增值服务:</p>
                 <p>
-                    <select class="select testing-select-small">
-                        <option>无排版</option>
+                    <select id="otherServ" class="select testing-select-small" onchange="ServChange()">
+                        <option otherServId="Y">需排版</option>
+                        <option otherServId="N">无排版</option>
                     </select>
                     <span>|</span>
                 </p>
-                <p class="p-mr">
-                    <select class="select testing-select-small">
-                        <option>无转化格式</option>
+                <p class="p-mr" id="otherService">
+                    <select id="otherServi" class="select testing-select-small">
+                        <option>Excel</option>
+                        <option>Word</option>
                     </select>
                     <span>|</span>
                 </p>
@@ -125,8 +130,10 @@
             <li>
                 <p class="word">级别选择:</p>
                 <p>
-                    <select class="select testing-select-small">
-                        <option>专业级</option>
+                    <select id="translateLv" class="select testing-select-small">
+                        <option transLv="100210">标准级</option>
+                        <option transLv="100220">专业级</option>
+                        <option transLv="100230">出版级</option>
                     </select>
                     <span>|</span>
                 </p>
@@ -134,10 +141,10 @@
             </li>
             <li class="word-checkbox">
                 <p>预计翻译速度: 1小时/千字</p>
-                <p class="p-mr1"><input type="checkbox" class="checkbox">加急<b>(加急订单，更快获得译文)</b></p>
+                <p class="p-mr1"><input type="checkbox" id="quick" class="checkbox">加急<b>(加急订单，更快获得译文)</b></p>
             </li>
             <li>
-                <p><input type="checkbox" class="checkbox"></p>
+                <p><input id="isRead" type="checkbox" class="checkbox"></p>
                 <p class="a-link">我已阅读并同意中译语通的<a href="#">《翻译协议》</a></p>
             </li>
         </ul>
@@ -156,39 +163,49 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("#submit").bind("click", function () {
-            onSubmit();
+            if(!$("#isRead").prop("checked")) {
+                $("#EjectTitle").html("没读");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+            }
+            var PurposeId = $("#purpose").find("option:selected").attr("purposeId");
+            var PurposeVal = $("#purpose").val();
+            var DomainId = $("#domain").find("option:selected").attr("domainId");
+            var DomainVal = $("#domain").val();
+            var TransLvId = $("#translateLv").find("option:selected").attr("transLv");
+            var TransLvVal = $("#translateLv").val();
+            var Express = "N";
+            if ($("#quick").prop("checked")) {
+                Express = "Y";
+            }
+//            onSubmit("DomainId="+DomainId+"&DomainVal="+DomainVal);
+        })
+
+        $('#upload').click(function(){
+
+        })
+
+        $('#prompt-btn').click(function(){
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
         })
     });
 
     $(function () {
 
     });
+    
+    function ServChange() {
+        var IsService = $("#otherServ").find("option:selected").attr("otherServId");
+        if(IsService=="Y") {
+            $("#otherService").css("display", "block");
+        } else {
+            $("#otherService").css("display", "none")
+        }
+    }
 
-    function onSubmit() {
-        var test = "haha";
-        $.ajax({
-            async : true,
-            type : "POST",
-            url : "<%=path%>/written/onContentSubmit",
-            modal : true,
-            timeout: 30000,
-            data : {
-                test:test
-            },
-            success : function(data) {
-                var ToUrl = "<%=path%>/written/confirm";
-                window.location.href=ToUrl;
-            },
-            error : function(data){
-
-            },
-            beforeSend : function(){
-
-            },
-            complete : function(){
-
-            }
-        });
+    function onSubmit(url) {
+        window.location.href = "<%=path%>/written/onContentSubmit?" + url;
     }
 
 </script>

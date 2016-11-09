@@ -12,7 +12,9 @@ table{border-collapse:collapse;}
 .center{text-align: center;}
 input{outline:none;}
 button{outline:none; cursor:pointer;}
-html,body {min-height:32rem;position:relative;}
+html,body {height:100%;position:relative;}
+.wrapper-big{min-height:100%; height: auto !important;height:100%;}
+* html .wrapper-big { height: 100%; }
 img{vertical-align:middle}
 
 
