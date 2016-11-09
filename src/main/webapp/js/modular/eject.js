@@ -20,3 +20,14 @@ jQuery(document).ready(function($) {
 	$('#prompt').slideUp(200);
 	})
 })
+//提示弹出框 
+jQuery(document).ready(function($) {
+	$('#payment-btn').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#payment-eject').slideDown(100);
+	})
+	$('#payment-close').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#payment-eject').slideUp(200);
+	})
+})	

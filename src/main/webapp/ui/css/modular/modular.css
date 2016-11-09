@@ -16,6 +16,13 @@
 .close-icon{width:100%;text-align:center;float:left;margin-top:0.2rem;}
 .close-icon i{font-size:1.49rem;color:#505050;cursor:pointer;}
 .mask{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.4;filter:alpha(opacity=40);z-index:18;display:none;}
+/**订单支付弹出**/
+.prompt-payment{width:9.84rem;height:5.33rem; background:#fff;position:fixed;top:50%;left:50%;margin-top:-2.66rem;margin-left:-4.92rem;z-index:999;border-radius:5px;display:none;}
+.prompt-payment-title{ width:100%; float:left;height:1.28rem;color:#333;font-size:0.51rem;border-bottom:1px solid #c7c7c7;text-align: center;line-height:1.28rem;color:#999;font-size:0.46rem}
+.prompt-payment-ctn{width:100%;float:left;padding:0.53rem 1.06rem;font-size:0.51rem;color:#666;text-align:center;line-height:0.8rem;}
+.prompt-payment-btn{width:100%;float:left;height:1.28rem;border-top:1px solid #c7c7c7}
+.prompt-payment-btn a{width:4.92rem;text-align:center;color:#1780e3;font-size:0.51rem;float:left;line-height:1.28rem;border-right:1px solid #c7c7c7}
+.prompt-payment-btn .none-border{border-right:none;}
 /**提示弹出框**/
 .prompt{width:8.64rem;min-height:5.33rem; background:#fff;position:fixed;top:50%;left:50%;margin-top:-2.66rem;margin-left:-4.32rem;z-index:999;border-radius:5px;display:none;}
 .prompt-title{ width:100%; float:left;height:1.28rem;color:#333;font-size:0.42rem;text-align:center;line-height:1.28rem;border-bottom:1px solid #c4c4c4;}
@@ -23,6 +30,7 @@
 .prompt-confirm ul{ width:100%;float:left;padding:0 1.28rem; }
 .prompt-confirm ul li{text-align:center;font-size:0.42rem;color:#666}
 .prompt-confirm-btn{width:100%;float:left;border-top:1px solid #c4c4c4}
+
 
 /**首页**/
 /**语言转换**/
@@ -70,7 +78,7 @@
 .choice-list ul{width:100%;float:left}
 .choice-list ul li{width:100%;float:left;margin-bottom:0.59rem;}
 .choice-list ul li p{float:left;position:relative;line-height:1.32rem;font-size:0.51rem;}
-.choice-list ul li p span{position:absolute;top:0.25rem;right:1.42rem;color:#c4c4c4;font-size:0.42rem}
+.choice-list ul li p span{position:absolute;top:0;right:1.42rem;color:#c4c4c4;font-size:0.42rem}
 .choice-list ul li .word{width:2.98rem;float:left;font-size:0.51rem;line-height:1.32rem;color:#666}
 .testing-select-small{width:5.56rem;height:1.32rem;border:1px solid #c4c4c4;font-size:0.42rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.46rem 0.12rem;border-radius:0.21rem}
@@ -90,8 +98,8 @@
 .add-contact a i{margin-right:0.42rem;color:#1780e3}
 .order-content{width:100%;float:left;background:#fff;border-top:1px solid #c4c4c4;border-bottom:1px solid #c4c4c4;margin-top:0.42rem;}
 .order-list{width:100%;float:left}
-.order-list ul{width:100%;height:1.7rem;border-bottom:1px solid #e9e9e9;padding:0 0.64rem;}
-.order-list ul li{float:left;line-height:1.7rem;font-size:0.55rem;color:#666}
+.order-list ul{width:100%;height:1.92rem;border-bottom:1px solid #e9e9e9;padding:0 0.64rem;}
+.order-list ul li{float:left;line-height:1.92rem;font-size:0.55rem;color:#666}
 .order-list ul .right{float:right;text-align:right;}
 .order-list ul .word{width:5.6rem;overflow:hidden;text-overflow: ellipsis; white-space: nowrap;}
 .order-list ul p{float:left}
@@ -102,10 +110,17 @@
 .order-message{width:100%;float:left;padding-bottom:0.4rem;}
 .order-message ul{width:100%;padding:0 0.64rem;}
 .order-message ul li{width:100%;float:left;font-size:0.55rem;margin-top:0.55rem;color:#666}
-.order-submit{width:100%;position:absolute;bottom:0;}
+.order-submit{width:100%;position:fixed;bottom:0;}
+.order-submit-kou{width:100%;float:left}
 .order-submit .left{width:9.98rem;height:1.92rem;background:#4a4a4a;float:left;line-height:1.92rem;padding-left:0.72rem;color:#fff;font-size:0.64rem}
 .order-submit .right{width:6rem;height:1.92rem;}
 .order-submit .right a{width:6rem;height:1.92rem;background:#1780e3;float:left;text-align:center;line-height:1.92rem;color:#fff;font-size:0.64rem}
+.order-submit-kou .cent{width:8rem;height:1.92rem;line-height:1.92rem;float:left;text-align:center;}
+.order-submit-kou .blue{background:#1780e3;}
+.order-submit-kou .blue a{color:#fff;font-size:0.64rem;}
+.order-submit-kou .green{background:#5bd18b;}
+.order-submit-kou .green a{color:#fff;font-size:0.64rem;}
+
 .new-cont{margin-top:0;}
 .input-medium{width:11.5rem;height:1.68rem;border:none;background:none;padding-left:0.34rem;color:#666;font-size:0.55rem;line-height:1.68rem;}
 .add-btn{width:100%;position:absolute;bottom:0;padding:0 0.64rem 0.34rem;}
@@ -116,7 +131,7 @@
 .tij-cg ul li i{font-size:2.51rem;color:#15a329}
 .tij-cg ul .word{font-size:0.64rem;color:#15a329;margin-bottom:0.34rem;}
 .tij-cg ul .red{color:#ff4949}
-.tij-cg ul li a{color:#1780e3}
+.tij-cg ul li a{color:#1780e3;font-size:0.46rem}
 .tij-cg ul li span{color:red;}
 /**滑动按钮**/
 .multi-switch {width:50px;user-select: none;-webkit-backface-visibility: hidden;-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none}
@@ -171,8 +186,8 @@
 /**安全设置**/
 .setting-list{}
 .setting-list{width:100%;float:left}
-.setting-list ul{width:100%;height:1.7rem;border-bottom:1px solid #e9e9e9;padding:0 0.64rem;}
-.setting-list ul li{float:left;line-height:1.7rem;font-size:0.55rem;color:#666}
+.setting-list ul{width:100%;height:1.92rem;border-bottom:1px solid #e9e9e9;padding:0 0.64rem;}
+.setting-list ul li{float:left;line-height:1.92rem;font-size:0.55rem;color:#666}
 .setting-list ul a{color:#666}
 .setting-list ul .right{width:11.2rem;float:right;text-align:right;}
 .setting-list .none-border{border-bottom:none;}
@@ -223,4 +238,71 @@
 #next3{display:none;}
 #next4{display:none;}
 /**充值**/
-.set-int ul li .word{color:#666;margin-right:0.64rem;}
+.my-order-content{width:100%;float:left;background:#fff;border-top:1px solid #c4c4c4;border-bottom:1px solid #c4c4c4;margin-top:0.42rem;}
+.my-order-list{width:100%;float:left}
+.my-order-list .ulborder{border-bottom:none;}
+.my-order-list .top-ulborder{border-top:1px solid #e9e9e9;}
+.my-order-list ul{width:100%;height:1.92rem;border-bottom:1px solid #e9e9e9;padding:0 0.64rem;}
+.my-order-list ul li{float:left;line-height:1.92rem;font-size:0.55rem;color:#666}
+.my-order-list ul .right{float:right;text-align:right;}
+.my-order-list ul p{float:left}
+.my-order-list ul .red-word{color:#ff4949}
+.my-order-list ul .ash-word{color:#c7c7c7}
+.my-order-list ul .ow-h{width:150px;overflow:hidden;text-overflow: ellipsis; white-space: nowrap;}
+.my-order-list ul .blue-word{color:#1780e3;margin:0 0.5rem;}
+.my-order-list ul .bord-btn{width:2.13rem;height:1.06rem;text-align: center;line-height:1.06rem;margin:0.4rem 0 0 0.4rem;border-radius:0.21rem;float:left}
+.my-order-list ul .red{border:1px solid #ff4949}
+.my-order-list ul .red a{color:#ff4949;font-size:0.55rem}
+.my-order-list ul .blue{border:1px solid #1780e3}
+.my-order-list ul .blue a{color:#1780e3;font-size:0.55rem}
+.my-order-list ul .ash{border:1px solid #666}
+.my-order-list ul .ash a{color:#666;font-size:0.55rem}
+.loading{width:100%;float:left;margin-top:0.46rem;text-align:center;}
+.loading a{font-size:0.51rem;color:#999}
+.my-order-list .zhek{width:100%;height:1rem;border-bottom:none;}
+.my-order-list .zhek li{line-height:0.5rem;font-size:0.51rem}
+.my-order-list .zhek li p{margin-right:0.5rem;}
+/**订单详细**/
+.original-big{width:100%;background:#fff;border-bottom:1px solid #c4c4c4;padding:0.42rem;float:left}
+.original-cont{width:100%;float:left}
+.original-cont ul{width:100%;float;left;margin-bottom:0.45rem;}
+.original-cont ul li{font-size:0.46rem;}
+.original-cont ul li span{color:#ff4949}
+.original-cont ul li .sm-word{width:14.7rem;overflow:hidden;text-overflow: ellipsis; white-space: nowrap;word-break:break-all; }
+.click-more{width:100%;float:left;text-align:center;}
+.click-more a{color:#666;font-size:0.42rem}
+#cont-hid{display: none;}
+.original-enclosure{width:100%;float:left}
+.original-enclosure ul{width:100%;float:left;margin-bottom:0.85rem;}
+.original-enclosure ul li{width:100%;float:left;font-size:0.46rem;}
+.original-enclosure ul li p{float:left}
+.original-enclosure ul li .right{float:right}
+.original-enclosure ul li .right a{font-size:0.46rem;color:#1780e3}
+/**订单跟踪**/
+.track-title{width:100%;float:left}
+.track-title ul{}
+.track-title ul li{float:left;width:100%;margin-bottom:0.2rem;}
+.track-title ul li p{float:left;font-size:0.46rem}
+.track-title ul li .blue{color:#1780e3;}
+.mt-20{float:left;margin-top:0.42rem;border-top:1px solid #c4c4c4;padding:0;}
+.track-list-title{width:100%;height:1.92rem;border-bottom:1px solid #e9e9e9;line-height:1.92rem;padding:0 0.42rem;font-size:0.46rem;color:#666}
+.track-list-ctn{width:100%;float:left;padding:0 0 0 0.42rem;margin-top:0.42rem;}
+.track-state{width:100%;float:left;position:relative;}
+.track-state p{width:0.42rem;float:left}
+.track-state .circular i{float:left;width:0.42rem;margin-left:0.1rem;text-align: center;}
+.track-state .line{height:1.94rem;border-right:1px solid #e9e9e9;display:block;margin-top:0.2rem;} 
+.track-state ul{width:14.08rem;height:2.13rem;border-bottom:1px solid #e9e9e9;margin-left:1.02rem;float:left;padding-top:0.2rem;}
+.track-state ul li{font-size:0.42rem;line-height:0.9rem;}
+.track-state ul .word{font-size:0.55rem}
+.track-bule .circular i{color:#1780e3}/**经过蓝色圆圈**/
+.track-bule ul li{color:#1780e3}/**经过蓝色文字**/
+.track-ash .circular i{color:#666}/**经过蓝色圆圈**/
+.track-ash ul li{color:#666}/**经过蓝色文字**/
+
+/**翻译内容**/
+.tran-big{width:100%;float:left;background:#fff;border-bottom:1px solid #c4c4c4;padding:0.42rem;}
+.tran-big ul{width:100%;float:left}
+.tran-big ul li{line-height:0.8rem;color:#666;font-size:0.51rem;word-break:break-all;margin-bottom:0.2rem;}
+.m-top{margin-top:0.42rem;border-top:1px solid #c4c4c4;}
+.tran-jiaz{width:100%;float:left;text-align:center;}
+.tran-jiaz a{font-size:0.64rem;color:#666;}

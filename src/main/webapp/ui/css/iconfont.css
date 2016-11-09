@@ -19,6 +19,7 @@
 .icon-fanhui:before { content: "\e626"; }
 .icon-weixin:before { content: "\e61a"; }
 .icon-qianjin:before { content: "\e62c"; }
+.icon-yuandian:before { content: "\e630"; }
 .icon-guanbi:before { content: "\e618"; }
 .icon-shouji:before { content: "\e613"; }
 .icon-doubanyin:before { content: "\e625"; }
@@ -38,9 +39,11 @@
 .icon-fenxiang:before { content: "\e61c"; }
 .icon-qq:before { content: "\e61e"; }
 .icon-pengyouquan:before { content: "\e61f"; }
+.icon-yuandian1:before { content: "\e631"; }
 .icon-shibai:before { content: "\e611"; }
 .icon-fuzhilianjie:before { content: "\e620"; }
 .icon-chenggong:before { content: "\e612"; }
+.icon-mail:before { content: "\e62f"; }
 .icon-iconset0196:before { content: "\e65f"; }
 .icon-duanxin:before { content: "\e622"; }
 .icon-xuanze:before { content: "\e616"; }
@@ -58,6 +61,8 @@
 .icon-tongzhi:before { content: "\e60a"; }
 .icon-shibai2:before { content: "\e62b"; }
 .icon-youhuiquan:before { content: "\e603"; }
+.icon-orders:before { content: "\e62d"; }
+.icon-dingdan1:before { content: "\e62e"; }
 .icon-wodedingdan:before { content: "\e601"; }
 .icon-fanyi:before { content: "\e619"; }
 .icon-zhuanhuan:before { content: "\e621"; }

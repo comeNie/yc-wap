@@ -54,11 +54,13 @@
 </c:if>
 
 <!--底部-->
-<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+<jsp:include page="/jsp/common/bottom.jsp"/>
 </body>
 </html>
 <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 
