@@ -46,4 +46,16 @@ public class Constants {
         // 口译
         public static final String INTER = "2";
     }
+
+    /**
+     * 翻译级别
+     */
+    public static class TranslateLevel {
+        // 标准级
+        public static final String Normal = "100210";
+        // 专业级
+        public static final String Professional = "100220";
+        // 出版级
+        public static final String Publish = "100230";
+    }
 }
