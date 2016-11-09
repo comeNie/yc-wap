@@ -60,6 +60,19 @@ public class Constants {
     }
 
     /**
+     * 增值服务
+     */
+    public static class OtherService {
+        //排版
+        public static final String Comp = "Y";
+        public static final String NoComp = "N";
+        //加急
+        public static final String Quick = "Y";
+        public static final String NoQuick = "N";
+
+    }
+
+    /**
      * 租户ID
      */
     public static final String TenantID = "yeecloud";

@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Created by Nozomi on 11/3/2016.
@@ -41,9 +40,11 @@ public class WrittenController extends BaseController{
         String country = local.getCountry();
         String language = local.getLanguage();
         log.info("local country: " + country + ", language: " + language);
+
         List DualList = GetDualList(language, Constants.OrderType.DOC);
         List PurposeList = GetPurposeList(language);
         List DomainList = GetDomainList(language);
+
         request.setAttribute("DualList", DualList);
         request.setAttribute("PurposeList", PurposeList);
         request.setAttribute("DomainList", DomainList);
@@ -77,11 +78,10 @@ public class WrittenController extends BaseController{
         return resp.getDomainVos();
     }
 
-    @RequestMapping(value = "onContentSubmit", method = RequestMethod.POST)
+    @RequestMapping(value = "onContentSubmit")
     public String onContentSubmit() {
-        String DomainIndex = request.getParameter("DomainIndex");
+        String DomainId = request.getParameter("DomainId");
         String DomainVal = request.getParameter("DomainVal");
-        log.info("onContentSubmit:" + DomainIndex + DomainVal);
         return "written/confirm";
     }
 
