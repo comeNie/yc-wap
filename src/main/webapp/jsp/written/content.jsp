@@ -43,7 +43,7 @@
 <!--上传提示弹出框-->
 <nav class="wap-second-nav">
     <ul>
-        <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+        <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
         <li>翻译下单</li>
         <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
     </ul>
@@ -142,7 +142,7 @@
             </li>
         </ul>
     </div>
-    <div class="wap-btn"><a href="#" id="submit" class="btn submit-btn btn-blue">提交</a></div>
+    <div class="wap-btn"><a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交</a></div>
 </section>
 <!--底部-->
 <%--<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>--%>

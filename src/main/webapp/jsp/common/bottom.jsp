@@ -22,22 +22,14 @@
             userAgent = "";
         }
         Matcher matcherAndroid = androidPat.matcher(userAgent);
-        if(matcherAndroid.find()){
-            return true;
-        } else {
-            return false;
-        }
+        return matcherAndroid.find();
     }
     private boolean IOS(String userAgent){
         if(null == userAgent){
             userAgent = "";
         }
         Matcher matcherIOS = iosPat.matcher(userAgent);
-        if(matcherIOS.find()){
-            return true;
-        } else {
-            return false;
-        }
+        return matcherIOS.find();
     }
 %>
 
@@ -68,11 +60,11 @@
                 <p><spring:message code="all.project.public.icon-1"/></p>
             </li>
             <li class="tow current">
-                <p><img src="<%=path%>/ui/images/icon-2.png" onclick="window.location.herf='${WapUrl}'"/></p>
+                <p><img src="<%=path%>/ui/images/icon-2.png" onclick="window.location.href='${WapUrl}'"/></p>
                 <p><spring:message code="all.project.public.icon-2"/></p>
             </li>
             <li class="three none-ml">
-                <p><img src="<%=path%>/ui/images/icon-3.png" onclick="window.location.herf='${PcUrl}'"/></p>
+                <p><img src="<%=path%>/ui/images/icon-3.png" onclick="window.location.href='${PcUrl}'"/></p>
                 <p><spring:message code="all.project.public.icon-3"/></p>
             </li>
         </ul>

@@ -24,7 +24,7 @@
 <body>
 <nav class="wap-second-nav">
     <ul>
-        <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+        <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
         <li>确认下单</li>
         <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
     </ul>
@@ -80,7 +80,7 @@
 <!--底部-->
 <section class="order-submit">
     <p class="left">总价:1111元</p>
-    <p class="right"><a href="#" id="submit">下一步</a></p>
+    <p class="right"><a href="javascript:void(0)" id="submit">下一步</a></p>
 </section>
 </body>
 </html>

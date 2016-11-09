@@ -24,7 +24,7 @@
 
 <nav class="wap-second-nav">
     <ul>
-        <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+        <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
         <li>支付订单</li>
         <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
     </ul>
@@ -72,12 +72,12 @@
 
     <%--start--%>
     <ul>
-        <li class="zhifb"><input  type="radio" class="radio"/><img src="<%=path%>/ui/images/zhifb.png" /></li>
-        <li class="unionpay"><input  type="radio" class="radio"/><img src="<%=path%>/ui/images/unionpay.png" /></li>
+        <li class="zhifb"><input  type="radio" id="alipay" name="choose" class="radio"/><img src="<%=path%>/ui/images/zhifb.png" id="imgAliPay"/></li>
+        <li class="unionpay"><input  type="radio" id="unipay" name="choose" class="radio"/><img src="<%=path%>/ui/images/unionpay.png" id="imgUniPay"/></li>
     </ul>
 
     <ul>
-        <li class="word-ash"><input type="radio" class="radio"/>账户余额支付（余额：20元）</li>
+        <li id="imgCash" class="word-ash"><input type="radio" id="cash" name="choose" class="radio"/>账户余额支付（余额：20元）</li>
         <li class="right"><a href="#">余额不足，请先充值</a></li>
     </ul>
 </div>
@@ -91,7 +91,7 @@
             <span>优惠:50元</span>
         </p>
     </div>
-    <div class="right"><a href="#" id="submit">确认支付</a></div>
+    <div class="right"><a href="javascript:void(0)" id="submit">确认支付</a></div>
 </section>
 </body>
 </html>
@@ -105,6 +105,18 @@
         $("#submit").bind("click", function () {
             window.location.href=tourl+"?result=success";
         });
+
+        $("#imgAliPay").bind("click", function () {
+            document.getElementById("alipay").checked=true;
+        })
+
+        $("#imgUniPay").bind("click", function () {
+            document.getElementById("unipay").checked=true;
+        })
+
+        $("#imgCash").bind("click", function () {
+            document.getElementById("cash").checked=true;
+        })
     });
 
     $(function () {

@@ -25,8 +25,8 @@
 
 <nav class="wap-second-nav">
     <ul>
-        <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
-        <li>新增联系方式</li>
+        <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
+        <li>联系方式</li>
 
     </ul>
     <div class="pop-nav">
@@ -66,7 +66,7 @@
     </div>
 </section>
 <section class="add-btn">
-    <a href="#" id="submit" class="btn submit-btn btn-blue">提交订单</a>
+    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交订单</a>
 </section>
 </body>
 </html>
