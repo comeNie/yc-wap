@@ -27,7 +27,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping(value = "written")
-public class WrittenController extends BaseController{
+public class WrittenController extends BaseController {
     private Log log = LogFactory.getLog(WrittenController.class);
 
     private IQuerySysDuadSV iQuerySysDuadSV = DubboConsumerFactory.getService(IQuerySysDuadSV.class);
@@ -56,7 +56,7 @@ public class WrittenController extends BaseController{
         req.setLanguage(Language);
         req.setOrderType(OrderType);
         QuerySysDuadListRes resp = iQuerySysDuadSV.querySysDuadList(req);
-        if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+        if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
             throw new RuntimeException("GetDualListFailed");
         }
         return resp.getDuads();
@@ -64,7 +64,7 @@ public class WrittenController extends BaseController{
 
     public List GetPurposeList(String Language) {
         QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList(Language);
-        if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+        if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
             throw new RuntimeException("GetPurposeListFailed");
         }
         return resp.getPurposes();
@@ -72,7 +72,7 @@ public class WrittenController extends BaseController{
 
     public List GetDomainList(String Language) {
         QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList(Language);
-        if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+        if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
             throw new RuntimeException("GetDomainListFailed");
         }
         return resp.getDomainVos();

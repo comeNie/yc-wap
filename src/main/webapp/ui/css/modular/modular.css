@@ -266,7 +266,7 @@
 /**订单详细**/
 .original-big{width:100%;background:#fff;border-bottom:1px solid #c4c4c4;padding:0.42rem;float:left}
 .original-cont{width:100%;float:left}
-.original-cont ul{width:100%;float;left;margin-bottom:0.45rem;}
+.original-cont ul{width:100%;float:left;margin-bottom:0.45rem;}
 .original-cont ul li{font-size:0.46rem;}
 .original-cont ul li span{color:#ff4949}
 .original-cont ul li .sm-word{width:14.7rem;overflow:hidden;text-overflow: ellipsis; white-space: nowrap;word-break:break-all; }
