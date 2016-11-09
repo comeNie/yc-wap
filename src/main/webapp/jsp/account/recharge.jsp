@@ -34,7 +34,7 @@
 <body>
     <nav class="wap-second-nav">
         <ul>
-            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+            <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
             <li>充值</li>
             <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
         </ul>
@@ -91,6 +91,9 @@
     $(function() {
 
     });
+    function retLeft(){
+        window.history.go(-1);
+    }
     function confirm() {
         var price = $("#price").val();
         if (price == null || price == "" || price == 0){

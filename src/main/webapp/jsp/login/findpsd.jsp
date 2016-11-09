@@ -66,7 +66,7 @@
             <div class="set-password">
                 <div class="set-phone">
                     <p>已验证手机</p>
-                    <p class="word">138****1234</p>
+                    <p class="word" id="phone2">138****1234</p>
                 </div>
                 <div class="set-int">
                     <ul>
@@ -120,6 +120,8 @@
 <script>
     //找回密码
     var index = 0;
+    var getPhone;
+    var getCode;
     $(function(){
         $("#next-btn1").click(function(){
             var phone = $("#nameid1").val();
@@ -132,16 +134,17 @@
                 $("#nameLabel1").css("display","none");
             }
             if (code == "" || code == null) {
-                $("#codeLabel1").html("请请输入验证码");
+                $("#codeLabel1").html("请输入验证码");
                 $("#codeLabel1").css("display","block");
                 return;
             }else {
                 $("#codeLabel1").css("display","none");
             }
+//            if(!validateCode()){
+//               return;
+//            }
+            jump1(phone);
 
-            index ++;//index = 1
-            $("#next1").hide();
-            $("#next2").show();
         });
         $("#next-btn2").click(function(){
             var code = $("#codeid2").val();
@@ -152,10 +155,8 @@
             }else {
                 $("#codeLabel2").css("display","none");
             }
+            jump2(code);
 
-            index ++;//index = 2
-            $("#next2").hide();
-            $("#next3").show();
         });
         $("#next-btn3").click(function(){
             var psdid = $("#psdid3").val();
@@ -192,10 +193,8 @@
                 $("#confirmLabel3").css("display","none");
             }
 
-            index ++;//index = 3
-            $("#next3").hide();
-            $("#next4").show();
-            countDownFive();
+            jump3(psdid);
+
         });
     });
     function leftRe() {
@@ -218,13 +217,116 @@
         }
 
     }
+    function jump1(phone){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/userinfo",
+            modal: true,
+            timeout: 30000,
+            data: {
+                phone: phone,
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#nameLabel1").css("display","none");
+                    var newphone = "15510179081";
+                    getPhone = newphone;
+                    $("#phone2").html(newphone);
+                    var myphone=newphone.substr(3,4);
+                    var lphone=newphone.replace(myphone,"****");
+                    $("#phone2").html(lphone);
+                    index ++;//index = 1
+                    $("#next1").hide();
+                    $("#next2").show();
 
+                } else {
+                    var tourl = "<%=path%>/login/findfail";
+                    window.location.href=tourl;
+                }
+            },
+            error: function () {
+                $("#nameLabel1").html("网络请求超时，请稍候再试");
+                $("#nameLabel1").css("display", "block");
+
+//                var newphone = "15510179081";
+//                getPhone = newphone;
+//                $("#phone2").html(newphone);
+//                var myphone=newphone.substr(3,4);
+//                var lphone=newphone.replace(myphone,"****");
+//                $("#phone2").html(lphone);
+//                index ++;//index = 1
+//                $("#next1").hide();
+//                $("#next2").show();
+            }
+        });
+    }
+    function jump2(code) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/checkTestCode",
+            modal: true,
+            timeout: 30000,
+            data: {
+                type: 6,    //密码操作码
+                code:code
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#codeLabel2").css("display", "none");
+                    index ++;//index = 2
+                    $("#next2").hide();
+                    $("#next3").show();
+                    getCode = code;
+                } else {
+                    $("#codeLabel2").html("短信验证码错误");
+                    $("#codeLabel2").css("display", "block");
+//                    index ++;//index = 2
+//                    $("#next2").hide();
+//                    $("#next3").show();
+                }
+            },
+            error: function () {
+                $("#codeLabel2").html("网络请求超时，请稍候再试");
+                $("#codeLabel2").css("display", "block");
+            }
+        });
+    }
+    function jump3(psd){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/editpssword",
+            modal: true,
+            timeout: 30000,
+            data: {
+                newpw: psd,
+                code:getCode,
+                mode:2  //密码操作吗
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    index ++;//index = 3
+                    $("#next3").hide();
+                    $("#next4").show();
+                    countDownFive();
+                } else {
+                    $("#confirmLabel3").html("找回失败");
+                    $("#confirmLabel3").css("display", "block");
+
+                }
+            },
+            error: function () {
+                $("#confirmLabel3").html("网络请求超时，请稍候再试");
+                $("#confirmLabel3").css("display", "block");
+            }
+        });
+    }
     function getnumberonclick(){
 //        调用接口校验合法性
 
-//        getTestCode("123123123");
-        //倒计时
-        countDown();
+        getTestCode(getPhone);
     }
     //    发送验证码
     function getTestCode(phone) {
@@ -234,21 +336,14 @@
             type: "POST",
             url: "<%=path%>/safe/sendTestCode",
             modal: true,
-            showBusi: false,
             timeout: 30000,
             data: {
-                telPhone: phone
+                type: 6,
+                info:phone
             },
             success: function (data) {
                 if (data.status == 1) {
-                    if (data.result == "true") {
-                        $("#codeLabel2").html("请验证码发送成功");
-                        $("#codeLabel2").css("display", "block");
-                        countDown(60);
-                    } else {
-                        $("#codeLabel2").html("短信验证码错误");
-                        $("#codeLabel2").css("display", "block");
-                    }
+                    countDown(60);
                 } else {
                     $("#codeLabel2").html("短信验证码错误");
                     $("#codeLabel2").css("display", "block");
@@ -319,7 +414,7 @@
     }
     function validateCode()
     {
-        var inputCode = document.getElementById("codeid").value;
+        var inputCode = document.getElementById("codeid1").value;
         if (inputCode.length <= 0)
         {
             $("#codeLabel1").html("请输入验证码");

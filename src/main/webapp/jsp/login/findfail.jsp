@@ -35,7 +35,7 @@
 
     <nav class="wap-second-nav">
         <ul>
-            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+            <a href="javascript:window.history.go(-1)" ><i class="icon iconfont left">&#xe626;</i></a>
             <li>找回密码</li>
         </ul>
     </nav>

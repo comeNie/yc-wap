@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: ldy
   Date: 2016/11/9
-  Time: 上午10:24
+  Time: 下午9:01
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>充值成功</title>
+    <title>账户余额</title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -32,19 +32,32 @@
 
 </head>
 <body>
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>支付</li>
-        </ul>
-    </nav>
-    <section class="tij-cg">
-        <ul>
-            <li><i class="icon iconfont">&#xe612;</i></li>
-            <li class="word">充值成功！账户余额为123123元</li>
-            <li>充值单号:<a href="#">414214</a> 查看<a href="#" onclick="toBalance()">我的账户</a></li>
-        </ul>
-    </section>
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
+                <li>账户余额</li>
+                <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
+            </ul>
+            <div class="pop-nav">
+                <ul>
+                    <li>
+                        <a href="#">译云首页</a>|
+                        <a href="#">个人中心</a>|
+                        <a href="#">我的订单</a>|
+                        <a href="#">安全退出</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="form-big">
+            <div class="balance">
+                账户余额:<span>12331.34元</span>
+            </div>
+            <div class="wap-btn"><a href="#" onclick="toRecharge()"  class="btn submit-btn btn-blue">充值</a></div>
+            <div class="balance-word">账户余额是在译云账户中的款项，下单时可以直接用于支付订单。</div>
+        </section>
+    </div>
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
@@ -52,14 +65,11 @@
 </body>
 </html>
 <script>
-    $(function() {
-
-    })
-    function retLeft(){
-        window.history.go(-1);
-    }
-    function toBalance(){
-        var tourl = "<%=path%>/account/balance";
+    function toRecharge(){
+        var tourl = "<%=path%>/account/recharge";
         window.location.href=tourl;
+    }
+    function retLeft() {
+        window.history.go(-1);
     }
 </script>
