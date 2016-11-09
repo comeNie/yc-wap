@@ -48,20 +48,19 @@
                 <ul>
                     <li>
                         <p>
-                            <select class="select testing-select-big">
-                                <option>中国大陆 +86</option>
-                                <option>中国大陆 +86</option>
+                            <select class="select testing-select-big" id="selectid">
                             </select>
                             <span>|</span>
                         </p>
                     </li>
                     <li>
-                        <p><input type="text" class="input input-large" placeholder="<spring:message code="safe.changephone.navli"/>"></p>
+                        <p><input id="phone" type="text" class="input input-large" placeholder="<spring:message code="safe.changephone.navli"/>"></p>
+                        <label id="phoneLabel"></label>
                     </li>
                     <li>
-                        <p><input type="text" class="input input-small" placeholder="<spring:message code="safe.changephone.small_input"/>"></p>
-                        <p class="yzm"><input type="text" class="btn bnt-yzm" value="<spring:message code="safe.changephone.bntyzm_input"/>"></p>
-                        <label><spring:message code="safe.changephone.code_label"/></label>
+                        <p><input type="text" id="codeid" class="input input-small" placeholder="<spring:message code="safe.changephone.small_input"/>"></p>
+                        <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value="<spring:message code="safe.changephone.bntyzm_input"/>"></p>
+                        <label id="phonetips"></label>
                     </li>
                     <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.changephone.nextbtn"/></a></li>
                 </ul>
@@ -69,34 +68,8 @@
         </div>
     </section>
 
-    <!--底部-->
-    <section class="footer-big">
-        <section class="terminal">
-            <ul>
-                <li class="none">
-                    <p><img src="<%=path%>/ui/images/icon-1.png"/></p>
-
-                    <p><spring:message code="all.project.public.icon-1"/></p>
-                </li>
-                <li class="tow current">
-                    <p><img src="<%=path%>/ui/images/icon-2.png"/></p>
-
-                    <p><spring:message code="all.project.public.icon-2"/></p>
-                </li>
-                <li class="three none-ml">
-                    <p><img src="<%=path%>/ui/images/icon-3.png"/></p>
-
-                    <p><spring:message code="all.project.public.icon-3"/></p>
-                </li>
-            </ul>
-        </section>
-        <footer class="footer">
-            <ul>
-                <li><a hrel="#"><spring:message code="all.project.public.footer.about"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.find"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.idea"/></a>|<a hrel="#"><spring:message code="all.project.public.footer.language"/></a></li>
-                <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
-            </ul>
-        </footer>
-    </section>
+    <%--底部視圖--%>
+    <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -105,9 +78,126 @@
             window.history.go(-1);
         });
     });
+    $(function() {
+       //加载国家的数据
+        loadCountry();
+    });
+    //加载国家的数据
+    function loadCountry() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/countryid",
+            modal: true,
+            showBusi: false,
+            timeout: 30000,
+            data: {
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    var list = data.list;
+                    $.each(list,function(index ,value){
+                        $('#selectid').append("<option>" + value.countryNameCn+"+"+value.countryCode + "</option>");
+                    })
+                } else {
+                    alert("失败")
+                }
+            },
+            error: function () {
+                $("#phonetips").html("网络请求超时，请稍候再试");
+                $("#phonetips").css("display", "block");
+            }
+        });
+    }
     function confirmBtn() {
+        var phone = $("#phone").val();
+        if (phone == "" || phone == null){
+            $("#phoneLabel").html("请输入手机号");
+            $("#phoneLabel").css("display","block");
+            return;
+        }else {
+            $("#phoneLabel").css("display","none");
+        }
+        var code = $("#codeid").val();
+        if (code == "" || code == null){
+            $("#phonetips").html("请输入短信验证码");
+            $("#phonetips").css("display","block");
+            return;
+        }else {
+            $("#phonetips").css("display","none");
+        }
 
         var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.confirm_phone"/>";
         window.location.href=tourl;
+    }
+    function getnumberonclick(){
+        var phone = $("#phone").val();
+        if (phone == "" || phone == null){
+            $("#phoneLabel").html("请输入手机号");
+            $("#phoneLabel").css("display","block");
+            return;
+        }else {
+            $("#phoneLabel").css("display","none");
+        }
+//        调用接口校验合法性
+
+//        getTestCode("123123123");
+        //倒计时
+        countDown(60);
+    }
+//    发送验证码
+    function getTestCode(phone) {
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/sendTestCode",
+            modal: true,
+            showBusi: false,
+            timeout: 30000,
+            data: {
+                telPhone: phone
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    if (data.result == "true") {
+                        $("#phonetips").html("请验证码发送成功");
+                        $("#phonetips").css("display", "block");
+                        countDown(60);
+                    } else {
+                        $("#phonetips").html("短信验证码错误");
+                        $("#phonetips").css("display", "block");
+                    }
+                } else {
+                    $("#phonetips").html("短信验证码错误");
+                    $("#phonetips").css("display", "block");
+                }
+            },
+            error: function () {
+                $("#phonetips").html("网络请求超时，请稍候再试");
+                $("#phonetips").css("display", "block");
+            }
+        });
+    }
+//    倒计时
+    var wait = 60;
+    function countDown() {
+        if (wait == 0) {
+            $("#getnumber").removeAttr("disabled");
+            $("#getnumber").attr("onclick", "getnumberonclick()");
+            $("#getnumber").val("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
+//            $("#getnumber").attr("class","");
+            //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
+            wait = 60;
+        }else {
+            var txtStr = '重新获取(' + wait + ')';
+            $("#getnumber").val(txtStr);
+//            $("#getnumber").attr("class","ash-cl");
+            // 按钮里面的内容呈现倒计时状态
+            $("#getnumber").attr("disabled", "block");
+            $("#getnumber").attr("onclick", "javascript:void(0)");
+            wait --;
+            setTimeout(function(){countDown();},1000);
+        }
     }
 </script>

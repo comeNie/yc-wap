@@ -27,7 +27,7 @@
 
 <nav class="wap-second-nav">
     <ul>
-        <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+        <a href="javascript:window.location.href='<%=path%>/written'"><i class="icon iconfont left">&#xe626;</i></a>
         <li>支付结果</li>
     </ul>
 </nav>
@@ -54,34 +54,13 @@
 </c:if>
 
 <!--底部-->
-<section class="footer-big">
-    <section class="terminal">
-        <ul>
-            <li class="none">
-                <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
-                <p>客户端</p>
-            </li>
-            <li class="tow current">
-                <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
-                <p>触屏版</p>
-            </li>
-            <li class="three none-ml">
-                <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
-                <p>电脑版</p>
-            </li>
-        </ul>
-    </section>
-    <footer class="footer">
-        <ul>
-            <li><a hrel="#">关于我们</a>|<a hrel="#">译云招募</a>|<a hrel="#">意见反馈</a>|<a hrel="#">ENGLISH</a></li>
-            <li class="ash">中译语通科技（北京）有限公司版权所有</li>
-        </ul>
-    </footer>
-</section>
+<%--<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>--%>
 </body>
 </html>
 <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 

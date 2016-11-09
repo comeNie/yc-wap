@@ -24,17 +24,17 @@
 </head>
 <body>
 <!--上传提示弹出框-->
+<!--上传提示弹出框-->
 <div class="eject-big">
     <div class="prompt" id="prompt">
-        <div class="prompt-title"><spring:message code="written.content.ptitle"/></div>
+        <div class="prompt-title">请选择</div>
         <div class="prompt-confirm">
             <ul>
-                <li><spring:message code="written.content.iosts"/></li>
+                <li>IOS端不支持上传附件请前往PC端</li>
             </ul>
         </div>
         <div class="prompt-confirm-btn">
-            <%--<input  type="button" class="btn btn-white" id="prompt-btn" value=<spring:message code="written.content.confirm"/>/>--%>
-            <a href="#" class="btn btn-white" id="prompt-btn"><spring:message code="written.content.confirm"/></a>
+            <input  type="button" class="btn btn-white" id="prompt-btn" value="确认"/>
         </div>
 
     </div>
@@ -43,24 +43,24 @@
 <!--上传提示弹出框-->
 <nav class="wap-second-nav">
     <ul>
-        <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
-        <li><spring:message code="written.content.ltitle"/></li>
+        <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
+        <li>翻译下单</li>
         <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
     </ul>
     <div class="pop-nav">
         <ul>
             <li>
-                <a href="#"><spring:message code="popnav.public.index"/></a>|
-                <a href="#"><spring:message code="popnav.public.ucenter"/></a>|
-                <a href="#"><spring:message code="popnav.public.order"/></a>|
-                <a href="#"><spring:message code="popnav.public.exit"/></a>
+                <a href="#">译云首页</a>|
+                <a href="#">个人中心</a>|
+                <a href="#">我的订单</a>|
+                <a href="#">安全退出</a>
             </li>
         </ul>
     </div>
 </nav>
 <section class="index-wrapper">
     <div class="testing-title">
-        <p><spring:message code="written.content.choose"/></p>
+        <p>选择语言:</p>
     </div>
     <!--转换语言-->
     <section class="testing">
@@ -79,32 +79,18 @@
             <span>|</span>
         </p>
     </section>
-    <!--转换语言结束-->
-    <div class="testing-title">
-        <p><spring:message code="written.content.content"/></p>
-        <p class="right"><a href="#"><spring:message code="written.content.back"/></a></p>
-    </div>
-    <!--翻译内容-->
-    <section class="history">
-        <div class="history-list">
-            <ul>
-                <a href="javascript:">
-                    <li>
-                        <p><i class="icon iconfont">&#xe601;</i></p>
-                        <p class="word-large">上传二十文件名称上传文件名称上传文件名称.docx</p>
-                        <p class="right"><a href="#" class="btn btn-red btn-mini">删除</a></p>
-                    </li>
-                </a>
-            </ul>
-        </div>
+    <!--文字翻译-->
+    <section class="translation-content">
+        <textarea class="textarea textarea-large" name="chick-int" id="chick-int"></textarea>
+        <a hrel="#"><i class="icon iconfont">&#xe618;</i></a>
     </section>
-    <div class="testing-title">
-        <p><a href="javascript:" id="upload">上传附件</a></p>
+    <div class="testing-title" style="display: none">
+        <p>您可以任意选择输入内容或者<a href="javascript:" id="upload">上传附件</a></p>
     </div>
     <div class="choice-list">
         <ul>
             <li>
-                <p class="word"><spring:message code="written.content.use"/></p>
+                <p class="word">用途:</p>
                 <p>
                     <select class="select testing-select-small">
                         <option>不限时</option>
@@ -113,7 +99,7 @@
                 </p>
             </li>
             <li>
-                <p class="word"><spring:message code="written.content.place"/></p>
+                <p class="word">领域:</p>
                 <p>
                     <select class="select testing-select-small">
                         <option>不限时</option>
@@ -122,7 +108,7 @@
                 </p>
             </li>
             <li>
-                <p class="word"><spring:message code="written.content.service"/></p>
+                <p class="word">增值服务:</p>
                 <p>
                     <select class="select testing-select-small">
                         <option>无排版</option>
@@ -137,7 +123,7 @@
                 </p>
             </li>
             <li>
-                <p class="word"><spring:message code="written.content.level"/></p>
+                <p class="word">级别选择:</p>
                 <p>
                     <select class="select testing-select-small">
                         <option>专业级</option>
@@ -152,40 +138,14 @@
             </li>
             <li>
                 <p><input type="checkbox" class="checkbox"></p>
-                <p class="a-link"><spring:message code="written.content.read"/><a href="#"><spring:message code="written.content.protocol"/></a></p>
+                <p class="a-link">我已阅读并同意中译语通的<a href="#">《翻译协议》</a></p>
             </li>
         </ul>
     </div>
-    <div class="wap-btn"><a href="#" id="submit" class="btn submit-btn btn-blue">提交</a></div>
+    <div class="wap-btn"><a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交</a></div>
 </section>
 <!--底部-->
-<section class="footer-big">
-    <section class="terminal">
-        <ul>
-            <li class="none">
-                <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
-                <p><spring:message code="all.project.public.icon-1"/></p>
-            </li>
-            <li class="tow current">
-                <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
-                <p><spring:message code="all.project.public.icon-2"/></p>
-            </li>
-            <li class="three none-ml">
-                <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
-                <p><spring:message code="all.project.public.icon-3"/></p>
-            </li>
-        </ul>
-    </section>
-    <footer class="footer">
-        <ul>
-            <li><a hrel="#"><spring:message code="all.project.public.footer.about"/></a>|
-                <a hrel="#"><spring:message code="all.project.public.footer.find"/></a>|
-                <a hrel="#"><spring:message code="all.project.public.footer.idea"/></a>|
-                <a hrel="#"><spring:message code="all.project.public.footer.language"/></a></li>
-            <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
-        </ul>
-    </footer>
-</section>
+<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
 </body>
 </html>
@@ -222,10 +182,10 @@
             error : function(data){
 
             },
-            beforeSend:function(){
+            beforeSend : function(){
 
             },
-            complete:function(){
+            complete : function(){
 
             }
         });

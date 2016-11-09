@@ -86,7 +86,7 @@
         <li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>
         <li class="right">
             <%--<input type="button" class="btn login-btn" value="登录" id="btn-login">--%>
-            <a href="#" class="btn login-btn" id="btn-login">登录</a>
+            <a href="javascript:window.location.href='<%=path%>/login/login'" class="btn login-btn" id="btn-login">登录</a>
         </li>
     </ul>
 </nav>
@@ -175,30 +175,12 @@
 </section>
 
 <!--底部-->
-<section class="footer-big">
-    <section class="terminal">
-        <ul>
-            <li class="none">
-                <p><img src="<%=path%>/ui/images/icon-1.png" /></p>
-                <p>客户端</p>
-            </li>
-            <li class="tow current">
-                <p><img src="<%=path%>/ui/images/icon-2.png" /></p>
-                <p>触屏版</p>
-            </li>
-            <li class="three none-ml">
-                <p><img src="<%=path%>/ui/images/icon-3.png" /></p>
-                <p>电脑版</p>
-            </li>
-        </ul>
-    </section>
-    <footer class="footer">
-        <ul>
-            <li><a hrel="#">关于我们</a>|<a hrel="#">译云招募</a>|<a hrel="#">意见反馈</a>|<a hrel="#" id="english-btn">ENGLISH</a></li>
-            <li class="ash">中译语通科技（北京）有限公司版权所有</li>
-        </ul>
-    </footer>
-</section>
+
+
+<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+<a onclick="javascript:window.location.href='<%=path%>/safe/safe'">安全设置</a>
+<a onclick="javascript:window.location.href='<%=path%>/account/recharge'">充值</a>
+
 </body>
 </html>
 <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>

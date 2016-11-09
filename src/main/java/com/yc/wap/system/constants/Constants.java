@@ -11,10 +11,8 @@ public class Constants {
     public static class AjaxStatus{
         // 处理成功，表示没有捕捉到任何异常
         public static final String STATUS_SUCCESS = "1";
-
         // 处理失败,标识捕捉到异常信息
         public static final String STATUS_FAILURE = "2";
-
         // session异常报错
         public static final String SESSION_EXCEPTION = "-1";
     }
@@ -37,4 +35,27 @@ public class Constants {
         public static final String RETURN_DATA="data";
     }
 
+    /**
+     * 订单类型
+     */
+    public static class OrderType {
+        // 快速翻译
+        public static final String QUICK = "0";
+        // 文档翻译
+        public static final String DOC = "1";
+        // 口译
+        public static final String INTER = "2";
+    }
+
+    /**
+     * 翻译级别
+     */
+    public static class TranslateLevel {
+        // 标准级
+        public static final String Normal = "100210";
+        // 专业级
+        public static final String Professional = "100220";
+        // 出版级
+        public static final String Publish = "100230";
+    }
 }

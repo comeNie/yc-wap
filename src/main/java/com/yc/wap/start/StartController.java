@@ -1,7 +1,5 @@
 package com.yc.wap.start;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
@@ -15,15 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.sun.org.apache.bcel.internal.classfile.JavaClass.FILE;
-import static javafx.scene.input.KeyCode.J;
 
 
 /**
@@ -70,11 +64,7 @@ public class StartController extends BaseController{
         String resp = null;
         try {
             resp = HttpsUtil.HttpsPost(TRANSREQ, jsonObject.toString(), "UTF-8");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
             e.printStackTrace();
         }
 
