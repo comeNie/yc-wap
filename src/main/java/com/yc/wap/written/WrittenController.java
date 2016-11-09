@@ -8,6 +8,7 @@ import com.ai.yc.common.api.sysduad.param.QuerySysDuadListReq;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListRes;
 import com.ai.yc.common.api.syspurpose.interfaces.IQuerySysPurposeSV;
 import com.ai.yc.common.api.syspurpose.param.QuerySysPurposeListRes;
+import com.alibaba.dubbo.common.json.JSONObject;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -16,6 +17,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -37,9 +39,11 @@ public class WrittenController extends BaseController{
     public String content() {
         Locale local = rb.getDefaultLocale();
         String country = local.getCountry();
-        List DualList = GetDualList(country, Constants.OrderType.DOC);
-        List PurposeList = GetPurposeList(country);
-        List DomainList = GetDomainList(country);
+        String language = local.getLanguage();
+        log.info("local country: " + country + ", language: " + language);
+        List DualList = GetDualList(language, Constants.OrderType.DOC);
+        List PurposeList = GetPurposeList(language);
+        List DomainList = GetDomainList(language);
         request.setAttribute("DualList", DualList);
         request.setAttribute("PurposeList", PurposeList);
         request.setAttribute("DomainList", DomainList);
@@ -54,7 +58,6 @@ public class WrittenController extends BaseController{
         if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
             throw new RuntimeException("GetDualListFailed");
         }
-        log.info("Get DualList Return: " + resp.getDuads().toString());
         return resp.getDuads();
     }
 
@@ -63,7 +66,6 @@ public class WrittenController extends BaseController{
         if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
             throw new RuntimeException("GetPurposeListFailed");
         }
-        log.info("Get PurposeList Return: " + resp.getPurposes().toString());
         return resp.getPurposes();
     }
 
@@ -72,16 +74,15 @@ public class WrittenController extends BaseController{
         if(!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
             throw new RuntimeException("GetDomainListFailed");
         }
-        log.info("Get DomainList Return: " + resp.getDomainVos().toString());
         return resp.getDomainVos();
     }
 
-    @RequestMapping(value = "onContentSubmit")
-    @ResponseBody
-    public Object onContentSubmit() {
-        MsgBean result = new MsgBean();
-        result.put("result", true);
-        return result.returnMsg();
+    @RequestMapping(value = "onContentSubmit", method = RequestMethod.POST)
+    public String onContentSubmit() {
+        String DomainIndex = request.getParameter("DomainIndex");
+        String DomainVal = request.getParameter("DomainVal");
+        log.info("onContentSubmit:" + DomainIndex + DomainVal);
+        return "written/confirm";
     }
 
     @RequestMapping(value = "contact")
@@ -118,5 +119,11 @@ public class WrittenController extends BaseController{
     @RequestMapping(value = "payment")
     public String payment() {
         return "written/payment";
+    }
+
+    @RequestMapping(value = "PayResult")
+    public String PayResult() {
+        request.setAttribute("result", "success");
+        return "written/payresult";
     }
 }

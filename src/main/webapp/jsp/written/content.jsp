@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
@@ -101,8 +102,10 @@
             <li>
                 <p class="word">领域:</p>
                 <p>
-                    <select class="select testing-select-small">
-                        <option>不限时</option>
+                    <select id="domain" class="select testing-select-small">
+                        <c:forEach items="${DomainList}" var="pair">
+                            <option>${pair.domainCn}</option>
+                        </c:forEach>
                     </select>
                     <span>|</span>
                 </p>
@@ -156,7 +159,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("#submit").bind("click", function () {
-            onSubmit();
+            var DomainIndex = $("#domain").prop('selectedIndex');
+            var DomainVal = $("#domain").val();
+            onSubmit("DomainIndex="+DomainIndex+"&DomainVal="+DomainVal);
         })
     });
 
@@ -164,31 +169,8 @@
 
     });
 
-    function onSubmit() {
-        var test = "haha";
-        $.ajax({
-            async : true,
-            type : "POST",
-            url : "<%=path%>/written/onContentSubmit",
-            modal : true,
-            timeout: 30000,
-            data : {
-                test:test
-            },
-            success : function(data) {
-                var ToUrl = "<%=path%>/written/confirm";
-                window.location.href=ToUrl;
-            },
-            error : function(data){
-
-            },
-            beforeSend : function(){
-
-            },
-            complete : function(){
-
-            }
-        });
+    function onSubmit(url) {
+        window.location.href = "<%=path%>/written/onContentSubmit?" + url;
     }
 
 </script>
