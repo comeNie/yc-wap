@@ -69,11 +69,12 @@
     </section>
     <footer class="footer">
         <ul>
-            <li><a href="#"><spring:message code="all.project.public.footer.about"/></a>|
-                <a href="#"><spring:message code="all.project.public.footer.find"/></a>|
+            <li><a href="<%=path%>/jsp/common/aboutus.jsp"><spring:message code="all.project.public.footer.about"/></a>|
+                <a href="<%=path%>/jsp/common/recruit.jsp"><spring:message code="all.project.public.footer.find"/></a>|
                 <a href="#"><spring:message code="all.project.public.footer.idea"/></a>|
                 <a href="#"><spring:message code="all.project.public.footer.language"/></a></li>
             <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
+            <%--若多语言不可用，就改控制器进入jsp--%>
         </ul>
     </footer>
 </section>

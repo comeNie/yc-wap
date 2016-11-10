@@ -71,7 +71,7 @@
         </section>
         <!--文字翻译-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" placeholder="2000字"></textarea>
+            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" placeholder="最多2000字啊啊啊"></textarea>
             <a hrel="#"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">
@@ -192,19 +192,19 @@
             var Content = $("#chick-int").val();
             var ContentLength = count(escape(Content));
             if (ContentLength == 0) {
-                $("#EjectTitle").html("没字");
+                $("#EjectTitle").html("没写字呢卧槽");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             }
             if (ContentLength >= 2000) {
-                $("#EjectTitle").html("多了");
+                $("#EjectTitle").html("超出2000了卧槽");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             }
             if (!$("#isRead").prop("checked")) {
-                $("#EjectTitle").html("没读");
+                $("#EjectTitle").html("没读协议呢卧槽");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;

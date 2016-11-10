@@ -33,8 +33,7 @@
         <ul>
             <li>
                 <a href="javascript:window.location.href='<%=path%>/'"><spring:message code="popnav.public.index"/></a>|
-                <a href="javascript:window.location.href='<%=path%>/center/center'"><spring:message
-                        code="popnav.public.ucenter"/></a>|
+                <a href="javascript:window.location.href='<%=path%>/center/center'"><spring:message code="popnav.public.ucenter"/></a>|
                 <a href="#"><spring:message code="popnav.public.order"/></a>|
                 <a href="#"><spring:message code="popnav.public.exit"/></a>
             </li>
