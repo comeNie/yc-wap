@@ -13,7 +13,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>联系方式</title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
@@ -22,49 +22,37 @@
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div class="wrapper-big" id="body">
+    <%--头部--%>
+    <jsp:include page="/jsp/common/pophead.jsp" flush="true">
+        <jsp:param name="Title" value="联系方式"/>
+        <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
+    </jsp:include>
+    <!--订单内容-->
+    <section class="order-content new-cont">
+        <div class="order-list">
+            <ul>
+                <li>手机:</li>
+                <li><input type="text" class="input input-medium" placeholder="请输入手机号码（必填）"></li>
+            </ul>
+            <ul>
+                <li>姓名:</li>
+                <li><input type="text" class="input input-medium" placeholder="请输入姓名"></li>
+            </ul>
+            <ul>
+                <li>邮箱:</li>
+                <li><input type="text" class="input input-medium" placeholder="请输入接收译文的邮箱"></li>
+            </ul>
 
-<nav class="wap-second-nav">
-    <ul>
-        <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
-        <li>联系方式</li>
-
-    </ul>
-    <div class="pop-nav">
-        <ul>
-            <li>
-                <a href="#">译云首页</a>|
-                <a href="#">个人中心</a>|
-                <a href="#">我的订单</a>|
-                <a href="#">安全退出</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<!--订单内容-->
-<section class="order-content new-cont">
-    <div class="order-list">
-        <ul>
-            <li>手机:</li>
-            <li><input type="text" class="input input-medium" placeholder="请输入手机号码（必填）"></li>
-        </ul>
-        <ul>
-            <li>姓名:</li>
-            <li><input type="text" class="input input-medium" placeholder="请输入姓名"></li>
-        </ul>
-        <ul>
-            <li>邮箱:</li>
-            <li><input type="text" class="input input-medium" placeholder="请输入接收译文的邮箱"></li>
-        </ul>
-        <ul class="none-border" style="display: none">
-            <li class="width-large">
-                <p>设为默认地址</p>
-                <p class="right-multi"><input type="checkbox" class="multi-switch" value="0" /></p>
-            </li>
-        </ul>
-
-    </div>
-</section>
+            <ul class="none-border" style="display: none">
+                <li class="width-large">
+                    <p>设为默认地址</p>
+                    <p class="right-multi"><input type="checkbox" class="multi-switch" value="0"/></p>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
 <section class="add-btn">
     <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交订单</a>
 </section>
@@ -72,9 +60,11 @@
 </html>
 <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
+<script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script src="<%=path%>/js/modular/multi-switch.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.multi-switch').multiSwitch();
         $("#submit").bind("click", function () {
             onSubmit();
@@ -88,25 +78,25 @@
     function onSubmit() {
         var test = "haha";
         $.ajax({
-            async : true,
-            type : "POST",
-            url : "<%=path%>/written/onNewContactSubmit",
-            modal : true,
+            async: true,
+            type: "POST",
+            url: "<%=path%>/written/onNewContactSubmit",
+            modal: true,
             timeout: 30000,
-            data : {
-                test:test
+            data: {
+                test: test
             },
-            success : function(data) {
+            success: function (data) {
                 var ToUrl = "<%=path%>/written/payment";
-                window.location.href=ToUrl;
+                window.location.href = ToUrl;
             },
-            error : function(data){
+            error: function (data) {
                 console.log(data);
             },
-            beforeSend:function(){
+            beforeSend: function () {
 
             },
-            complete:function(){
+            complete: function () {
 
             }
         });

@@ -18,7 +18,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import scala.util.parsing.combinator.testing.Str;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

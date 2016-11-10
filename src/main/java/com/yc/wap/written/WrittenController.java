@@ -78,20 +78,19 @@ public class WrittenController extends BaseController {
         return resp.getDomainVos();
     }
 
+    @RequestMapping(value = "onSaveContent")
+    @ResponseBody
+    public Object onSaveContent() {
+        MsgBean result = new MsgBean();
+        String Content = request.getParameter("Content");
+        String ContentLength = request.getParameter("ContentLength");
+        session.setAttribute("Content", Content);
+        session.setAttribute("ContentLength", ContentLength);
+        return result.returnMsg();
+    }
+
     @RequestMapping(value = "onContentSubmit")
     public String onContentSubmit() {
-        String DomainId = request.getParameter("DomainId");
-        String DomainVal = request.getParameter("DomainVal");
-        return "written/confirm";
-    }
-
-    @RequestMapping(value = "contact")
-    public String contact() {
-        return "written/contact";
-    }
-
-    @RequestMapping(value = "confirm")
-    public String confirm() {
         return "written/confirm";
     }
 
@@ -99,7 +98,6 @@ public class WrittenController extends BaseController {
     @ResponseBody
     public Object onConfirmSubmit() {
         MsgBean result = new MsgBean();
-        result.put("result", true);
         return result.returnMsg();
     }
 

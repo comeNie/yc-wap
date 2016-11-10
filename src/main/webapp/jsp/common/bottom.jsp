@@ -50,7 +50,7 @@
 <head>
 </head>
 <body>
-<section class="footer-big">
+<section id="_bottom" class="footer-big">
     <section class="terminal">
         <ul>
             <li class="none">

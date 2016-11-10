@@ -9,11 +9,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
+    String index = path + "/";
 %>
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>支付结果</title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
@@ -22,35 +23,37 @@
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div class="wrapper-big" id="body">
+    <%--头部--%>
+    <jsp:include page="/jsp/common/pophead.jsp" flush="true">
+        <jsp:param name="Title" value="支付结果"/>
+        <jsp:param name="BackTo" value="<%=index%>"/>
+        <jsp:param name="ShowIcon" value="false"/>
+    </jsp:include>
 
-<nav class="wap-second-nav">
-    <ul>
-        <a href="javascript:window.location.href='<%=path%>'"><i class="icon iconfont left">&#xe626;</i></a>
-        <li>支付结果</li>
-    </ul>
-</nav>
-
-<%--success--%>
-<c:if test="${result=='success'}">
-<section class="tij-cg" id="successlabel">
-    <ul>
-        <li><i class="icon iconfont">&#xe612;</i></li>
-        <li class="word">您的订单支付成功</li>
-        <li>您的订单号:<a href="#">5000020965</a>，您可以在<a href="#">“我的订单”</a>中查看您的订单信息，若有任何疑问，欢迎致电咨询:<br>400-119-8080</li>
-    </ul>
-</section>
-</c:if>
-<%--fail--%>
-<c:if test="${result=='fail'}">
-<section class="tij-cg" id="faillabel">
-    <ul>
-        <li><i class="icon iconfont red">&#xe62b;</i></li>
-        <li class="word red">您的订单支付失败！</li>
-        <li>您的订单号:<a href="#">5000020965</a>，您可以在“<a href="#">我的订单</a>”中查看您的订单信息，若有任何疑问，欢迎致电咨询:<br>400-119-8080</li>
-    </ul>
-</section>
-</c:if>
-
+    <%--success--%>
+    <c:if test="${result=='success'}">
+        <section class="tij-cg" id="successlabel">
+            <ul>
+                <li><i class="icon iconfont">&#xe612;</i></li>
+                <li class="word">您的订单支付成功</li>
+                <li>您的订单号:<a href="#">5000020965</a>，您可以在<a href="#">“我的订单”</a>中查看您的订单信息，若有任何疑问，欢迎致电咨询:<br>400-119-8080
+                </li>
+            </ul>
+        </section>
+    </c:if>
+    <%--fail--%>
+    <c:if test="${result=='fail'}">
+        <section class="tij-cg" id="faillabel">
+            <ul>
+                <li><i class="icon iconfont red">&#xe62b;</i></li>
+                <li class="word red">您的订单支付失败！</li>
+                <li>您的订单号:<a href="#">5000020965</a>，您可以在“<a href="#">我的订单</a>”中查看您的订单信息，若有任何疑问，欢迎致电咨询:<br>400-119-8080
+                </li>
+            </ul>
+        </section>
+    </c:if>
+</div>
 <!--底部-->
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>
@@ -60,12 +63,12 @@
 <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
 
     });
 
     $(function () {
-        
+
     });
 
 </script>
