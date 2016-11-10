@@ -76,4 +76,81 @@ public class Constants {
      * 租户ID
      */
     public static final String TenantID = "yeecloud";
+
+    /**
+     * 登录方式
+     */
+    public static class LoginModel {
+        //1：邮箱密码
+        public static final String MailModel = "1";
+        //2：手机密码
+        public static final String PhonePsdModel = "2";
+        //3：手机动态密码
+        public static final String PhoneCodeModel = "3";
+        //4：用户名密码
+        public static final String UsernamePsdModel = "4";
+
+    }
+    /**
+     * 获取用户信息方式
+     */
+    public static class GetUserMode {
+        //1：用户id
+        public static final String UserID = "1";
+        //2：邮箱
+        public static final String Mail = "2";
+        //3：手机
+        public static final String Phone = "3";
+        //4：用户名
+        public static final String UserName = "4";
+
+    }
+    /**
+     * 许可登录方式
+     */
+    public static class AllowLoginModel {
+        //0.全部
+        public static final String AllModel = "0";
+        //1：邮箱密码
+        public static final String MailModel = "1";
+        //2：手机密码
+        public static final String PhonePsdModel = "2";
+        //3：手机动态密码
+        public static final String PhoneCodeModel = "3";
+        //4：用户名密码
+        public static final String UsernamePsdModel = "4";
+
+    }
+    /**
+     * 注册方式
+     */
+    public static class RegisterModel {
+        //1：邮箱密码
+        public static final String MailModel = "1";
+        //2：手机密码
+        public static final String PhonePsdModel = "2";
+        //3：手机动态密码
+        public static final String PhoneCodeModel = "3";
+        //4：用户名密码
+        public static final String UsernamePsdModel = "4";
+
+    }
+    /**
+     * 用户来源系统
+     */
+    public static class UserSource {
+        //0：内部系统 gtcom
+        public static final String GTCOM = "0";
+        //1：金山 jinshan
+        public static final String JINSHAN = "1";
+        //2：百度用户baidu
+        public static final String BAIDU = "2";
+        //3：微信 weixin
+        public static final String WEIXIN = "3";
+        //4：腾讯用户qq
+        public static final String QQ = "4";
+        //5：新浪用户sina
+        public static final String SINA  = "5";
+
+    }
 }

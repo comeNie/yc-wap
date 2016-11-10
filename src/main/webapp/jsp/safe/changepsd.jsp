@@ -31,39 +31,40 @@
 
 </head>
 <body>
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-            <li><spring:message code="safe.changepsd.title"/></li>
-        </ul>
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
+                <li><spring:message code="safe.changepsd.title"/></li>
+            </ul>
 
-    </nav>
+        </nav>
 
-    <!--订单内容-->
-    <section class="index-wrapper ">
-        <div class="set-password">
-            <div class="set-int">
-                <ul>
-                    <li>
-                        <p><input id="oldPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input1"/>"></p>
-                        <label id="oldLable"></label>
-                    </li>
-                    <li>
-                        <p><input id="newPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input2"/>"></p>
-                        <label id="newLable"></label>
-                    </li>
-                    <li>
-                        <p><input id="confirmPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input3"/>"></p>
-                        <label id="confirmLable"></label>
-                    </li>
-                    <li>
-                        <a class="btn submit-btn btn-blue" href="#" onclick="finishChange()"><spring:message code="safe.changepsd.enter_input"/></a>
-                    </li>
-                </ul>
+        <!--订单内容-->
+        <section class="index-wrapper ">
+            <div class="set-password">
+                <div class="set-int">
+                    <ul>
+                        <li>
+                            <p><input id="oldPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input1"/>"></p>
+                            <label id="oldLable"></label>
+                        </li>
+                        <li>
+                            <p><input id="newPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input2"/>"></p>
+                            <label id="newLable"></label>
+                        </li>
+                        <li>
+                            <p><input id="confirmPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input3"/>"></p>
+                            <label id="confirmLable"></label>
+                        </li>
+                        <li>
+                            <a class="btn submit-btn btn-blue" href="#" onclick="finishChange()"><spring:message code="safe.changepsd.enter_input"/></a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
-
+        </section>
+    </div>
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>

@@ -32,85 +32,85 @@
 
 </head>
 <body>
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:" onclick="leftRe()"><i class="icon iconfont left">&#xe626;</i></a>
+                <li>找回密码</li>
+            </ul>
+        </nav>
+        <section class="form-big">
 
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:" onclick="leftRe()"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>找回密码</li>
-        </ul>
-    </nav>
-    <section class="form-big">
+            <div id="next1">
+                <div class="set-password">
+                    <div class="set-int">
+                        <ul>
+                            <li>
+                                <p><input id="nameid1" type="text" class="input input-large" placeholder="用户名/邮箱/手机号"></p>
+                                <label id="nameLabel1"></label>
+                            </li>
+                            <li class="int-border">
+                                <p><input id="codeid1" type="text" class="input input-yzm" placeholder="验证码"></p>
 
-        <div id="next1">
-            <div class="set-password">
-                <div class="set-int">
-                    <ul>
-                        <li>
-                            <p><input id="nameid1" type="text" class="input input-large" placeholder="用户名/邮箱/手机号"></p>
-                            <label id="nameLabel1"></label>
-                        </li>
-                        <li class="int-border">
-                            <p><input id="codeid1" type="text" class="input input-yzm" placeholder="验证码"></p>
-
-                            <p><div class="code" id="checkCode"></div></p>
-                            <p><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
-                            <label id="codeLabel1"></label>
-                        </li>
-                        <li><a href="javascript:void(0)" id="next-btn1" class="submit-btn btn-blue">下一步</a></li>
-                    </ul>
+                                <p><div class="code" id="checkCode"></div></p>
+                                <p><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
+                                <label id="codeLabel1"></label>
+                            </li>
+                            <li><a href="javascript:void(0)" id="next-btn1" class="submit-btn btn-blue">下一步</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="next2">
-            <div class="set-password">
-                <div class="set-phone">
-                    <p>已验证手机</p>
-                    <p class="word" id="phone2">138****1234</p>
-                </div>
-                <div class="set-int">
-                    <ul>
-                        <li>
-                            <p><input id="codeid2" type="text" class="input input-small" placeholder="请输入动态码"></p>
-                            <p class="yzm"><a id="getnumber" onclick="getnumberonclick()" href="#"  class="btn bnt-yzm">获取动态码</a></p>
-                            <label id="codeLabel2"></label>
-                        </li>
-                        <li><a href="javascript:void(0)" id="next-btn2" class="submit-btn btn-blue">下一步</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div id="next3">
-            <div class="set-password">
-                <div class="set-int">
-                    <ul>
-                        <li>
-                            <p><input id="psdid3" type="password" class="input input-large" placeholder="新密码"></p>
-                            <label id="psdLabel3"></label>
-                        </li>
-                        <li>
-                            <p><input id="confirmid3" type="password" class="input input-large" placeholder="确认密码"></p>
-                            <label id="confirmLabel3"></label>
-                        </li>
-                        <li><a href="javascript:void(0)" id="next-btn3" class="submit-btn btn-blue">下一步</a></li>
-                    </ul>
+            <div id="next2">
+                <div class="set-password">
+                    <div class="set-phone">
+                        <p>已验证手机</p>
+                        <p class="word" id="phone2">138****1234</p>
+                    </div>
+                    <div class="set-int">
+                        <ul>
+                            <li>
+                                <p><input id="codeid2" type="text" class="input input-small" placeholder="请输入动态码"></p>
+                                <p class="yzm"><a id="getnumber" onclick="getnumberonclick()" href="#"  class="btn bnt-yzm">获取动态码</a></p>
+                                <label id="codeLabel2"></label>
+                            </li>
+                            <li><a href="javascript:void(0)" id="next-btn2" class="submit-btn btn-blue">下一步</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="next4">
-            <section class="tij-cg">
-                <ul>
-                    <li><i class="icon iconfont">&#xe612;</i></li>
-                    <li class="word">密码设置成功</li>
-                    <li><span id="spanTime">5s</span>内自动回到<a href="#" onclick="goLogin()">登录页面</a></li>
-                </ul>
-            </section>
-        </div>
+            <div id="next3">
+                <div class="set-password">
+                    <div class="set-int">
+                        <ul>
+                            <li>
+                                <p><input id="psdid3" type="password" class="input input-large" placeholder="新密码"></p>
+                                <label id="psdLabel3"></label>
+                            </li>
+                            <li>
+                                <p><input id="confirmid3" type="password" class="input input-large" placeholder="确认密码"></p>
+                                <label id="confirmLabel3"></label>
+                            </li>
+                            <li><a href="javascript:void(0)" id="next-btn3" class="submit-btn btn-blue">下一步</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-    </section>
+            <div id="next4">
+                <section class="tij-cg">
+                    <ul>
+                        <li><i class="icon iconfont">&#xe612;</i></li>
+                        <li class="word">密码设置成功</li>
+                        <li><span id="spanTime">5s</span>内自动回到<a href="#" onclick="goLogin()">登录页面</a></li>
+                    </ul>
+                </section>
+            </div>
 
+        </section>
+    </div>
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>

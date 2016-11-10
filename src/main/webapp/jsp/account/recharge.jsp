@@ -32,55 +32,57 @@
 
 </head>
 <body>
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>充值</li>
-            <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
-        </ul>
-        <div class="pop-nav">
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
             <ul>
-                <li>
-                    <a href="#">译云首页</a>|
-                    <a href="#">个人中心</a>|
-                    <a href="#">我的订单</a>|
-                    <a href="#">安全退出</a>
-                </li>
+                <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
+                <li>充值</li>
+                <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
             </ul>
-        </div>
-    </nav>
-    <section class="form-big">
-        <div class="set-password">
-            <div class="choice-list">
+            <div class="pop-nav">
                 <ul>
                     <li>
-                        <p class="word">账户余额:</p>
-                        <p>100元</p>
-                    </li>
-                    <li>
-                        <p class="word">充值金额:</p>
-                        <p><input id="price" type="text" class="input int-rech" placeholder="50"></p>
-                        <p>元</p>
-
-                    </li>
-                    <label id="pricetip"></label>
-                    <li>
-                        <p class="word">充值方式:</p>
-                        <p>
-                            <input type="radio" class="radio" name="way" value="1" checked>
-                            <img src="<%=path%>/ui/images/zhifb.png">
-                        </p>
-                        <p class="ml-a">
-                            <input type="radio" class="radio" name="way" value="2">
-                            <img src="<%=path%>/ui/images/unionpay.png">
-                        </p>
-                        <label id="inputid"></label>
+                        <a href="#">译云首页</a>|
+                        <a href="#">个人中心</a>|
+                        <a href="#">我的订单</a>|
+                        <a href="#">安全退出</a>
                     </li>
                 </ul>
             </div>
-            <div class="wap-btn"><a href="#"  class="btn submit-btn btn-blue" onclick="confirm()">提交</a></div>
-        </div>
-    </section>
+        </nav>
+        <section class="form-big">
+            <div class="set-password">
+                <div class="choice-list">
+                    <ul>
+                        <li>
+                            <p class="word">账户余额:</p>
+                            <p>100元</p>
+                        </li>
+                        <li>
+                            <p class="word">充值金额:</p>
+                            <p><input id="price" type="text" class="input int-rech" placeholder="50"></p>
+                            <p>元</p>
+
+                        </li>
+                        <label id="pricetip"></label>
+                        <li>
+                            <p class="word">充值方式:</p>
+                            <p>
+                                <input type="radio" class="radio" name="way" value="1" checked>
+                                <img src="<%=path%>/ui/images/zhifb.png">
+                            </p>
+                            <p class="ml-a">
+                                <input type="radio" class="radio" name="way" value="2">
+                                <img src="<%=path%>/ui/images/unionpay.png">
+                            </p>
+                            <label id="inputid"></label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="wap-btn"><a href="#"  class="btn submit-btn btn-blue" onclick="confirm()">提交</a></div>
+            </div>
+        </section>
+    </div>
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>

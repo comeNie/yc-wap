@@ -69,12 +69,12 @@ public class LoginController extends BaseController {
         boolean isEmail = RegexUtils.checkIsEmail(username);
         boolean isPhone = RegexUtils.checkIsPhone(username);
         if (isEmail) {
-            loginmode = "1";
+            loginmode = Constants.LoginModel.MailModel;
         }
         else if (isPhone) {
-            loginmode = "2";
+            loginmode = Constants.LoginModel.PhoneCodeModel;
         }else {
-            loginmode = "4";
+            loginmode = Constants.LoginModel.UsernamePsdModel;
         }
         log.info(loginmode);
         res.setLoginmode(loginmode);
@@ -105,8 +105,8 @@ public class LoginController extends BaseController {
         res.setTenantId(Constants.TenantID);
         res.setPassword(password);
         res.setMobilephone(phone);
-        res.setLoginmode("0");
-        res.setLoginway("3");
+        res.setLoginmode(Constants.AllowLoginModel.AllModel);
+        res.setLoginway(Constants.RegisterModel.PhoneCodeModel);
         res.setCreatetime(createTime);
         res.setOperationcode(code);
         try {

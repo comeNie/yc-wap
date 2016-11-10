@@ -32,21 +32,21 @@
 
 </head>
 <body>
-
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:" onclick="leftRe()"><i  class="icon iconfont left">&#xe626;</i></a>
-            <li>注册</li>
-        </ul>
-    </nav>
-    <section class="tij-cg">
-        <ul>
-            <li><i class="icon iconfont">&#xe612;</i></li>
-            <li class="word">恭喜您注册成功</li>
-            <li><span id="spanTime">5s</span>内自动回到<a href="#" onclick="goLogin()">登录页面</a>恭喜您获得平台赠送的翻译体验金，欢迎您体验人工翻译服务</li>
-        </ul>
-    </section>
-
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:" onclick="leftRe()"><i  class="icon iconfont left">&#xe626;</i></a>
+                <li>注册</li>
+            </ul>
+        </nav>
+        <section class="tij-cg">
+            <ul>
+                <li><i class="icon iconfont">&#xe612;</i></li>
+                <li class="word">恭喜您注册成功</li>
+                <li><span id="spanTime">5s</span>内自动回到<a href="#" onclick="goLogin()">登录页面</a>恭喜您获得平台赠送的翻译体验金，欢迎您体验人工翻译服务</li>
+            </ul>
+        </section>
+    </div>
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>

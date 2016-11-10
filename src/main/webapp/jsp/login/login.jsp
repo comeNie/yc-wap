@@ -33,96 +33,97 @@
 
 </head>
 <body>
- <!--登录-->
- <nav class="wap-second-nav">
-     <ul>
-         <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
-         <li>登录</li>
-         <a href="#" class="btn login-btn right1" onclick="registJump()">注册</a>
-     </ul>
- </nav>
- <%--<!--tab-->
- <section class="login-tab">
-     <ul>
-         <li><a href="#" class="current">快速登录</a></li>
-         <li><a href="#">普通登录</a></li>
-     </ul>
- </section>
-    <!--tab1-->
-    <section id="tab1">
-        <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
-        <section class="form-big">
-            <div class="set-password">
-                <div class="set-int">
-                    <ul>
-                        <li>
-                            <p>
-                                <select class="select testing-select-big" id="selectid">
-                                </select>
-                                <span>|</span>
-                            </p>
-                        </li>
-                        <li>
-                            <p><input type="text" class="input input-large" placeholder="手机号"></p>
-                            <label id="phoneLabel"></label>
-                        </li>
-                        <li>
-                            <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-                            <p class="yzm"><a href="#" class="btn bnt-yzm">获取动态码</a></p>
-                            <label id="phonetips"></label>
-                        </li>
-                        <li><a href="#" class="submit-btn btn-blue">立即登录</a></li>
-                        <li class="right"><a href="#">忘记密码 </a></li>
-                    </ul>
-                </div>
-            </div>
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <!--登录-->
+        <nav class="wap-second-nav">
+         <ul>
+             <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+             <li>登录</li>
+             <a href="#" class="btn login-btn right1" onclick="registJump()">注册</a>
+         </ul>
+        </nav>
+        <%--<!--tab-->
+        <section class="login-tab">
+         <ul>
+             <li><a href="#" class="current">快速登录</a></li>
+             <li><a href="#">普通登录</a></li>
+         </ul>
         </section>
-    </section>
-    <!--tab1-->--%>
-    <section id="tab2" style="display:block;">
-        <section class="form-big">
-            <div class="set-password">
-                <div class="set-int">
-                    <ul>
-                        <li>
-                            <p><input id="phoneid" type="text" class="input input-large" placeholder="用户名/邮箱/手机号"></p>
-                            <label id="phoneLabel"></label>
-                        </li>
-                        <li>
-                            <p><input id="psdid" type="password" class="input input-large" placeholder="密码"></p>
-                            <label id="psdLabel"></label>
-                        </li>
-                        <li class="int-border">
-                            <p><input id="codeid" type="text" class="input input-yzm" placeholder="验证码"></p>
-                            <p><div class="code" id="checkCode"></div></p>
-                            <p><a href="#" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
-                            <label id="codeLabel"></label>
-                        </li>
-                        <li><a href="#" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
-                        <li class="right"><a href="#" onclick="forgetpsd()">忘记密码 </a></li>
-                    </ul>
+        <!--tab1-->
+        <section id="tab1">
+            <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
+            <section class="form-big">
+                <div class="set-password">
+                    <div class="set-int">
+                        <ul>
+                            <li>
+                                <p>
+                                    <select class="select testing-select-big" id="selectid">
+                                    </select>
+                                    <span>|</span>
+                                </p>
+                            </li>
+                            <li>
+                                <p><input type="text" class="input input-large" placeholder="手机号"></p>
+                                <label id="phoneLabel"></label>
+                            </li>
+                            <li>
+                                <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
+                                <p class="yzm"><a href="#" class="btn bnt-yzm">获取动态码</a></p>
+                                <label id="phonetips"></label>
+                            </li>
+                            <li><a href="#" class="submit-btn btn-blue">立即登录</a></li>
+                            <li class="right"><a href="#">忘记密码 </a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </section>
         </section>
-    </section>
-    <%--<!--其他登录-->
-    <section class="other-big">
-        <div class="other-login">
-            <p class="line"></p>
-            <p class="word">其他登录</p>
-            <p class="line"></p>
-        </div>
-        <div class="other-login-icon">
-            <ul>
-                <li class="none-ml"><a href="#"><img src="../ui/images/iocn-4.png" /></a></li>
-                <li><a href="#"><img src="../ui/images/iocn-5.png" /></a></li>
-                <li><a href="#"><img src="../ui/images/iocn-6.png" /></a></li>
-                <li><a href="#"><img src="../ui/images/iocn-7.png" /></a></li>
-                <li><a href="#"><img src="../ui/images/iocn-8.png" /></a></li>
-            </ul>
-        </div>
-    </section>--%>
-
+        <!--tab1-->--%>
+        <section id="tab2" style="display:block;">
+            <section class="form-big">
+                <div class="set-password">
+                    <div class="set-int">
+                        <ul>
+                            <li>
+                                <p><input id="phoneid" type="text" class="input input-large" placeholder="用户名/邮箱/手机号"></p>
+                                <label id="phoneLabel"></label>
+                            </li>
+                            <li>
+                                <p><input id="psdid" type="password" class="input input-large" placeholder="密码"></p>
+                                <label id="psdLabel"></label>
+                            </li>
+                            <li class="int-border">
+                                <p><input id="codeid" type="text" class="input input-yzm" placeholder="验证码"></p>
+                                <p><div class="code" id="checkCode"></div></p>
+                                <p><a href="#" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
+                                <label id="codeLabel"></label>
+                            </li>
+                            <li><a href="#" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
+                            <li class="right"><a href="#" onclick="forgetpsd()">忘记密码 </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <%--<!--其他登录-->
+        <section class="other-big">
+            <div class="other-login">
+                <p class="line"></p>
+                <p class="word">其他登录</p>
+                <p class="line"></p>
+            </div>
+            <div class="other-login-icon">
+                <ul>
+                    <li class="none-ml"><a href="#"><img src="../ui/images/iocn-4.png" /></a></li>
+                    <li><a href="#"><img src="../ui/images/iocn-5.png" /></a></li>
+                    <li><a href="#"><img src="../ui/images/iocn-6.png" /></a></li>
+                    <li><a href="#"><img src="../ui/images/iocn-7.png" /></a></li>
+                    <li><a href="#"><img src="../ui/images/iocn-8.png" /></a></li>
+                </ul>
+            </div>
+        </section>--%>
+    </div>
 
      <%--底部視圖--%>
      <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>

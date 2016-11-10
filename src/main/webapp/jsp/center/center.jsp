@@ -54,7 +54,7 @@
         <!--个人中心-->
         <section class="personal-banner">
             <ul>
-                <li class="img"><img src="images/4.jpg" /></li>
+                <li class="img"><img src="<%=path%>/ui/images/4.jpg" /></li>
                 <li>用户名是12345</li>
                 <li>普通会员</li>
             </ul>
@@ -79,25 +79,25 @@
             <ul>
                 <a href="#">
                     <li>
-                        <p><img src="images/icon-9.jpg" /></p>
+                        <p><img src="<%=path%>/ui/images/icon-9.jpg" /></p>
                         <p>我的订单</p>
                     </li>
                 </a>
                 <a href="#" onclick="toBalance()">
                     <li>
-                        <p><img src="images/icon-10.jpg" /></p>
+                        <p><img src="<%=path%>/ui/images/icon-10.jpg" /></p>
                         <p>我的账户</p>
                     </li>
                 </a>
                 <a href="#" onclick="toSafe()">
                     <li>
-                        <p><img src="images/icon-11.jpg" /></p>
+                        <p><img src="<%=path%>/ui/images/icon-11.jpg" /></p>
                         <p>安全设置</p>
                     </li>
                 </a>
                 <a href="#">
                     <li>
-                        <p><img src="images/icon-12.jpg" /></p>
+                        <p><img src="<%=path%>/ui/images/icon-12.jpg" /></p>
                         <p>我的积分</p>
                     </li>
                 </a>
@@ -105,7 +105,7 @@
         </section>
 
     </div>
-    <section class="personal-ban1"><a href="#"><img src="images/person-banner.jpg" /></a></section>
+    <section class="personal-ban1"><a href="#"><img src="<%=path%>/ui/images/person-banner.jpg" /></a></section>
 
 </body>
 </html>

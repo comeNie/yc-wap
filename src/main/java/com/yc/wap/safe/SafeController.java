@@ -142,12 +142,12 @@ public class SafeController extends BaseController {
         boolean isEmail = RegexUtils.checkIsEmail(username);
         boolean isPhone = RegexUtils.checkIsPhone(username);
         if (isEmail) {
-            mode = "2";
+            mode = Constants.GetUserMode.Mail;
         }
         else if (isPhone) {
-            mode = "3";
+            mode = Constants.GetUserMode.Phone;
         }else {
-            mode = "4";
+            mode = Constants.GetUserMode.UserName;
         }
         log.info(mode);
 
@@ -331,7 +331,6 @@ public class SafeController extends BaseController {
     }
     /**
      * 校验验证码接口
-     * 操作类型 1：手机激活码 2：手机验证码 3：手机动态密码 4：邮箱激活码 5：邮箱验证码 6：密码操作验证码
      */
     @RequestMapping(value = "checkTestCode")
     public @ResponseBody Object checkTestCode() {

@@ -32,34 +32,35 @@
 
 </head>
 <body>
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-            <li><spring:message code="safe.checkphone.title"/></li>
-        </ul>
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
+                <li><spring:message code="safe.checkphone.title"/></li>
+            </ul>
 
-    </nav>
+        </nav>
 
-    <!--订单内容-->
-    <section class="index-wrapper ">
-        <div class="set-password">
-            <div class="set-phone">
-                <p><spring:message code="safe.checkphone.psd_p"/></p>
-                <p class="word" id="phone">138****1234</p>
+        <!--订单内容-->
+        <section class="index-wrapper ">
+            <div class="set-password">
+                <div class="set-phone">
+                    <p><spring:message code="safe.checkphone.psd_p"/></p>
+                    <p class="word" id="phone">138****1234</p>
+                </div>
+                <div class="set-int">
+                    <ul>
+                        <li>
+                            <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="safe.checkphone.small_input"/>"></p>
+                            <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value="<spring:message code="safe.checkphone.yzm_input"/>"></p>
+                            <label id="phonetips"><spring:message code="safe.checkphone.code_label"/></label>
+                        </li>
+                        <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="set-int">
-                <ul>
-                    <li>
-                        <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="safe.checkphone.small_input"/>"></p>
-                        <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value="<spring:message code="safe.checkphone.yzm_input"/>"></p>
-                        <label id="phonetips"><spring:message code="safe.checkphone.code_label"/></label>
-                    </li>
-                    <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
+        </section>
+    </div>
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>

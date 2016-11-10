@@ -32,20 +32,21 @@
 
 </head>
 <body>
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>支付</li>
-        </ul>
-    </nav>
-    <section class="tij-cg">
-        <ul>
-            <li><i class="icon iconfont">&#xe612;</i></li>
-            <li class="word">充值成功！账户余额为123123元</li>
-            <li>充值单号:<a href="#">414214</a> 查看<a href="#" onclick="toBalance()">我的账户</a></li>
-        </ul>
-    </section>
-
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
+                <li>支付</li>
+            </ul>
+        </nav>
+        <section class="tij-cg">
+            <ul>
+                <li><i class="icon iconfont">&#xe612;</i></li>
+                <li class="word">充值成功！账户余额为123123元</li>
+                <li>充值单号:<a href="#">414214</a> 查看<a href="#" onclick="toBalance()">我的账户</a></li>
+            </ul>
+        </section>
+    </div>
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 

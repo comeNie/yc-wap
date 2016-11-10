@@ -32,20 +32,20 @@
 
 </head>
 <body>
-
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:window.history.go(-1)" ><i class="icon iconfont left">&#xe626;</i></a>
-            <li>找回密码</li>
-        </ul>
-    </nav>
-    <section class="tij-cg">
-        <ul>
-            <li><i class="icon iconfont red">&#xe628;</i></li>
-            <li>很遗憾，您没有绑定过任何信息，无法找回密码可以拨打400-119-8080电话，咨询人工客服</li>
-        </ul>
-    </section>
-
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:window.history.go(-1)" ><i class="icon iconfont left">&#xe626;</i></a>
+                <li>找回密码</li>
+            </ul>
+        </nav>
+        <section class="tij-cg">
+            <ul>
+                <li><i class="icon iconfont red">&#xe628;</i></li>
+                <li>很遗憾，您没有绑定过任何信息，无法找回密码可以拨打400-119-8080电话，咨询人工客服</li>
+            </ul>
+        </section>
+    </div>
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>

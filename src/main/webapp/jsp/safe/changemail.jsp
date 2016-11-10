@@ -32,34 +32,35 @@
 
 </head>
 <body>
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
+                <li>${mailTitle}<spring:message code="safe.changemail.navli"/></li>
+            </ul>
 
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-            <li>${mailTitle}<spring:message code="safe.changemail.navli"/></li>
-        </ul>
+        </nav>
+        <!--订单内容-->
+        <section class="index-wrapper ">
+            <div class="set-password">
+                <div class="set-int">
+                    <ul>
+                        <li>
+                            <p><input id="mail" type="text" class="input input-large" placeholder=<spring:message code="safe.changemail.navli"/>></p>
+                            <label id="mailLabel"></label>
+                        </li>
+                        <li>
+                            <p><input id="codeid" type="text" class="input input-small" placeholder=<spring:message code="safe.changemail.small_input"/>></p>
 
-    </nav>
-    <!--订单内容-->
-    <section class="index-wrapper ">
-        <div class="set-password">
-            <div class="set-int">
-                <ul>
-                    <li>
-                        <p><input id="mail" type="text" class="input input-large" placeholder=<spring:message code="safe.changemail.navli"/>></p>
-                        <label id="mailLabel"></label>
-                    </li>
-                    <li>
-                        <p><input id="codeid" type="text" class="input input-small" placeholder=<spring:message code="safe.changemail.small_input"/>></p>
-
-                        <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value=<spring:message code="safe.changemail.bntyzm_input"/>></p>
-                        <label id="phonetips"></label>
-                    </li>
-                    <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.changemail.nextbtn"/></a></li>
-                </ul>
+                            <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value=<spring:message code="safe.changemail.bntyzm_input"/>></p>
+                            <label id="phonetips"></label>
+                        </li>
+                        <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.changemail.nextbtn"/></a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>

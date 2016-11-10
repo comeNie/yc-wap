@@ -32,26 +32,26 @@
 
 </head>
 <body>
-
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-            <li><spring:message code="safe.safesuccess.title"/></li>
-        </ul>
-
-    </nav>
-
-    <!--订单内容-->
-    <section class="index-wrapper ">
-        <section class="tij-cg">
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <nav class="wap-second-nav">
             <ul>
-                <li><i class="icon iconfont">&#xe612;</i></li>
-                <li class="word">${name}<spring:message code="safe.safesuccess.word_li"/></li>
-                <li><span class="red">5s</span><spring:message code="safe.safesuccess.red_span"/><a href="#"><spring:message code="safe.safesuccess.red_a"/>登录页面</a></li>
+                <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
+                <li><spring:message code="safe.safesuccess.title"/></li>
             </ul>
-        </section>
-    </section>
 
+        </nav>
+
+        <!--订单内容-->
+        <section class="index-wrapper ">
+            <section class="tij-cg">
+                <ul>
+                    <li><i class="icon iconfont">&#xe612;</i></li>
+                    <li class="word">${name}<spring:message code="safe.safesuccess.word_li"/></li>
+                    <li><span class="red">5s</span><spring:message code="safe.safesuccess.red_span"/><a href="#"><spring:message code="safe.safesuccess.red_a"/>登录页面</a></li>
+                </ul>
+            </section>
+        </section>
+    </div>
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
