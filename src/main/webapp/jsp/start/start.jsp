@@ -207,7 +207,9 @@
         $("#chick-int").bind("input propertychange",function () {
             landetec=$("#chick-int").val();
             lanLength=count(escape(landetec));
+            console.info("lanLength...."+lanLength);
             if(lanLength>=20){
+                console.info("不能让你再输入啦.....");
                 $("#chick-int").val(lanLength.substr(0,20));
             }
             console.info("landetec....."+landetec);
