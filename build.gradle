@@ -26,7 +26,7 @@ configurations {
 repositories {
     maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
 }
-buildscript{
+buildscript {
     repositories {
         maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
     }
@@ -94,13 +94,13 @@ dependencies {
 
 }
 
-def getUedTemplate=task("getUedTemplate",type:com.ai.runner.gradle.plugin.jar.APIJarProcessTask){
-	jarPaths=configurations.optUedTemplate.files.asType(List)
+def getUedTemplate = task("getUedTemplate", type: com.ai.runner.gradle.plugin.jar.APIJarProcessTask) {
+    jarPaths = configurations.optUedTemplate.files.asType(List)
     destinationDir file("src/main/webapp/resources/template") //这里面的路径建议保持默认
 }
 
-def getJsCommonLibs=task("getJsCommonLibs",type:com.ai.runner.gradle.plugin.jar.APIJarProcessTask){
-	jarPaths=configurations.jsCommonLibs.files.asType(List)
+def getJsCommonLibs = task("getJsCommonLibs", type: com.ai.runner.gradle.plugin.jar.APIJarProcessTask) {
+    jarPaths = configurations.jsCommonLibs.files.asType(List)
     destinationDir file("src/main/webapp/resources/spm_modules") //这里面的路径建议保持默认
 }
 

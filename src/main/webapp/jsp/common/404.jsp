@@ -35,14 +35,14 @@
     <div class="wrapper-big"><!--包含除底部外的所有层-->
         <nav class="wap-second-nav">
             <ul>
-                <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
+                <a href="<%=path%>/"><i class="icon iconfont left">&#xe626;</i></a>
                 <li>访问错误</li>
             </ul>
         </nav>
         <section class="tij-cg">
             <ul>
                 <li><img src="<%=path%>/ui/images/404.png" /></li>
-                <li>抱歉！您所要访问的页面不存在<br><span>5s</span>内自动回到<a href="#">首页</a></li>
+                <li>抱歉！您所要访问的页面不存在<br><span>5s</span>内自动回到<a href="<%=path%>/">首页</a></li>
             </ul>
         </section>
     </div>

@@ -3,24 +3,27 @@ package com.yc.wap.written;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.yc.common.api.sysdomain.interfaces.IQuerySysDomainSV;
 import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListRes;
+import com.ai.yc.common.api.sysdomain.param.SysDomainVo;
 import com.ai.yc.common.api.sysduad.interfaces.IQuerySysDuadSV;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListReq;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListRes;
+import com.ai.yc.common.api.sysduad.param.SysDuadVo;
 import com.ai.yc.common.api.syspurpose.interfaces.IQuerySysPurposeSV;
 import com.ai.yc.common.api.syspurpose.param.QuerySysPurposeListRes;
-import com.alibaba.dubbo.common.json.JSONObject;
+import com.ai.yc.common.api.syspurpose.param.SysPurposeVo;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
+
 
 /**
  * Created by Nozomi on 11/3/2016.
@@ -39,11 +42,15 @@ public class WrittenController extends BaseController {
         Locale local = rb.getDefaultLocale();
         String country = local.getCountry();
         String language = local.getLanguage();
-        log.info("local country: " + country + ", language: " + language);
+        log.info("local country: " + country + ", language: " + language + ", local: " + local.toString());
 
-        List DualList = GetDualList(language, Constants.OrderType.DOC);
-        List PurposeList = GetPurposeList(language);
-        List DomainList = GetDomainList(language);
+        List<SysDuadVo> DualList = GetDualList(local.toString(), Constants.OrderType.DOC);
+        List<SysPurposeVo> PurposeList = GetPurposeList(local.toString());
+        List<SysDomainVo> DomainList = GetDomainList(local.toString());
+
+        log.info("GetDualListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(DualList));
+        log.info("GetPurposeListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(PurposeList));
+        log.info("GetDomainListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(DomainList));
 
         request.setAttribute("DualList", DualList);
         request.setAttribute("PurposeList", PurposeList);
@@ -51,7 +58,7 @@ public class WrittenController extends BaseController {
         return "written/content";
     }
 
-    public List GetDualList(String Language, String OrderType) {
+    private List GetDualList(String Language, String OrderType) {
         QuerySysDuadListReq req = new QuerySysDuadListReq();
         req.setLanguage(Language);
         req.setOrderType(OrderType);
@@ -62,7 +69,7 @@ public class WrittenController extends BaseController {
         return resp.getDuads();
     }
 
-    public List GetPurposeList(String Language) {
+    private List GetPurposeList(String Language) {
         QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList(Language);
         if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
             throw new RuntimeException("GetPurposeListFailed");
@@ -70,7 +77,7 @@ public class WrittenController extends BaseController {
         return resp.getPurposes();
     }
 
-    public List GetDomainList(String Language) {
+    private List GetDomainList(String Language) {
         QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList(Language);
         if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
             throw new RuntimeException("GetDomainListFailed");
