@@ -2,6 +2,8 @@ package com.yc.wap.login;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
+import com.ai.yc.ucenter.api.members.param.UcMembersVo;
+import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
 import com.ai.yc.ucenter.api.members.param.login.UcMembersLoginRequest;
 import com.ai.yc.ucenter.api.members.param.login.UcMembersLoginResponse;
 import com.ai.yc.ucenter.api.members.param.register.UcMembersRegisterRequest;
@@ -9,6 +11,7 @@ import com.ai.yc.ucenter.api.members.param.register.UcMembersRegisterResponse;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
+import com.yc.wap.system.utils.MD5Util;
 import com.yc.wap.system.utils.RegexUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,7 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import scala.util.parsing.combinator.testing.Str;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by ldy on 2016/11/8.
@@ -64,7 +71,10 @@ public class LoginController extends BaseController {
         String password = request.getParameter("password");
         UcMembersLoginRequest res = new UcMembersLoginRequest();
         res.setTenantId(Constants.TenantID);
+
+        password = MD5Utils.md5(password);
         res.setPassword(password);
+        res.setUsername(username);
         String loginmode;
         boolean isEmail = RegexUtils.checkIsEmail(username);
         boolean isPhone = RegexUtils.checkIsPhone(username);
@@ -72,7 +82,7 @@ public class LoginController extends BaseController {
             loginmode = Constants.LoginModel.MailModel;
         }
         else if (isPhone) {
-            loginmode = Constants.LoginModel.PhoneCodeModel;
+            loginmode = Constants.LoginModel.PhonePsdModel;
         }else {
             loginmode = Constants.LoginModel.UsernamePsdModel;
         }
@@ -80,14 +90,45 @@ public class LoginController extends BaseController {
         res.setLoginmode(loginmode);
         try {
             UcMembersLoginResponse resp = iUcMembersSV.ucLoginMember(res);
-            log.info(resp.getResponseHeader().getIsSuccess());
-            log.info(resp.getEmail());
+            Map m = resp.getDate();
+            UcMembersVo vo = new UcMembersVo(m);
+            log.info(m);
+            log.info("))))))))))))" + vo.getUsername());
+            ResponseCode code = resp.getCode();  //通过code进行捕获
+            /*code:失败，未找到该用户信息-1 code:成功1    */
+            log.info("--------code:"+ code.getCodeMessage() + code.getCodeNumber());
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
         }
 
         return result.returnMsg();
+    }
+
+    /**
+     * MD5加密
+     */
+    public static class MD5Utils {
+        /**
+         * 使用md5的算法进行加密
+         */
+        public static String md5(String plainText) {
+            byte[] secretBytes = null;
+            try {
+                secretBytes = MessageDigest.getInstance("md5").digest(
+                        plainText.getBytes());
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException("没有md5这个算法！");
+            }
+            String md5code = new BigInteger(1, secretBytes).toString(16);
+            for (int i = 0; i < 32 - md5code.length(); i++) {
+                md5code = "0" + md5code;
+            }
+            return md5code;
+        }
+
+
+
     }
     /**
      * 注册
@@ -104,14 +145,23 @@ public class LoginController extends BaseController {
         UcMembersRegisterRequest res = new UcMembersRegisterRequest();
         res.setTenantId(Constants.TenantID);
         res.setPassword(password);
+        res.setRegip("0");
+//        domainname
         res.setMobilephone(phone);
-        res.setLoginmode(Constants.AllowLoginModel.AllModel);
-        res.setLoginway(Constants.RegisterModel.PhoneCodeModel);
+        res.setLoginmode(Constants.AllowLoginModel.PhonePsdModel);
+        res.setLoginway(Constants.RegisterModel.PhonePsdModel);
         res.setCreatetime(createTime);
         res.setOperationcode(code);
+        res.setUsersource(Constants.UserSource.GTCOM); //用户来源
         try {
             UcMembersRegisterResponse resp = iUcMembersSV.ucRegisterMember(res);
-            log.info(resp.getMessage().isSuccess());
+            Map m = resp.getDate();
+            UcMembersVo vo = new UcMembersVo(m);
+            log.info(m);
+            log.info("))))))))))))" + vo.getUsername());
+            ResponseCode c = resp.getCode();  //通过code进行捕获
+            /*code:失败，未找到该用户信息-1 code:成功1    */
+            log.info("--------code:"+ c.getCodeMessage() + c.getCodeNumber());
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());

@@ -8,6 +8,8 @@ import com.ai.yc.common.api.country.param.CountryVo;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
+import com.ai.yc.ucenter.api.members.param.UcMembersVo;
+import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
 import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
@@ -142,25 +144,29 @@ public class SafeController extends BaseController {
         boolean isEmail = RegexUtils.checkIsEmail(username);
         boolean isPhone = RegexUtils.checkIsPhone(username);
         if (isEmail) {
-            mode = Constants.GetUserMode.Mail;
+            mode = Constants.GetUserMode.Mail; //2
         }
         else if (isPhone) {
-            mode = Constants.GetUserMode.Phone;
+            mode = Constants.GetUserMode.Phone; //3
         }else {
             mode = Constants.GetUserMode.UserName;
         }
         log.info(mode);
 
         UcMembersGetRequest res = new UcMembersGetRequest();
-        res.setTenantId("yeecloud");
+        res.setTenantId(Constants.TenantID);
 
         res.setGetmode(mode);
         res.setUsername(username);
         try {
             UcMembersGetResponse resp = iUcMembersSV.ucGetMember(res);
-            UcMembersGetResponse.UcMembersGetDate date = resp.getDate();
-            log.info(date.getLoginmode());
-
+            Map m = resp.getDate();
+            UcMembersVo vo = new UcMembersVo(m);
+            log.info(m);
+            log.info("))))))))))))" + vo.getUsername());
+            ResponseCode code = resp.getCode();  //通过code进行捕获
+            /*code:失败，未找到该用户信息-1 code:成功1    */
+            log.info("--------code:"+ code.getCodeMessage() + code.getCodeNumber());
         }catch (Exception e) {
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
@@ -188,6 +194,7 @@ public class SafeController extends BaseController {
 
         return  result.returnMsg();
     }
+
     /**
      * 修改用户密码接口
      */
@@ -223,12 +230,13 @@ public class SafeController extends BaseController {
 
         UcMembersCheckeMobileRequest res = new UcMembersCheckeMobileRequest();
         res.setTenantId(Constants.TenantID);
-//        res.setUid(0);
         res.setMobilephone(phone);
-
         try {
             UcMembersResponse resp = iUcMembersSV.ucCheckeMobilephone(res);
-            log.info(resp.getMessage().isSuccess());
+            Map m = resp.getDate();
+            UcMembersVo vo = new UcMembersVo(m);
+            log.info(m);
+            log.info(vo.getUsername());
         }catch (Exception e) {
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());

@@ -239,31 +239,6 @@
         $.ajax({
             async: true,
             type: "POST",
-            url: "<%=path%>/safe/phoneenable",
-            modal: true,
-            timeout: 30000,
-            data: {
-                phone: phone,
-            },
-            success: function (data) {
-                if (data.status == 1) {
-                    $("#phoneLabel").css("display","none");
-                    toJump(phone,codeid,psdid);
-                } else {
-                    $("#phoneLabel").html("服务返回错误");
-                    $("#phoneLabel").css("display", "block");
-                }
-            },
-            error: function () {
-                $("#phoneLabel").html("网络请求超时，请稍候再试");
-                $("#phoneLabel").css("display", "block");
-            }
-        });
-    }
-    function toJump(phone,codeid,psdid) {
-        $.ajax({
-            async: true,
-            type: "POST",
             url: "<%=path%>/login/checkregister",
             modal: true,
             timeout: 30000,
@@ -307,34 +282,7 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
-//        调用接口校验合法性
-
-        checkPhoneWithCode(phone)
-    }
-    function checkPhoneWithCode(phone) {
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: "<%=path%>/safe/phoneenable",
-            modal: true,
-            timeout: 30000,
-            data: {
-                phone: phone,
-            },
-            success: function (data) {
-                if (data.status == 1) {
-                    $("#phoneLabel").css("display","none");
-                    getTestCode(phone);
-                } else {
-                    $("#phoneLabel").html("服务返回错误");
-                    $("#phoneLabel").css("display", "block");
-                }
-            },
-            error: function () {
-                $("#phoneLabel").html("网络请求超时，请稍候再试");
-                $("#phoneLabel").css("display", "block");
-            }
-        });
+        getTestCode(phone);
     }
     //    发送验证码
     function getTestCode(phone) {

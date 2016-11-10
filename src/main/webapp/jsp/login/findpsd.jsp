@@ -230,8 +230,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#nameLabel1").css("display","none");
-                    var newphone = "15510179081";
-                    getPhone = newphone;
+                    getPhone = phone;
                     $("#phone2").html(newphone);
                     var myphone=newphone.substr(3,4);
                     var lphone=newphone.replace(myphone,"****");
