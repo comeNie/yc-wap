@@ -71,7 +71,7 @@
         </section>
         <!--文字翻译-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" name="chick-int" id="chick-int"></textarea>
+            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" placeholder="2000字"></textarea>
             <a hrel="#"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">
@@ -83,7 +83,9 @@
                     <p class="word">用途:</p>
                     <p>
                         <select id="purpose" class="select testing-select-small">
-                            <option purposeId="111">哈哈</option>
+                            <c:forEach items="${PurposeList}" var="pair">
+                                <option purposeId="${pair.purposeId}">${pair.purposeCn}</option>
+                            </c:forEach>
                         </select>
                         <span>|</span>
                     </p>
@@ -187,16 +189,22 @@
 
     $(document).ready(function () {
         $("#submit").bind("click", function () {
-            if (!$("#isRead").prop("checked")) {
-                $("#EjectTitle").html("没读");
-                $('#eject-mask').fadeIn(100);
-                $('#prompt').slideDown(100);
-                return;
-            }
             var Content = $("#chick-int").val();
             var ContentLength = count(escape(Content));
             if (ContentLength == 0) {
                 $("#EjectTitle").html("没字");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
+            }
+            if (ContentLength >= 2000) {
+                $("#EjectTitle").html("多了");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
+            }
+            if (!$("#isRead").prop("checked")) {
+                $("#EjectTitle").html("没读");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
@@ -207,7 +215,7 @@
         $('#upload').click(function () {
 
         });
-//
+
 //        $('#prompt-btn').click(function () {
 //            $('#eject-mask').fadeOut(200);
 //            $('#prompt').slideUp(200);
@@ -270,6 +278,21 @@
     }
 
     function saveContent(Content, ContentLength) {
+        //用途
+        var PurposeId = $("#purpose").find("option:selected").attr("purposeId");
+        var PurposeVal = $("#purpose").val();
+        //领域
+        var DomainId = $("#domain").find("option:selected").attr("domainId");
+        var DomainVal = $("#domain").val();
+        //翻译级别
+        var TransLvId = $("#translateLv").find("option:selected").attr("transLv");
+        var TransLvVal = $("#translateLv").val();
+        //是否加急
+        var Express = "N";
+        if ($("#quick").prop("checked")) {
+            Express = "Y";
+        }
+        var Detail = Content.substring(0, 10) + "...";
         $.ajax({
             async: true,
             type: "POST",
@@ -278,29 +301,19 @@
             timeout: 30000,
             data: {
                 Content: Content,
-                ContentLength: ContentLength
+                ContentLength: ContentLength,
+                DualId: "1",
+                PurposeId: PurposeId,
+                TransLvId: TransLvId,
+                Express: Express
             },
             success: function (data) {
                 if (data.status == 1) {
-                    //用途
-                    var PurposeId = $("#purpose").find("option:selected").attr("purposeId");
-                    var PurposeVal = $("#purpose").val();
-                    //领域
-                    var DomainId = $("#domain").find("option:selected").attr("domainId");
-                    var DomainVal = $("#domain").val();
-                    //翻译级别
-                    var TransLvId = $("#translateLv").find("option:selected").attr("transLv");
-                    var TransLvVal = $("#translateLv").val();
-                    //是否加急
-                    var Express = "N";
-                    if ($("#quick").prop("checked")) {
-                        Express = "Y";
-                    }
-                    var Detail = Content.substring(0, 10) + "...";
+                    var Price = data.Price;
                     onSubmit("PurposeId=" + PurposeId + "&PurposeVal=" + PurposeVal
                             + "&DomainId=" + DomainId + "&DomainVal=" + DomainVal
                             + "&TransLvId=" + TransLvId + "&TransLvVal=" + TransLvVal
-                            + "&Express=" + Express + "&Detail=" + Detail);
+                            + "&Express=" + Express + "&Detail=" + Detail + "&Price=" + Price);
                 }
             },
             error: function (data) {

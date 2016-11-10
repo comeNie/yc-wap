@@ -13,6 +13,8 @@
     String PurposeVal = request.getParameter("PurposeVal");
     String DomainVal = request.getParameter("DomainVal");
     String TransLvVal = request.getParameter("TransLvVal");
+    String Price = request.getParameter("Price");
+    String PriceDisplay = "总价：" + Price + "元";
 %>
 <html>
 <head>
@@ -77,7 +79,7 @@
 </div>
 <!--底部-->
 <section class="order-submit">
-    <p class="left">总价:0元</p>
+    <p class="left"><%=PriceDisplay%></p>
     <p class="right"><a href="javascript:void(0)" id="submit">下一步</a></p>
 </section>
 
