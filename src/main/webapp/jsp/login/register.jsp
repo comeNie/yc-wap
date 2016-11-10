@@ -239,31 +239,60 @@
         $.ajax({
             async: true,
             type: "POST",
-            url: "<%=path%>/login/checkregister",
+            url: "<%=path%>/safe/checkTestCode",
             modal: true,
             timeout: 30000,
             data: {
-                phone: phone,
-                password:psdid,
-                code:codeid
+                type: 1,    //手机激活码
+                code:codeid,
             },
             success: function (data) {
                 if (data.status == 1) {
-                    $("#confimPsd").css("display","none");
+                    $("#codeLabel2").css("display", "none");
 
-                    var tourl = "<%=path%>/login/registersuccess";
-                    window.location.href=tourl;
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        url: "<%=path%>/login/checkregister",
+                        modal: true,
+                        timeout: 30000,
+                        data: {
+                            phone: phone,
+                            password:psdid,
+                            code:codeid
+                        },
+                        success: function (data) {
+                            if (data.status == 1) {
+                                $("#confimPsd").css("display","none");
+
+                                var tourl = "<%=path%>/login/registersuccess";
+                                window.location.href=tourl;
+                            } else {
+                                $("#confimPsd").html("请输入密码");
+                                $("#confimPsd").css("display","block");
+                                return;
+                            }
+                        },
+                        error: function () {
+                            $("#confimPsd").html("网络请求超时，请稍候再试");
+                            $("#confimPsd").css("display", "block");
+                        }
+                    });
+
                 } else {
-                    $("#confimPsd").html("请输入密码");
-                    $("#confimPsd").css("display","block");
-                    return;
+                    $("#codeLabel").html("短信验证码错误");
+                    $("#codeLabel").css("display", "block");
+//                    index ++;//index = 2
+//                    $("#next2").hide();
+//                    $("#next3").show();
                 }
             },
             error: function () {
-                $("#confimPsd").html("网络请求超时，请稍候再试");
-                $("#confimPsd").css("display", "block");
+                $("#codeLabel").html("网络请求超时，请稍候再试");
+                $("#codeLabel").css("display", "block");
             }
         });
+
     }
 
     function getnumberonclick(){

@@ -159,18 +159,32 @@ public class SafeController extends BaseController {
         res.setGetmode(mode);
         res.setUsername(username);
         try {
+
             UcMembersGetResponse resp = iUcMembersSV.ucGetMember(res);
-            Map m = resp.getDate();
-            UcMembersVo vo = new UcMembersVo(m);
-            log.info(m);
-            log.info("))))))))))))" + vo.getUsername());
+
             ResponseCode code = resp.getCode();  //通过code进行捕获
+            if (code.getCodeNumber() == 1){
+                Map m = resp.getDate();
+                log.info(m);
+                UcMembersVo vo = new UcMembersVo(m);
+                result.put("userPhone",vo.getMobilephone());
+                result.put("uids",vo.getUid());
+                result.put("username",vo.getUsername());
+                result.put("email",vo.getEmail());
+                result.put("password",vo.getPassword());
+                log.info(vo.getUid());
+            }else {
+                result.put("status","0");
+                result.put("msg","获取用户信息失败");
+            }
             /*code:失败，未找到该用户信息-1 code:成功1    */
             log.info("--------code:"+ code.getCodeMessage() + code.getCodeNumber());
-        }catch (Exception e) {
+        }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
         }
+
+
         return  result.returnMsg();
     }
 
@@ -343,19 +357,21 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "checkTestCode")
     public @ResponseBody Object checkTestCode() {
         MsgBean result = new MsgBean();
+        String uid = request.getParameter("uid");
+        Integer u = Integer.parseInt(uid);
         String type = request.getParameter("type");
         String code = request.getParameter("code");
         UcMembersActiveRequest res = new UcMembersActiveRequest();
         res.setTenantId(Constants.TenantID);
         res.setOperationtype(type);
         res.setOperationcode(code);
-        try {
-            UcMembersResponse resp = iUcMembersOperationSV.ucActiveMember(res);
-            log.info(resp.getMessage().isSuccess());
-        }catch (Exception e){
-            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
-        }
+        res.setUid(u);
+        log.info(u);
+
+        UcMembersResponse resp = iUcMembersOperationSV.ucActiveMember(res);
+        ResponseCode responseCode = resp.getCode();
+
+        log.info("--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
 
         return  result.returnMsg();
     }

@@ -87,20 +87,48 @@ public class LoginController extends BaseController {
         }
         log.info(loginmode);
         res.setLoginmode(loginmode);
-        try {
-            UcMembersLoginResponse resp = iUcMembersSV.ucLoginMember(res);
+
+        UcMembersLoginResponse resp = iUcMembersSV.ucLoginMember(res);
+
+        ResponseCode code = resp.getCode();  //通过code进行捕获
+        /*code:失败，未找到该用户信息-1 code:成功1    */
+        log.info("--------code:"+ code.getCodeMessage() + code.getCodeNumber());
+//        if (code.getCodeNumber() == -1 ){
+//            result.put("status","0");
+//            if (isEmail){
+//                result.put("msg","邮箱未注册");
+//            }else if (isPhone){
+//                result.put("msg","手机号未注册");
+//            }else {
+//                result.put("msg","用户名不存在");
+//            }
+//            return result.returnMsg();
+//        }
+//        if (code.getCodeNumber() == 0 ){
+//            result.put("status","0");
+//            if (isEmail){
+//                result.put("msg","邮箱");
+//            }else if (isPhone){
+//                result.put("msg","手机号未注册");
+//            }else {
+//                result.put("msg","用户名不存在");
+//            }
+//            return result.returnMsg();
+//        }
+        if (code.getCodeNumber() == 1){
+            session.setAttribute("isLogin","1");    //1登录  0未登录
             Map m = resp.getDate();
             UcMembersVo vo = new UcMembersVo(m);
-            log.info(m);
-            log.info("))))))))))))" + vo.getUsername());
-            ResponseCode code = resp.getCode();  //通过code进行捕获
-            /*code:失败，未找到该用户信息-1 code:成功1    */
-            log.info("--------code:"+ code.getCodeMessage() + code.getCodeNumber());
-        }catch (Exception e){
-            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
+        }else {
+            result.put("status","0");
+            if (isEmail){
+                result.put("msg","邮箱或密码错误");
+            }else if (isPhone){
+                result.put("msg","手机号或密码错误");
+            }else {
+                result.put("msg","用户名或密码错误");
+            }
         }
-
         return result.returnMsg();
     }
 
@@ -139,6 +167,7 @@ public class LoginController extends BaseController {
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
         String code = request.getParameter("code");
+        password = MD5Utils.md5(password);
         Date date = new Date();
         String createTime = date.toString();
         UcMembersRegisterRequest res = new UcMembersRegisterRequest();

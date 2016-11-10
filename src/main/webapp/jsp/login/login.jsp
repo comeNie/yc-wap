@@ -174,52 +174,31 @@
         }
 
         toJump(phone,psd);
-//        alert("该跳走了");
     }
     function toJump(phone,psd) {
         $.ajax({
             async: true,
             type: "POST",
-            url: "<%=path%>/safe/phoneenable",
+            url: "<%=path%>/login/checklogin",
             modal: true,
             timeout: 30000,
             data: {
-                phone:phone
+                username: phone,
+                password:psd
             },
             success: function (data) {
                 if (data.status == 1) {
-                    $("#phoneLabel").css("display","none");
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        url: "<%=path%>/login/checklogin",
-                        modal: true,
-                        timeout: 30000,
-                        data: {
-                            username: phone,
-                            password:psd
-                        },
-                        success: function (data) {
-                            if (data.status == 1) {
-                                alert("登录成功")
-                            } else {
-                                alert("登录失败")
-                            }
-                        },
-                        error: function () {
-                            $("#codeLabel").html("网络请求超时，请稍候再试");
-                            $("#codeLabel").css("display", "block");
-                        }
-                    });
-                } else {
-                    $("#phoneLabel").html("服务返回数据");
-                    $("#phoneLabel").css("display","block");
+
+                    alert("登录成功");
+                } else{
+                    $("#codeLabel").html(data.msg);
+                    $("#codeLabel").css("display", "block");
                     return;
                 }
             },
             error: function () {
-                $("#phoneLabel").html("网络请求超时，请稍候再试");
-                $("#phoneLabel").css("display", "block");
+                $("#codeLabel").html("网络请求超时，请稍候再试");
+                $("#codeLabel").css("display", "block");
             }
         });
 

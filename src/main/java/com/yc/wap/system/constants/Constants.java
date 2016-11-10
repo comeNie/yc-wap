@@ -153,4 +153,22 @@ public class Constants {
         public static final String SINA  = "5";
 
     }
+    /**
+     * 验证码操作类型
+     */
+    public static class CheckOpreation {
+        //1：手机激活码
+        public static final String PhoneActivate = "1";
+        //2：手机验证码
+        public static final String PhoneCheck = "2";
+        //3：手机动态密码
+        public static final String PhoneDynamic = "3";
+        // 4：邮箱激活码
+        public static final String MailActivate = "4";
+        //5：邮箱验证码
+        public static final String MailCheck = "5";
+        //6：密码操作验证码
+        public static final String PasswordOperation  = "6";
+
+    }
 }

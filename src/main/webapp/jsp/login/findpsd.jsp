@@ -46,7 +46,7 @@
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="nameid1" type="text" class="input input-large" placeholder="用户名/邮箱/手机号"></p>
+                                <p><input id="nameid1" type="text" class="input input-large" placeholder="手机号"></p>
                                 <label id="nameLabel1"></label>
                             </li>
                             <li class="int-border">
@@ -72,7 +72,7 @@
                         <ul>
                             <li>
                                 <p><input id="codeid2" type="text" class="input input-small" placeholder="请输入动态码"></p>
-                                <p class="yzm"><a id="getnumber" onclick="getnumberonclick()" href="#"  class="btn bnt-yzm">获取动态码</a></p>
+                                <p class="yzm"><a id="getnumber" onclick="getTestCode()" href="#"  class="btn bnt-yzm">获取动态码</a></p>
                                 <label id="codeLabel2"></label>
                             </li>
                             <li><a href="javascript:void(0)" id="next-btn2" class="submit-btn btn-blue">下一步</a></li>
@@ -121,13 +121,14 @@
     //找回密码
     var index = 0;
     var getPhone;
+    var getuids;
     var getCode;
     $(function(){
         $("#next-btn1").click(function(){
             var phone = $("#nameid1").val();
             var code = $("#codeid1").val();
             if (phone == "" || phone == null) {
-                $("#nameLabel1").html("请输入用户名/邮箱/手机号");
+                $("#nameLabel1").html("请输入手机号");
                 $("#nameLabel1").css("display","block");
                 return;
             }else {
@@ -225,20 +226,20 @@
             modal: true,
             timeout: 30000,
             data: {
-                phone: phone,
+                username: phone,
             },
             success: function (data) {
                 if (data.status == 1) {
                     $("#nameLabel1").css("display","none");
-                    getPhone = phone;
-                    $("#phone2").html(newphone);
+                    var newphone = data.userPhone;
+                    getuids = data.uids;
+                    getPhone = newphone;
                     var myphone=newphone.substr(3,4);
                     var lphone=newphone.replace(myphone,"****");
                     $("#phone2").html(lphone);
                     index ++;//index = 1
                     $("#next1").hide();
                     $("#next2").show();
-
                 } else {
                     var tourl = "<%=path%>/login/findfail";
                     window.location.href=tourl;
@@ -247,16 +248,6 @@
             error: function () {
                 $("#nameLabel1").html("网络请求超时，请稍候再试");
                 $("#nameLabel1").css("display", "block");
-
-//                var newphone = "15510179081";
-//                getPhone = newphone;
-//                $("#phone2").html(newphone);
-//                var myphone=newphone.substr(3,4);
-//                var lphone=newphone.replace(myphone,"****");
-//                $("#phone2").html(lphone);
-//                index ++;//index = 1
-//                $("#next1").hide();
-//                $("#next2").show();
             }
         });
     }
@@ -269,7 +260,8 @@
             timeout: 30000,
             data: {
                 type: 6,    //密码操作码
-                code:code
+                code:code,
+                uid:getuids
             },
             success: function (data) {
                 if (data.status == 1) {
@@ -322,13 +314,9 @@
             }
         });
     }
-    function getnumberonclick(){
-//        调用接口校验合法性
 
-        getTestCode(getPhone);
-    }
     //    发送验证码
-    function getTestCode(phone) {
+    function getTestCode() {
 
         $.ajax({
             async: true,
@@ -338,7 +326,7 @@
             timeout: 30000,
             data: {
                 type: 6,
-                info:phone
+                info:getPhone
             },
             success: function (data) {
                 if (data.status == 1) {
