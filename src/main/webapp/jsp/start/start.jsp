@@ -208,7 +208,7 @@
             landetec=$("#chick-int").val();
             lanLength=count(escape(landetec));
             if(lanLength>=20){
-                $("#chick-int").val(lanLength.substr(0,2000));
+                $("#chick-int").val(lanLength.substr(0,20));
             }
             console.info("landetec....."+landetec);
             contentDetection(landetec);
