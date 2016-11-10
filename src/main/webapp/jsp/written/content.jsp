@@ -41,24 +41,6 @@
         </div>
         <div class="mask" id="eject-mask"></div>
     </div>
-    <!--上传提示弹出框-->
-    <%--<nav class="wap-second-nav">--%>
-    <%--<ul>--%>
-    <%--<a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>--%>
-    <%--<li>翻译下单</li>--%>
-    <%--<a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>--%>
-    <%--</ul>--%>
-    <%--<div class="pop-nav">--%>
-    <%--<ul>--%>
-    <%--<li>--%>
-    <%--<a href="#">译云首页</a>|--%>
-    <%--<a href="#">个人中心</a>|--%>
-    <%--<a href="#">我的订单</a>|--%>
-    <%--<a href="#">安全退出</a>--%>
-    <%--</li>--%>
-    <%--</ul>--%>
-    <%--</div>--%>
-    <%--</nav>--%>
 
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
@@ -198,58 +180,49 @@
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
 <script type="text/javascript">
+    $(function () {
+        LvChange();
+        ServChange();
+    });
+
     $(document).ready(function () {
         $("#submit").bind("click", function () {
             if (!$("#isRead").prop("checked")) {
                 $("#EjectTitle").html("没读");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
+                return;
             }
-            //用途
-            var PurposeId = $("#purpose").find("option:selected").attr("purposeId");
-            var PurposeVal = $("#purpose").val();
-            //领域
-            var DomainId = $("#domain").find("option:selected").attr("domainId");
-            var DomainVal = $("#domain").val();
-            //翻译级别
-            var TransLvId = $("#translateLv").find("option:selected").attr("transLv");
-            var TransLvVal = $("#translateLv").val();
-            //是否加急
-            var Express = "N";
-            if ($("#quick").prop("checked")) {
-                Express = "Y";
-            }
-            //翻译文字
             var Content = $("#chick-int").val();
-            var ContentLength = count(escape(content));
-            alert(ContentLength);
-//            onSubmit("DomainId="+DomainId+"&DomainVal="+DomainVal);
-        })
+            var ContentLength = count(escape(Content));
+            if (ContentLength == 0) {
+                $("#EjectTitle").html("没字");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
+            }
+            saveContent(Content, ContentLength);
+        });
 
         $('#upload').click(function () {
 
-        })
-
-        $('#prompt-btn').click(function () {
-            $('#eject-mask').fadeOut(200);
-            $('#prompt').slideUp(200);
-        })
+        });
+//
+//        $('#prompt-btn').click(function () {
+//            $('#eject-mask').fadeOut(200);
+//            $('#prompt').slideUp(200);
+//        })
 
         $("#pQuick").click(function () {
             var checked = document.getElementById("quick").checked;
             document.getElementById("quick").checked = !checked;
             LvChange();
-        })
+        });
 
         $("#pIsRead").click(function () {
             var checked = document.getElementById("isRead").checked;
             document.getElementById("isRead").checked = !checked;
-        })
-    });
-
-    $(function () {
-        LvChange();
-        ServChange();
+        });
     });
 
     function LvChange() {
@@ -280,10 +253,10 @@
         if (IsService == "Y") {
             $("#otherService").css("display", "block");
         } else {
-            $("#otherService").css("display", "none")
+            $("#otherService").css("display", "none");
         }
     }
-    
+
     function toLicense() {
         $("#body").css("display", "none");
         $("#_bottom").css("display", "none");
@@ -294,6 +267,52 @@
         $("#body").css("display", "block");
         $("#_bottom").css("display", "block");
         $("#license").css("display", "none");
+    }
+
+    function saveContent(Content, ContentLength) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/written/onSaveContent",
+            modal: true,
+            timeout: 30000,
+            data: {
+                Content: Content,
+                ContentLength: ContentLength
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    //用途
+                    var PurposeId = $("#purpose").find("option:selected").attr("purposeId");
+                    var PurposeVal = $("#purpose").val();
+                    //领域
+                    var DomainId = $("#domain").find("option:selected").attr("domainId");
+                    var DomainVal = $("#domain").val();
+                    //翻译级别
+                    var TransLvId = $("#translateLv").find("option:selected").attr("transLv");
+                    var TransLvVal = $("#translateLv").val();
+                    //是否加急
+                    var Express = "N";
+                    if ($("#quick").prop("checked")) {
+                        Express = "Y";
+                    }
+                    var Detail = Content.substring(0, 10) + "...";
+                    onSubmit("PurposeId=" + PurposeId + "&PurposeVal=" + PurposeVal
+                            + "&DomainId=" + DomainId + "&DomainVal=" + DomainVal
+                            + "&TransLvId=" + TransLvId + "&TransLvVal=" + TransLvVal
+                            + "&Express=" + Express + "&Detail=" + Detail);
+                }
+            },
+            error: function (data) {
+
+            },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+
+            }
+        });
     }
 
     function onSubmit(url) {
