@@ -188,6 +188,7 @@
 <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
+<script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
 
 <script type="text/javascript">
     var IsTranslated = false;
@@ -198,12 +199,19 @@
     var srcvalue="zh";
     var tarvalue="en";
     var landetec;
+    var lanLength;
     var xmlHttpRequest;
     $(document).ready(function () {
 
         <!--监听输入的文本内容-->
         $("#chick-int").bind("input propertychange",function () {
             landetec=$("#chick-int").val();
+            lanLength=count(escape(landetec));
+            console.info("lanLength...."+lanLength);
+            if(lanLength>=20){
+                console.info("不能让你再输入啦.....");
+                $("#chick-int").val(landetec.substring(0,20));
+            }
             console.info("landetec....."+landetec);
             contentDetection(landetec);
         });
