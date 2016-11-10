@@ -35,7 +35,7 @@
     <div class="wrapper-big"><!--包含除底部外的所有层-->
         <nav class="wap-second-nav">
             <ul>
-                <a href="<%=path%>/start/start"><i class="icon iconfont left">&#xe626;</i></a>
+                <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
                 <li>访问错误</li>
             </ul>
         </nav>
