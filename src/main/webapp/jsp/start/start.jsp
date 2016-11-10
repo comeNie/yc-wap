@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
 %>
@@ -21,6 +21,7 @@
 </head>
 
 <body>
+<div class="wrapper-big">
 <!--分享弹出框-->
 <div class="eject-big">
     <div class="prompt-share" id="share-eject">
@@ -173,7 +174,7 @@
     <section class="banner"><a href="#"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
 
 </section>
-
+</div>
 <!--底部-->
 
 
