@@ -245,6 +245,8 @@
             data: {
                 type: 1,    //手机激活码
                 code:codeid,
+                uid:getuids,
+                mode:2,
             },
             success: function (data) {
                 if (data.status == 1) {
