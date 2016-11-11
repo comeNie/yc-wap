@@ -23,12 +23,14 @@ import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRespon
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
+import com.yc.wap.system.utils.MD5Util;
 import com.yc.wap.system.utils.RegexUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import scala.util.parsing.combinator.testing.Str;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -53,15 +55,14 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "safe")
     public String safe() {
         MsgBean result = new MsgBean();
-
-
-        try {
-
-
-        } catch (Exception e) {
-            log.info("~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
-        }
+        String uidStr = (String) session.getAttribute("UID");
+        String email = (String) session.getAttribute("email");
+        String password = (String) session.getAttribute("password");
+        String mobilePhone = (String) session.getAttribute("mobilePhone");
+        request.setAttribute("UID",uidStr);
+        request.setAttribute("email",email);
+        request.setAttribute("password",password);
+        request.setAttribute("mobilePhone",mobilePhone);
         log.info("safe-safe invoked");
         return "safe/safe";
     }
@@ -143,6 +144,8 @@ public class SafeController extends BaseController {
     public @ResponseBody Object userinfo() {
         MsgBean result = new MsgBean();
         String username = request.getParameter("username");
+        String uid = request.getParameter("uid");
+
         String mode;
         boolean isEmail = RegexUtils.checkIsEmail(username);
         boolean isPhone = RegexUtils.checkIsPhone(username);
@@ -152,26 +155,30 @@ public class SafeController extends BaseController {
         else if (isPhone) {
             mode = Constants.GetUserMode.Phone; //3
         }else {
-            mode = Constants.GetUserMode.UserName;
+            mode = Constants.GetUserMode.UserName; //4
+        }
+        if (uid.length() > 0){
+            username = uid;
+            mode = Constants.GetUserMode.UserID;
         }
         log.info(mode);
 
         UcMembersGetRequest res = new UcMembersGetRequest();
         res.setTenantId(Constants.TenantID);
-
         res.setGetmode(mode);
         res.setUsername(username);
         try {
 
             UcMembersGetResponse resp = iUcMembersSV.ucGetMember(res);
-
             ResponseCode code = resp.getCode();  //通过code进行捕获
+            log.info("--------code:"+ code.getCodeMessage() + code.getCodeNumber());
+
             if (code.getCodeNumber() == 1){
                 Map m = resp.getDate();
                 log.info(m);
                 UcMembersVo vo = new UcMembersVo(m);
                 result.put("userPhone",vo.getMobilephone());
-                result.put("uids",vo.getUid());
+                result.put("uids",vo.getUid()+"");
                 result.put("username",vo.getUsername());
                 result.put("email",vo.getEmail());
                 result.put("password",vo.getPassword());
@@ -181,10 +188,13 @@ public class SafeController extends BaseController {
                 result.put("msg","获取用户信息失败");
             }
             /*code:失败，未找到该用户信息-1 code:成功1    */
-            log.info("--------code:"+ code.getCodeMessage() + code.getCodeNumber());
+
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
+            result.put("status","0");
+            result.put("msg","获取用户信息失败");
+            return result;
         }
 
 
@@ -220,7 +230,7 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String checke_code = request.getParameter("code");  //旧密码或验证码
         String newpw = request.getParameter("newpw");
-        newpw = MD5Utils.md5(newpw);
+        newpw = MD5Util.md5(newpw);
         String uid = request.getParameter("uid");
         Integer u = Integer.parseInt(uid);
         String checke_mode = request.getParameter("mode");  // 1：旧密码 2：验证码（密码操作验证码）
@@ -232,61 +242,26 @@ public class SafeController extends BaseController {
         res.setUid(u);
         try {
             UcMembersResponse resp = iUcMembersSV.ucEditPassword(res);
-            log.info(resp.getCode().getCodeMessage());
-            log.info(resp.getDate());
+            ResponseCode responseCode = resp.getCode();
+            log.info("--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
+            if (responseCode.getCodeNumber() == 1){
+                Map m = resp.getDate();
+                log.info(m);
+                UcMembersVo vo = new UcMembersVo(m);
+                log.info(vo);
+            }else{
+                result.put("status","0");
+                result.put("msg","修改失败");
+            }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
+            result.put("status","0");
+            result.put("msg","修改失败");
         }
 //4297f44b13955235245b2497399d7a93
         return  result.returnMsg();
     }
-    /**
-     * MD5加密
-     */
-    public static class MD5Utils {
-        /**
-         * 使用md5的算法进行加密
-         */
-        public static String md5(String plainText) {
-            byte[] secretBytes = null;
-            try {
-                secretBytes = MessageDigest.getInstance("md5").digest(
-                        plainText.getBytes());
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException("没有md5这个算法！");
-            }
-            String md5code = new BigInteger(1, secretBytes).toString(16);
-            for (int i = 0; i < 32 - md5code.length(); i++) {
-                md5code = "0" + md5code;
-            }
-            return md5code;
-        }
-    }
-    /**
-     * 查询手机号的合法性
-     */
-    @RequestMapping(value = "phoneenable")
-    public @ResponseBody Object phoneenable() {
-        MsgBean result = new MsgBean();
 
-        String phone = request.getParameter("phone");
-
-        UcMembersCheckeMobileRequest res = new UcMembersCheckeMobileRequest();
-        res.setTenantId(Constants.TenantID);
-        res.setMobilephone(phone);
-        try {
-            UcMembersResponse resp = iUcMembersSV.ucCheckeMobilephone(res);
-            Map m = resp.getDate();
-            UcMembersVo vo = new UcMembersVo(m);
-            log.info(m);
-            log.info(vo.getUsername());
-        }catch (Exception e) {
-            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
-        }
-        return  result.returnMsg();
-    }
     /**
      * 修改/绑定手机接口
      */
@@ -302,38 +277,26 @@ public class SafeController extends BaseController {
         res.setMobilephone(phone);
         try {
             UcMembersResponse resp = iUcMembersSV.ucEditMobilephone(res);
-            log.info(resp.getMessage().isSuccess());
+            ResponseCode responseCode = resp.getCode();
+            log.info("--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
+            if (responseCode.getCodeNumber() == 1){
+                Map m = resp.getDate();
+                log.info(m);
+                UcMembersVo vo = new UcMembersVo(m);
+                log.info(vo);
+            }else{
+                result.put("status","0");
+                result.put("msg","绑定/修改手机失败");
+            }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
+            result.put("status","0");
+            result.put("msg","绑定/修改手机失败");
         }
 
         return  result.returnMsg();
     }
-    /**
-     * 查询邮箱的合法性
-     */
-    @RequestMapping(value = "mailenable")
-    public @ResponseBody Object mailenable() {
-        MsgBean result = new MsgBean();
 
-        String mail = request.getParameter("mail");
-
-        UcMembersCheckEmailRequest res = new UcMembersCheckEmailRequest();
-        res.setTenantId(Constants.TenantID);
-        res.setEmail(mail);
-        res.setUid(0);
-        try {
-            UcMembersResponse resp = iUcMembersSV.ucCheckeEmail(res);
-
-            log.info(resp.getMessage());
-            log.info(resp.getDate());
-        }catch (Exception e) {
-            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
-        }
-        return  result.returnMsg();
-    }
     /**
      * 修改/绑定邮箱接口
      */
@@ -349,10 +312,21 @@ public class SafeController extends BaseController {
         res.setEmail(mail);
         try {
             UcMembersResponse resp = iUcMembersSV.ucEditEmail(res);
-            log.info(resp.getMessage().isSuccess());
+            ResponseCode responseCode = resp.getCode();
+            log.info("--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
+            if (responseCode.getCodeNumber() == 1){
+                Map m = resp.getDate();
+                log.info(m);
+                UcMembersVo vo = new UcMembersVo(m);
+                log.info(vo);
+            }else{
+                result.put("status","0");
+                result.put("msg","绑定/修改邮箱失败");
+            }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
+            result.put("status","0");
+            result.put("msg","绑定/修改邮箱失败");
         }
 
         return  result.returnMsg();
@@ -373,13 +347,21 @@ public class SafeController extends BaseController {
         res.setUserinfo(info);
         try {
             UcMembersGetOperationcodeResponse resp = iUcMembersOperationSV.ucGetOperationcode(res);
-            Map m = resp.getDate();
-            log.info(m);
-            UcMembersVo vo = new UcMembersVo(m);
-            log.info(vo.getOperationcode());
+            ResponseCode responseCode = resp.getCode();
+            if (responseCode.getCodeNumber() == 1){
+                Map m = resp.getDate();
+                log.info(m);
+                UcMembersVo vo = new UcMembersVo(m);
+                log.info(vo);
+                log.info("验证码是:" +vo.getOperationcode());
+            }else{
+                result.put("status","0");
+                result.put("msg","获取验证码失败");
+            }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
+            result.put("status","0");
+            result.put("msg","获取验证码失败");
         }
 
         return  result.returnMsg();
@@ -403,11 +385,22 @@ public class SafeController extends BaseController {
         try {
             UcMembersResponse resp = iUcMembersOperationSV.ucActiveMember(res);
             ResponseCode responseCode = resp.getCode();
-
             log.info("--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
+            if (responseCode.getCodeNumber() == 1){
+                Map m = resp.getDate();
+                log.info(m);
+                UcMembersVo vo = new UcMembersVo(m);
+                log.info(vo);
+            }else{
+                result.put("status","0");
+                result.put("msg","验证码错误");
+            }
+
 
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            result.put("status","0");
+            result.put("msg","验证码错误");
         }
 
         return  result.returnMsg();

@@ -188,8 +188,10 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-
-                    alert("登录成功");
+                    <%--var tourl = "<%=path%>/center/center";--%>
+                    <%--window.location.href=tourl;--%>
+                    window.history.go(-1);
+//                    alert("登录成功");
                 } else{
                     $("#codeLabel").html(data.msg);
                     $("#codeLabel").css("display", "block");
@@ -197,7 +199,7 @@
                 }
             },
             error: function () {
-                $("#codeLabel").html("网络请求超时，请稍候再试");
+                $("#codeLabel").html(data.msg);
                 $("#codeLabel").css("display", "block");
             }
         });

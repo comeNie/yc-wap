@@ -74,7 +74,7 @@
                             </li>
                             <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()">立即注册</a></li>
                             <li class="left">
-                                <p><input id="checkid" type="checkbox" class="checkbox"></p>我已经阅读并同意<a href="javascript:void(0)" onclick="look()">《译云用户协议》</a>
+                                <p><input id="checkid" type="checkbox" class="checkbox" checked></p>我已经阅读并同意<a href="javascript:void(0)" onclick="look()">《译云用户协议》</a>
                                 <label id="agreeLabel"></label>
                             </li>
 

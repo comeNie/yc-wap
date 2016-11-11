@@ -13,13 +13,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String path = request.getContextPath();
+    String staticUid = (String) session.getAttribute("UID");
+    String isLogin = (String) session.getAttribute("isLogin");
+    System.out.println(isLogin+"=========="+staticUid);
+    request.setAttribute("UID",staticUid);
+    request.setAttribute("isLogin",isLogin);
 %>
 
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>账户余额</title>
+    <title>个人中心</title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -55,7 +60,7 @@
         <section class="personal-banner">
             <ul>
                 <li class="img"><img src="<%=path%>/ui/images/4.jpg" /></li>
-                <li>用户名是12345</li>
+                <li id="nameLi"></li>
                 <li>普通会员</li>
             </ul>
         </section>
@@ -118,4 +123,29 @@
         var tourl = "<%=path%>/safe/safe";
         window.location.href=tourl;
     }
+    $(function() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/userinfo",
+            modal: true,
+            timeout: 30000,
+            data: {
+                username: "",
+                uid:${UID}
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#nameLi").html(data.username);
+                } else {
+                    var tourl = "<%=path%>/login/findfail";
+                    window.location.href=tourl;
+                }
+            },
+            error: function () {
+                $("#nameLabel1").html("网络请求超时，请稍候再试");
+                $("#nameLabel1").css("display", "block");
+            }
+        });
+    })
 </script>

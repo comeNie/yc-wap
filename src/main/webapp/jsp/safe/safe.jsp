@@ -14,6 +14,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String path = request.getContextPath();
+
 %>
 
 <html>
@@ -57,20 +58,20 @@
         <div class="setting-list">
             <ul>
                 <a href="#" onclick="changepsd()">
-                    <li>修改密码</li>
+                    <li id="passwordLeft">修改密码</li>
                     <li class="right"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
             <ul>
                 <a href="#" onclick="changePhone()">
                     <li>手机验证</li>
-                    <li class="right">138****1234<i class="icon iconfont">&#xe62c;</i></li>
+                    <li class="right" id="phoneRight">138****1234<i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
             <ul class="none-border" onclick="changeMail()">
                 <a href="#">
                     <li>邮箱验证</li>
-                    <li class="right">您还没有通过邮箱验证，请验证<i class="icon iconfont">&#xe62c;</i></li>
+                    <li class="right" id="emalRight"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
         </div>
@@ -80,15 +81,43 @@
 </body>
 </html>
 <script>
-    $(document).ready(function () {
-
-    });
+    var isEmail;
+    var isPhone;
+    var isPassword;
+    $(function() {
+        var email = "${email}";
+        var password = "${password}";
+        var mobilePhone = "${mobilePhone}";
+        if(email == "" || email == null){
+            $("#emalRight").html("您还没有通过邮箱验证，请验证");
+            isEmail = 0;
+        }else {
+            $("#emalRight").html(email);
+            isEmail = 1;
+        }
+        if(password == "" || password == null){
+            $("#passwordLeft").html("设置密码");
+            isPassword = 0;
+        }else {
+            $("#passwordLeft").html("修改密码");
+            isPassword = 1;
+        }
+        if(mobilePhone == "" || mobilePhone == null){
+            $("#phoneRight").html("您还没有通过手机验证，请验证");
+            isPhone = 0;
+        }else {
+            var myphone=mobilePhone.substr(3,4);
+            var lphone=mobilePhone.replace(myphone,"****");
+            $("#phoneRight").html(lphone);
+            isPhone = 1;
+        }
+    })
     function retLeft(){
         window.history.go(-1);
     }
     function changepsd() {
-        var c = confirm("是否有密码");
-        if (c == true) {
+//        var c = confirm("是否有密码");
+        if (isPassword == true) {
             var tourl = "<%=path%>/safe/changepsd";
             window.location.href=tourl;
         }else {
@@ -115,8 +144,8 @@
         <%--});--%>
     }
     function changeMail() {
-        var c = confirm("是否已验证邮箱");
-        if (c == true) {
+//        var c = confirm("是否已验证邮箱");
+        if (isEmail == true) {
             var tourl = "<%=path%>/safe/checkphone?jump=mail";
             window.location.href = tourl;
         } else {
@@ -125,8 +154,8 @@
         }
     }
     function changePhone() {
-        var c = confirm("是否已验证手机号");
-        if (c == true) {
+//        var c = confirm("是否已验证手机号");
+        if (isPhone == true) {
             var tourl = "<%=path%>/safe/checkphone?jump=phone";
             window.location.href = tourl;
         } else {
