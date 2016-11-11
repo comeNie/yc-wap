@@ -208,9 +208,8 @@
             landetec=$("#chick-int").val();
             lanLength=count(escape(landetec));
             console.info("lanLength...."+lanLength);
-            if(lanLength>=20){
-                console.info("不能让你再输入啦.....");
-                $("#chick-int").val(landetec.substring(0,20));
+            if(lanLength>=2000){
+                $("#chick-int").val(landetec.substring(0,2000));
             }
             console.info("landetec....."+landetec);
             contentDetection(landetec);
@@ -236,16 +235,6 @@
             }
         }
 
-//        <!--翻译源内容失去焦点-->
-//        var sourcetext;
-//        $("#chick-int").blur(function () {
-//            sourcetext = $("#chick-int").val();
-//            if(sourcetext == "" || sourcetext == null) {
-//                $("#results").css("display","none");
-//                $("#chick-btn").css("display","block");
-//                return;
-//            }
-//        });
 
         $("#btn-textarea-clear").bind("click",function () {
             if(IsTranslated == true) {
@@ -313,15 +302,6 @@
         }
     }
 
-    function downloadApp() {
-        var andlink="http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt";
-        var ioslink="https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8";
-        if (/android/i.test(navigator.userAgent)){
-            window.location.href=andlink;
-        }else if(/iphone/i.test(navigator.userAgent)){
-            window.location.href=ioslink;
-        }
-    }
     <!--手动选择源语言-->
 
     function chooseSourLan() {
