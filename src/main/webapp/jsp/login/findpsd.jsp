@@ -261,7 +261,8 @@
             data: {
                 type: 6,    //密码操作码
                 code:code,
-                uid:getuids
+                uid:getuids,
+                mode:2,
             },
             success: function (data) {
                 if (data.status == 1) {
@@ -292,6 +293,7 @@
             modal: true,
             timeout: 30000,
             data: {
+                uid:getuids,
                 newpw: psd,
                 code:getCode,
                 mode:2  //密码操作吗

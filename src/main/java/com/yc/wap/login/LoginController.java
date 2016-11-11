@@ -2,6 +2,7 @@ package com.yc.wap.login;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
+
 import com.ai.yc.ucenter.api.members.param.UcMembersVo;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
 import com.ai.yc.ucenter.api.members.param.login.UcMembersLoginRequest;
@@ -11,14 +12,12 @@ import com.ai.yc.ucenter.api.members.param.register.UcMembersRegisterResponse;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
-import com.yc.wap.system.utils.MD5Util;
 import com.yc.wap.system.utils.RegexUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
