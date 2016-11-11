@@ -227,6 +227,7 @@
             timeout: 30000,
             data: {
                 username: phone,
+                uid:""
             },
             success: function (data) {
                 if (data.status == 1) {
@@ -272,7 +273,7 @@
                     $("#next3").show();
                     getCode = code;
                 } else {
-                    $("#codeLabel2").html("短信验证码错误");
+                    $("#codeLabel2").html(data.msg);
                     $("#codeLabel2").css("display", "block");
 //                    index ++;//index = 2
 //                    $("#next2").hide();
@@ -280,7 +281,7 @@
                 }
             },
             error: function () {
-                $("#codeLabel2").html("网络请求超时，请稍候再试");
+                $("#codeLabel2").html(data.msg);
                 $("#codeLabel2").css("display", "block");
             }
         });
@@ -305,13 +306,13 @@
                     $("#next4").show();
                     countDownFive();
                 } else {
-                    $("#confirmLabel3").html("找回失败");
+                    $("#confirmLabel3").html("找回密码失败");
                     $("#confirmLabel3").css("display", "block");
 
                 }
             },
             error: function () {
-                $("#confirmLabel3").html("网络请求超时，请稍候再试");
+                $("#confirmLabel3").html("找回密码失败");
                 $("#confirmLabel3").css("display", "block");
             }
         });
@@ -334,12 +335,12 @@
                 if (data.status == 1) {
                     countDown(60);
                 } else {
-                    $("#codeLabel2").html("短信验证码错误");
+                    $("#codeLabel2").html(data.msg);
                     $("#codeLabel2").css("display", "block");
                 }
             },
             error: function () {
-                $("#codeLabel2").html("网络请求超时，请稍候再试");
+                $("#codeLabel2").html(data.msg);
                 $("#codeLabel2").css("display", "block");
             }
         });
