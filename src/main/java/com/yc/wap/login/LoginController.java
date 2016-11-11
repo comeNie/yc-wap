@@ -2,7 +2,6 @@ package com.yc.wap.login;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
-
 import com.ai.yc.ucenter.api.members.param.UcMembersVo;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
 import com.ai.yc.ucenter.api.members.param.login.UcMembersLoginRequest;
@@ -19,6 +18,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -34,26 +35,31 @@ import java.util.Map;
 public class LoginController extends BaseController {
     private Log log = LogFactory.getLog(LoginController.class);
     private IUcMembersSV iUcMembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
+
     @RequestMapping(value = "login")
     public String login() {
         MsgBean result = new MsgBean();
         return "login/login";
     }
+
     @RequestMapping(value = "register")
     public String register() {
         MsgBean result = new MsgBean();
         return "login/register";
     }
+
     @RequestMapping(value = "registersuccess")
     public String registersuccess() {
         MsgBean result = new MsgBean();
         return "login/registersuccess";
     }
+
     @RequestMapping(value = "findpsd")
     public String findpsd() {
         MsgBean result = new MsgBean();
         return "login/findpsd";
     }
+
     @RequestMapping(value = "findfail")
     public String findFail() {
         MsgBean result = new MsgBean();
@@ -64,7 +70,9 @@ public class LoginController extends BaseController {
      * 登录验证
      */
     @RequestMapping(value = "checklogin")
-    public @ResponseBody Object checklogin() {
+    public
+    @ResponseBody
+    Object checklogin() {
         MsgBean result = new MsgBean();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -79,10 +87,9 @@ public class LoginController extends BaseController {
         boolean isPhone = RegexUtils.checkIsPhone(username);
         if (isEmail) {
             loginmode = Constants.LoginModel.MailModel;
-        }
-        else if (isPhone) {
+        } else if (isPhone) {
             loginmode = Constants.LoginModel.PhonePsdModel;
-        }else {
+        } else {
             loginmode = Constants.LoginModel.UsernamePsdModel;
         }
         log.info(loginmode);
@@ -152,7 +159,6 @@ public class LoginController extends BaseController {
         return result.returnMsg();
     }
 
-
     /**
      * 注册
      */
@@ -187,10 +193,18 @@ public class LoginController extends BaseController {
                 log.info(vo);
             }
             /*code:失败，未找到该用户信息-1 code:成功1    */
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-            result.setFailure(e.getMessage());
         }
+        return result.returnMsg();
+    }
+
+    @RequestMapping(value = "Logout")
+    @ResponseBody
+    public Object Logout(HttpServletResponse response) {
+        log.info("-----Logout-----");
+        MsgBean result = new MsgBean();
+        session.invalidate();
         return result.returnMsg();
     }
 }
