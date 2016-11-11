@@ -66,7 +66,7 @@
                 <div class="set-password">
                     <div class="set-phone">
                         <p>已验证手机</p>
-                        <p class="word" id="phone2">138****1234</p>
+                        <p class="word" id="phone2"></p>
                     </div>
                     <div class="set-int">
                         <ul>
@@ -104,7 +104,7 @@
                     <ul>
                         <li><i class="icon iconfont">&#xe612;</i></li>
                         <li class="word">密码设置成功</li>
-                        <li><span id="spanTime">5s</span>内自动回到<a href="#" onclick="goLogin()">登录页面</a></li>
+                        <li><span id="spanTime">5s</span>内自动回到<a href="javascript:void(0)" onclick="goLogin()">登录页面</a></li>
                     </ul>
                 </section>
             </div>
@@ -227,7 +227,7 @@
             timeout: 30000,
             data: {
                 username: phone,
-                uid:""
+
             },
             success: function (data) {
                 if (data.status == 1) {
@@ -263,7 +263,6 @@
                 type: 6,    //密码操作码
                 code:code,
                 uid:getuids,
-                mode:2,
             },
             success: function (data) {
                 if (data.status == 1) {

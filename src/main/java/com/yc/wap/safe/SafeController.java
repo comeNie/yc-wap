@@ -64,6 +64,8 @@ public class SafeController extends BaseController {
         request.setAttribute("password",password);
         request.setAttribute("mobilePhone",mobilePhone);
         log.info("safe-safe invoked");
+
+        log.info("----------密码"+password);
         return "safe/safe";
     }
 
@@ -75,6 +77,9 @@ public class SafeController extends BaseController {
     public String changepsd() {
 
         log.info("safe-changepsd invoked");
+
+        String uid = request.getParameter("uid");
+        request.setAttribute("uid",uid);
         return "safe/changepsd";
     }
 
@@ -134,6 +139,8 @@ public class SafeController extends BaseController {
         log.info("safe-checkphone invoked");
         String jump = request.getParameter("jump");
         request.setAttribute("jump",jump);
+        String phone = request.getParameter("phone");
+        request.setAttribute("phone",phone);
         return "safe/checkphone";
     }
 
@@ -270,11 +277,16 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String code = request.getParameter("code");
         String phone = request.getParameter("phone");
-
+        String uid = request.getParameter("uid");
         UcMembersEditMobileRequest res = new UcMembersEditMobileRequest();
         res.setTenantId(Constants.TenantID);
         res.setOperationcode(code);
         res.setMobilephone(phone);
+        if (uid != ""){
+
+            Integer u = Integer.parseInt(uid);
+            res.setUid(u);
+        }
         try {
             UcMembersResponse resp = iUcMembersSV.ucEditMobilephone(res);
             ResponseCode responseCode = resp.getCode();
@@ -305,11 +317,13 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String code = request.getParameter("code");
         String mail = request.getParameter("mail");
-
+        String uid = request.getParameter("uid");
+        Integer u = Integer.parseInt(uid);
         UcMembersEditEmailRequest res = new UcMembersEditEmailRequest();
         res.setTenantId(Constants.TenantID);
         res.setOperationcode(code);
         res.setEmail(mail);
+        res.setUid(u);
         try {
             UcMembersResponse resp = iUcMembersSV.ucEditEmail(res);
             ResponseCode responseCode = resp.getCode();
@@ -350,7 +364,7 @@ public class SafeController extends BaseController {
             ResponseCode responseCode = resp.getCode();
             if (responseCode.getCodeNumber() == 1){
                 Map m = resp.getDate();
-                log.info(m);
+                result.put("uid",m.get("uid")+"");
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
                 log.info("验证码是:" +vo.getOperationcode());

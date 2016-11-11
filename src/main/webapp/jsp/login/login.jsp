@@ -39,7 +39,7 @@
          <ul>
              <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
              <li>登录</li>
-             <a href="#" class="btn login-btn right1" onclick="registJump()">注册</a>
+             <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()">注册</a>
          </ul>
         </nav>
         <%--<!--tab-->
@@ -96,10 +96,10 @@
                             <li class="int-border">
                                 <p><input id="codeid" type="text" class="input input-yzm" placeholder="验证码"></p>
                                 <p><div class="code" id="checkCode"></div></p>
-                                <p><a href="#" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
+                                <p><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
                                 <label id="codeLabel"></label>
                             </li>
-                            <li><a href="#" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
+                            <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
                             <li class="right"><a href="#" onclick="forgetpsd()">忘记密码 </a></li>
                         </ul>
                     </div>
@@ -188,9 +188,9 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    <%--var tourl = "<%=path%>/center/center";--%>
-                    <%--window.location.href=tourl;--%>
-                    window.history.go(-1);
+                    var tourl = "<%=path%>/center/center";
+                    window.location.href=tourl;
+//                    window.history.go(-1);
 //                    alert("登录成功");
                 } else{
                     $("#codeLabel").html(data.msg);

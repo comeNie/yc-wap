@@ -58,7 +58,7 @@
                             <label id="confirmLable"></label>
                         </li>
                         <li>
-                            <a class="btn submit-btn btn-blue" href="#" onclick="finishChange()"><spring:message code="safe.changepsd.enter_input"/></a>
+                            <a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="finishChange()"><spring:message code="safe.changepsd.enter_input"/></a>
                         </li>
                     </ul>
                 </div>
@@ -119,7 +119,37 @@
         }else {
             $("#confirmLable").css("display","none");
         }
-        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.change_jump"/>";
-        window.location.href=tourl;
+
+        checkChange(oldpsd,newpsd);
+
+    }
+    function checkChange(oldLable,newLable){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/editpssword",
+            modal: true,
+            timeout: 30000,
+            data: {
+                uid:${uid},
+                newpw: newLable,
+                code:oldLable,
+                mode:1  //密码操作吗
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.change_jump"/>";
+                    window.location.href=tourl;
+                } else {
+                    $("#confirmLabel3").html(data.msg);
+                    $("#confirmLabel3").css("display", "block");
+
+                }
+            },
+            error: function () {
+                $("#confirmLabel3").html(data.msg);
+                $("#confirmLabel3").css("display", "block");
+            }
+        });
     }
 </script>

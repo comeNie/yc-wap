@@ -106,7 +106,7 @@
 
 //        调用接口校验合法性
 
-//        getTestCode("123123123");
+        getTestCode(phone);
         //倒计时
         countDown(60);
     }
@@ -121,7 +121,8 @@
             showBusi: false,
             timeout: 30000,
             data: {
-                telPhone: phone
+                type: 5,
+                info:phone
             },
             success: function (data) {
                 if (data.status == 1) {
