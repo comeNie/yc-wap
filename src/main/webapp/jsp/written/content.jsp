@@ -194,6 +194,7 @@
             var ContentLength = count(escape(Content));
             if (${isLogin==null || isLogin=='0'}) {
                 window.location.href="<%=path%>/login/login";
+                return;
             }
             if (ContentLength == 0) {
                 $("#EjectTitle").html("没写字呢卧槽");

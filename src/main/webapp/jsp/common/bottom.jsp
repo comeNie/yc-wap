@@ -7,9 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
-<%@ page language="java" pageEncoding="UTF-8"%>
-<%@page import="java.util.regex.Matcher"%>
-<%@page import="java.util.regex.Pattern"%>
+<%@ page language="java" pageEncoding="UTF-8" %>
+<%@page import="java.util.regex.Matcher" %>
+<%@page import="java.util.regex.Pattern" %>
 <%!
     private String androidReg = "\\bandroid|Nexus\\b";
     private String iosReg = "ip(hone|od|ad)";
@@ -17,15 +17,16 @@
     private Pattern androidPat = Pattern.compile(androidReg, Pattern.CASE_INSENSITIVE);
     private Pattern iosPat = Pattern.compile(iosReg, Pattern.CASE_INSENSITIVE);
 
-    private boolean Android(String userAgent){
-        if(null == userAgent){
+    private boolean Android(String userAgent) {
+        if (null == userAgent) {
             userAgent = "";
         }
         Matcher matcherAndroid = androidPat.matcher(userAgent);
         return matcherAndroid.find();
     }
-    private boolean IOS(String userAgent){
-        if(null == userAgent){
+
+    private boolean IOS(String userAgent) {
+        if (null == userAgent) {
             userAgent = "";
         }
         Matcher matcherIOS = iosPat.matcher(userAgent);
@@ -36,13 +37,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
-    String userAgent = request.getHeader( "USER-AGENT" ).toLowerCase();
-    System.out.println("userAgent: "+userAgent);
-    if(Android(userAgent)) {
-        request.setAttribute("AppUrl", "http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt");
-    } else if(IOS(userAgent)) {
-        request.setAttribute("AppUrl", "https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8");
+    String userAgent = request.getHeader("USER-AGENT").toLowerCase();
+    String AppUrl = "http://m.yeecloud.com";
+    System.out.println("userAgent: " + userAgent);
+    if (Android(userAgent)) {
+        AppUrl = "http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt";
+    } else if (IOS(userAgent)) {
+        AppUrl = "https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8";
     }
+    request.setAttribute("AppUrl", AppUrl);
     request.setAttribute("WapUrl", "http://m.yeecloud.com");
     request.setAttribute("PcUrl", "http://www.yeecloud.com/");
 %>
@@ -54,7 +57,7 @@
     <section class="terminal">
         <ul>
             <li class="none">
-                <p><img src="<%=path%>/ui/images/icon-1.png" onclick="${AppUrl}"/></p>
+                <p><img src="<%=path%>/ui/images/icon-1.png" onclick="window.location.href='${AppUrl}'"/></p>
                 <p><spring:message code="all.project.public.icon-1"/></p>
             </li>
             <li class="tow current">
