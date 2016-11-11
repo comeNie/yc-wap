@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.text.DecimalFormat" %><%--
   Created by IntelliJ IDEA.
   User: Nozomi
   Date: 11/3/2016
@@ -8,13 +8,14 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    DecimalFormat df = new DecimalFormat("######0.00");
     String path = request.getContextPath();
     String detail = request.getParameter("Detail");
     String PurposeVal = request.getParameter("PurposeVal");
     String DomainVal = request.getParameter("DomainVal");
     String TransLvVal = request.getParameter("TransLvVal");
     String Price = request.getParameter("Price");
-    String PriceDisplay = "总价：" + Price + "元";
+    String PriceDisplay = "总价：" + df.format(Double.parseDouble(Price) / 1000) + "元";
 %>
 <html>
 <head>

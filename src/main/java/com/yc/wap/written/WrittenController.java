@@ -126,6 +126,15 @@ public class WrittenController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "onSaveToUrl")
+    @ResponseBody
+    public Object onSaveToUrl() {
+        MsgBean result = new MsgBean();
+        session.setAttribute("ToUrl", request.getParameter("ToUrl"));
+        session.setAttribute("Param", request.getParameter("Param"));
+        return result.returnMsg();
+    }
+
     @RequestMapping(value = "onContentSubmit")
     public String onContentSubmit() {
         return "written/confirm";
