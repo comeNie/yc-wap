@@ -160,4 +160,5 @@ public class WrittenController extends BaseController {
         request.setAttribute("result", "success");
         return "written/payresult";
     }
+
 }

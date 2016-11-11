@@ -79,7 +79,8 @@
 </div>
 <!--底部-->
 <section class="order-submit">
-    <p class="left"><%=PriceDisplay%></p>
+    <p class="left"><%=PriceDisplay%>
+    </p>
     <p class="right"><a href="javascript:void(0)" id="submit">下一步</a></p>
 </section>
 
