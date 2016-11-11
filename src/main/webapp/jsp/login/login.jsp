@@ -37,7 +37,7 @@
         <!--登录-->
         <nav class="wap-second-nav">
          <ul>
-             <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
+             <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
              <li>登录</li>
              <a href="#" class="btn login-btn right1" onclick="registJump()">注册</a>
          </ul>

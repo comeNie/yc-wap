@@ -11,6 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
+    request.setAttribute("isLogin", session.getAttribute("isLogin"));
 %>
 <html>
 <head>
@@ -191,6 +192,9 @@
         $("#submit").bind("click", function () {
             var Content = $("#chick-int").val();
             var ContentLength = count(escape(Content));
+            if (${isLogin==null || isLogin=='0'}) {
+                window.location.href="<%=path%>/login/login";
+            }
             if (ContentLength == 0) {
                 $("#EjectTitle").html("没写字呢卧槽");
                 $('#eject-mask').fadeIn(100);
