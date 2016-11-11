@@ -72,7 +72,8 @@
         </section>
         <!--文字翻译-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" placeholder="最多2000字啊啊啊"></textarea>
+            <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
+                      placeholder="最多2000字啊啊啊"></textarea>
             <a hrel="#"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">
@@ -192,9 +193,7 @@
         $("#submit").bind("click", function () {
             var Content = $("#chick-int").val();
             var ContentLength = count(escape(Content));
-            if (${isLogin==null || isLogin=='0'}) {
-                window.location.href="<%=path%>/login/login";
-            }
+
             if (ContentLength == 0) {
                 $("#EjectTitle").html("没写字呢卧槽");
                 $('#eject-mask').fadeIn(100);
@@ -333,7 +332,39 @@
     }
 
     function onSubmit(url) {
+        if (${isLogin==null || isLogin=='0'}) {
+            SaveToUrl("/written/onContentSubmit", url);
+            return;
+        }
         window.location.href = "<%=path%>/written/onContentSubmit?" + url;
+    }
+
+    function SaveToUrl(ToUrl, Param) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/written/onSaveToUrl",
+            modal: true,
+            timeout: 30000,
+            data: {
+                ToUrl: ToUrl,
+                Param: Param
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    window.location.href = "<%=path%>/login/login";
+                }
+            },
+            error: function (data) {
+
+            },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+
+            }
+        });
     }
 
 </script>
