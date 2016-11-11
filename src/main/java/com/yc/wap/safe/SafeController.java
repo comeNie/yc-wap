@@ -30,6 +30,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 
@@ -217,21 +220,48 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String checke_code = request.getParameter("code");  //旧密码或验证码
         String newpw = request.getParameter("newpw");
+        newpw = MD5Utils.md5(newpw);
+        String uid = request.getParameter("uid");
+        Integer u = Integer.parseInt(uid);
         String checke_mode = request.getParameter("mode");  // 1：旧密码 2：验证码（密码操作验证码）
         UcMembersEditPassRequest res = new UcMembersEditPassRequest();
         res.setTenantId(Constants.TenantID);
         res.setChecke_code(checke_code);
         res.setChecke_mode(checke_mode);
         res.setNewpw(newpw);
+        res.setUid(u);
         try {
             UcMembersResponse resp = iUcMembersSV.ucEditPassword(res);
-            log.info(resp.getMessage().isSuccess());
+            log.info(resp.getCode().getCodeMessage());
+            log.info(resp.getDate());
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
         }
-
+//4297f44b13955235245b2497399d7a93
         return  result.returnMsg();
+    }
+    /**
+     * MD5加密
+     */
+    public static class MD5Utils {
+        /**
+         * 使用md5的算法进行加密
+         */
+        public static String md5(String plainText) {
+            byte[] secretBytes = null;
+            try {
+                secretBytes = MessageDigest.getInstance("md5").digest(
+                        plainText.getBytes());
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException("没有md5这个算法！");
+            }
+            String md5code = new BigInteger(1, secretBytes).toString(16);
+            for (int i = 0; i < 32 - md5code.length(); i++) {
+                md5code = "0" + md5code;
+            }
+            return md5code;
+        }
     }
     /**
      * 查询手机号的合法性
@@ -343,7 +373,10 @@ public class SafeController extends BaseController {
         res.setUserinfo(info);
         try {
             UcMembersGetOperationcodeResponse resp = iUcMembersOperationSV.ucGetOperationcode(res);
-            log.info(resp.getOperationcode());
+            Map m = resp.getDate();
+            log.info(m);
+            UcMembersVo vo = new UcMembersVo(m);
+            log.info(vo.getOperationcode());
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
@@ -367,11 +400,15 @@ public class SafeController extends BaseController {
         res.setOperationcode(code);
         res.setUid(u);
         log.info(u);
+        try {
+            UcMembersResponse resp = iUcMembersOperationSV.ucActiveMember(res);
+            ResponseCode responseCode = resp.getCode();
 
-        UcMembersResponse resp = iUcMembersOperationSV.ucActiveMember(res);
-        ResponseCode responseCode = resp.getCode();
+            log.info("--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
 
-        log.info("--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
+        }catch (Exception e){
+            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+        }
 
         return  result.returnMsg();
     }
