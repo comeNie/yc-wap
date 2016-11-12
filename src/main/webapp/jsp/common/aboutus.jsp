@@ -32,23 +32,28 @@
 
 </head>
 <body>
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>关于我们</li>
-            <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
-        </ul>
-        <div class="pop-nav">
-            <ul>
-                <li>
-                    <a href="#">译云首页</a>|
-                    <a href="#">个人中心</a>|
-                    <a href="#">我的订单</a>|
-                    <a href="#">安全退出</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <%--头部--%>
+    <jsp:include page="/jsp/common/pophead.jsp" flush="true">
+        <jsp:param name="Title" value="关于我们"/>
+        <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
+    </jsp:include>
+    <%--<nav class="wap-second-nav">--%>
+        <%--<ul>--%>
+            <%--<a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>--%>
+            <%--<li>关于我们</li>--%>
+            <%--<a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>--%>
+        <%--</ul>--%>
+        <%--<div class="pop-nav">--%>
+            <%--<ul>--%>
+                <%--<li>--%>
+                    <%--<a href="#">译云首页</a>|--%>
+                    <%--<a href="#">个人中心</a>|--%>
+                    <%--<a href="#">我的订单</a>|--%>
+                    <%--<a href="#">安全退出</a>--%>
+                <%--</li>--%>
+            <%--</ul>--%>
+        <%--</div>--%>
+    <%--</nav>--%>
     <section class="about">
         <ul>
             <li class="img"><img src="<%=path%>/ui/images/about-logo.png" /></li>

@@ -33,23 +33,12 @@
 </head>
 <body>
     <div class="wrapper-big"><!--包含除底部外的所有层-->
-        <nav class="wap-second-nav">
-            <ul>
-                <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
-                <li>充值</li>
-                <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
-            </ul>
-            <div class="pop-nav">
-                <ul>
-                    <li>
-                        <a href="#">译云首页</a>|
-                        <a href="#">个人中心</a>|
-                        <a href="#">我的订单</a>|
-                        <a href="#">安全退出</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <%--头部--%>
+        <jsp:include page="/jsp/common/pophead.jsp" flush="true">
+            <jsp:param name="Title" value="充值"/>
+            <jsp:param name="BackTo" value="javascript:retLeft()"/>
+        </jsp:include>
+
         <section class="form-big">
             <div class="set-password">
                 <div class="choice-list">
