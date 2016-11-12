@@ -100,6 +100,8 @@
         <p>
             <select class="select testing-select" id="source-lan">
                 <c:forEach items="${requestScope.languagepairs}" var="pair">
+                    <option id="auto-zh" style="display: none">检测语言：中文</option>
+                    <option id="auto-en" style="display: none">检测语言：英语</option>
                     <option>${pair}</option>
                 </c:forEach>
             </select>
@@ -136,7 +138,7 @@
     <section class="translation-content-english" id="results">
         <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
         <p>
-            <a href="#"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
+            <a href="#" id="text_audio"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
             <a href="#" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
             <audio src="" controls="controls"  id="audioPlay" style="display: none">
                 Your browser does not support audio tag
@@ -201,8 +203,20 @@
     var lanLength;
     var beRead;
 
-    var language=navigator.userAgent;
-    console.info("浏览器语言。。。"+language)
+    var Language = "${pageContext.response.locale}";
+    console.info("locallanguage:"+Language);
+    if (Language=="zh_CN"){
+        $("#auto-zh").css("display","block");
+        $("#auto-en").css("display", "none");
+        srcvalue="zh";
+    }else if (Language=="en_US"){
+        $("#source-lan option:selected").attr("selected","");
+        $("#auto-en").css("display","block");
+        $("#auto-en").attr("selected","selected");
+        $("#auto-zh").css("display","none");
+        srcvalue="en";
+        tarvalue="zh";
+    }
     $(document).ready(function () {
 
         <!--监听输入的文本内容-->
@@ -283,6 +297,11 @@
             if (beRead==""||beRead==null){
                 return;
             }
+            var ttslength=mbStringLength(beRead);
+            console.info("ttslenght>>>"+ttslength);
+            if (ttslength>1024){
+                $("#text_audio").css("display","none");
+            }
             var audioPlay=document.getElementById("audioPlay");
             console.info("audioPlay>>>>>"+audioPlay.paused);
             if (audioPlay.paused){
@@ -293,6 +312,22 @@
                 audioPlay.pause;
             }
         });
+
+        function mbStringLength(s) {
+            var totalLength = 0;
+            var charCode;
+            for (var i = 0; i < s.length; i++) {
+                charCode = s.charCodeAt(i);
+                if (charCode < 0x007f) {
+                    totalLength = totalLength + 1;
+                } else if ((0x0080 <= charCode) && (charCode <= 0x07ff)) {
+                    totalLength += 2;
+                } else if ((0x0800 <= charCode) && (charCode <= 0xffff)) {
+                    totalLength += 3;
+                }
+            }
+            return totalLength;
+        }
 
         <!--跳转到笔译下单-->
         $("#banner1").bind("click",function () {
