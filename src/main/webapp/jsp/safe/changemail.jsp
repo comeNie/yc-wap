@@ -52,7 +52,7 @@
                         <li>
                             <p><input id="codeid" type="text" class="input input-small" placeholder=<spring:message code="safe.changemail.small_input"/>></p>
 
-                            <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value=<spring:message code="safe.changemail.bntyzm_input"/>></p>
+                            <p class="yzm"><a id="getnumber" onclick="javascript:getnumberonclick()" class="btn bnt-yzm"><spring:message code="safe.changemail.bntyzm_input"/></a></p>
                             <label id="phonetips"></label>
                         </li>
                         <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.changemail.nextbtn"/></a></li>
@@ -66,7 +66,7 @@
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>
 </html>
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
         $("#leftRe").click(function() {
             window.history.go(-1);

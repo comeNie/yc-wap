@@ -59,7 +59,7 @@
                         </li>
                         <li>
                             <p><input type="text" id="codeid" class="input input-small" placeholder="<spring:message code="safe.changephone.small_input"/>"></p>
-                            <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value="<spring:message code="safe.changephone.bntyzm_input"/>"></p>
+                            <p class="yzm"><a id="getnumber" onclick="javascript:getnumberonclick()" class="btn bnt-yzm"><spring:message code="safe.changephone.bntyzm_input"/></a>></p>
                             <label id="phonetips"></label>
                         </li>
                         <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.changephone.nextbtn"/></a></li>
