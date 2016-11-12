@@ -121,16 +121,19 @@ public class LoginController extends BaseController {
     //        }
             if (code.getCodeNumber() == 1){
                 Map m = resp.getDate();
+
                 UcMembersVo vo = new UcMembersVo(m);
                 session.setAttribute("isLogin","1");    //1登录  0未登录
-                session.setAttribute("UID",vo.getUid()+"");
-                session.setAttribute("email",vo.getEmail());
-//                if (vo.getPassword().length() > 0){
-                    session.setAttribute("password","1");
-//                }else {
-//                    session.setAttribute("password","");
-//                }
-                session.setAttribute("mobilePhone",vo.getMobilephone());
+                session.setAttribute("UID",m.get("uid")+"");
+                session.setAttribute("email",m.get("email"));
+                session.setAttribute("username",m.get("username"));
+                log.info(m.get("passHav"));
+                if (m.get("passHav") == "true"){
+                session.setAttribute("password","1");
+                }else {
+                    session.setAttribute("password","");
+                }
+                session.setAttribute("mobilePhone",m.get("mobilephone"));
                 log.info(vo);
             }else {
                 result.put("status","0");
@@ -169,6 +172,7 @@ public class LoginController extends BaseController {
         password = MD5Util.md5(password);
         Date date = new Date();
         String createTime = date.toString();
+
         UcMembersRegisterRequest res = new UcMembersRegisterRequest();
         res.setTenantId(Constants.TenantID);
         res.setPassword(password);

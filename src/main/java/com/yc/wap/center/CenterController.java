@@ -17,7 +17,8 @@ public class CenterController extends BaseController {
     @RequestMapping(value = "center")
     public String center() {
         log.info("account-center invoked");
-
+        String username = (String) session.getAttribute("username");
+        request.setAttribute("username",username);
         return "center/center";
     }
 }

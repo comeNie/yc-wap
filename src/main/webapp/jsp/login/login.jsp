@@ -37,6 +37,49 @@
 
 </head>
 <body>
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <!--登录-->
+        <nav class="wap-second-nav">
+         <ul>
+             <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
+             <li>登录</li>
+             <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()">注册</a>
+         </ul>
+        </nav>
+        <%--<!--tab-->
+        <section class="login-tab">
+         <ul>
+             <li><a href="#" class="current">快速登录</a></li>
+             <li><a href="#">普通登录</a></li>
+         </ul>
+        </section>
+        <!--tab1-->
+        <section id="tab1">
+            <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
+            <section class="form-big">
+                <div class="set-password">
+                    <div class="set-int">
+                        <ul>
+                            <li>
+                                <p>
+                                    <select class="select testing-select-big" id="selectid">
+                                    </select>
+                                    <span>|</span>
+                                </p>
+                            </li>
+                            <li>
+                                <p><input type="text" class="input input-large" placeholder="手机号"></p>
+                                <label id="phoneLabel"></label>
+                            </li>
+                            <li>
+                                <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
+                                <p class="yzm"><a href="#" class="btn bnt-yzm">获取动态码</a></p>
+                                <label id="phonetips"></label>
+                            </li>
+                            <li><a href="#" class="submit-btn btn-blue">立即登录</a></li>
+                            <li class="right"><a href="#">忘记密码 </a></li>
+                        </ul>
+                    </div>
 <div class="wrapper-big"><!--包含除底部外的所有层-->
     <!--登录-->
     <nav class="wap-second-nav">
@@ -82,7 +125,6 @@
                 </div>
             </div>
         </section>
-    </section>
     <!--tab1-->--%>
     <section id="tab2" style="display:block;">
         <section class="form-big">

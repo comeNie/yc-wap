@@ -29,7 +29,6 @@
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
-
 </head>
 <body>
     <div id="otherDiv">
@@ -119,6 +118,7 @@
 </body>
 </html>
 <script>
+    var personUid;
     function leftRe() {
         window.history.go(-1);
     }
@@ -239,63 +239,32 @@
         $.ajax({
             async: true,
             type: "POST",
-            url: "<%=path%>/safe/checkTestCode",
+            url: "<%=path%>/safe/editpssword",
             modal: true,
             timeout: 30000,
             data: {
-                type: 1,    //手机激活码
+                uid:personUid,
+                newpw: psdid,
                 code:codeid,
-                uid:getuids,
-                mode:2,
+                mode:2  //密码操作吗
             },
             success: function (data) {
                 if (data.status == 1) {
-                    $("#codeLabel2").css("display", "none");
-
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        url: "<%=path%>/login/checkregister",
-                        modal: true,
-                        timeout: 30000,
-                        data: {
-                            phone: phone,
-                            password:psdid,
-                            code:codeid
-                        },
-                        success: function (data) {
-                            if (data.status == 1) {
-                                $("#confimPsd").css("display","none");
-
-                                var tourl = "<%=path%>/login/registersuccess";
-                                window.location.href=tourl;
-                            } else {
-                                $("#confimPsd").html("请输入密码");
-                                $("#confimPsd").css("display","block");
-                                return;
-                            }
-                        },
-                        error: function () {
-                            $("#confimPsd").html("网络请求超时，请稍候再试");
-                            $("#confimPsd").css("display", "block");
-                        }
-                    });
-
+                    $("#codeLabel").css("display", "none");
+                    alert("注册成功");
                 } else {
-                    $("#codeLabel").html("短信验证码错误");
+                    $("#codeLabel").html(data.msg);
                     $("#codeLabel").css("display", "block");
-//                    index ++;//index = 2
-//                    $("#next2").hide();
-//                    $("#next3").show();
                 }
             },
             error: function () {
-                $("#codeLabel").html("网络请求超时，请稍候再试");
+                $("#codeLabel").html(data.msg);
                 $("#codeLabel").css("display", "block");
             }
         });
 
     }
+
 
     function getnumberonclick(){
         var phone = $("#phone").val();
@@ -323,7 +292,6 @@
             type: "POST",
             url: "<%=path%>/safe/sendTestCode",
             modal: true,
-            showBusi: false,
             timeout: 30000,
             data: {
                 type: 1,
@@ -331,14 +299,16 @@
             },
             success: function (data) {
                 if (data.status == 1) {
+                    $("#codeLabel").css("display", "none");
+                    personUid = data.uid;
                     countDown(60);
                 } else {
-                    $("#codeLabel").html("短信验证码错误");
+                    $("#codeLabel").html(data.msg);
                     $("#codeLabel").css("display", "block");
                 }
             },
             error: function () {
-                $("#codeLabel").html("网络请求超时，请稍候再试");
+                $("#codeLabel").html(data.msg);
                 $("#codeLabel").css("display", "block");
             }
         });
@@ -373,4 +343,34 @@
         $("#otherDiv").show();
         $("#xieyiDiv").hide();
     }
+    <%--function checkRegister(phone,psdid,codeid){--%>
+    <%--$.ajax({--%>
+    <%--async: true,--%>
+    <%--type: "POST",--%>
+    <%--url: "<%=path%>/login/checkregister",--%>
+    <%--modal: true,--%>
+    <%--timeout: 30000,--%>
+    <%--data: {--%>
+    <%--phone: phone,--%>
+    <%--password:psdid,--%>
+    <%--code:codeid--%>
+    <%--},--%>
+    <%--success: function (data) {--%>
+    <%--if (data.status == 1) {--%>
+    <%--$("#confimPsd").css("display","none");--%>
+
+    <%--var tourl = "<%=path%>/login/registersuccess";--%>
+    <%--window.location.href=tourl;--%>
+    <%--} else {--%>
+    <%--$("#confimPsd").html("请输入密码");--%>
+    <%--$("#confimPsd").css("display","block");--%>
+    <%--return;--%>
+    <%--}--%>
+    <%--},--%>
+    <%--error: function () {--%>
+    <%--$("#confimPsd").html(data.msg);--%>
+    <%--$("#confimPsd").css("display", "block");--%>
+    <%--}--%>
+    <%--});--%>
+    <%--}--%>
 </script>

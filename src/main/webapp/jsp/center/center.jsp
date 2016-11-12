@@ -13,10 +13,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String path = request.getContextPath();
-    String staticUid = (String) session.getAttribute("UID");
     String isLogin = (String) session.getAttribute("isLogin");
-    System.out.println(isLogin+"=========="+staticUid);
-    request.setAttribute("UID",staticUid);
     request.setAttribute("isLogin",isLogin);
 %>
 
@@ -124,28 +121,7 @@
         window.location.href=tourl;
     }
     $(function() {
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: "<%=path%>/safe/userinfo",
-            modal: true,
-            timeout: 30000,
-            data: {
-                username: "",
-                uid:${UID}
-            },
-            success: function (data) {
-                if (data.status == 1) {
-                    $("#nameLi").html(data.username);
-                } else {
-                    var tourl = "<%=path%>/login/findfail";
-                    window.location.href=tourl;
-                }
-            },
-            error: function () {
-                $("#nameLabel1").html("网络请求超时，请稍候再试");
-                $("#nameLabel1").css("display", "block");
-            }
-        });
+        $("#nameLi").html("${username}");
+
     })
 </script>
