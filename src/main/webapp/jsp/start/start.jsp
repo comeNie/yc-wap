@@ -82,15 +82,18 @@
     <p>公告信息等等等等</p>
     <label><i class="icon iconfont">&#xe618;</i></label>
 </section>
-<nav class="wap-nav">
-    <ul>
-        <li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>
-        <li class="right">
-            <%--<input type="button" class="btn login-btn" value="登录" id="btn-login">--%>
-            <a href="javascript:window.location.href='<%=path%>/login/login'" class="btn login-btn" id="btn-login">登录</a>
-        </li>
-    </ul>
-</nav>
+<%--<nav class="wap-nav">--%>
+    <%--<ul>--%>
+        <%--<li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>--%>
+        <%--<li class="right">--%>
+            <%--&lt;%&ndash;<input type="button" class="btn login-btn" value="登录" id="btn-login">&ndash;%&gt;--%>
+            <%--<a href="javascript:window.location.href='<%=path%>/login/login'" class="btn login-btn" id="btn-login">登录</a>--%>
+        <%--</li>--%>
+    <%--</ul>--%>
+<%--</nav>--%>
+    <jsp:include page="/jsp/common/pophead.jsp" flush="true">
+        <jsp:param name="Index" value="1"/>
+    </jsp:include>
 <section class="index-wrapper">
     <!--转换语言-->
     <section class="testing">
@@ -177,10 +180,7 @@
 </div>
 <!--底部-->
 
-
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
-<a onclick="javascript:window.location.href='<%=path%>/safe/safe'">安全设置</a>
-<a onclick="javascript:window.location.href='<%=path%>/account/recharge'">充值</a>
 
 </body>
 </html>

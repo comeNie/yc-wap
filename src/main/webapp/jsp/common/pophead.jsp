@@ -13,6 +13,8 @@
     String title = request.getParameter("Title");
     String back = request.getParameter("BackTo");
     String show = request.getParameter("ShowIcon");
+    String index = request.getParameter("Index");
+    request.setAttribute("index", index);
     request.setAttribute("show", show);
     request.setAttribute("isLogin", session.getAttribute("isLogin"));
 %>
@@ -24,9 +26,15 @@
 <body>
 <nav class="wap-second-nav">
     <ul>
-        <a href="<%=back%>"><i class="icon iconfont left">&#xe626;</i></a>
-        <li><%=title%>
-        </li>
+        <c:if test="${index==1}">
+            <a href="<%=path%>/"><i class="icon iconfont left"><img style="width:3.13rem;height:1.06rem;"
+                                                                    src="<%=path%>/ui/images/logo.png"/></i></a>
+        </c:if>
+        <c:if test="${index=='' || index==null}">
+            <a href="<%=back%>"><i class="icon iconfont left">&#xe626;</i></a>
+            <li><%=title%>
+            </li>
+        </c:if>
         <c:if test="${show!=false}">
             <c:if test="${isLogin==null || isLogin=='0'}">
                 <a href="javascript:window.location.href='<%=path%>/login/login'" class="btn login-btn right1">登陆</a>
@@ -43,7 +51,7 @@
                     <spring:message code="popnav.public.index"/></a>|
                 <a href="javascript:window.location.href='<%=path%>/center/center'">
                     <spring:message code="popnav.public.ucenter"/></a>|
-                <a href="#">
+                <a href="javascript:window.location.href='<%=path%>/order'">
                     <spring:message code="popnav.public.order"/></a>|
                 <a href="javascript:onLogout()">
                     <spring:message code="popnav.public.exit"/></a>
