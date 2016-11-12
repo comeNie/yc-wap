@@ -200,6 +200,9 @@
     var landetec;
     var lanLength;
     var beRead;
+
+    var language=navigator.userAgent;
+    console.info("浏览器语言。。。"+language)
     $(document).ready(function () {
 
         <!--监听输入的文本内容-->

@@ -63,7 +63,6 @@ public class HttpUtil {
                 URL url = new URL(Url);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
-                con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
                 if(con.getResponseCode()==200){
                     // 将返回的输入流转换成字符串    
                     InputStream inputStream = con.getInputStream();
