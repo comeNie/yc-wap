@@ -90,6 +90,9 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "changephone")
     public String changephone() {
         log.info("safe-changephone invoked");
+        String uidStr = (String) session.getAttribute("UID");
+        request.setAttribute("UID",uidStr);
+
         String phoneTitle = request.getParameter("phoneTitle");
         request.setAttribute("phoneTitle",phoneTitle);
         return "safe/changephone";
@@ -102,6 +105,9 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "changemail")
     public String changemail() {
         log.info("safe-changemail invoked");
+        String uidStr = (String) session.getAttribute("UID");
+        request.setAttribute("UID",uidStr);
+
         String mailTitle = request.getParameter("mailTitle");
         request.setAttribute("mailTitle",mailTitle);
         return "safe/changemail";
@@ -137,10 +143,14 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "checkphone")
     public String checkphone() {
         log.info("safe-checkphone invoked");
+        String uidStr = (String) session.getAttribute("UID");
+        request.setAttribute("UID",uidStr);
+
         String jump = request.getParameter("jump");
         request.setAttribute("jump",jump);
         String phone = request.getParameter("phone");
         request.setAttribute("phone",phone);
+
         return "safe/checkphone";
     }
 
@@ -259,6 +269,7 @@ public class SafeController extends BaseController {
                 log.info(m);
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
+                session.setAttribute("password","true");
             }else{
                 result.put("status","0");
                 result.put("msg","修改失败");
@@ -299,6 +310,7 @@ public class SafeController extends BaseController {
                 log.info(m);
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
+                session.setAttribute("mobilePhone",m.get("mobilephone"));
             }else{
                 result.put("status","0");
                 result.put("msg","绑定/修改手机失败");

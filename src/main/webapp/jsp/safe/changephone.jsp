@@ -118,6 +118,15 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
+        var t = /^1\d{10}$/;
+        if(!t.test(phone)){
+            $("#phoneLabel").html("请输入正确手机号");
+            $("#phoneLabel").css("display","block");
+            return;
+        }else {
+            $("#phoneLabel").css("display","none");
+        }
+
         var code = $("#codeid").val();
         if (code == "" || code == null){
             $("#phonetips").html("请输入短信验证码");
@@ -127,8 +136,36 @@
             $("#phonetips").css("display","none");
         }
 
-        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.confirm_phone"/>";
-        window.location.href=tourl;
+        checkPhone(code,phone);
+
+    }
+    function checkPhone(code,phone){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/editphone",
+            modal: true,
+            timeout: 30000,
+            data: {
+                uid: "${UID}",
+                code:code,
+                phone:phone
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#phonetips").css("display", "none");
+                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.confirm_phone"/>";
+                    window.location.href=tourl;
+                } else {
+                    $("#phonetips").html(data.msg);
+                    $("#phonetips").css("display", "block");
+                }
+            },
+            error: function () {
+                $("#phonetips").html(data.msg);
+                $("#phonetips").css("display", "block");
+            }
+        });
     }
     function getnumberonclick(){
         var phone = $("#phone").val();
@@ -139,45 +176,43 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
-//        调用接口校验合法性
-
-//        getTestCode("123123123");
-        //倒计时
-        countDown(60);
+        var t = /^1\d{10}$/;
+        if(!t.test(phone)){
+            $("#phoneLabel").html("请输入正确手机号");
+            $("#phoneLabel").css("display","block");
+            return;
+        }else {
+            $("#phoneLabel").css("display","none");
+        }
+        getTestCode(phone);
     }
 //    发送验证码
     function getTestCode(phone) {
-
         $.ajax({
             async: true,
             type: "POST",
             url: "<%=path%>/safe/sendTestCode",
             modal: true,
-            showBusi: false,
             timeout: 30000,
             data: {
-                telPhone: phone
+                type: 2,
+                info:phone
             },
             success: function (data) {
                 if (data.status == 1) {
-                    if (data.result == "true") {
-                        $("#phonetips").html("请验证码发送成功");
-                        $("#phonetips").css("display", "block");
-                        countDown(60);
-                    } else {
-                        $("#phonetips").html("短信验证码错误");
-                        $("#phonetips").css("display", "block");
-                    }
+                    $("#phonetips").css("display", "none");
+                    countDown(60);
                 } else {
-                    $("#phonetips").html("短信验证码错误");
+                    $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
                 }
             },
             error: function () {
-                $("#phonetips").html("网络请求超时，请稍候再试");
+                $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
             }
         });
+
     }
 //    倒计时
     var wait = 60;

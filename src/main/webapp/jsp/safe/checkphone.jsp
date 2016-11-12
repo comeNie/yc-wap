@@ -53,7 +53,7 @@
                         <li>
                             <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="safe.checkphone.small_input"/>"></p>
                             <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value="<spring:message code="safe.checkphone.yzm_input"/>"></p>
-                            <label id="phonetips"><spring:message code="safe.checkphone.code_label"/></label>
+                            <label id="phonetips"></label>
                         </li>
                         <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
                     </ul>
@@ -81,69 +81,95 @@
         var s = "${jump}";
         if (s == "mail") {
             $("#ptitle").html("已验证邮箱");
-            $("#navtitle").html("验证邮箱")
+            $("#navtitle").html("验证邮箱");
         }
     })
     function confirmBtn() {
 //        校验验证码为空
         var code = $("#codeid").val();
         if (code == "" || code == null){
-            $("#phonetips").html("请输入短信验证码");
+            $("#phonetips").html("请输入验证码");
             $("#phonetips").css("display","block");
             return;
         }else {
             $("#phonetips").css("display","none");
         }
+//        校验验证码
+        checkCode(code);
 
-        //跳转
-        var s = "${jump}";
-        if (s=="psd"){
-            var tourl = "<%=path%>/safe/installpsd";
-            window.location.href=tourl;
-        }else if(s == "mail") {
-            var tourl = "<%=path%>/safe/changemail?mailTitle=<spring:message code="safe.checkphone.change_jump"/>";
-            window.location.href=tourl;
-        }else if(s == "phone") {
-            var tourl = "<%=path%>/safe/changephone?phoneTitle=<spring:message code="safe.checkphone.change_jump"/>";
-            window.location.href=tourl;
-        }
+    }
+    function checkCode(code){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/checkTestCode",
+            modal: true,
+            timeout: 30000,
+            data: {
+                type: 2,    //密码操作码
+                code:code,
+                uid:${UID},
+            },
+            success: function (data) {
+//                if (data.status == 1) {
+                    $("#phonetips").css("display", "none");
 
+                    //跳转
+                    var s = "${jump}";
+                    if (s=="psd"){
+                        var tourl = "<%=path%>/safe/installpsd";
+                        window.location.href=tourl;
+                    }else if(s == "mail") {
+                        var tourl = "<%=path%>/safe/changemail?mailTitle=<spring:message code="safe.checkphone.change_jump"/>";
+                        window.location.href=tourl;
+                    }else if(s == "phone") {
+                        var tourl = "<%=path%>/safe/changephone?phoneTitle=<spring:message code="safe.checkphone.change_jump"/>";
+                        window.location.href=tourl;
+                    }
+//                } else {
+                    $("#phonetips").html(data.msg);
+                    $("#phonetips").css("display", "block");
+//                }
+            },
+            error: function () {
+                $("#phonetips").html(data.msg);
+                $("#phonetips").css("display", "block");
+            }
+        });
     }
     function getnumberonclick(){
-//        var phone = $("#phone");
-//        getTestCode("123123123");
-        //倒计时
-        countDown(60);
-    }
-    function getTestCode(phone) {
 
+        var s = "${jump}";
+        var type;
+        if (s == "mail") {
+            type = 5;
+        }else {
+            type = 2
+        }
+        getTestCode(type);
+    }
+    function getTestCode(type) {
         $.ajax({
             async: true,
             type: "POST",
             url: "<%=path%>/safe/sendTestCode",
             modal: true,
-            showBusi: false,
             timeout: 30000,
             data: {
-                telPhone: phone
+                type: type,
+                info:"${phone}"
             },
             success: function (data) {
                 if (data.status == 1) {
-                    if (data.result == "true") {
-                        $("#phonetips").html("请验证码发送成功");
-                        $("#phonetips").css("display", "block");
-                        countDown(60);
-                    } else {
-                        $("#phonetips").html("短信验证码错误");
-                        $("#phonetips").css("display", "block");
-                    }
+                    $("#phonetips").css("display", "none");
+                    countDown(60);
                 } else {
-                    $("#phonetips").html("短信验证码错误");
+                    $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
                 }
             },
             error: function () {
-                $("#phonetips").html("网络请求超时，请稍候再试");
+                $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
             }
         });

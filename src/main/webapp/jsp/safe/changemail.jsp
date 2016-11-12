@@ -73,9 +73,17 @@
         });
     });
     function confirmBtn() {
-        var phone = $("#mail").val();
-        if (phone == "" || phone == null){
+        var mail = $("#mail").val();
+        if (mail == "" || mail == null){
             $("#mailLabel").html("请输入邮箱");
+            $("#mailLabel").css("display","block");
+            return;
+        }else {
+            $("#mailLabel").css("display","none");
+        }
+        var t = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        if (!t.test(mail)){
+            $("#mailLabel").html("请输入正确邮箱");
             $("#mailLabel").css("display","block");
             return;
         }else {
@@ -90,57 +98,80 @@
             $("#phonetips").css("display","none");
         }
 
-        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changemail.navli"/>";
-        window.location.href=tourl;
-    }
+        checkMail(mail,code);
 
+
+    }
+    function checkMail(mail,code){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/editmail",
+            modal: true,
+            timeout: 30000,
+            data: {
+                uid: "${UID}",
+                code:code,
+                mail:mail
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#phonetips").css("display", "none");
+                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changemail.navli"/>";
+                    window.location.href=tourl;
+                } else {
+                    $("#phonetips").html(data.msg);
+                    $("#phonetips").css("display", "block");
+                }
+            },
+            error: function () {
+                $("#phonetips").html(data.msg);
+                $("#phonetips").css("display", "block");
+            }
+        });
+    }
     function getnumberonclick(){
-        var phone = $("#mail").val();
-        if (phone == "" || phone == null){
+        var mail = $("#mail").val();
+        if (mail == "" || mail == null){
             $("#mailLabel").html("请输入邮箱");
             $("#mailLabel").css("display","block");
             return;
         }else {
             $("#mailLabel").css("display","none");
         }
-
-//        调用接口校验合法性
-
-        getTestCode(phone);
-        //倒计时
-        countDown(60);
+        var t = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        if (!t.test(mail)){
+            $("#mailLabel").html("请输入正确邮箱");
+            $("#mailLabel").css("display","block");
+            return;
+        }else {
+            $("#mailLabel").css("display","none");
+        }
+        getTestCode(mail);
     }
     //    发送验证码
-    function getTestCode(phone) {
-
+    function getTestCode(mail) {
         $.ajax({
             async: true,
             type: "POST",
             url: "<%=path%>/safe/sendTestCode",
             modal: true,
-            showBusi: false,
             timeout: 30000,
             data: {
                 type: 5,
-                info:phone
+                info:mail
             },
             success: function (data) {
                 if (data.status == 1) {
-                    if (data.result == "true") {
-                        $("#phonetips").html("请验证码发送成功");
-                        $("#phonetips").css("display", "block");
-                        countDown(60);
-                    } else {
-                        $("#phonetips").html("短信验证码错误");
-                        $("#phonetips").css("display", "block");
-                    }
+                    $("#phonetips").css("display", "none");
+                    countDown(60);
                 } else {
-                    $("#phonetips").html("短信验证码错误");
+                    $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
                 }
             },
             error: function () {
-                $("#phonetips").html("网络请求超时，请稍候再试");
+                $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
             }
         });
