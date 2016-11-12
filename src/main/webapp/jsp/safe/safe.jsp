@@ -65,7 +65,7 @@
             <ul>
                 <a href="javascript:void(0)" onclick="changePhone()">
                     <li>手机验证</li>
-                    <li class="right" id="phoneRight">138****1234<i class="icon iconfont">&#xe62c;</i></li>
+                    <li class="right" id="phoneRight"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
             <ul class="none-border" onclick="changeMail()">
@@ -95,7 +95,7 @@
             $("#emalRight").html(email);
             isEmail = 1;
         }
-        if(password == "" || password == null){
+        if(password != "true"){
             $("#passwordLeft").html("设置密码");
             isPassword = 0;
         }else {
@@ -130,7 +130,7 @@
 //        var c = confirm("是否已验证邮箱");
 
         if (isEmail == true) {
-            var tourl = "<%=path%>/safe/checkphone?jump=mail&phone="+"${mobilePhone}";
+            var tourl = "<%=path%>/safe/checkphone?jump=mail&phone="+"${email}";
             window.location.href = tourl;
         } else {
             var tourl = "<%=path%>/safe/changemail?mailTitle=绑定";

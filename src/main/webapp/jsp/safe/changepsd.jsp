@@ -138,6 +138,7 @@
             },
             success: function (data) {
                 if (data.status == 1) {
+                    $("#confirmLabel3").css("display", "none");
                     var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.change_jump"/>";
                     window.location.href=tourl;
                 } else {

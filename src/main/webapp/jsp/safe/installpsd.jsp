@@ -53,7 +53,7 @@
                             <p><input id="confirmPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input2"/>"></p>
                             <label id="confirmLable"></label>
                         </li>
-                        <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.installpsd.nextbtn"/></a></li>
+                        <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.installpsd.nextbtn"/></a></li>
                     </ul>
                 </div>
             </div>

@@ -23,7 +23,7 @@
     </head>
 </head>
 <body>
-<div class="wrapper-big"><!--包含除底部外的所有层-->
+<div class="wrapper-big">
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="我的订单"/>
@@ -31,7 +31,7 @@
     </jsp:include>
 
     <!--订单form-->
-    <section class="my-order-content">
+    <section class="my-order-content" onclick="window.location.href='<%=path%>/order/OrderDetail'">
         <div class="my-order-list">
             <ul>
                 <li>
@@ -108,12 +108,12 @@
     <div class="loading"><a href="#">加载更多…</a></div>
 
     <%----%>
-    <div style="background:#010101; opacity:0.5;filter:alpha(opacity=50);">
-        <section class="loading-wrapper">
-            <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>
-            <p class="img2"><img src="<%=path%>/ui/images/loading.gif"/>加载中</p>
-        </section>
-    </div>
+    <%--<div style="background:#010101; opacity:0.5;filter:alpha(opacity=50);">--%>
+        <%--<section class="loading-wrapper">--%>
+            <%--<p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>--%>
+            <%--<p class="img2"><img src="<%=path%>/ui/images/loading.gif"/>加载中</p>--%>
+        <%--</section>--%>
+    <%--</div>--%>
 </div>
 </body>
 </html>

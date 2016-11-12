@@ -164,7 +164,7 @@ public class SafeController extends BaseController {
         }else {
             mode = Constants.GetUserMode.UserName; //4
         }
-        if (uid.length() > 0){
+        if (uid != null){
             username = uid;
             mode = Constants.GetUserMode.UserID;
         }
@@ -235,15 +235,18 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "editpssword")
     public @ResponseBody Object editpssword() {
         MsgBean result = new MsgBean();
-        String checke_code = request.getParameter("code");  //旧密码或验证码
+        String check_code = request.getParameter("code");  //旧密码或验证码
         String newpw = request.getParameter("newpw");
         newpw = MD5Util.md5(newpw);
         String uid = request.getParameter("uid");
         Integer u = Integer.parseInt(uid);
         String checke_mode = request.getParameter("mode");  // 1：旧密码 2：验证码（密码操作验证码）
+        if (checke_mode.equals(Constants.PsdOpreation.OldPsd)){
+            check_code = MD5Util.md5(check_code);
+        }
         UcMembersEditPassRequest res = new UcMembersEditPassRequest();
         res.setTenantId(Constants.TenantID);
-        res.setChecke_code(checke_code);
+        res.setChecke_code(check_code);
         res.setChecke_mode(checke_mode);
         res.setNewpw(newpw);
         res.setUid(u);

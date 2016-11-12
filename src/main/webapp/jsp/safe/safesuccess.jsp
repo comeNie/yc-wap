@@ -47,7 +47,7 @@
                 <ul>
                     <li><i class="icon iconfont">&#xe612;</i></li>
                     <li class="word">${name}<spring:message code="safe.safesuccess.word_li"/></li>
-                    <li><span class="red" id="spanTime">5s</span><spring:message code="safe.safesuccess.red_span"/><a href="#" onclick="goLogin()"><spring:message code="safe.safesuccess.red_a"/>登录页面</a></li>
+                    <li><span class="red" id="spanTime">5s</span><spring:message code="safe.safesuccess.red_span"/><a href="#" onclick="goLogin()"><spring:message code="safe.safesuccess.red_a"/></a></li>
                 </ul>
             </section>
         </section>
@@ -69,7 +69,7 @@
         countDown();
     })
     function goLogin() {
-        var tourl = "<%=path%>/login/login";
+        var tourl = "<%=path%>/safe/safe";
         window.location.href=tourl;
     }
     var wait = 5;

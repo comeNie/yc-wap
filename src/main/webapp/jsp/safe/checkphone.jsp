@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title><spring:message code="safe.checkphone.title"/></title>
+    <title>验证</title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -35,8 +35,8 @@
     <div class="wrapper-big"><!--包含除底部外的所有层-->
         <nav class="wap-second-nav">
             <ul>
-                <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-                <li><spring:message code="safe.checkphone.title"/></li>
+                <a href="javascript:void(0)"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
+                <li id="navtitle"><spring:message code="safe.checkphone.title"/></li>
             </ul>
 
         </nav>
@@ -45,7 +45,7 @@
         <section class="index-wrapper ">
             <div class="set-password">
                 <div class="set-phone">
-                    <p><spring:message code="safe.checkphone.psd_p"/></p>
+                    <p id="ptitle"><spring:message code="safe.checkphone.psd_p"/></p>
                     <p class="word" id="phone"></p>
                 </div>
                 <div class="set-int">
@@ -55,7 +55,7 @@
                             <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value="<spring:message code="safe.checkphone.yzm_input"/>"></p>
                             <label id="phonetips"><spring:message code="safe.checkphone.code_label"/></label>
                         </li>
-                        <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
+                        <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
                     </ul>
                 </div>
             </div>
@@ -78,6 +78,11 @@
         var myphone=mobilePhone.substr(3,4);
         var hidePhone=mobilePhone.replace(myphone,"****");
         $("#phone").html(hidePhone)
+        var s = "${jump}";
+        if (s == "mail") {
+            $("#ptitle").html("已验证邮箱");
+            $("#navtitle").html("验证邮箱")
+        }
     })
     function confirmBtn() {
 //        校验验证码为空
