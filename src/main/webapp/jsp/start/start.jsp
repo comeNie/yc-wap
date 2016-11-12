@@ -135,8 +135,8 @@
         <p>
             <a href="#"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
             <a href="#" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
-            <audio controls="controls" preload="true" id="audio" style="display: none">
-                <source src=ttsUrl/>
+            <audio src="" controls="controls"  id="audioPlay" style="display: none">
+                Your browser does not support audio tag
             </audio>
         </p>
     </section>
@@ -193,14 +193,13 @@
 <script type="text/javascript">
     var IsTranslated = false;
     var sourcetext="";
-    var ttsUrl;
     var srctext;
     var tartext;
     var srcvalue="zh";
     var tarvalue="en";
     var landetec;
     var lanLength;
-    var xmlHttpRequest;
+    var beRead;
     $(document).ready(function () {
 
         <!--监听输入的文本内容-->
@@ -215,26 +214,25 @@
             contentDetection(landetec);
         });
         function contentDetection(landetec) {
-            if (landetec==""||landetec==null){
+            if (landetec == "" || landetec == null) {
                 return;
             }
-            var detecUrl="http://translateport.yeekit.com:9006/detection?text="+landetec;
-            xmlHttpRequest=new XMLHttpRequest();
-            xmlHttpRequest.onreadystatechange=finish();
-            xmlHttpRequest.open("GET",detecUrl,true);
-            xmlHttpRequest.send(null);
+            $.ajax({
+                url: "<%=path%>/lanDetection",
+                type: "POST",
+                data: {
+                    text: landetec
+                },
+                success: function (result) {
+                    var finLan = result.fintec;
+                    console.info("finLan>>>>>>>" + finLan);
+                },
+                error: function (data) {
+                    console.info(data);
+                }
 
+            });
         }
-        
-        function finish() {
-            if(xmlHttpRequest.readyState==4){
-                var result=xmlHttpRequest.responseText;
-                var detecResult=result.result;
-                console.info("result..."+result);
-                console.info("detecResult..."+detecResult);
-            }
-        }
-
 
         $("#btn-textarea-clear").bind("click",function () {
             if(IsTranslated == true) {
@@ -254,9 +252,6 @@
         });
 
 
-        $("#btn-login").bind("click",function () {
-            <!--跳转到登录页面-->
-        });
         <!--选择源语言-->
         $("#source-lan").bind("click",function () {
             chooseSourLan();
@@ -279,12 +274,23 @@
         });
 
         $("#toAudio").bind("click",function () {
-           textToAudio();
+            console.info("点啦这个小喇叭");
+            beRead=$("#result-text").val();
+            console.info("beRead....."+beRead);
+            if (beRead==""||beRead==null){
+                return;
+            }
+            var audioPlay=document.getElementById("audioPlay");
+            console.info("audioPlay>>>>>"+audioPlay.paused);
+            if (audioPlay.paused){
+                var ttsUrl="<%=path%>/ttsSync?languages="+tarvalue+"&beRead="+beRead;
+                console.info("ttsUrl..."+ttsUrl);
+                $("#audioPlay").attr("src",ttsUrl);
+            }else{
+                audioPlay.pause;
+            }
         });
 
-        $(".none").bind("click",function () {
-           downloadApp(); 
-        });
         <!--跳转到笔译下单-->
         $("#banner1").bind("click",function () {
             window.location.href="<%=path%>/written";
@@ -292,15 +298,6 @@
 
 
     });
-
-    function textToAudio() {
-        if ($("#audio").paused) {
-            $("#audio").play();
-            return;
-        }else{
-            $("#audio").pause;
-        }
-    }
 
     <!--手动选择源语言-->
 
@@ -316,8 +313,6 @@
             srcvalue="ru";
         }else if (srctext=="葡萄牙语"){
             srcvalue="pt";
-        }else{
-            srcvalue="es";
         }
         console.info("srcvalue-----"+srcvalue);
     }
@@ -336,8 +331,6 @@
             tarvalue="ru";
         }else if(tartext=="葡萄牙语"){
             tarvalue="pt";
-        }else{
-            tarvalue="es";
         }
         console.info("tarvalue-----"+tarvalue);
     }
@@ -361,8 +354,6 @@
                 console.info(data);
                 if (data.status == 1) {//成功
                     $("#result-text").val(data.target);
-                    ttsUrl="<%=path%>/ttsSync?languages="+tarvalue+"&beRead="+data.target;
-                    console.info("ttsUrl..."+ttsUrl);
                     IsTranslated = true;
                 } else {
 

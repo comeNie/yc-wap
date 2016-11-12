@@ -1,8 +1,6 @@
 package com.yc.wap.system.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -57,5 +55,36 @@ public class HttpUtil {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String httpGet(String Url){
+            StringBuffer buffer = new StringBuffer();
+            try {
+                URL url = new URL(Url);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                if(con.getResponseCode()==200){
+                    // 将返回的输入流转换成字符串    
+                    InputStream inputStream = con.getInputStream();
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"utf-8");
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    String str = null;
+                        while ((str = bufferedReader.readLine())!= null){
+                            buffer.append(str);
+                        }
+                        bufferedReader.close();
+                        inputStreamReader.close();
+                        // 释放资源    
+                        inputStream.close();
+                        inputStream = null;
+                        con.disconnect();
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                return  buffer.toString();
+            }
     }
 }

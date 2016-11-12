@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -38,7 +39,6 @@ public class StartController extends BaseController{
         pairs.add("法语");
         pairs.add("俄语");
         pairs.add("葡萄牙语");
-        pairs.add("西班牙语");
         request.setAttribute("languagepairs",pairs);
 
         return "start/start";
@@ -80,6 +80,19 @@ public class StartController extends BaseController{
         return result.returnMsg();
 
     }
+    @RequestMapping(value="/lanDetection")
+    public @ResponseBody Object lanDetection(){
+        MsgBean result=new MsgBean();
+        String finalLan=request.getParameter("text");
+        String detecUrl="http://translateport.yeekit.com:9006/detection?text="+finalLan;
+
+        String respon=HttpUtil.httpGet(detecUrl);
+        JSONObject json = (JSONObject) JSONObject.parse(respon);
+
+        String fintec=json.getString("result");
+        result.put("fintec",fintec);
+        return result.returnMsg();
+    }
 
     @RequestMapping(value="/ttsSync")
     public @ResponseBody Object ttsSync(String languages ,String beRead){
@@ -101,13 +114,12 @@ public class StartController extends BaseController{
         }
 
         //得到带xml的语音块
-        byte[] lanresp = HttpUtil.TTShttpReq(beRead,config);
+        byte[] lanresp = HttpUtil.TTShttpReq(beRead,config+audioformat);
         //得到需要去掉的长度
         String lanresponse= new String(lanresp);
         String[] splits = lanresponse.split("</ResponseInfo>");
         String xml = splits[0] + "</ResponseInfo>";
         int offset = xml.getBytes().length;
-
         log.info("offset----------"+offset);
         //得到完整的语音块
         byte[] audioBlock = FileUtil.ByteinfoFile(lanresp, offset);
