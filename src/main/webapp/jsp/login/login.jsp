@@ -14,6 +14,8 @@
     String path = request.getContextPath();
     String ToUrl = (String) session.getAttribute("ToUrl");
     String Param = (String) session.getAttribute("Param");
+    System.out.println("ToUrl: " + ToUrl);
+    System.out.println("Param: " + Param);
     request.setAttribute("path", path);
     request.setAttribute("ToUrl", ToUrl);
     request.setAttribute("Param", Param);
@@ -238,10 +240,10 @@
                 if (data.status == 1) {
                     <%--var tourl = "<%=path%>/center/center";--%>
                     <%--window.location.href=tourl;--%>
-                    if (${ToUrl!=null || ToUrl!=""}) {
-                        window.location.href = "${path}" + "${ToUrl}" + "?" + "${Param}";
-                    } else {
+                    if (${ToUrl==null || ToUrl==""}) {
                         window.location.href = "<%=path%>" + "/";
+                    } else {
+                        window.location.href = "${path}" + "${ToUrl}" + "?" + "${Param}";
                     }
                 } else {
                     $("#codeLabel").html(data.msg);
