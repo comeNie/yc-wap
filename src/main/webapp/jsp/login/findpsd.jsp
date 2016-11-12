@@ -141,9 +141,9 @@
             }else {
                 $("#codeLabel1").css("display","none");
             }
-//            if(!validateCode()){
-//               return;
-//            }
+            if(!validateCode()){
+               return;
+            }
             jump1(phone);
 
         });
@@ -349,7 +349,7 @@
     function countDown() {
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
-            $("#getnumber").attr("onclick", "getnumberonclick()");
+            $("#getnumber").attr("onclick", "getTestCode()");
             $("#getnumber").html("获取动态码");//改变按钮中value的值
 //            $("#getnumber").attr("class","");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");

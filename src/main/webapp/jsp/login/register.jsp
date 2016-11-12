@@ -251,7 +251,8 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#codeLabel").css("display", "none");
-                    alert("注册成功");
+                    var tourl = "<%=path%>/login/registersuccess";
+                    window.location.href=tourl;
                 } else {
                     $("#codeLabel").html(data.msg);
                     $("#codeLabel").css("display", "block");

@@ -144,11 +144,11 @@
                             <p>
                             <div class="code" id="checkCode"></div>
                             </p>
-                            <p><a href="#" onclick="createCode()"><i class="icon-refresh"></i></a></p>
+                            <p><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh"></i></a></p>
                             <label id="codeLabel"></label>
                         </li>
-                        <li><a href="#" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
-                        <li class="right"><a href="#" onclick="forgetpsd()">忘记密码 </a></li>
+                        <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
+                        <li class="right"><a href="javascript:void(0)" onclick="forgetpsd()">忘记密码 </a></li>
                     </ul>
                 </div>
             </div>

@@ -171,4 +171,15 @@ public class Constants {
         public static final String PasswordOperation  = "6";
 
     }
+    /**
+     * 密码操作验证码
+     */
+    public static class PsdOpreation {
+        //1：旧密码
+        public static final String OldPsd = "1";
+        //2：验证码
+        public static final String CheckCode = "2";
+
+
+    }
 }

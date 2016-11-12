@@ -127,12 +127,9 @@ public class LoginController extends BaseController {
                 session.setAttribute("UID",m.get("uid")+"");
                 session.setAttribute("email",m.get("email"));
                 session.setAttribute("username",m.get("username"));
-                log.info(m.get("passHav"));
-                if (m.get("passHav") == "true"){
-                session.setAttribute("password","1");
-                }else {
-                    session.setAttribute("password","");
-                }
+                log.info("passHav:"+ m.get("passHav"));
+                session.setAttribute("password",m.get("passHav"));
+
                 session.setAttribute("mobilePhone",m.get("mobilephone"));
                 log.info(vo);
             }else {
