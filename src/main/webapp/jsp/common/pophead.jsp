@@ -27,8 +27,8 @@
 <nav class="wap-second-nav">
     <ul>
         <c:if test="${index==1}">
-            <a href="<%=path%>/"><i class="icon iconfont left"><img style="width:3.13rem;height:1.06rem;"
-                                                                    src="<%=path%>/ui/images/logo.png"/></i></a>
+            <a href="<%=path%>/"><i class="icon iconfont left">
+                <img style="width:3.13rem;height:1.06rem;" src="<%=path%>/ui/images/logo.png"/></i></a>
         </c:if>
         <c:if test="${index=='' || index==null}">
             <a href="<%=back%>"><i class="icon iconfont left">&#xe626;</i></a>

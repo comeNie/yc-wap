@@ -108,12 +108,12 @@
     <div class="loading"><a href="#">加载更多…</a></div>
 
     <%----%>
-    <div style="background:#010101; opacity:0.5;filter:alpha(opacity=50);">
-        <section class="loading-wrapper">
-            <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>
-            <p class="img2"><img src="<%=path%>/ui/images/loading.gif"/>加载中</p>
-        </section>
-    </div>
+    <%--<div style="background:#010101; opacity:0.5;filter:alpha(opacity=50);">--%>
+        <%--<section class="loading-wrapper">--%>
+            <%--<p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>--%>
+            <%--<p class="img2"><img src="<%=path%>/ui/images/loading.gif"/>加载中</p>--%>
+        <%--</section>--%>
+    <%--</div>--%>
 </div>
 </body>
 </html>
