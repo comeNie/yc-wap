@@ -23,7 +23,7 @@
     </head>
 </head>
 <body>
-<div class="wrapper-big"><!--包含除底部外的所有层-->
+<div class="wrapper-big">
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="我的订单"/>
@@ -31,7 +31,7 @@
     </jsp:include>
 
     <!--订单form-->
-    <section class="my-order-content">
+    <section class="my-order-content" onclick="window.location.href='<%=path%>/order/OrderDetail'">
         <div class="my-order-list">
             <ul>
                 <li>

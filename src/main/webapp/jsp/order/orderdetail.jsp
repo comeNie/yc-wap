@@ -21,7 +21,7 @@
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div class="wrapper-big"><!--包含除底部外的所有层-->
+<div class="wrapper-big">
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="订单详细"/>
         <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
@@ -192,7 +192,7 @@
 </div>
 <section class="order-submit-kou">
     <p class="cent blue"><a href="#">评价订单</a></p>
-    <p class="cent green"><a href="#">订单跟踪</a></p>
+    <p class="cent green"><a href="javascript:window.location.href='<%=path%>/order/OrderTrack'">订单跟踪</a></p>
 </section>
 </body>
 </html>

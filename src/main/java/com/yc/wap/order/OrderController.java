@@ -18,4 +18,19 @@ public class OrderController extends BaseController{
     public String order() {
         return "order/order";
     }
+
+    @RequestMapping(value = "OrderDetail")
+    public String OrderDetail() {
+        return "order/orderdetail";
+    }
+
+    @RequestMapping(value = "OrderError")
+    public String OrderError() {
+        return "order/ordererror";
+    }
+
+    @RequestMapping(value = "OrderTrack")
+    public String OrderTrack() {
+        return "order/ordertrack";
+    }
 }

@@ -241,7 +241,7 @@
                     if (${ToUrl!=null || ToUrl!=""}) {
                         window.location.href = "${path}" + "${ToUrl}" + "?" + "${Param}";
                     } else {
-                        window.history.go(-2);
+                        window.location.href = "<%=path%>" + "/";
                     }
                 } else {
                     $("#codeLabel").html(data.msg);
