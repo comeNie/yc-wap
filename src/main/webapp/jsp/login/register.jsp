@@ -93,23 +93,7 @@
             <jsp:param name="Title" value="协议"/>
             <jsp:param name="BackTo" value="javascript:disMiss()"/>
         </jsp:include>
-        <%--<nav class="wap-second-nav">--%>
-            <%--<ul>--%>
-                <%--<a href="javascript:" onclick="disMiss()"><i class="icon iconfont left">&#xe626;</i></a>--%>
-                <%--<li>协议</li>--%>
-                <%--<a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>--%>
-            <%--</ul>--%>
-            <%--<div class="pop-nav">--%>
-                <%--<ul>--%>
-                    <%--<li>--%>
-                        <%--<a href="#">译云首页</a>|--%>
-                        <%--<a href="#">个人中心</a>|--%>
-                        <%--<a href="#">我的订单</a>|--%>
-                        <%--<a href="#">安全退出</a>--%>
-                    <%--</li>--%>
-                <%--</ul>--%>
-            <%--</div>--%>
-        <%--</nav>--%>
+
         <section class="about">
             <ul>
                 <li class="td">译云平台在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《用户协议》（以下简称“本协议”），确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权注册、登录或使用本协议所涉服务。您的注册、登录、使用等行为将视为对本协议的接受， 并同意接受本协议各项条款的约束。如果您未满18周岁，请在法定监护人的陪同下阅读本协议，并特别注意未成年人使用条款。</li>
@@ -301,7 +285,7 @@
             timeout: 30000,
             data: {
                 type: 1,
-                info:phone
+                info:phone,
             },
             success: function (data) {
                 if (data.status == 1) {

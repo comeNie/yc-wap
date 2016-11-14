@@ -35,24 +35,12 @@
 </head>
 <body>
 
-    <nav class="wap-second-nav">
-        <ul>
-            <a href="javascript:" onclick="retLeft()"><i class="icon iconfont left">&#xe626;</i></a>
-            <li><spring:message code="safe.safe.title"/></li>
-            <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
-        </ul>
-        <div class="pop-nav">
-            <ul>
-                <li>
-                    <a href="#"><spring:message code="popnav.public.index"/></a>|
-                    <a href="#"><spring:message code="popnav.public.ucenter"/></a>|
-                    <a href="#"><spring:message code="popnav.public.order"/></a>|
-                    <a href="#"><spring:message code="popnav.public.exit"/></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    
+    <%--头部--%>
+    <jsp:include page="/jsp/common/pophead.jsp" flush="true">
+        <jsp:param name="Title" value="安全设置"/>
+        <jsp:param name="BackTo" value="javascript:retLeft()"/>
+    </jsp:include>
+
     <!--订单内容-->
     <section class="order-content ">
         <div class="setting-list">
@@ -92,7 +80,9 @@
             $("#emalRight").html("您还没有通过邮箱验证，请验证");
             isEmail = 0;
         }else {
-            $("#emalRight").html(email);
+            var myemail=email.substr(3,4);
+            var hidePhone=email.replace(myemail,"****");
+            $("#emalRight").html(hidePhone);
             isEmail = 1;
         }
         if(password != "true"){
@@ -113,7 +103,8 @@
         }
     })
     function retLeft(){
-        window.history.go(-1);
+        var tourl = "<%=path%>/center/center";
+        window.location.href=tourl;
     }
     function changepsd() {
 //        var c = confirm("是否有密码");

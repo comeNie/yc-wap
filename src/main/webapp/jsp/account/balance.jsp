@@ -43,7 +43,7 @@
             <div class="balance">
                 账户余额:<span>12331.34元</span>
             </div>
-            <div class="wap-btn"><a href="#" onclick="toRecharge()"  class="btn submit-btn btn-blue">充值</a></div>
+            <div class="wap-btn"><a href="javascript:void(0)" onclick="toRecharge()"  class="btn submit-btn btn-blue">充值</a></div>
             <div class="balance-word">账户余额是在译云账户中的款项，下单时可以直接用于支付订单。</div>
         </section>
     </div>

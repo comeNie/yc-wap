@@ -296,7 +296,7 @@ public class SafeController extends BaseController {
         res.setTenantId(Constants.TenantID);
         res.setOperationcode(code);
         res.setMobilephone(phone);
-        if (uid != ""){
+        if (uid != null){
 
             Integer u = Integer.parseInt(uid);
             res.setUid(u);
@@ -310,7 +310,7 @@ public class SafeController extends BaseController {
                 log.info(m);
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
-                session.setAttribute("mobilePhone",m.get("mobilephone"));
+                session.setAttribute("mobilePhone",phone);
             }else{
                 result.put("status","0");
                 result.put("msg","绑定/修改手机失败");
@@ -347,6 +347,7 @@ public class SafeController extends BaseController {
                 Map m = resp.getDate();
                 log.info(m);
                 UcMembersVo vo = new UcMembersVo(m);
+                session.setAttribute("email",mail);
                 log.info(vo);
             }else{
                 result.put("status","0");
@@ -370,10 +371,15 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String type = request.getParameter("type");
         String info = request.getParameter("info");
+        String uid = request.getParameter("uid");
         UcMembersGetOperationcodeRequest res = new UcMembersGetOperationcodeRequest();
         res.setTenantId(Constants.TenantID);
         res.setOperationtype(type);
         res.setUserinfo(info);
+        if (uid != null){
+            Integer u = Integer.parseInt(uid);
+            res.setUid(u);
+        }
         try {
             UcMembersGetOperationcodeResponse resp = iUcMembersOperationSV.ucGetOperationcode(res);
             ResponseCode responseCode = resp.getCode();
@@ -385,7 +391,8 @@ public class SafeController extends BaseController {
                 log.info("验证码是:" +vo.getOperationcode());
             }else{
                 result.put("status","0");
-                result.put("msg","获取验证码失败");
+//                result.put("msg","获取验证码失败");
+                result.put("msg",responseCode.getCodeMessage());
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
@@ -410,7 +417,7 @@ public class SafeController extends BaseController {
         res.setOperationtype(type);
         res.setOperationcode(code);
         res.setUid(u);
-        log.info(u);
+        log.info("uid:"+u);
         try {
             UcMembersResponse resp = iUcMembersOperationSV.ucActiveMember(res);
             ResponseCode responseCode = resp.getCode();

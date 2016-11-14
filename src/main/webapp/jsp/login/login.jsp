@@ -51,8 +51,8 @@
         <%--<!--tab-->
         <section class="login-tab">
          <ul>
-             <li><a href="#" class="current">快速登录</a></li>
-             <li><a href="#">普通登录</a></li>
+             <li><a href="javascript:void(0)" class="current">快速登录</a></li>
+             <li><a href="javascript:void(0)">普通登录</a></li>
          </ul>
         </section>
         <!--tab1-->
@@ -75,11 +75,11 @@
                             </li>
                             <li>
                                 <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-                                <p class="yzm"><a href="#" class="btn bnt-yzm">获取动态码</a></p>
+                                <p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>
                                 <label id="phonetips"></label>
                             </li>
-                            <li><a href="#" class="submit-btn btn-blue">立即登录</a></li>
-                            <li class="right"><a href="#">忘记密码 </a></li>
+                            <li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>
+                            <li class="right"><a href="javascript:void(0)">忘记密码 </a></li>
                         </ul>
                     </div>
 <div class="wrapper-big"><!--包含除底部外的所有层-->
@@ -88,14 +88,14 @@
         <ul>
             <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
             <li>登录</li>
-            <a href="#" class="btn login-btn right1" onclick="registJump()">注册</a>
+            <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()">注册</a>
         </ul>
     </nav>
     <%--<!--tab-->
     <section class="login-tab">
      <ul>
-         <li><a href="#" class="current">快速登录</a></li>
-         <li><a href="#">普通登录</a></li>
+         <li><a href="javascript:void(0)" class="current">快速登录</a></li>
+         <li><a href="javascript:void(0)">普通登录</a></li>
      </ul>
     </section>
     <!--tab1-->
@@ -118,11 +118,11 @@
                         </li>
                         <li>
                             <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-                            <p class="yzm"><a href="#" class="btn bnt-yzm">获取动态码</a></p>
+                            <p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>
                             <label id="phonetips"></label>
                         </li>
-                        <li><a href="#" class="submit-btn btn-blue">立即登录</a></li>
-                        <li class="right"><a href="#">忘记密码 </a></li>
+                        <li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>
+                        <li class="right"><a href="javascript:void(0)">忘记密码 </a></li>
                     </ul>
                 </div>
             </div>
@@ -142,9 +142,9 @@
                             <label id="psdLabel"></label>
                         </li>
                         <li class="int-border">
-                            <p><input id="codeid" type="text" class="input input-yzm" placeholder="验证码"></p>
+                            <p><input id="codeInput" type="text" class="input input-yzm" placeholder="验证码"></p>
                             <p>
-                            <div class="code" id="checkCode"></div>
+                                <div class="codeDiv" id="checkCodeId"></div>
                             </p>
                             <p><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh"></i></a></p>
                             <label id="codeLabel"></label>
@@ -165,11 +165,11 @@
         </div>
         <div class="other-login-icon">
             <ul>
-                <li class="none-ml"><a href="#"><img src="../ui/images/iocn-4.png" /></a></li>
-                <li><a href="#"><img src="../ui/images/iocn-5.png" /></a></li>
-                <li><a href="#"><img src="../ui/images/iocn-6.png" /></a></li>
-                <li><a href="#"><img src="../ui/images/iocn-7.png" /></a></li>
-                <li><a href="#"><img src="../ui/images/iocn-8.png" /></a></li>
+                <li class="none-ml"><a href="javascript:void(0)"><img src="../ui/images/iocn-4.png" /></a></li>
+                <li><a href="javascript:void(0)"><img src="../ui/images/iocn-5.png" /></a></li>
+                <li><a href="javascript:void(0)"><img src="../ui/images/iocn-6.png" /></a></li>
+                <li><a href="javascript:void(0)"><img src="../ui/images/iocn-7.png" /></a></li>
+                <li><a href="javascript:void(0)"><img src="../ui/images/iocn-8.png" /></a></li>
             </ul>
         </div>
     </section>--%>
@@ -186,7 +186,7 @@
     function login() {
         var phone = $("#phoneid").val();
         var psd = $("#psdid").val();
-        var code = $("#codeid").val();
+        var code = $("#codeInput").val();
         if (phone == "" || phone == null) {
             $("#phoneLabel").html("请输入用户名/邮箱/手机号");
             $("#phoneLabel").css("display", "block");
@@ -268,31 +268,29 @@
     }
 
     //验证码代码
-    var code;
+    var codeStr;
     function createCode() {
-        code = "";
+        codeStr = "";
         var codeLength = 6; //验证码的长度
-        var checkCode = document.getElementById("checkCode");
-        var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //所有候选组成验证码的字符，当然也可以用中文的
+        var codeChars = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9,
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //所有候选组成验证码的字符，当然也可以用中文的
         for (var i = 0; i < codeLength; i++) {
             var charNum = Math.floor(Math.random() * 52);
-            code += codeChars[charNum];
+            codeStr += codeChars[charNum];
         }
-        if (checkCode) {
-            checkCode.className = "code";
-            checkCode.innerHTML = code;
-        }
+//        if (checkCode) {
+            $("#checkCodeId").html(codeStr);
+//        }
     }
     function validateCode() {
-        var inputCode = document.getElementById("codeid").value;
+        var inputCode = $("#codeInput").val();
         if (inputCode.length <= 0) {
             $("#codeLabel").html("请输入验证码");
             $("#codeLabel").css("display", "block");
             return false;
         }
-        else if (inputCode.toUpperCase() != code.toUpperCase()) {
+        else if (inputCode.toUpperCase() != codeStr.toUpperCase()) {
             $("#codeLabel").html("验证码错误");
             $("#codeLabel").css("display", "block");
             createCode();

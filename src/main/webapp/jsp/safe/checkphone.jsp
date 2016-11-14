@@ -52,7 +52,7 @@
                     <ul>
                         <li>
                             <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="safe.checkphone.small_input"/>"></p>
-                            <p class="yzm"><input id="getnumber" onclick="getnumberonclick()" type="button" class="btn bnt-yzm" value="<spring:message code="safe.checkphone.yzm_input"/>"></p>
+                            <p class="yzm"><a id="getnumber" onclick="getnumberonclick()"class="btn bnt-yzm">获取验证码</a></p>
                             <label id="phonetips"></label>
                         </li>
                         <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
@@ -95,10 +95,17 @@
             $("#phonetips").css("display","none");
         }
 //        校验验证码
-        checkCode(code);
+        var s = "${jump}";
+        var type;
+        if (s == "mail") {
+            type = 5;
+        }else {
+            type = 2
+        }
+        checkCode(code,type);
 
     }
-    function checkCode(code){
+    function checkCode(code,type){
         $.ajax({
             async: true,
             type: "POST",
@@ -106,12 +113,12 @@
             modal: true,
             timeout: 30000,
             data: {
-                type: 2,    //密码操作码
+                type: type,    //密码操作码
                 code:code,
                 uid:${UID},
             },
             success: function (data) {
-//                if (data.status == 1) {
+                if (data.status == 1) {
                     $("#phonetips").css("display", "none");
 
                     //跳转
@@ -126,10 +133,10 @@
                         var tourl = "<%=path%>/safe/changephone?phoneTitle=<spring:message code="safe.checkphone.change_jump"/>";
                         window.location.href=tourl;
                     }
-//                } else {
+                } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
-//                }
+                }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
@@ -157,7 +164,8 @@
             timeout: 30000,
             data: {
                 type: type,
-                info:"${phone}"
+                info:"${phone}",
+                uid:${UID}
             },
             success: function (data) {
                 if (data.status == 1) {
@@ -179,12 +187,12 @@
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
             $("#getnumber").attr("onclick", "getnumberonclick()");
-            $("#getnumber").val("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
+            $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
             var txtStr = '重新获取(' + wait + ')';
-            $("#getnumber").val(txtStr);
+            $("#getnumber").html(txtStr);
             // 按钮里面的内容呈现倒计时状态
             $("#getnumber").attr("disabled", "block");
             $("#getnumber").attr("onclick", "javascript:void(0)");

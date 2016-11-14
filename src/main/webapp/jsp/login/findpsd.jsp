@@ -72,7 +72,7 @@
                         <ul>
                             <li>
                                 <p><input id="codeid2" type="text" class="input input-small" placeholder="请输入动态码"></p>
-                                <p class="yzm"><a id="getnumber" onclick="getTestCode()" href="#"  class="btn bnt-yzm">获取动态码</a></p>
+                                <p class="yzm"><a id="getnumber" onclick="getTestCode()" href="javascript:void(0)"  class="btn bnt-yzm">获取动态码</a></p>
                                 <label id="codeLabel2"></label>
                             </li>
                             <li><a href="javascript:void(0)" id="next-btn2" class="submit-btn btn-blue">下一步</a></li>
@@ -328,7 +328,7 @@
             timeout: 30000,
             data: {
                 type: 6,
-                info:getPhone
+                info:getPhone,
             },
             success: function (data) {
                 if (data.status == 1) {

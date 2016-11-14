@@ -13,6 +13,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String path = request.getContextPath();
+    String isLogin = (String) session.getAttribute("isLogin");
 %>
 
 <html>
@@ -37,24 +38,8 @@
         <jsp:param name="Title" value="译员招募"/>
         <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
     </jsp:include>
-    <%--<nav class="wap-second-nav">--%>
-        <%--<ul>--%>
-            <%--<a href="javascript:"><i class="icon iconfont left">&#xe626;</i></a>--%>
-            <%--<li>译员招募</li>--%>
-            <%--<a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>--%>
-        <%--</ul>--%>
-        <%--<div class="pop-nav">--%>
-            <%--<ul>--%>
-                <%--<li>--%>
-                    <%--<a href="#">译云首页</a>|--%>
-                    <%--<a href="#">个人中心</a>|--%>
-                    <%--<a href="#">我的订单</a>|--%>
-                    <%--<a href="#">安全退出</a>--%>
-                <%--</li>--%>
-            <%--</ul>--%>
-        <%--</div>--%>
-    <%--</nav>--%>
-    <div class="rect-banner"><a href="#"><img src="<%=path%>/ui/images/recruit1.jpg"></a></div>
+
+    <div class="rect-banner"><a href="javascript:void (0)" onclick="toRegister()"><img src="<%=path%>/ui/images/recruit1.jpg"></a></div>
     <section class="recruit">
         <ul>
             <li>
@@ -79,5 +64,34 @@
         </ul>
         <span>译员的认证接单需通过pc端完成，现在就去吧！</span>
     </section>
+
+    <!--上传提示弹出框-->
+    <div class="eject-big">
+        <div class="prompt" id="prompt">
+            <div class="prompt-title">请选择</div>
+            <div class="prompt-confirm">
+                <ul>
+                    <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+                </ul>
+            </div>
+            <div class="prompt-confirm-btn">
+                <a class="btn btn-white" id="prompt-btn">确认</a>
+            </div>
+
+        </div>
+        <div class="mask" id="eject-mask"></div>
+    </div>
 </body>
 </html>
+<script>
+    function toRegister(){
+        if ("${isLogin}"== "1"){
+            $("#EjectTitle").html("您已成功注册，请使用账号登录PC客户端使用议员功能。");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+            return;
+        }
+        var tourl = "<%=path%>/login/register";
+        window.location.href=tourl;
+    }
+</script>

@@ -55,7 +55,7 @@
                             <p class="yzm"><a id="getnumber" onclick="javascript:getnumberonclick()" class="btn bnt-yzm"><spring:message code="safe.changemail.bntyzm_input"/></a></p>
                             <label id="phonetips"></label>
                         </li>
-                        <li><a class="btn submit-btn btn-blue" href="#" onclick="confirmBtn()"><spring:message code="safe.changemail.nextbtn"/></a></li>
+                        <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.changemail.nextbtn"/></a></li>
                     </ul>
                 </div>
             </div>
@@ -159,7 +159,8 @@
             timeout: 30000,
             data: {
                 type: 5,
-                info:mail
+                info:mail,
+                uid:"${UID}"
             },
             success: function (data) {
                 if (data.status == 1) {
@@ -182,13 +183,13 @@
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
             $("#getnumber").attr("onclick", "getnumberonclick()");
-            $("#getnumber").val("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
+            $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
 //            $("#getnumber").attr("class","");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
             var txtStr = '重新获取(' + wait + ')';
-            $("#getnumber").val(txtStr);
+            $("#getnumber").html(txtStr);
 //            $("#getnumber").attr("class","ash-cl");
             // 按钮里面的内容呈现倒计时状态
             $("#getnumber").attr("disabled", "block");

@@ -51,13 +51,13 @@
         </section>
         <section class="personal-tab">
             <ul>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li>
                         <p>0</p>
                         <p>待付款</p>
                     </li>
                 </a>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li class="none-border">
                         <p>5</p>
                         <p>待确认</p>
@@ -67,25 +67,25 @@
         </section>
         <section class="personal-list">
             <ul>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-9.jpg" /></p>
                         <p>我的订单</p>
                     </li>
                 </a>
-                <a href="#" onclick="toBalance()">
+                <a href="javascript:void(0)" onclick="toBalance()">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-10.jpg" /></p>
                         <p>我的账户</p>
                     </li>
                 </a>
-                <a href="#" onclick="toSafe()">
+                <a href="javascript:void(0)" onclick="toSafe()">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-11.jpg" /></p>
                         <p>安全设置</p>
                     </li>
                 </a>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-12.jpg" /></p>
                         <p>我的积分</p>
@@ -95,7 +95,7 @@
         </section>
 
     </div>
-    <section class="personal-ban1"><a href="#"><img src="<%=path%>/ui/images/person-banner.jpg" /></a></section>
+    <section class="personal-ban1"><a href="javascript:void(0)"><img src="<%=path%>/ui/images/person-banner.jpg" /></a></section>
 
 </body>
 </html>
