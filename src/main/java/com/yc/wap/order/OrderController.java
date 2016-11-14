@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "order")
 public class OrderController extends BaseController{
-    Log log = LogFactory.getLog(OrderController.class);
+    private Log log = LogFactory.getLog(OrderController.class);
 
     @RequestMapping(value = "")
     public String order() {

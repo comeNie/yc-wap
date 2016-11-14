@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
  * Created by Nozomi on 11/8/2016.
  */
 public class SearchServiceImpl implements InterfaceSearchService{
-    Log log = LogFactory.getLog(SearchServiceImpl.class);
+    private Log log = LogFactory.getLog(SearchServiceImpl.class);
 
 
 }
