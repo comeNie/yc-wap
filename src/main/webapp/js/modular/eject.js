@@ -31,3 +31,14 @@ jQuery(document).ready(function($) {
 	$('#payment-eject').slideUp(200);
 	})
 })	
+//无密码弹出框 
+jQuery(document).ready(function($) {
+	$('#no-password-btn').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#no-password').slideDown(100);
+	})
+	$('#set-passbtn').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#no-password').slideUp(200);
+	})
+})	
