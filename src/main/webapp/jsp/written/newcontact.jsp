@@ -33,15 +33,15 @@
         <div class="order-list">
             <ul>
                 <li>手机:</li>
-                <li><input type="text" class="input input-medium" placeholder="请输入手机号码（必填）"></li>
+                <li><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码（必填）"></li>
             </ul>
             <ul>
                 <li>姓名:</li>
-                <li><input type="text" class="input input-medium" placeholder="请输入姓名"></li>
+                <li><input type="text" class="input input-medium" id="name" placeholder="请输入姓名"></li>
             </ul>
             <ul>
                 <li>邮箱:</li>
-                <li><input type="text" class="input input-medium" placeholder="请输入接收译文的邮箱"></li>
+                <li><input type="text" class="input input-medium" id="email" placeholder="请输入接收译文的邮箱"></li>
             </ul>
 
             <ul class="none-border" style="display: none">
@@ -76,7 +76,9 @@
     });
 
     function onSubmit() {
-        var test = "haha";
+        var phone = $("#phone").val();
+        var name = $("#name").val();
+        var email = $("#email").val();
         $.ajax({
             async: true,
             type: "POST",
@@ -84,11 +86,15 @@
             modal: true,
             timeout: 30000,
             data: {
-                test: test
+                phone: phone,
+                name: name,
+                email: email
             },
             success: function (data) {
-                var ToUrl = "<%=path%>/written/payment";
-                window.location.href = ToUrl;
+                if(data.status==1) {
+                    var params = data.Params;
+                    window.location.href = "<%=path%>/written/payment?" + params;
+                }
             },
             error: function (data) {
                 console.log(data);

@@ -73,7 +73,7 @@
         <div class="order-message">
             <ul>
                 <li>给译员留言:</li>
-                <li><textarea class="textarea tex-int"></textarea></li>
+                <li><textarea id="message" class="textarea tex-int"></textarea></li>
             </ul>
         </div>
     </section>
@@ -104,7 +104,7 @@
 
 
     function onSubmit() {
-        var test = "haha";
+        var msg = $("#message").val();
         $.ajax({
             async: true,
             type: "POST",
@@ -112,7 +112,7 @@
             modal: true,
             timeout: 30000,
             data: {
-                test: test
+                msg:msg
             },
             success: function (data) {
                 var ToUrl = "<%=path%>/written/newContact";

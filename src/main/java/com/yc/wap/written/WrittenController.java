@@ -20,6 +20,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import scala.xml.PrettyPrinter;
 
 import java.util.List;
 import java.util.Locale;
@@ -144,6 +145,10 @@ public class WrittenController extends BaseController {
     @ResponseBody
     public Object onConfirmSubmit() {
         MsgBean result = new MsgBean();
+        String msg = request.getParameter("msg");
+        String Param = (String) session.getAttribute("Param");
+        Param = Param + "&msg=" + msg;
+        session.setAttribute("Param", Param);
         return result.returnMsg();
     }
 
@@ -156,6 +161,14 @@ public class WrittenController extends BaseController {
     @ResponseBody
     public Object onNewContactSubmit() {
         MsgBean result = new MsgBean();
+        String Param = (String) session.getAttribute("Param");
+        String phone = request.getParameter("phone");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        Param = Param + "&phone=" + phone + "&name=" + name + "&email=" + email;
+        session.setAttribute("Param", Param);
+        result.put("Params", Param);
+        log.info("OrderParams: " + Param);
         return result.returnMsg();
     }
 
