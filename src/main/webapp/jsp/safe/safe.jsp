@@ -80,9 +80,11 @@
             $("#emalRight").html("您还没有通过邮箱验证，请验证");
             isEmail = 0;
         }else {
-            var myemail=email.substr(3,4);
-            var hidePhone=email.replace(myemail,"****");
-            $("#emalRight").html(hidePhone);
+            var index = email.indexOf("@");
+            var email1 = email.slice(0,index-1);
+            var email2 = email.slice(index+2,email.length);
+            var hideMail = email1+"***"+email2;
+            $("#emalRight").html(hideMail);
             isEmail = 1;
         }
         if(password != "true"){
@@ -96,8 +98,9 @@
             $("#phoneRight").html("您还没有通过手机验证，请验证");
             isPhone = 0;
         }else {
-            var myphone=mobilePhone.substr(3,4);
-            var hidePhone=mobilePhone.replace(myphone,"****");
+            var myphone1=mobilePhone.substr(0,3);
+            var myphone2=mobilePhone.substr(7,4);
+            var hidePhone=myphone1+"****"+myphone2;
             $("#phoneRight").html(hidePhone);
             isPhone = 1;
         }

@@ -163,7 +163,9 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
-        if(!(/^[0-9]*$/.test(phone))){
+
+        var t = /^1\d{10}$/;
+        if(!t.test(phone)){
             $("#phoneLabel").html("请输入正确手机号");
             $("#phoneLabel").css("display","block");
             return;
@@ -265,13 +267,15 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
-        if(!(/^[0-9]*$/.test(phone))){
+        var t = /^1\d{10}$/;
+        if(!t.test(phone)){
             $("#phoneLabel").html("请输入正确手机号");
             $("#phoneLabel").css("display","block");
             return;
         }else {
             $("#phoneLabel").css("display","none");
         }
+
         getTestCode(phone);
     }
     //    发送验证码
@@ -289,17 +293,17 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    $("#codeLabel").css("display", "none");
+                    $("#phoneLabel").css("display", "none");
                     personUid = data.uid;
                     countDown(60);
                 } else {
-                    $("#codeLabel").html(data.msg);
-                    $("#codeLabel").css("display", "block");
+                    $("#phoneLabel").html(data.msg);
+                    $("#phoneLabel").css("display", "block");
                 }
             },
             error: function () {
-                $("#codeLabel").html(data.msg);
-                $("#codeLabel").css("display", "block");
+                $("#phoneLabel").html(data.msg);
+                $("#phoneLabel").css("display", "block");
             }
         });
     }
