@@ -46,15 +46,15 @@
                 <div class="set-int">
                     <ul>
                         <li>
-                            <p><input id="oldPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input1"/>"></p>
+                            <p><input id="oldPsdID" type="password" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input1"/>"></p>
                             <label id="oldLable"></label>
                         </li>
                         <li>
-                            <p><input id="newPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input2"/>"></p>
+                            <p><input id="newPsdID" type="password" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input2"/>"></p>
                             <label id="newLable"></label>
                         </li>
                         <li>
-                            <p><input id="confirmPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input3"/>"></p>
+                            <p><input id="confirmPsdID" type="password" class="input input-large" placeholder="<spring:message code="safe.changepsd.large_input3"/>"></p>
                             <label id="confirmLable"></label>
                         </li>
                         <li>

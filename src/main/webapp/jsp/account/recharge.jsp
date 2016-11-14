@@ -68,7 +68,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="wap-btn"><a href="#"  class="btn submit-btn btn-blue" onclick="confirm()">提交</a></div>
+                <div class="wap-btn"><a href="javascript:void(0)"  class="btn submit-btn btn-blue" onclick="confirm()">提交</a></div>
             </div>
         </section>
     </div>

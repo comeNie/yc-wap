@@ -1,17 +1,16 @@
 
-.code
+.codeDiv
 {
     /*background:url(1.jpg);*/
-    /*font-family:Arial;*/
-    /*font-style:italic;*/
+    font-family:Arial;
+    font-style:italic;
     /*color:blue;*/
     /*font-size:30px;*/
-    /*border:0;*/
+    border:0;
     /*padding:2px 3px;*/
-    /*letter-spacing:3px;*/
+    letter-spacing:3px;
     /*font-weight:bolder;*/
-    /*float:left;*/
-    /*cursor:pointer;*/
+    cursor:pointer;
     /*width:150px;*/
     /*height:60px;*/
     /*line-height:60px;*/
