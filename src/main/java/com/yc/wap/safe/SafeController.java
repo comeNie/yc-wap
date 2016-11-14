@@ -202,7 +202,7 @@ public class SafeController extends BaseController {
                 log.info(vo.getUid());
             }else {
                 result.put("status","0");
-                result.put("msg","获取用户信息失败");
+                result.put("msg",code.getCodeMessage());
             }
             /*code:失败，未找到该用户信息-1 code:成功1    */
 
@@ -272,14 +272,13 @@ public class SafeController extends BaseController {
                 session.setAttribute("password","true");
             }else{
                 result.put("status","0");
-                result.put("msg","修改失败");
+                result.put("msg",responseCode.getCodeMessage());
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.put("status","0");
             result.put("msg","修改失败");
         }
-//4297f44b13955235245b2497399d7a93
         return  result.returnMsg();
     }
 
@@ -313,7 +312,8 @@ public class SafeController extends BaseController {
                 session.setAttribute("mobilePhone",phone);
             }else{
                 result.put("status","0");
-                result.put("msg","绑定/修改手机失败");
+//                result.put("msg","绑定/修改手机失败");
+                result.put("msg",responseCode.getCodeMessage());
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
@@ -351,7 +351,7 @@ public class SafeController extends BaseController {
                 log.info(vo);
             }else{
                 result.put("status","0");
-                result.put("msg","绑定/修改邮箱失败");
+                result.put("msg",responseCode.getCodeMessage());
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
@@ -429,7 +429,7 @@ public class SafeController extends BaseController {
                 log.info(vo);
             }else{
                 result.put("status","0");
-                result.put("msg","验证码错误");
+                result.put("msg",responseCode.getCodeMessage());
             }
 
 

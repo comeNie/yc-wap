@@ -75,13 +75,21 @@
     });
     $(function() {
         var mobilePhone = "${phone}";
-        var myphone=mobilePhone.substr(3,4);
-        var hidePhone=mobilePhone.replace(myphone,"****");
-        $("#phone").html(hidePhone)
+
         var s = "${jump}";
         if (s == "mail") {
             $("#ptitle").html("已验证邮箱");
             $("#navtitle").html("验证邮箱");
+            var index = mobilePhone.indexOf("@");
+            var email1 = mobilePhone.slice(0,index-1);
+            var email2 = mobilePhone.slice(index+2,mobilePhone.length);
+            var hideMail = email1+"***"+email2;
+            $("#phone").html(hideMail)
+        }else {
+            var myphone1=mobilePhone.substr(0,3);
+            var myphone2=mobilePhone.substr(7,4);
+            var hidePhone=myphone1+"****"+myphone2;
+            $("#phone").html(hidePhone)
         }
     })
     function confirmBtn() {

@@ -143,10 +143,8 @@
                         </li>
                         <li class="int-border">
                             <p><input id="codeInput" type="text" class="input input-yzm" placeholder="验证码"></p>
-                            <p>
-                                <div class="codeDiv" id="checkCodeId"></div>
-                            </p>
-                            <p><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh"></i></a></p>
+                            <p class="codeDiv" id="checkCodeId" onclick="createCode()"></p>
+                            <p style="float:right" class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh"></i></a></p>
                             <label id="codeLabel"></label>
                         </li>
                         <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
@@ -271,7 +269,7 @@
     var codeStr;
     function createCode() {
         codeStr = "";
-        var codeLength = 6; //验证码的长度
+        var codeLength = 1; //验证码的长度
         var codeChars = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9,
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //所有候选组成验证码的字符，当然也可以用中文的
@@ -279,9 +277,7 @@
             var charNum = Math.floor(Math.random() * 52);
             codeStr += codeChars[charNum];
         }
-//        if (checkCode) {
-            $("#checkCodeId").html(codeStr);
-//        }
+        $("#checkCodeId").html(codeStr);
     }
     function validateCode() {
         var inputCode = $("#codeInput").val();
