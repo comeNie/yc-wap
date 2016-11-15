@@ -80,9 +80,7 @@ dependencies {
     compile 'avalon-framework:avalon-framework:4.1.5'
     compile 'commons-logging:commons-logging:1.2'
 
-    //international
-    compile 'com.ai:dubbo-ext:0.3.1'
-    compile "com.ai:ipaas-i18n-spring:0.3.1"
+
 
     //yc
     compile "com.ai.yc.ucenter:members:1.1.1-SNAPSHOT"
@@ -92,6 +90,7 @@ dependencies {
     compile "com.ai.yc.common:syspurpose:${version}"
     compile "com.ai.yc.common:sysdomain:${version}"
     compile "com.ai.yc.order:autooffer:${version}"
+    compile "com.ai.yc.order:ordersubmission:${version}"
 
 }
 

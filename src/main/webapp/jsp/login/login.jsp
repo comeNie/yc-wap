@@ -13,12 +13,7 @@
 <%
     String path = request.getContextPath();
     String ToUrl = (String) session.getAttribute("ToUrl");
-    String Param = (String) session.getAttribute("Param");
-    System.out.println("ToUrl: " + ToUrl);
-    System.out.println("Param: " + Param);
-    request.setAttribute("path", path);
-    request.setAttribute("ToUrl", ToUrl);
-    request.setAttribute("Param", Param);
+    System.out.println("LoginToUrl: " + ToUrl);
 %>
 
 <html>
@@ -241,7 +236,7 @@
                     if (${ToUrl==null || ToUrl==""}) {
                         window.location.href = "<%=path%>" + "/";
                     } else {
-                        window.location.href = "${path}" + "${ToUrl}" + "?" + "${Param}";
+                        window.location.href = "<%=path%>" + "<%=ToUrl%>";
                     }
                 } else {
                     $("#codeLabel").html(data.msg);

@@ -295,7 +295,7 @@
         if ($("#quick").prop("checked")) {
             Express = "Y";
         }
-        var Detail = Content.substring(0, 10) + "...";
+        var Detail = Content.substring(0, 15) + "...";
         $.ajax({
             async: true,
             type: "POST",
@@ -306,17 +306,23 @@
                 Content: Content,
                 ContentLength: ContentLength,
                 DualId: "1",
+                DualVal: "中文啊->英文啊",
                 PurposeId: PurposeId,
+                PurposeVal: PurposeVal,
+                DomainId: DomainId,
+                DomainVal: DomainVal,
                 TransLvId: TransLvId,
-                Express: Express
+                TransLvVal: TransLvVal,
+                Express: Express,
+                Detail: Detail
             },
             success: function (data) {
                 if (data.status == 1) {
-                    var Price = data.Price;
-                    onSubmit("PurposeId=" + PurposeId + "&PurposeVal=" + PurposeVal
-                            + "&DomainId=" + DomainId + "&DomainVal=" + DomainVal
-                            + "&TransLvId=" + TransLvId + "&TransLvVal=" + TransLvVal
-                            + "&Express=" + Express + "&Detail=" + Detail + "&Price=" + Price);
+                    if (${isLogin==null || isLogin=='0'}) {
+                        SaveToUrl("/written/onContentSubmit");
+                        return;
+                    }
+                    window.location.href = "<%=path%>/written/onContentSubmit";
                 }
             },
             error: function (data) {
@@ -331,15 +337,7 @@
         });
     }
 
-    function onSubmit(url) {
-        if (${isLogin==null || isLogin=='0'}) {
-            SaveToUrl("/written/onContentSubmit", url);
-            return;
-        }
-        window.location.href = "<%=path%>/written/onContentSubmit?" + url;
-    }
-
-    function SaveToUrl(ToUrl, Param) {
+    function SaveToUrl(ToUrl) {
         $.ajax({
             async: true,
             type: "POST",
@@ -347,8 +345,7 @@
             modal: true,
             timeout: 30000,
             data: {
-                ToUrl: ToUrl,
-                Param: Param
+                ToUrl: ToUrl
             },
             success: function (data) {
                 if (data.status == 1) {

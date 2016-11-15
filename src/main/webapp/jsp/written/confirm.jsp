@@ -1,4 +1,4 @@
-<%@ page import="java.text.DecimalFormat" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Nozomi
   Date: 11/3/2016
@@ -8,14 +8,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    DecimalFormat df = new DecimalFormat("######0.00");
     String path = request.getContextPath();
-    String detail = request.getParameter("Detail");
-    String PurposeVal = request.getParameter("PurposeVal");
-    String DomainVal = request.getParameter("DomainVal");
-    String TransLvVal = request.getParameter("TransLvVal");
-    String Price = request.getParameter("Price");
-    String PriceDisplay = "总价：" + df.format(Double.parseDouble(Price) / 1000) + "元";
 %>
 <html>
 <head>
@@ -44,26 +37,27 @@
         <div class="order-list">
             <ul>
                 <li>翻译主题:</li>
-                <li class="right word"><%=detail%>
+                <li class="right word">${Detail}
                 </li>
             </ul>
             <ul>
                 <li>翻译语言:</li>
-                <li class="right">中文→英文</li>
+                <li class="right">${DualVal}
+                </li>
             </ul>
             <ul>
                 <li>领域:</li>
-                <li class="right"><%=DomainVal%>
+                <li class="right">${DomainVal}
                 </li>
             </ul>
             <ul>
                 <li>用途:</li>
-                <li class="right"><%=PurposeVal%>
+                <li class="right">${PurposeVal}
                 </li>
             </ul>
             <ul class="none-border">
                 <li>级别:</li>
-                <li class="right"><%=TransLvVal%>
+                <li class="right">${TransLvVal}
                 </li>
             </ul>
         </div>
@@ -80,7 +74,7 @@
 </div>
 <!--底部-->
 <section class="order-submit">
-    <p class="left"><%=PriceDisplay%>
+    <p class="left">${Price}
     </p>
     <p class="right"><a href="javascript:void(0)" id="submit">下一步</a></p>
 </section>
@@ -112,11 +106,10 @@
             modal: true,
             timeout: 30000,
             data: {
-                msg:msg
+                msg: msg
             },
             success: function (data) {
-                var ToUrl = "<%=path%>/written/newContact";
-                window.location.href = ToUrl;
+                window.location.href = "<%=path%>/written/newContact";
             },
             error: function (data) {
                 console.log(data);

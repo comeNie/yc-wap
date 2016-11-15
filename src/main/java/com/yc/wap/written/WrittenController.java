@@ -1,5 +1,7 @@
 package com.yc.wap.written;
 
+import com.ai.opt.base.exception.BusinessException;
+import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.yc.common.api.sysdomain.interfaces.IQuerySysDomainSV;
 import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListRes;
@@ -11,17 +13,21 @@ import com.ai.yc.common.api.syspurpose.param.QuerySysPurposeListRes;
 import com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV;
 import com.ai.yc.order.api.autooffer.param.QueryAutoOfferReq;
 import com.ai.yc.order.api.autooffer.param.QueryAutoOfferRes;
+import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
+import com.ai.yc.order.api.ordersubmission.param.*;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
+import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import scala.xml.PrettyPrinter;
 
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,6 +44,7 @@ public class WrittenController extends BaseController {
     private IQuerySysPurposeSV iQuerySysPurposeSV = DubboConsumerFactory.getService(IQuerySysPurposeSV.class);
     private IQuerySysDomainSV iQuerySysDomainSV = DubboConsumerFactory.getService(IQuerySysDomainSV.class);
     private IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
+    private IOrderSubmissionSV iOrderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
 
     @RequestMapping(value = "")
     public String content() {
@@ -61,30 +68,45 @@ public class WrittenController extends BaseController {
     }
 
     private List GetDualList(String Language, String OrderType) {
-        QuerySysDuadListReq req = new QuerySysDuadListReq();
-        req.setLanguage(Language);
-        req.setOrderType(OrderType);
-        QuerySysDuadListRes resp = iQuerySysDuadSV.querySysDuadList(req);
-        if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+        try {
+            QuerySysDuadListReq req = new QuerySysDuadListReq();
+            req.setLanguage(Language);
+            req.setOrderType(OrderType);
+            QuerySysDuadListRes resp = iQuerySysDuadSV.querySysDuadList(req);
+            if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                throw new RuntimeException("GetDualListFailed");
+            }
+            return resp.getDuads();
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
             throw new RuntimeException("GetDualListFailed");
         }
-        return resp.getDuads();
     }
 
     private List GetPurposeList(String Language) {
-        QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList(Language);
-        if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+        try {
+            QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList(Language);
+            if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                throw new RuntimeException("GetPurposeListFailed");
+            }
+            return resp.getPurposes();
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
             throw new RuntimeException("GetPurposeListFailed");
         }
-        return resp.getPurposes();
     }
 
     private List GetDomainList(String Language) {
-        QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList(Language);
-        if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+        try {
+            QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList(Language);
+            if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                throw new RuntimeException("GetDomainListFailed");
+            }
+            return resp.getDomainVos();
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
             throw new RuntimeException("GetDomainListFailed");
         }
-        return resp.getDomainVos();
     }
 
     @RequestMapping(value = "onSaveContent")
@@ -97,32 +119,61 @@ public class WrittenController extends BaseController {
         String PurposeId = request.getParameter("PurposeId");
         String TransLvId = request.getParameter("TransLvId");
         String Express = request.getParameter("Express");
+        String DomainId = request.getParameter("DomainId");
+
+        String DualVal = request.getParameter("DualVal");
+        String PurposeVal = request.getParameter("PurposeVal");
+        String DomainVal = request.getParameter("DomainVal");
+        String TransLvVal = request.getParameter("TransLvVal");
+        String Detail = request.getParameter("Detail");
         boolean isExpress = false;
         if (Express.equals("Y")) {
             isExpress = true;
         }
-        QueryAutoOfferReq req = new QueryAutoOfferReq();
-        req.setWordNum(Integer.parseInt(ContentLength));
-        req.setDuadId(DualId);
-        req.setPurposeId(PurposeId);
-        req.setTranslateLevel(TransLvId);
-        req.setUrgent(isExpress);
-        QueryAutoOfferRes resp = iQueryAutoOfferSV.queryAutoOffer(req);
-        if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
-            String Price = resp.getPrice().toString();
-            String valuationWay = resp.getValuationWay();
-            String currencyUnit = resp.getCurrencyUnit();
-            log.info("AutoOfferPriceReturn: Price: " + Price + ", valuationWay: " + valuationWay + ", currencyUnit: " + currencyUnit);
+        try {
+            QueryAutoOfferReq req = new QueryAutoOfferReq();
+            req.setWordNum(Integer.parseInt(ContentLength));
+            req.setDuadId(DualId);
+            req.setPurposeId(PurposeId);
+            req.setTranslateLevel(TransLvId);
+            req.setUrgent(isExpress);
+            QueryAutoOfferRes resp = iQueryAutoOfferSV.queryAutoOffer(req);
+            if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                String Price = resp.getPrice().toString();
+                String valuationWay = resp.getValuationWay();
+                String currencyUnit = resp.getCurrencyUnit();
+                log.info("AutoOfferPriceReturn: Price: " + Price + ", valuationWay: " + valuationWay + ", currencyUnit: " + currencyUnit);
 
-            session.setAttribute("Content", Content);
-            session.setAttribute("ContentLength", ContentLength);
+                JSONObject WrittenContextJSON = new JSONObject();
+                WrittenContextJSON.put("Content", Content);
+                WrittenContextJSON.put("ContentLength", ContentLength);
+                WrittenContextJSON.put("DualId", DualId);
+                WrittenContextJSON.put("PurposeId", PurposeId);
+                WrittenContextJSON.put("DomainId", DomainId);
+                WrittenContextJSON.put("TransLvId", TransLvId);
+                WrittenContextJSON.put("Express", Express);
+                WrittenContextJSON.put("Price", Price);
+                WrittenContextJSON.put("valuationWay", valuationWay);
+                WrittenContextJSON.put("currencyUnit", currencyUnit);
+                WrittenContextJSON.put("Detail", Detail);
+                session.setAttribute("WrittenContextJSON", WrittenContextJSON);
 
-            result.put("Price", Price);
-            result.put("valuationWay", valuationWay);
-            result.put("currencyUnit", currencyUnit);
-            return result.returnMsg();
-        } else {
-            log.info("iQueryAutoOfferSV Return: " + resp.getResponseHeader().getResultCode());
+                JSONObject WrittenShowJSON = new JSONObject();
+                WrittenShowJSON.put("DualVal", DualVal);
+                WrittenShowJSON.put("PurposeVal", PurposeVal);
+                WrittenShowJSON.put("DomainVal", DomainVal);
+                WrittenShowJSON.put("TransLvVal", TransLvVal);
+                WrittenShowJSON.put("Detail", Detail);
+                WrittenShowJSON.put("Price", Price);
+                session.setAttribute("WrittenShowJSON", WrittenShowJSON);
+
+                return result.returnMsg();
+            } else {
+                log.info("iQueryAutoOfferSV Return: " + resp.getResponseHeader().getResultCode());
+                throw new RuntimeException("AutoOfferPriceFailed");
+            }
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
             throw new RuntimeException("AutoOfferPriceFailed");
         }
     }
@@ -132,12 +183,24 @@ public class WrittenController extends BaseController {
     public Object onSaveToUrl() {
         MsgBean result = new MsgBean();
         session.setAttribute("ToUrl", request.getParameter("ToUrl"));
-        session.setAttribute("Param", request.getParameter("Param"));
         return result.returnMsg();
     }
 
     @RequestMapping(value = "onContentSubmit")
     public String onContentSubmit() {
+        JSONObject WrittenShowJSON = JSONObject.fromObject(session.getAttribute("WrittenShowJSON"));
+        log.info("WrittenShowJSON: " + WrittenShowJSON);
+
+        String Price = WrittenShowJSON.getString("Price");
+        DecimalFormat df = new DecimalFormat("######0.00");
+        String PriceDisplay = "总价：" + df.format(Double.parseDouble(Price) / 1000) + "元";
+
+        request.setAttribute("PurposeVal", WrittenShowJSON.get("PurposeVal"));
+        request.setAttribute("DualVal", WrittenShowJSON.get("DualVal"));
+        request.setAttribute("DomainVal", WrittenShowJSON.get("DomainVal"));
+        request.setAttribute("TransLvVal", WrittenShowJSON.get("TransLvVal"));
+        request.setAttribute("Detail", WrittenShowJSON.get("Detail"));
+        request.setAttribute("Price", PriceDisplay);
         return "written/confirm";
     }
 
@@ -146,9 +209,9 @@ public class WrittenController extends BaseController {
     public Object onConfirmSubmit() {
         MsgBean result = new MsgBean();
         String msg = request.getParameter("msg");
-        String Param = (String) session.getAttribute("Param");
-        Param = Param + "&msg=" + msg;
-        session.setAttribute("Param", Param);
+        JSONObject WrittenContextJSON = JSONObject.fromObject(session.getAttribute("WrittenContextJSON"));
+        WrittenContextJSON.put("Message", msg);
+        session.setAttribute("WrittenContextJSON", WrittenContextJSON);
         return result.returnMsg();
     }
 
@@ -161,15 +224,75 @@ public class WrittenController extends BaseController {
     @ResponseBody
     public Object onNewContactSubmit() {
         MsgBean result = new MsgBean();
-        String Param = (String) session.getAttribute("Param");
-        String phone = request.getParameter("phone");
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        Param = Param + "&phone=" + phone + "&name=" + name + "&email=" + email;
-        session.setAttribute("Param", Param);
-        result.put("Params", Param);
-        log.info("OrderParams: " + Param);
+        String Phone = request.getParameter("phone");
+        String Name = request.getParameter("name");
+        String Email = request.getParameter("email");
+        JSONObject WrittenContextJSON = JSONObject.fromObject(session.getAttribute("WrittenContextJSON"));
+        WrittenContextJSON.put("Phone", Phone);
+        WrittenContextJSON.put("Name", Name);
+        WrittenContextJSON.put("Email", Email);
+        session.setAttribute("WrittenContextJSON", WrittenContextJSON);
+        String OrderNumber = OrderSubmit(WrittenContextJSON);
+        result.put("OrderNumber", OrderNumber);
         return result.returnMsg();
+    }
+
+    public String OrderSubmit(JSONObject WrittenContextJSON) {
+        Timestamp Time = new Timestamp(System.currentTimeMillis());
+        Locale locale = rb.getDefaultLocale();
+        String UserId = (String) session.getAttribute("UID");
+        log.info("OrderParams: " + WrittenContextJSON.toString() + ", Time: " + Time + ", UserId: " + UserId);
+        OrderSubmissionRequest req = new OrderSubmissionRequest();
+        BaseInfo reqBaseInfo = new BaseInfo();
+        reqBaseInfo.setFlag("0");
+        reqBaseInfo.setChlId("5");
+        reqBaseInfo.setOrderType("1");
+        reqBaseInfo.setBusiType("1");
+        reqBaseInfo.setTranslateName(WrittenContextJSON.getString("Detail"));
+        reqBaseInfo.setTranslateType("0");
+        reqBaseInfo.setSubFlag("0");
+        reqBaseInfo.setUserType("10");
+        reqBaseInfo.setUserId(UserId);
+        reqBaseInfo.setOrderTime(Time);
+        reqBaseInfo.setTimeZone(locale.toString());
+        reqBaseInfo.setOrderLevel("1");
+
+        ProductInfo reqProductInfo = new ProductInfo();
+        reqProductInfo.setTranslateSum(WrittenContextJSON.getLong("ContentLength"));
+        reqProductInfo.setUseCode(WrittenContextJSON.getString("PurposeId"));
+        reqProductInfo.setFieldCode(WrittenContextJSON.getString("DomainId"));
+        reqProductInfo.setIsSetType("N");
+        reqProductInfo.setIsUrgent(WrittenContextJSON.getString("Express"));
+        reqProductInfo.setTranslateInfo(WrittenContextJSON.getString("Content"));
+        reqProductInfo.setStartTime(Time);
+        reqProductInfo.setEndTime(Time);
+
+        FeeInfo reqFeeInfo = new FeeInfo();
+        reqFeeInfo.setCurrencyUnit("1");
+        reqFeeInfo.setTotalFee(WrittenContextJSON.getLong("Price"));
+        reqFeeInfo.setAdjustFee(WrittenContextJSON.getLong("Price"));
+
+        ContactInfo reqContactInfo = new ContactInfo();
+        reqContactInfo.setContactTel(WrittenContextJSON.getString("Phone"));
+        reqContactInfo.setContactName(WrittenContextJSON.getString("Name"));
+        reqContactInfo.setContactEmail(WrittenContextJSON.getString("Email"));
+        reqContactInfo.setRemark(WrittenContextJSON.getString("Message"));
+
+        req.setBaseInfo(reqBaseInfo);
+        req.setProductInfo(reqProductInfo);
+        req.setFeeInfo(reqFeeInfo);
+        req.setContactInfo(reqContactInfo);
+
+        OrderSubmissionResponse resp = iOrderSubmissionSV.orderSubmission(req);
+        if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+            Long OrderId = resp.getOrderId();
+            log.info("OrderId: " + OrderId);
+        } else {
+            log.info("orderSubmissionFailed: " + resp.getResponseHeader().getResultMessage());
+            log.info("orderSubmissionFailed: " + resp.getResponseHeader().getResultCode());
+        }
+
+        return "OrderNumber";
     }
 
     @RequestMapping(value = "payment")
