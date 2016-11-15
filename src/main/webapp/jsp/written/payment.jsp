@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
+    String OrderId = request.getParameter("orderid");
+    request.setAttribute("OrderId", OrderId);
 %>
 <html>
 <head>
@@ -59,10 +61,10 @@
 
         <%--start--%>
         <ul>
-            <li class="zhifb"><input type="radio" id="alipay" name="choose" class="radio"/><img
-                    src="<%=path%>/ui/images/zhifb.png" id="imgAliPay"/></li>
-            <li class="unionpay"><input type="radio" id="unipay" name="choose" class="radio"/><img
-                    src="<%=path%>/ui/images/unionpay.png" id="imgUniPay"/></li>
+            <li class="zhifb"><input type="radio" id="alipay" name="choose" class="radio"/>
+                <img src="<%=path%>/ui/images/zhifb.png" id="imgAliPay"/></li>
+            <li class="unionpay"><input type="radio" id="unipay" name="choose" class="radio"/>
+                <img src="<%=path%>/ui/images/unionpay.png" id="imgUniPay"/></li>
         </ul>
 
         <ul>
@@ -76,10 +78,10 @@
 <!--底部-->
 <section class="order-submit">
     <div class="left">
-        <p>应付金额:110元</p>
+        <p>应付金额:${PriceDisplay}元</p>
         <p>
-            <span>订单金额:160元</span>
-            <span>优惠:50元</span>
+            <span>订单金额:${PriceDisplay}元</span>
+            <%--<span>优惠:50元</span>--%>
         </p>
     </div>
     <div class="right"><a href="javascript:void(0)" id="submit">确认支付</a></div>

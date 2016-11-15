@@ -19,18 +19,18 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "pay")
-public class PayController extends BaseController{
+public class PayController extends BaseController {
     private Log log = LogFactory.getLog(PayController.class);
 
     @RequestMapping(value = "/gotoPayByOrg")
     public void gotoPayByOrg(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String tenantId= request.getParameter("tenantId" );
-        String orderId= request.getParameter("orderId");
-        String returnUrl= request.getParameter("returnUrl");
-        String notifyUrl= request.getParameter("notifyUrl");
-        String orderAmount= request.getParameter("orderAmount");
-        String subject= request.getParameter("subject");
-        String requestSource= request.getParameter("requestSource");
+        String tenantId = request.getParameter("tenantId");
+        String orderId = request.getParameter("orderId");
+        String returnUrl = request.getParameter("returnUrl");
+        String notifyUrl = request.getParameter("notifyUrl");
+        String orderAmount = request.getParameter("orderAmount");
+        String subject = request.getParameter("subject");
+        String requestSource = request.getParameter("requestSource");
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("tenantId", tenantId);
@@ -42,7 +42,7 @@ public class PayController extends BaseController{
         map.put("subject", subject);
         map.put("payOrgCode", "ZFB");
         // 加密
-        String infoStr = orderId+ VerifyUtil.SEPARATOR
+        String infoStr = orderId + VerifyUtil.SEPARATOR
                 + orderAmount + VerifyUtil.SEPARATOR
                 + notifyUrl + VerifyUtil.SEPARATOR
                 + tenantId;

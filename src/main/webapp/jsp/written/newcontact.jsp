@@ -105,8 +105,8 @@
             },
             success: function (data) {
                 if(data.status==1) {
-                    var params = data.Params;
-                    window.location.href = "<%=path%>/written/payment?" + params;
+                    var OrderId = data.OrderId;
+                    window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
                 }
             },
             error: function (data) {

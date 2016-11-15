@@ -25,6 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import scala.collection.immutable.Stream;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -238,8 +239,9 @@ public class WrittenController extends BaseController {
         WrittenContextJSON.put("Email", Email);
         WrittenContextJSON.put("TimeZone", TimeZone);
         session.setAttribute("WrittenContextJSON", WrittenContextJSON);
-        String OrderNumber = OrderSubmit(WrittenContextJSON).toString();
-        result.put("OrderNumber", OrderNumber);
+
+        String OrderId = OrderSubmit(WrittenContextJSON).toString();
+        result.put("OrderId", OrderId);
         return result.returnMsg();
     }
 
@@ -261,14 +263,14 @@ public class WrittenController extends BaseController {
 
         OrderSubmissionRequest req = new OrderSubmissionRequest();
         BaseInfo reqBaseInfo = new BaseInfo();
-        reqBaseInfo.setFlag("0");
-        reqBaseInfo.setChlId("5");
-        reqBaseInfo.setOrderType("1");
-        reqBaseInfo.setBusiType("1");
+        reqBaseInfo.setFlag(Constants.OrderSubmission.INTERNAL);
+        reqBaseInfo.setChlId(Constants.OrderSubmission.WAPCN);
+        reqBaseInfo.setOrderType(Constants.OrderSubmission.PERSONAL);
+        reqBaseInfo.setBusiType(Constants.OrderSubmission.NROMAL);
         reqBaseInfo.setTranslateName(WrittenContextJSON.getString("Detail"));
-        reqBaseInfo.setTranslateType("0");
-        reqBaseInfo.setSubFlag("0");
-        reqBaseInfo.setUserType("10");
+        reqBaseInfo.setTranslateType(Constants.OrderSubmission.QUICK);
+        reqBaseInfo.setSubFlag(Constants.OrderSubmission.AUTO);
+        reqBaseInfo.setUserType(Constants.OrderSubmission.USER);
         reqBaseInfo.setUserId(UserId);
         reqBaseInfo.setOrderTime(Time);
         reqBaseInfo.setTimeZone(WrittenContextJSON.getString("TimeZone"));
@@ -323,6 +325,12 @@ public class WrittenController extends BaseController {
 
     @RequestMapping(value = "payment")
     public String payment() {
+        JSONObject WrittenContextJSON = JSONObject.fromObject(session.getAttribute("WrittenContextJSON"));
+        String Price = WrittenContextJSON.getString("Price");
+        DecimalFormat df = new DecimalFormat("######0.00");
+        String PriceDisplay = df.format(Double.parseDouble(Price) / 1000);
+        request.setAttribute("Price", Price);
+        request.setAttribute("PriceDisplay", PriceDisplay);
         return "written/payment";
     }
 

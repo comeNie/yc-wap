@@ -8,7 +8,7 @@ public class Constants {
     /**
      * ajax返回状态
      */
-    public static class AjaxStatus{
+    public static class AjaxStatus {
         // 处理成功，表示没有捕捉到任何异常
         public static final String STATUS_SUCCESS = "1";
         // 处理失败,标识捕捉到异常信息
@@ -32,7 +32,7 @@ public class Constants {
         // AJAX返回的列表数据总数
         public static final String RETURN_TOTAL_COUNT = "totalCount";
         //返回的form
-        public static final String RETURN_DATA="data";
+        public static final String RETURN_DATA = "data";
     }
 
     /**
@@ -91,6 +91,7 @@ public class Constants {
         public static final String UsernamePsdModel = "4";
 
     }
+
     /**
      * 获取用户信息方式
      */
@@ -105,6 +106,7 @@ public class Constants {
         public static final String UserName = "4";
 
     }
+
     /**
      * 许可登录方式
      */
@@ -121,6 +123,7 @@ public class Constants {
         public static final String UsernamePsdModel = "4";
 
     }
+
     /**
      * 注册方式
      */
@@ -135,6 +138,7 @@ public class Constants {
         public static final String UsernamePsdModel = "4";
 
     }
+
     /**
      * 用户来源系统
      */
@@ -150,9 +154,10 @@ public class Constants {
         //4：腾讯用户qq
         public static final String QQ = "4";
         //5：新浪用户sina
-        public static final String SINA  = "5";
+        public static final String SINA = "5";
 
     }
+
     /**
      * 验证码操作类型
      */
@@ -168,9 +173,10 @@ public class Constants {
         //5：邮箱验证码
         public static final String MailCheck = "5";
         //6：密码操作验证码
-        public static final String PasswordOperation  = "6";
+        public static final String PasswordOperation = "6";
 
     }
+
     /**
      * 密码操作验证码
      */
@@ -191,9 +197,13 @@ public class Constants {
 //        public static final String VERIFICATION_CCS_NAMESPACE = "/com/ai/opt/verification-code-config";
         /** 缓存命名空间 */
 //        public static final String CACHE_NAMESPACE = "com.ai.yc.protal.web.register.cache";
-        /** 注册邮件中文模版 */
+        /**
+         * 注册邮件中文模版
+         */
         public static final String REGISTER_EMAIL_ZH_CN_TEMPLATE = "email/template/yc-register_zh_cn-mail.xml";
-        /** 注册邮件英文模版 */
+        /**
+         * 注册邮件英文模版
+         */
         public static final String REGISTER_EMAIL_EN_US_TEMPLATE = "email/template/yc-register_en_us-mail.xml";
         /** 邮箱校验 */
 //        public static final String CHECK_TYPE_EMAIL = "email";
@@ -203,8 +213,46 @@ public class Constants {
 //        public static final String CHECK_TYPE_SUCCESS = "1";
         /** 注册国家缓存key */
 //        public static final String REGISTER_COUNTRY_LIST_KEY = "register_country_list_key";
-        /** 注册国家缓存超时时间 */
+        /**
+         * 注册国家缓存超时时间
+         */
         public static final String REGISTER_COUNTRY_LIST_KEY_OVERTIME = "300";
+
+    }
+
+    /**
+     * 订单提交
+     */
+    public static final class OrderSubmission {
+        // 业务标识
+        public static final String INTERNAL = "0";
+        public static final String INTERNATIONAL = "1";
+
+        // 订单来源
+        public static final String WAPCN = "5";
+        public static final String WAPEN = "6";
+
+        // 订单类型
+        public static final String PERSONAL = "1";
+        public static final String ENTERPRISE = "2";
+
+        // 业务类型
+        public static final String NROMAL = "1";
+        public static final String BACKFEE = "2";
+
+        // 翻译类型
+        public static final String QUICK = "0";
+        public static final String DOCUMENT = "1";
+        public static final String INTERPRET = "2";
+
+        // 报价标识
+        public static final String AUTO = "0";
+        public static final String MANUAL = "1";
+
+        // 用户类型
+        public static final String USER = "10";
+        public static final String ENTER = "11";
+        public static final String AGENT = "12";
 
     }
 
