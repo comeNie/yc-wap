@@ -10,8 +10,6 @@ import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.UcMembersVo;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
-import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
-import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
 import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editpass.UcMembersEditPassRequest;
@@ -25,6 +23,9 @@ import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.utils.MD5Util;
 import com.yc.wap.system.utils.RegexUtils;
+
+import com.yc.wap.system.utils.send.SendEmailRequest;
+import com.yc.wap.system.utils.send.SmsSenderUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -32,10 +33,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import scala.util.parsing.combinator.testing.Str;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -56,18 +55,20 @@ public class SafeController extends BaseController {
     public String safe() {
         MsgBean result = new MsgBean();
         String uidStr = (String) session.getAttribute("UID");
-        String email = (String) session.getAttribute("email");
+        String email1 = (String) session.getAttribute("email");
         String password = (String) session.getAttribute("password");
         String mobilePhone = (String) session.getAttribute("mobilePhone");
         request.setAttribute("UID",uidStr);
-        request.setAttribute("email",email);
+        request.setAttribute("email",email1);
         request.setAttribute("password",password);
         request.setAttribute("mobilePhone",mobilePhone);
         log.info("safe-safe invoked");
-
         log.info("----------密码"+password);
+
+        System.out.println("测试");
         return "safe/safe";
     }
+
 
     /**
      * 修改密码界面
@@ -389,6 +390,18 @@ public class SafeController extends BaseController {
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
                 log.info("验证码是:" +vo.getOperationcode());
+                SafeController ctrl = new SafeController();
+                if (type.equals("4") || type.equals("5")){
+                    if(!ctrl.sendMail(info,vo.getOperationcode())){
+                        result.put("status","0");
+                        result.put("msg","验证码发送失败");
+                    }
+                }else {
+                    if(!SmsSenderUtil.sendMessage(info,"验证码是:"+vo.getOperationcode())){
+                        result.put("status","0");
+                        result.put("msg","验证码发送失败");
+                    }
+                }
             }else{
                 result.put("status","0");
 //                result.put("msg","获取验证码失败");
@@ -440,6 +453,35 @@ public class SafeController extends BaseController {
         }
 
         return  result.returnMsg();
+    }
+
+    /**
+     * 发送邮件
+     * @param email
+     * @param randomStr
+     * @return
+     */
+    public boolean sendMail(String  email,String randomStr){
+//        String email = "liudy@asiainfo.com";
+//        String randomStr = "123456";
+//        String username = "liudy";
+        String time = Constants.Register.REGISTER_COUNTRY_LIST_KEY_OVERTIME;
+        SendEmailRequest emailRequest = new SendEmailRequest();
+        emailRequest.setTomails(new String[] { email });
+        emailRequest.setData(new String[] { email, randomStr ,time});
+        Locale locale = rb.getDefaultLocale();
+        String _template = "";
+        String _subject = "";
+        if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
+            _template = Constants.Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
+            _subject = "中文主题";
+        } else if (Locale.US.toString().equals(locale.toString())) {
+            _template = Constants.Register.REGISTER_EMAIL_EN_US_TEMPLATE;
+            _subject = "英文主题";
+        }
+        emailRequest.setTemplateURL(_template);
+        emailRequest.setSubject(_subject);
+        return SmsSenderUtil.sendEmail(emailRequest);
     }
 
 
