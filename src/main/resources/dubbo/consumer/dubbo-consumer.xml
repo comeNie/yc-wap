@@ -26,5 +26,6 @@
 	<dubbo:reference id="iUcMembersOperationSV" registry="ycRegistry" interface="com.ai.yc.ucenter.api.members.interfaces.IUcMembersOperationSV" />
 	<dubbo:reference id="iQuerySysDomainSV" registry="ycRegistry" interface="com.ai.yc.common.api.sysdomain.interfaces.IQuerySysDomainSV" />
 	<dubbo:reference id="iQueryAutoOfferSV" registry="ycRegistry" interface="com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV" />
+	<dubbo:reference id="IOrderSubmissionSV" registry="ycRegistry" interface="com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV" />
 
 </beans>

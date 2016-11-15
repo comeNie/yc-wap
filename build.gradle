@@ -81,7 +81,6 @@ dependencies {
     compile 'commons-logging:commons-logging:1.2'
 
     //jars for sms
-
     compile 'org.dom4j:dom4j:2.0.0'
     compile 'com.ai.yc.sms:focusSmsSDK:1.0'
 
@@ -98,10 +97,6 @@ dependencies {
         exclude group: 'org.apache.geronimo.specs'
     }
 
-    //international
-    compile 'com.ai:dubbo-ext:0.3.1'
-    compile "com.ai:ipaas-i18n-spring:0.3.1"
-
     //yc
     compile "com.ai.yc.ucenter:members:1.1.1-SNAPSHOT"
     compile "com.ai.yc.common:country:${version}"
@@ -110,6 +105,9 @@ dependencies {
     compile "com.ai.yc.common:syspurpose:${version}"
     compile "com.ai.yc.common:sysdomain:${version}"
     compile "com.ai.yc.order:autooffer:${version}"
+
+    compile "com.ai.yc.order:ordersubmission:${version}"
+
 }
 
 def getUedTemplate = task("getUedTemplate", type: com.ai.runner.gradle.plugin.jar.APIJarProcessTask) {
