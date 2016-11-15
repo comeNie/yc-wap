@@ -76,6 +76,18 @@
     });
 
     function onSubmit() {
+        Date.prototype.stdTimezoneOffset = function() {
+            var jan = new Date(this.getFullYear(), 0, 1);
+            var jul = new Date(this.getFullYear(), 6, 1);
+            return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+        }
+
+        Date.prototype.dst = function() {
+            return this.getTimezoneOffset() < this.stdTimezoneOffset();
+        }
+        var today = new Date();
+        var TimeZoneOffset = today.stdTimezoneOffset();
+
         var phone = $("#phone").val();
         var name = $("#name").val();
         var email = $("#email").val();
@@ -88,7 +100,8 @@
             data: {
                 phone: phone,
                 name: name,
-                email: email
+                email: email,
+                TimeZoneOffset: TimeZoneOffset
             },
             success: function (data) {
                 if(data.status==1) {
@@ -97,7 +110,7 @@
                 }
             },
             error: function (data) {
-                console.log(data);
+
             },
             beforeSend: function () {
 

@@ -112,7 +112,7 @@
                 window.location.href = "<%=path%>/written/newContact";
             },
             error: function (data) {
-                console.log(data);
+
             },
             beforeSend: function () {
 

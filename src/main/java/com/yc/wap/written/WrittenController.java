@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,9 +50,6 @@ public class WrittenController extends BaseController {
     @RequestMapping(value = "")
     public String content() {
         Locale local = rb.getDefaultLocale();
-        String country = local.getCountry();
-        String language = local.getLanguage();
-        log.info("local country: " + country + ", language: " + language + ", local: " + local.toString());
 
         List DualList = GetDualList(local.toString(), Constants.OrderType.DOC);
         List PurposeList = GetPurposeList(local.toString());
@@ -169,7 +167,7 @@ public class WrittenController extends BaseController {
 
                 return result.returnMsg();
             } else {
-                log.info("iQueryAutoOfferSV Return: " + resp.getResponseHeader().getResultCode());
+                log.info("AutoOfferPriceFailed: " + resp.getResponseHeader().getResultCode());
                 throw new RuntimeException("AutoOfferPriceFailed");
             }
         } catch (BusinessException | SystemException e) {
@@ -189,7 +187,6 @@ public class WrittenController extends BaseController {
     @RequestMapping(value = "onContentSubmit")
     public String onContentSubmit() {
         JSONObject WrittenShowJSON = JSONObject.fromObject(session.getAttribute("WrittenShowJSON"));
-        log.info("WrittenShowJSON: " + WrittenShowJSON);
 
         String Price = WrittenShowJSON.getString("Price");
         DecimalFormat df = new DecimalFormat("######0.00");
@@ -227,21 +224,41 @@ public class WrittenController extends BaseController {
         String Phone = request.getParameter("phone");
         String Name = request.getParameter("name");
         String Email = request.getParameter("email");
+        int TimeZoneOffset = Integer.parseInt(request.getParameter("TimeZoneOffset"));
+        String TimeZone = "";
+        if (TimeZoneOffset > 0) {
+            TimeZone = "GMT" + -TimeZoneOffset / 60;
+        } else {
+            TimeZone = "GMT+" + -TimeZoneOffset / 60;
+        }
+
         JSONObject WrittenContextJSON = JSONObject.fromObject(session.getAttribute("WrittenContextJSON"));
         WrittenContextJSON.put("Phone", Phone);
         WrittenContextJSON.put("Name", Name);
         WrittenContextJSON.put("Email", Email);
+        WrittenContextJSON.put("TimeZone", TimeZone);
         session.setAttribute("WrittenContextJSON", WrittenContextJSON);
-        String OrderNumber = OrderSubmit(WrittenContextJSON);
+        String OrderNumber = OrderSubmit(WrittenContextJSON).toString();
         result.put("OrderNumber", OrderNumber);
         return result.returnMsg();
     }
 
-    public String OrderSubmit(JSONObject WrittenContextJSON) {
+    private Long OrderSubmit(JSONObject WrittenContextJSON) {
         Timestamp Time = new Timestamp(System.currentTimeMillis());
-        Locale locale = rb.getDefaultLocale();
         String UserId = (String) session.getAttribute("UID");
-        log.info("OrderParams: " + WrittenContextJSON.toString() + ", Time: " + Time + ", UserId: " + UserId);
+
+        LanguagePairInfo languagePairInfo = new LanguagePairInfo();
+        languagePairInfo.setLanguagePairId("1");
+        languagePairInfo.setLanguagePairName("啊");
+        languagePairInfo.setLanguageNameEn("a");
+        List<LanguagePairInfo> LanguagePair = new ArrayList<LanguagePairInfo>();
+        LanguagePair.add(languagePairInfo);
+
+        TranslateLevelInfo translateLevelInfo = new TranslateLevelInfo();
+        translateLevelInfo.setTranslateLevel(WrittenContextJSON.getString("TransLvId"));
+        List<TranslateLevelInfo> TranslateLevel = new ArrayList<TranslateLevelInfo>();
+        TranslateLevel.add(translateLevelInfo);
+
         OrderSubmissionRequest req = new OrderSubmissionRequest();
         BaseInfo reqBaseInfo = new BaseInfo();
         reqBaseInfo.setFlag("0");
@@ -254,7 +271,7 @@ public class WrittenController extends BaseController {
         reqBaseInfo.setUserType("10");
         reqBaseInfo.setUserId(UserId);
         reqBaseInfo.setOrderTime(Time);
-        reqBaseInfo.setTimeZone(locale.toString());
+        reqBaseInfo.setTimeZone(WrittenContextJSON.getString("TimeZone"));
         reqBaseInfo.setOrderLevel("1");
 
         ProductInfo reqProductInfo = new ProductInfo();
@@ -263,9 +280,11 @@ public class WrittenController extends BaseController {
         reqProductInfo.setFieldCode(WrittenContextJSON.getString("DomainId"));
         reqProductInfo.setIsSetType("N");
         reqProductInfo.setIsUrgent(WrittenContextJSON.getString("Express"));
-        reqProductInfo.setTranslateInfo(WrittenContextJSON.getString("Content"));
+        reqProductInfo.setNeedTranslateInfo(WrittenContextJSON.getString("Content"));
         reqProductInfo.setStartTime(Time);
         reqProductInfo.setEndTime(Time);
+        reqProductInfo.setLanguagePairInfoList(LanguagePair);
+        reqProductInfo.setTranslateLevelInfoList(TranslateLevel);
 
         FeeInfo reqFeeInfo = new FeeInfo();
         reqFeeInfo.setCurrencyUnit("1");
@@ -283,16 +302,23 @@ public class WrittenController extends BaseController {
         req.setFeeInfo(reqFeeInfo);
         req.setContactInfo(reqContactInfo);
 
-        OrderSubmissionResponse resp = iOrderSubmissionSV.orderSubmission(req);
-        if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
-            Long OrderId = resp.getOrderId();
-            log.info("OrderId: " + OrderId);
-        } else {
-            log.info("orderSubmissionFailed: " + resp.getResponseHeader().getResultMessage());
-            log.info("orderSubmissionFailed: " + resp.getResponseHeader().getResultCode());
+        log.info("OrderSubmissionInputParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
+        try {
+            OrderSubmissionResponse resp = iOrderSubmissionSV.orderSubmission(req);
+            if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                Long OrderId = resp.getOrderId();
+                log.info("orderSubmissionSuccess");
+                log.info("OrderId: " + OrderId);
+                return OrderId;
+            } else {
+                log.info("orderSubmissionFailed: " + resp.getResponseHeader().getResultMessage());
+                log.info("orderSubmissionFailed: " + resp.getResponseHeader().getResultCode());
+                throw new RuntimeException("orderSubmissionFailed");
+            }
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
+            throw new RuntimeException("orderSubmissionFailed");
         }
-
-        return "OrderNumber";
     }
 
     @RequestMapping(value = "payment")
