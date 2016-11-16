@@ -26,7 +26,6 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
-    <link href="<%=path%>/ui/css/modular/code.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
@@ -138,7 +137,7 @@
                         </li>
                         <li class="int-border">
                             <p><input id="codeInput" type="text" class="input input-yzm" placeholder="验证码"></p>
-                            <p class="codeDiv" id="checkCodeId" onclick="createCode()"></p>
+                            <img id="checkCodeId" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
                             <p style="float:right" class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh"></i></a></p>
                             <label id="codeLabel"></label>
                         </li>
@@ -174,7 +173,6 @@
 </html>
 <script>
     $(function () {
-        createCode();
     })
     function login() {
         var phone = $("#phoneid").val();
@@ -211,14 +209,9 @@
         } else {
             $("#codeLabel").css("display", "none");
         }
-        //校验验证码
-        if (!validateCode()) {
-            return;
-        }
-
-        toJump(phone, psd);
+        toJump(phone, psd,code);
     }
-    function toJump(phone, psd) {
+    function toJump(phone, psd,code) {
         $.ajax({
             async: true,
             type: "POST",
@@ -227,18 +220,20 @@
             timeout: 30000,
             data: {
                 username: phone,
-                password: psd
+                password: psd,
+                code:code
             },
             success: function (data) {
                 if (data.status == 1) {
-                    <%--var tourl = "<%=path%>/center/center";--%>
-                    <%--window.location.href=tourl;--%>
                     if (${ToUrl==null || ToUrl==""}) {
                         window.location.href = "<%=path%>" + "/";
                     } else {
                         window.location.href = "<%=path%>" + "<%=ToUrl%>";
                     }
                 } else {
+                    if (data.status == 2){
+                        createCode();
+                    }
                     $("#codeLabel").html(data.msg);
                     $("#codeLabel").css("display", "block");
                     return;
@@ -261,35 +256,9 @@
     }
 
     //验证码代码
-    var codeStr;
     function createCode() {
-        codeStr = "";
-        var codeLength = 1; //验证码的长度
-        var codeChars = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9,
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //所有候选组成验证码的字符，当然也可以用中文的
-        for (var i = 0; i < codeLength; i++) {
-            var charNum = Math.floor(Math.random() * 52);
-            codeStr += codeChars[charNum];
-        }
-        $("#checkCodeId").html(codeStr);
+        var d =  new Date();
+        $("#checkCodeId").attr("src","<%=path%>/safe/getpiccode?time="+ d.getTime());
     }
-    function validateCode() {
-        var inputCode = $("#codeInput").val();
-        if (inputCode.length <= 0) {
-            $("#codeLabel").html("请输入验证码");
-            $("#codeLabel").css("display", "block");
-            return false;
-        }
-        else if (inputCode.toUpperCase() != codeStr.toUpperCase()) {
-            $("#codeLabel").html("验证码错误");
-            $("#codeLabel").css("display", "block");
-            createCode();
-            return false;
-        }
-        else {
-            $("#codeLabel").css("display", "none");
-            return true;
-        }
-    }
+
 </script>
