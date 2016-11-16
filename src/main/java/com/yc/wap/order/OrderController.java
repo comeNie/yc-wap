@@ -4,6 +4,8 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
+import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
@@ -26,9 +28,12 @@ public class OrderController extends BaseController {
     private Log log = LogFactory.getLog(OrderController.class);
 
     private IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
+    private IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
 
     @RequestMapping(value = "")
     public String order() {
+        String isUnPaid = request.getParameter("UnPaid");
+        String isUnConfirm = request.getParameter("UnConfirm");
         QueryOrderRequest req = new QueryOrderRequest();
         req.setPageNo(1);
         req.setPageSize(4);
@@ -66,7 +71,7 @@ public class OrderController extends BaseController {
             QueryOrderRsponse respUnPaid = iOrderQuerySV.queryOrder(reqUnPaid);
             QueryOrderRsponse respUnConfirm = iOrderQuerySV.queryOrder(reqUnConfirm);
             PageInfo<OrdOrderVo> orderUnPaid = respUnPaid.getPageInfo();
-            PageInfo<OrdOrderVo> orderUnConfirm = respUnPaid.getPageInfo();
+            PageInfo<OrdOrderVo> orderUnConfirm = respUnConfirm.getPageInfo();
             log.info("GetOrderShowNumber1Return: " + com.alibaba.fastjson.JSONArray.toJSONString(orderUnPaid));
             log.info("GetOrderShowNumber2Return: " + com.alibaba.fastjson.JSONArray.toJSONString(orderUnConfirm));
             int UnPaid = orderUnPaid.getCount();
@@ -80,8 +85,26 @@ public class OrderController extends BaseController {
         return result.returnMsg();
     }
 
+    @RequestMapping(value = "GetMoreOrder")
+    @ResponseBody
+    public Object GetMoreOrder() {
+        MsgBean result = new MsgBean();
+
+        return result.returnMsg();
+    }
+
     @RequestMapping(value = "OrderDetail")
     public String OrderDetail() {
+        String OrderId = request.getParameter("OrderId");
+        OrderId = "2000000027472285";
+        try {
+            log.info("QueryOrderDetailsOrderId: " + OrderId);
+            QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(Long.parseLong(OrderId));
+            log.info("QueryOrderDetailsReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
+            // TODO request.set
+        } catch (BusinessException | SystemException | NumberFormatException e) {
+            e.printStackTrace();
+        }
         return "order/orderdetail";
     }
 

@@ -106,6 +106,7 @@ dependencies {
     compile "com.ai.yc.common:sysdomain:${version}"
     compile "com.ai.yc.order:autooffer:${version}"
     compile "com.ai.yc.order:orderquery:${version}"
+    compile "com.ai.yc.order:orderdetails:${version}"
     compile "com.ai.yc.order:ordersubmission:${version}"
 
     //创建账户的包

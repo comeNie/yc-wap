@@ -169,7 +169,7 @@
 //        console.log(pageHeight);
 //        console.log(viewportHeight);
 //        console.log(scrollHeight);
-        return pageHeight - viewportHeight - scrollHeight < 1000;
+        return pageHeight - viewportHeight - scrollHeight < 20;
     }
 
     function doSomething() {
