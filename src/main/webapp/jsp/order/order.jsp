@@ -105,14 +105,38 @@
             </ul>
         </div>
     </section>
+    <section class="my-order-content">
+        <div class="my-order-list">
+            <ul>
+                <li>
+                    <p>订单号:</p>
+                    <p class="blue-word">124545667658</p>
+                    <p class="bord-btn red"><a href="#">企业</a></p>
+                </li>
+                <li class="right red-word">翻译中</li>
+            </ul>
+            <ul>
+                <li>
+                    <p class="ow-h">翻译什么什么内容翻译什么什么内容</p>
+                </li>
+                <li class="right ash-word">2015/11/11 20:23:49</li>
+            </ul>
+            <ul>
+                <li>
+                    <p>实付款:</p>
+                    <p>1600元</p>
+                </li>
+            </ul>
+        </div>
+    </section>
     <div class="loading"><a href="#">加载更多…</a></div>
 
     <%----%>
     <%--<div style="background:#010101; opacity:0.5;filter:alpha(opacity=50);">--%>
-        <%--<section class="loading-wrapper">--%>
-            <%--<p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>--%>
-            <%--<p class="img2"><img src="<%=path%>/ui/images/loading.gif"/>加载中</p>--%>
-        <%--</section>--%>
+    <%--<section class="loading-wrapper">--%>
+    <%--<p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>--%>
+    <%--<p class="img2"><img src="<%=path%>/ui/images/loading.gif"/>加载中</p>--%>
+    <%--</section>--%>
     <%--</div>--%>
 </div>
 </body>

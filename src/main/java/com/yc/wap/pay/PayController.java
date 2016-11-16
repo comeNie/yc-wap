@@ -52,6 +52,7 @@ public class PayController extends BaseController {
         log.info("发起支付申请:" + htmlStr);
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(htmlStr);
+        response.getWriter().flush();
     }
 
     @RequestMapping(value = "payResult")
