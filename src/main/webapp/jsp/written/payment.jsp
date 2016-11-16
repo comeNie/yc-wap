@@ -79,7 +79,7 @@
     <input type="hidden" name="orderId" value="${OrderId}">
     <input type="hidden" name="orderAmount" value="${Price}">
     <input type="hidden" name="currencyUnit" value="${currencyUnit}">
-    <input type="hidden" id="payType" name="payOrgCode" value="YL">
+    <input type="hidden" id="payType" name="payOrgCode" value="PP">
     <input type="hidden" id="merchantUrl" name="merchantUrl">    <%--当前地址--%>
     <input type="hidden" name="orderType" value="1">    <%--订单类型 目前只支持用户--%>
 </form>
