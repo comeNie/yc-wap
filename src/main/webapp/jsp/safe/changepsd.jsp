@@ -134,7 +134,8 @@
                 uid:${uid},
                 newpw: newLable,
                 code:oldLable,
-                mode:1  //密码操作吗
+                mode:1,  //密码操作吗
+                isRegister:"0"
             },
             success: function (data) {
                 if (data.status == 1) {

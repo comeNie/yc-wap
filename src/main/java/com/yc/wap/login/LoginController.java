@@ -1,6 +1,9 @@
 package com.yc.wap.login;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.UUIDUtil;
+import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
+import com.ai.slp.balance.api.accountmaintain.param.RegAccReq;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersVo;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
@@ -32,7 +35,7 @@ import java.util.Map;
 public class LoginController extends BaseController {
     private Log log = LogFactory.getLog(LoginController.class);
     private IUcMembersSV iUcMembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
-
+    private IAccountMaintainSV iAccountMaintainSV = DubboConsumerFactory.getService(IAccountMaintainSV.class);
     @RequestMapping(value = "login")
     public String login() {
         MsgBean result = new MsgBean();
@@ -71,11 +74,17 @@ public class LoginController extends BaseController {
     @ResponseBody
     Object checklogin() {
         MsgBean result = new MsgBean();
+        String checkCode = request.getParameter("code");//图文验证码
+        String sessionCode = (String) session.getAttribute("certCode");
+        if (!checkCode.toUpperCase().equals(sessionCode.toUpperCase())){
+            result.put("status","2");
+            result.put("msg","验证码错误");
+            return result.returnMsg();
+        }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UcMembersLoginRequest res = new UcMembersLoginRequest();
         res.setTenantId(Constants.TenantID);
-
         password = MD5Util.md5(password);
         res.setPassword(password);
         res.setUsername(username);
@@ -97,28 +106,6 @@ public class LoginController extends BaseController {
             ResponseCode code = resp.getCode();  //通过code进行捕获
             /*code:失败，未找到该用户信息-1 code:成功1    */
             log.info("--------code:"+ code.getCodeMessage() + code.getCodeNumber());
-    //        if (code.getCodeNumber() == -1 ){
-    //            result.put("status","0");
-    //            if (isEmail){
-    //                result.put("msg","邮箱未注册");
-    //            }else if (isPhone){
-    //                result.put("msg","手机号未注册");
-    //            }else {
-    //                result.put("msg","用户名不存在");
-    //            }
-    //            return result.returnMsg();
-    //        }
-    //        if (code.getCodeNumber() == 0 ){
-    //            result.put("status","0");
-    //            if (isEmail){
-    //                result.put("msg","邮箱");
-    //            }else if (isPhone){
-    //                result.put("msg","手机号未注册");
-    //            }else {
-    //                result.put("msg","用户名不存在");
-    //            }
-    //            return result.returnMsg();
-    //        }
             if (code.getCodeNumber() == 1){
                 Map m = resp.getDate();
 
@@ -189,6 +176,17 @@ public class LoginController extends BaseController {
                 Map m = resp.getDate();
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
+                //注册成功为用户创建一个管钱的账户
+                RegAccReq regAccReq = new RegAccReq();
+                regAccReq.setTenantId(Constants.TenantID);
+                regAccReq.setSystemId("Cloud-UAC_WEB");
+                regAccReq.setExternalId(UUIDUtil.genId32());
+                regAccReq.setAcctName(vo.getUsername());
+                regAccReq.setRegCustomerId(vo.getUid()+"");
+                regAccReq.setAcctType("0"); //账户类型
+                regAccReq.setPayCheck("1"); //支付密碼是否验证
+                long l = iAccountMaintainSV.createAccount(regAccReq);
+                log.info(l);
             }
             /*code:失败，未找到该用户信息-1 code:成功1    */
         } catch (Exception e) {

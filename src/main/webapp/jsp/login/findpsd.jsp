@@ -29,7 +29,6 @@
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
-    <link href="<%=path%>/ui/css/modular/code.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="wrapper-big"><!--包含除底部外的所有层-->
@@ -51,8 +50,7 @@
                             </li>
                             <li class="int-border">
                                 <p><input id="codeid1" type="text" class="input input-yzm" placeholder="验证码"></p>
-
-                                <p class="codeDiv" id="checkCodeid" onclick="createCode()"></p>
+                                <img id="checkCodeImg" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
                                 <p style="float:right" class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
                                 <label id="codeLabel1"></label>
                             </li>
@@ -124,7 +122,6 @@
     var getuids;
     var getCode;
     $(function(){
-        createCode();
         $("#next-btn1").click(function(){
             var phone = $("#nameid1").val();
             var code = $("#codeid1").val();
@@ -150,10 +147,7 @@
             }else {
                 $("#codeLabel1").css("display","none");
             }
-            if(!validateCode()){
-               return;
-            }
-            jump1(phone);
+            jump1(phone,code);
 
         });
         $("#next-btn2").click(function(){
@@ -227,7 +221,7 @@
         }
 
     }
-    function jump1(phone){
+    function jump1(phone,code){
         $.ajax({
             async: true,
             type: "POST",
@@ -236,11 +230,12 @@
             timeout: 30000,
             data: {
                 username: phone,
-
+                code:code
             },
             success: function (data) {
                 if (data.status == 1) {
                     $("#nameLabel1").css("display","none");
+                    $("#codeLabel1").css("display","none");
                     var newphone = data.userPhone;
                     getuids = data.uids;
                     getPhone = newphone;
@@ -252,6 +247,13 @@
                     $("#next1").hide();
                     $("#next2").show();
                 } else {
+                    if (data.status == 2){
+                        createCode();
+                        $("#codeLabel1").html(data.msg);
+                        $("#codeLabel1").css("display","block");
+                        return;
+                    }
+                    $("#codeLabel1").css("display","none");
                     var tourl = "<%=path%>/login/findfail";
                     window.location.href=tourl;
                 }
@@ -284,9 +286,6 @@
                 } else {
                     $("#codeLabel2").html(data.msg);
                     $("#codeLabel2").css("display", "block");
-//                    index ++;//index = 2
-//                    $("#next2").hide();
-//                    $("#next3").show();
                 }
             },
             error: function () {
@@ -306,7 +305,8 @@
                 uid:getuids,
                 newpw: psd,
                 code:getCode,
-                mode:2  //密码操作吗
+                mode:2,  //密码操作吗
+                isRegister:"0"
             },
             success: function (data) {
                 if (data.status == 1) {
@@ -342,6 +342,7 @@
             },
             success: function (data) {
                 if (data.status == 1) {
+                    $("#codeLabel2").css("display", "none");
                     countDown(60);
                 } else {
                     $("#codeLabel2").html(data.msg);
@@ -392,39 +393,9 @@
     }
 
     //验证码代码
-    var codeStr;
     function createCode() {
-        codeStr = "";
-        var codeLength = 1; //验证码的长度
-        var codeChars = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9,
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //所有候选组成验证码的字符，当然也可以用中文的
-        for (var i = 0; i < codeLength; i++) {
-            var charNum = Math.floor(Math.random() * 52);
-            codeStr += codeChars[charNum];
-        }
-        $("#checkCodeid").html(codeStr);
+        var d =  new Date();
+        $("#checkCodeImg").attr("src","<%=path%>/safe/getpiccode?t="+d.getTime());
     }
-    function validateCode()
-    {
-        var inputCode = $("#codeid1").val();
-        if (inputCode.length <= 0)
-        {
-            $("#codeLabel1").html("请输入验证码");
-            $("#codeLabel1").css("display","block");
-            return false;
-        }
-        else if (inputCode.toUpperCase() != codeStr.toUpperCase())
-        {
-            $("#codeLabel1").html("验证码错误");
-            $("#codeLabel1").css("display","block");
-            createCode();
-            return false;
-        }
-        else
-        {
-            $("#codeLabel1").css("display","none");
-            return true;
-        }
-    }
+
 </script>

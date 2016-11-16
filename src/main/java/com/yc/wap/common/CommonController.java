@@ -19,4 +19,9 @@ public class CommonController {
     public String recruit() {
         return "common/recruit";
     }
+
+    @RequestMapping(value = "agreement")
+    public String agreement() {
+        return "common/agreement";
+    }
 }

@@ -1,6 +1,9 @@
 package com.yc.wap.safe;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.util.UUIDUtil;
+import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
+import com.ai.slp.balance.api.accountmaintain.param.RegAccReq;
 import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
 import com.ai.yc.common.api.country.param.CountryRequest;
 import com.ai.yc.common.api.country.param.CountryResponse;
@@ -21,6 +24,8 @@ import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRespon
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
+
+import com.yc.wap.system.utils.ImageCodeUtil;
 import com.yc.wap.system.utils.MD5Util;
 import com.yc.wap.system.utils.RegexUtils;
 
@@ -31,8 +36,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import scala.util.parsing.combinator.testing.Str;
 
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,6 +55,7 @@ public class SafeController extends BaseController {
     private IUcMembersSV iUcMembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
     private IGnCountrySV iGnCountrySV = DubboConsumerFactory.getService(IGnCountrySV.class);
     private IUcMembersOperationSV iUcMembersOperationSV = DubboConsumerFactory.getService(IUcMembersOperationSV.class);
+    private IAccountMaintainSV iAccountMaintainSV = DubboConsumerFactory.getService(IAccountMaintainSV.class);
     /**
      * 安全设置界面
      * @return
@@ -161,6 +170,17 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "userinfo")
     public @ResponseBody Object userinfo() {
         MsgBean result = new MsgBean();
+        String checkCode = request.getParameter("code");//图文验证码
+        if (checkCode != null){
+
+            String sessionCode = (String) session.getAttribute("certCode");
+            if (!checkCode.toUpperCase().equals(sessionCode.toUpperCase())){
+                result.put("status","2");
+                result.put("msg","验证码错误");
+                return result.returnMsg();
+            }
+        }
+
         String username = request.getParameter("username");
         String uid = request.getParameter("uid");
 
@@ -248,6 +268,7 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String check_code = request.getParameter("code");  //旧密码或验证码
         String newpw = request.getParameter("newpw");
+        String isRegister = request.getParameter("isRegister"); //注册的标志
         newpw = MD5Util.md5(newpw);
         String uid = request.getParameter("uid");
         Integer u = Integer.parseInt(uid);
@@ -271,6 +292,19 @@ public class SafeController extends BaseController {
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
                 session.setAttribute("password","true");
+                if(isRegister.equals("1")){         //注册用户需要创建余额账户
+                    //注册成功为用户创建一个余额的账户
+                    RegAccReq regAccReq = new RegAccReq();
+                    regAccReq.setTenantId(Constants.TenantID);
+                    regAccReq.setSystemId("Cloud-UAC_WEB");
+                    regAccReq.setExternalId(UUIDUtil.genId32());
+                    regAccReq.setAcctName(vo.getUsername());
+                    regAccReq.setRegCustomerId(vo.getUid()+"");
+                    regAccReq.setAcctType("1"); //账户类型
+                    regAccReq.setPayCheck("1"); //支付密碼是否验证
+                    long l = iAccountMaintainSV.createAccount(regAccReq);
+                    log.info(l);
+                }
             }else{
                 result.put("status","0");
                 result.put("msg",responseCode.getCodeMessage());
@@ -313,7 +347,6 @@ public class SafeController extends BaseController {
                 session.setAttribute("mobilePhone",phone);
             }else{
                 result.put("status","0");
-//                result.put("msg","绑定/修改手机失败");
                 result.put("msg",responseCode.getCodeMessage());
             }
         }catch (Exception e){
@@ -392,7 +425,25 @@ public class SafeController extends BaseController {
                 log.info("验证码是:" +vo.getOperationcode());
                 SafeController ctrl = new SafeController();
                 if (type.equals("4") || type.equals("5")){
-                    if(!ctrl.sendMail(info,vo.getOperationcode())){
+                    String time = Constants.Register.REGISTER_COUNTRY_LIST_KEY_OVERTIME;
+                    SendEmailRequest emailRequest = new SendEmailRequest();
+                    emailRequest.setTomails(new String[] { info });
+                    int index = info.indexOf("@");
+                    String name = info.substring(0,index);
+                    emailRequest.setData(new String[] { name, vo.getOperationcode() ,time});
+                    Locale locale = rb.getDefaultLocale();
+                    String _template = "";
+                    String _subject = "";
+                    if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
+                        _template = Constants.Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
+                        _subject = "中文主题";
+                    } else if (Locale.US.toString().equals(locale.toString())) {
+                        _template = Constants.Register.REGISTER_EMAIL_EN_US_TEMPLATE;
+                        _subject = "英文主题";
+                    }
+                    emailRequest.setTemplateURL(_template);
+                    emailRequest.setSubject(_subject);
+                    if(!SmsSenderUtil.sendEmail(emailRequest)){
                         result.put("status","0");
                         result.put("msg","验证码发送失败");
                     }
@@ -404,7 +455,6 @@ public class SafeController extends BaseController {
                 }
             }else{
                 result.put("status","0");
-//                result.put("msg","获取验证码失败");
                 result.put("msg",responseCode.getCodeMessage());
             }
         }catch (Exception e){
@@ -456,33 +506,18 @@ public class SafeController extends BaseController {
     }
 
     /**
-     * 发送邮件
-     * @param email
-     * @param randomStr
+     * 图文验证码
+     * @param response
      * @return
+     * @throws IOException
      */
-    public boolean sendMail(String  email,String randomStr){
-//        String email = "liudy@asiainfo.com";
-//        String randomStr = "123456";
-//        String username = "liudy";
-        String time = Constants.Register.REGISTER_COUNTRY_LIST_KEY_OVERTIME;
-        SendEmailRequest emailRequest = new SendEmailRequest();
-        emailRequest.setTomails(new String[] { email });
-        emailRequest.setData(new String[] { email, randomStr ,time});
-        Locale locale = rb.getDefaultLocale();
-        String _template = "";
-        String _subject = "";
-        if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
-            _template = Constants.Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
-            _subject = "中文主题";
-        } else if (Locale.US.toString().equals(locale.toString())) {
-            _template = Constants.Register.REGISTER_EMAIL_EN_US_TEMPLATE;
-            _subject = "英文主题";
-        }
-        emailRequest.setTemplateURL(_template);
-        emailRequest.setSubject(_subject);
-        return SmsSenderUtil.sendEmail(emailRequest);
+    @RequestMapping (value = "getpiccode")
+    public @ResponseBody Object getpiccode(HttpServletResponse response) throws IOException {
+        ImageCodeUtil util = new ImageCodeUtil();
+        String str= util.creatCode(120,40,5,20,response.getOutputStream());
+        // 将认证码存入SESSION
+        log.info("===========code:" + str);
+        session.setAttribute("certCode", str);
+        return "";
     }
-
-
 }
