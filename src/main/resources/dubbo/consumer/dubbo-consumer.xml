@@ -28,7 +28,6 @@
 	<dubbo:reference id="iQueryAutoOfferSV" registry="ycRegistry" interface="com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV" />
 	<dubbo:reference id="iOrderSubmissionSV" registry="ycRegistry" interface="com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV" />
 	<dubbo:reference id="iOrderQuerySV" registry="ycRegistry" interface="com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV" />
-	<dubbo:reference id="IOrderSubmissionSV" registry="ycRegistry" interface="com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV" />
 	<dubbo:reference id="iAccountMaintainSV" registry="ycRegistry" interface="com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV" />
 
 </beans>

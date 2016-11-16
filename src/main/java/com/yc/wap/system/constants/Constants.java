@@ -256,4 +256,11 @@ public class Constants {
 
     }
 
+    /**
+     * 订单查询
+     */
+    public static final class Order {
+
+    }
+
 }

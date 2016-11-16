@@ -129,7 +129,9 @@
             </ul>
         </div>
     </section>
-    <div class="loading"><a href="#">加载更多…</a></div>
+    <div id="sample">
+    </div>
+    <div class="loading" id="spinner"><a href="#">加载更多…</a></div>
 
     <%----%>
     <%--<div style="background:#010101; opacity:0.5;filter:alpha(opacity=50);">--%>
@@ -153,5 +155,44 @@
     $(function () {
 
     });
+
+    var index = 0;
+    function lowEnough(){
+        var pageHeight = Math.max(document.body.scrollHeight,document.body.offsetHeight);
+        var viewportHeight = window.innerHeight ||
+                document.documentElement.clientHeight ||
+                document.body.clientHeight || 0;
+        var scrollHeight = window.pageYOffset ||
+                document.documentElement.scrollTop ||
+                document.body.scrollTop || 0;
+
+         console.log(pageHeight);
+         console.log(viewportHeight);
+         console.log(scrollHeight);
+        return pageHeight - viewportHeight - scrollHeight < 20;
+    }
+
+    function doSomething(){
+        var htmlStr = "";
+        for(var i=0;i<10;i++){
+            htmlStr += "这是第"+index+"次加载<br>";
+        }
+        $('#sample').append(htmlStr);
+        index++;
+        pollScroll();//继续循环
+        $('#spinner').hide();
+    }
+
+    function checkScroll(){
+        if(!lowEnough()) return pollScroll();
+
+        $('#spinner').show();
+        setTimeout(doSomething,900);
+
+    }
+    function pollScroll(){
+        setTimeout(checkScroll,1000);
+    }
+    checkScroll();
 
 </script>
