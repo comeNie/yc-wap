@@ -329,6 +329,8 @@ public class WrittenController extends BaseController {
         String Price = WrittenContextJSON.getString("Price");
         DecimalFormat df = new DecimalFormat("######0.00");
         String PriceDisplay = df.format(Double.parseDouble(Price) / 1000);
+        String currencyUnit = WrittenContextJSON.getString("currencyUnit");
+        request.setAttribute("currencyUnit", currencyUnit);
         request.setAttribute("Price", Price);
         request.setAttribute("PriceDisplay", PriceDisplay);
         return "written/payment";

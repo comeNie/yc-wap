@@ -75,6 +75,17 @@
     </div>
 </div>
 
+<form id="toPayForm" method="post" action="<%=path%>/pay/gotoPay">
+    <input type="hidden" name="orderId" value="${OrderId}">
+    <input type="hidden" name="orderAmount" value="${Price}">
+    <input type="hidden" name="currencyUnit" value="${currencyUnit}">
+    <input type="hidden" id="payType" name="payOrgCode" value="YL">
+    <%--当前地址--%>
+    <input type="hidden" id="merchantUrl" name="merchantUrl">
+    <%--订单类型 目前只支持用户--%>
+    <input type="hidden" name="orderType" value="1">
+</form>
+
 <!--底部-->
 <section class="order-submit">
     <div class="left">
@@ -96,7 +107,8 @@
     $(document).ready(function () {
         var ToUrl = "<%=path%>/written/PayResult";
         $("#submit").bind("click", function () {
-            window.location.href = ToUrl;
+//            window.location.href = ToUrl;
+            $("#toPayForm").submit();
         });
 
         $("#imgAliPay").bind("click", function () {
