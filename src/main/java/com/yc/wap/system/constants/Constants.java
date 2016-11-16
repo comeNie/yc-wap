@@ -260,7 +260,9 @@ public class Constants {
      * 订单查询
      */
     public static final class Order {
-
+        // 客户端显示状态
+        public static final String UNPAID = "11";
+        public static final String UNCONFIRM = "50";
     }
 
 }
