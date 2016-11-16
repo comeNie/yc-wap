@@ -25,12 +25,11 @@ public class PayController extends BaseController {
     @RequestMapping(value = "/gotoPay")
     public void gotoPayByOrg(String orderId, Long orderAmount, String currencyUnit, String merchantUrl, String payOrgCode,
                              String orderType, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        log.info("PayController-gotoPay");
-        //租户
-        String tenantId = ConfigUtil.getProperty("TENANT_ID");
-        //服务异步通知地址
-        String notifyUrl = ConfigUtil.getProperty("NOTIFY_URL");//+"/"+orderType+"/"+ UserUtil.getUserId();
 
+        log.info("PayController-gotoPay");
+
+        String tenantId = ConfigUtil.getProperty("TENANT_ID");
+        String notifyUrl = ConfigUtil.getProperty("NOTIFY_URL");//+"/"+orderType+"/"+ UserUtil.getUserId();
         String returnUrl = ConfigUtil.getProperty("RETURN_URL");
 
         Map<String, String> map = new HashMap<String, String>();
@@ -38,8 +37,10 @@ public class PayController extends BaseController {
         map.put("orderId", orderId);
         map.put("returnUrl", returnUrl);
         map.put("notifyUrl", notifyUrl);
+        map.put("merchantUrl",merchantUrl);
         map.put("requestSource", "1");
         map.put("orderAmount", String.valueOf(orderAmount));
+        map.put("currencyUnit",currencyUnit);
         map.put("subject", "orderPay");
         map.put("payOrgCode", payOrgCode);
         // 加密
