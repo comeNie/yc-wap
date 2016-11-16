@@ -47,7 +47,7 @@ public class PayController extends BaseController {
         String infoMd5 = VerifyUtil.encodeParam(infoStr, ConfigUtil.getProperty("REQUEST_KEY"));
         map.put("infoMd5", infoMd5);
         log.info("开始前台通知:" + map);
-        String htmlStr = PaymentUtil.generateAutoSubmitForm(ConfigUtil.getProperty("BY_PAY_ORG_ACTION_URL"), map);
+        String htmlStr = PaymentUtil.generateAutoSubmitForm(ConfigUtil.getProperty("ACTION_URL"), map);
         log.info("发起支付申请:" + htmlStr);
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(htmlStr);
