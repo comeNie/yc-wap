@@ -55,13 +55,13 @@ public class PayController extends BaseController {
 
     @RequestMapping(value = "payResult")
     public String payResult() {
-
+        request.setAttribute("result", "success");
         return "written/payresult";
     }
 
     @RequestMapping(value = "payResultView")
     public String payResultView() {
-
+        request.setAttribute("result", "fail");
         return "written/payresult";
     }
 
