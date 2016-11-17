@@ -55,7 +55,6 @@
     var btn2 = "";
     var statusFlag = ""; //0正常 1待支付 2待确认 3待报价
     var detailUrl = "<%=path%>/order/OrderDetail?OrderId=";
-    var cancelUrl = "<%=path%>/order/OrderCancel"
     function lowEnough() {
         var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
         var viewportHeight = window.innerHeight ||
@@ -117,7 +116,7 @@
                         if (statusFlag == "0") {
                             var htmlStr = "<section class='my-order-content' onclick='window.location.href=\"" + detailUrl + orderId + "\"'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li></ul></div></section>";
                         } else if (statusFlag == "1") {
-                            var htmlStr = "<section class='my-order-content' onclick='window.location.href=\"" + detailUrl + orderId + "\"'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn blue'><a href='#'>" + btn1 + "</a></p><p class='bord-btn ash'><a href=" + cancelUrl + orderId + ">" + btn2 + "</a></p></li></ul></div></section>";
+                            var htmlStr = "<section class='my-order-content' onclick='window.location.href=\"" + detailUrl + orderId + "\"'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn blue'><a href='#'>" + btn1 + "</a></p><p class='bord-btn ash'><a href='javascript:CancelOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         } else if (statusFlag == "2") {
                             var htmlStr = "<section class='my-order-content' onclick='window.location.href=\"" + detailUrl + orderId + "\"'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn ash'><a href='#'>" + btn2 + "</a></p></li></ul></div></section>";
                         } else if (statusFlag == "3") {
@@ -125,6 +124,33 @@
                         }
                         $('#sample').append(htmlStr);
                     }
+                }
+            },
+            error: function (data) {
+
+            },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+
+            }
+        });
+    }
+
+    function CancelOrder(OrderId) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/order/OrderCancel",
+            modal: true,
+            timeout: 30000,
+            data: {
+                OrderId: OrderId
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    window.location.reload();
                 }
             },
             error: function (data) {

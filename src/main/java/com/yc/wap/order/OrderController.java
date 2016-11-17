@@ -8,7 +8,7 @@ import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV;
 import com.ai.yc.order.api.orderclose.param.OrderCancelRequest;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
-import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
+import com.ai.yc.order.api.orderdetails.param.*;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
@@ -17,12 +17,17 @@ import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
+import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -108,20 +113,6 @@ public class OrderController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "OrderDetail")
-    public String OrderDetail() {
-        String OrderId = request.getParameter("OrderId");
-        try {
-            log.info("QueryOrderDetailsOrderId: " + OrderId);
-            QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(Long.parseLong(OrderId));
-            log.info("QueryOrderDetailsReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
-            // TODO request.set
-        } catch (BusinessException | SystemException | NumberFormatException e) {
-            e.printStackTrace();
-        }
-        return "order/orderdetail";
-    }
-
     @RequestMapping(value = "OrderCancel")
     @ResponseBody
     public Object OrderCancel() {
@@ -134,10 +125,11 @@ public class OrderController extends BaseController {
         req.setOperId(operId);
         req.setReasonDesc(reasonDesc);
         req.setOrderId(Long.parseLong(OrderId));
-
+        log.info("OrderCancelParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
         try {
             BaseResponse resp = iOrderCancelSV.handCancelNoPayOrder(req);
             if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                log.info("OrderCancelSussess");
                 return result.returnMsg();
             } else {
                 throw new RuntimeException("OrderCancelFailed");
@@ -146,6 +138,82 @@ public class OrderController extends BaseController {
             e.printStackTrace();
             throw new RuntimeException("OrderCancelFailed");
         }
+    }
+
+    @RequestMapping(value = "OrderDetail")
+    public String OrderDetail() {
+        String OrderId = request.getParameter("OrderId");
+        try {
+            log.info("QueryOrderDetailsOrderId: " + OrderId);
+            QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(Long.parseLong(OrderId));
+            log.info("QueryOrderDetailsReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
+
+            ProdVo ProdList = resp.getProd();
+            OrderFeeVo OrderFee = resp.getOrderFee();
+            ProdExtendVo prodExtends = resp.getProdExtends().get(0);
+            ProdLevelVo prodLevels = resp.getProdLevels().get(0);
+            ContactsVo Contacts = resp.getContacts();
+
+            Timestamp Time = resp.getOrderTime();
+            DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+            String OrderPrice = OrderFee.getTotalFee() / 1000 + "";
+            DecimalFormat df = new DecimalFormat("######0.00");
+
+            String TransLV = prodLevels.getTranslateLevel();
+            String TranslateLevel = "其他";
+            if (TransLV.equals(Constants.TranslateLevel.Normal)) {
+                TranslateLevel = "标准级";
+            } else if (TransLV.equals(Constants.TranslateLevel.Professional)) {
+                TranslateLevel = "专业级";
+            } else if (TransLV.equals(Constants.TranslateLevel.Publish)) {
+                TranslateLevel = "出版级";
+            }
+
+            String discountSum = OrderFee.getDiscountSum();
+            if (discountSum == null || discountSum.equals("")) {
+                discountSum = "";
+            } else {
+                discountSum = discountSum + "折";
+            }
+
+            String PriceDisplay = df.format(Double.parseDouble(OrderPrice));
+            String OrderTime = sdf.format(Time);
+            String TransLang = prodExtends.getLangungePairName();
+            String useCn = ProdList.getUseCn();
+            String fieldCn = ProdList.getFieldCn();
+            String takeTime = ProdList.getTakeTime();
+            String Remark = resp.getRemark();
+            String isUrgent = ProdList.getIsUrgent();
+            String contactName = Contacts.getContactName();
+            String contactTel = Contacts.getContactTel();
+            String contactEmail = Contacts.getContactEmail();
+
+            JSONObject ParamJson = new JSONObject();
+            ParamJson.put("OrderId", OrderId);
+            ParamJson.put("PriceDisplay", PriceDisplay);
+            ParamJson.put("OrderTime", OrderTime);
+            ParamJson.put("TransLang", TransLang);
+            ParamJson.put("TranslateLevel", TranslateLevel);
+            ParamJson.put("useCn", useCn);
+            ParamJson.put("fieldCn", fieldCn);
+            ParamJson.put("takeTime", takeTime);
+            ParamJson.put("Remark", Remark);
+            ParamJson.put("discountSum", discountSum);
+            ParamJson.put("contactName", contactName);
+            ParamJson.put("contactTel", contactTel);
+            ParamJson.put("contactEmail", contactEmail);
+            if (isUrgent.equals("Y")) {
+                ParamJson.put("Urgent", "加急");
+            }
+
+            log.info("aaaaaaaaaaaaaaa.." + ParamJson.toString());
+
+            request.setAttribute("Params", ParamJson);
+        } catch (BusinessException | SystemException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return "order/orderdetail";
     }
 
     @RequestMapping(value = "OrderError")

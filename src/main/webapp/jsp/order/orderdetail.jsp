@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
@@ -69,62 +70,62 @@
                 <li>
                     <p>订单号:</p>
                 </li>
-                <li class="right">312321321</li>
+                <li class="right">${Params.OrderId}</li>
             </ul>
             <ul>
                 <li>
                     <p>订单金额:</p>
                 </li>
-                <li class="right">3232元</li>
+                <li class="right">${Params.PriceDisplay}元</li>
             </ul>
             <ul>
                 <li>
                     <p>订单日期:</p>
                 </li>
-                <li class="right">2014-11-11 11:11:11</li>
+                <li class="right">${Params.OrderTime}</li>
             </ul>
             <ul>
                 <li>
                     <p>翻译语言:</p>
                 </li>
-                <li class="right">中英</li>
+                <li class="right">${Params.TransLang}</li>
             </ul>
             <ul>
                 <li>
                     <p>翻译级别:</p>
                 </li>
-                <li class="right">标准级</li>
+                <li class="right">${Params.TranslateLevel}</li>
             </ul>
             <ul>
                 <li>
                     <p>用途:</p>
                 </li>
-                <li class="right">移民留学</li>
+                <li class="right">${Params.useCn}</li>
             </ul>
             <ul>
                 <li>
                     <p>领域:</p>
                 </li>
-                <li class="right">化工</li>
+                <li class="right">${Params.fieldCn}</li>
             </ul>
             <ul>
                 <li>
                     <p>预计翻译耗时:</p>
                 </li>
-                <li class="right">3天5小时18分</li>
+                <li class="right">${Params.takeTime}小时</li>
             </ul>
 
             <ul>
                 <li>
                     <p>其他:</p>
                 </li>
-                <li class="right">加急;需要排版</li>
+                <li class="right">${Params.Urgent}</li>
             </ul>
             <ul class="ulborder">
                 <li>
                     <p>需求备注:</p>
                 </li>
-                <li class="right">翻译需求是什么翻译翻译需求是什么翻译需求</li>
+                <li class="right">${Params.Remark}</li>
             </ul>
         </div>
     </section>
@@ -134,31 +135,31 @@
                 <li>
                     <p>订单总额:</p>
                 </li>
-                <li class="right">312321321</li>
+                <li class="right">${Params.PriceDisplay}元</li>
             </ul>
             <ul class="zhek">
                 <li>
                     <p>－折扣:</p>
                 </li>
-                <li class="right">8折</li>
+                <li class="right">${Params.discountSum}</li>
             </ul>
-            <ul class="zhek">
-                <li>
-                    <p>－优惠码:</p>
-                </li>
-                <li class="right">32元</li>
-            </ul>
-            <ul class="zhek">
-                <li>
-                    <p>－优惠卷:</p>
-                </li>
-                <li class="right">232元</li>
-            </ul>
+            <%--<ul class="zhek">--%>
+                <%--<li>--%>
+                    <%--<p>－优惠码:</p>--%>
+                <%--</li>--%>
+                <%--<li class="right">32元</li>--%>
+            <%--</ul>--%>
+            <%--<ul class="zhek">--%>
+                <%--<li>--%>
+                    <%--<p>－优惠卷:</p>--%>
+                <%--</li>--%>
+                <%--<li class="right">232元</li>--%>
+            <%--</ul>--%>
             <ul class="top-ulborder ulborder">
                 <li>
                     <p>实付款:</p>
                 </li>
-                <li class="right blue-word">2532.6元</li>
+                <li class="right blue-word">${Params.PriceDisplay}元</li>
             </ul>
         </div>
     </section>
@@ -171,14 +172,14 @@
             </ul>
             <ul class="zhek">
                 <li>
-                    <p>张三</p>
-                    <p>13111111111</p>
-                    <p>ceshi@gtcom.com.cn</p>
+                    <p>${Params.contactName}</p>
+                    <p>${Params.contactTel}</p>
+                    <p>${Params.contactEmail}</p>
                 </li>
             </ul>
         </div>
     </section>
-    <section class="my-order-content">
+    <section class="my-order-content" style="display: none;">
         <div class="my-order-list">
             <ul class="ulborder">
                 <li>
