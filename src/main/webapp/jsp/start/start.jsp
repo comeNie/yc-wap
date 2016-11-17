@@ -27,175 +27,177 @@
 </head>
 
 <body>
-<div class="wrapper-big">
-    <!--分享弹出框-->
-    <div class="eject-big">
-        <div class="prompt-share" id="share-eject">
-            <div class="prompt-share-title">请选择</div>
-            <!--确认删除-->
-            <div class="prompt-share-confirm">
-                <ul>
-                    <a href="javascript:void(0)">
-                        <li class="weix">
-                            <p><i class="icon iconfont">&#xe61a;</i></p>
-                            <p>微信</p>
-                        </li>
-                    </a>
-                    <a href="javascript:void(0)">
-                        <li class="weixq">
-                            <p><i class="icon iconfont">&#xe61f;</i></p>
-                            <p>微信朋友圈</p>
-                        </li>
-                    </a>
-                    <a href="javascript:void(0)">
-                        <li class="blog">
-                            <p><i class="icon iconfont">&#xe627;</i></p>
-                            <p>微博</p>
-                        </li>
-                    </a>
-                    <a href="javascript:void(0)">
-                        <li class="qq">
-                            <p><i class="icon iconfont">&#xe61e;</i></p>
-                            <p>QQ</p>
-                        </li>
-                    </a>
-                    <a href="javascript:void(0)">
-                        <li class="watercress">
-                            <p><i class="icon iconfont">&#xe625;</i></p>
-                            <p>豆瓣</p>
-                        </li>
-                    </a>
-                    <a href="javascript:void(0)">
-                        <li class="message">
-                            <p><i class="icon iconfont">&#xe622;</i></p>
-                            <p>短信</p>
-                        </li>
-                    </a>
-                    <a href="javascript:void(0)">
-                        <li class="copy">
-                            <p><i class="icon iconfont">&#xe620;</i></p>
-                            <p>复制链接</p>
-                        </li>
-                    </a>
-                </ul>
-                <div class="wrapper-big">
-                    <div class="close-icon"><i class="icon iconfont" id="close-icon">&#xe611;</i></div>
-                </div>
-                <div class="mask" id="eject-mask"></div>
-            </div>
-            <!--弹出框结束-->
-            <section class="notice" style="display: none">
-                <p>公告信息等等等等</p>
-                <label><i class="icon iconfont">&#xe618;</i></label>
-            </section>
-        <%--<nav class="wap-nav">--%>
-        <%--<ul>--%>
-        <%--<li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>--%>
-        <%--<li class="right">--%>
-        <%--&lt;%&ndash;<input type="button" class="btn login-btn" value="登录" id="btn-login">&ndash;%&gt;--%>
-        <%--<a href="javascript:window.location.href='<%=path%>/login/login'" class="btn login-btn" id="btn-login">登录</a>--%>
-        <%--</li>--%>
-        <%--</ul>--%>
-        <%--</nav>--%>
-        <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-            <jsp:param name="Index" value="1"/>
-        </jsp:include>
-        <section class="index-wrapper">
-            <!--转换语言-->
-            <section class="testing">
-                <p>
-                    <select class="select testing-select" id="source-lan">
-                        <c:forEach items="${requestScope.languagepairs}" var="pair">
-                            <option>${pair}</option>
-                        </c:forEach>
-                    </select>
-                    <span>|</span>
-                </p>
-                <p class="test-icon" style="vertical-align: middle"><i class="icon iconfont" id="change-lan">&#xe621;</i>
-                </p>
 
-                <p>
-                    <select class="select testing-select" id="target-lan">
-                        <c:forEach items="${requestScope.languagepairs}" var="pair">
-                            <c:choose>
-                                <c:when test="${pair=='英语'}">
-                                    <option selected="selected">${pair}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option>${pair}</option>
-                                </c:otherwise>
-                            </c:choose>
-
-                        </c:forEach>
-                    </select>
-                    <span>|</span>
-                </p>
-            </section>
-            <!--翻译内容-->
-            <section class="translation-content">
-                <textarea class="textarea textarea-large" id="chick-int" maxlength="2000"></textarea>
-                <a hrel="javascript:void(0)"><i class="icon iconfont" id="btn-textarea-clear">&#xe618;</i></a>
-            </section>
-            <!--翻译按钮-->
-            <section class="translate-btn" id="chick-btn">
-                <a href="javascript:void(0)" class="btn btn-big" id="btn-translate">翻译</a>
-            </section>
-            <!--翻译结果-->
-            <section class="translation-content-english" id="results">
-                <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
-
-                <p>
-                    <a href="javascript:void(0)" id="text_audio"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
-                    <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
-                    <audio src="" controls="controls" id="audioPlay" hidden>
-                        Your browser does not support audio tag
-                    </audio>
-                </p>
-            </section>
-
-        </section>
-        <section id="wrapper-hide">
-            <section class="index-wrapper">
-                <!--历史纪录-->
-                <section class="history" style="display: none">
-                    <div class="history-list">
-                        <ul>
-                            <a href="javascript:">
-                                <li>
-                                    <p><i class="icon iconfont">&#xe624;</i></p>
-
-                                    <p class="word">就显示一行 就显示一行显示一行</p>
-
-                                    <p class="word-en">yiwen yiwen yiwen</p>
-
-                                    <p class="right"><i class="icon iconfont">&#xe618;</i></p>
-                                </li>
-                            </a>
-                            <a href="javascript:">
-                                <li>
-                                    <p><i class="icon iconfont">&#xe624;</i></p>
-
-                                    <p class="word">就显示一行 就显示一行显示一行</p>
-
-                                    <p class="word-en">yiwen yiwen yiwen</p>
-
-                                    <p class="right"><i class="icon iconfont">&#xe618;</i></p>
-                                </li>
-                            </a>
-                        </ul>
-                    </div>
-                </section>
-
-            </section>
-            <!--banner-->
-            <section class="banner"><a href="#" id="banner1"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
-            <section class="banner"><a href="#"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
-
-        </section>
+<!--分享弹出框-->
+<div class="eject-big">
+    <div class="prompt-share" id="share-eject">
+        <div class="prompt-share-title">请选择</div>
+        <!--确认删除-->
+        <div class="prompt-share-confirm">
+            <ul>
+                <a href="#">
+                    <li class="weix">
+                        <p><i class="icon iconfont">&#xe61a;</i></p>
+                        <p>微信</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="weixq">
+                        <p><i class="icon iconfont">&#xe61f;</i></p>
+                        <p>微信朋友圈</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="blog">
+                        <p><i class="icon iconfont">&#xe627;</i></p>
+                        <p>微博</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="qq">
+                        <p><i class="icon iconfont">&#xe61e;</i></p>
+                        <p>QQ</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="watercress">
+                        <p><i class="icon iconfont">&#xe625;</i></p>
+                        <p>豆瓣</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="message">
+                        <p><i class="icon iconfont">&#xe622;</i></p>
+                        <p>短信</p>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="copy">
+                        <p><i class="icon iconfont">&#xe620;</i></p>
+                        <p>复制链接</p>
+                    </li>
+                </a>
+            </ul>
+        </div>
+        <div class="close-icon"><i class="icon iconfont" id="close-icon">&#xe611;</i></div>
     </div>
-    <!--底部-->
+    <div class="mask" id="eject-mask"></div>
+</div>
+<!--弹出框结束-->
+<div class="wrapper-big"><!--包含除底部外的所有层-->
+    <section class="notice" style="display: none">
+        <p>公告信息等等等等</p>
+        <label><i class="icon iconfont">&#xe618;</i></label>
+    </section>
+    <%--<nav class="wap-nav">--%>
+    <%--<ul>--%>
+    <%--<li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>--%>
+    <%--<li class="right">--%>
+    <%--&lt;%&ndash;<input type="button" class="btn login-btn" value="登录" id="btn-login">&ndash;%&gt;--%>
+    <%--<a href="javascript:window.location.href='<%=path%>/login/login'" class="btn login-btn" id="btn-login">登录</a>--%>
+    <%--</li>--%>
+    <%--</ul>--%>
+    <%--</nav>--%>
+    <jsp:include page="/jsp/common/pophead.jsp" flush="true">
+        <jsp:param name="Index" value="1"/>
+    </jsp:include>
+    <section class="index-wrapper">
+        <!--转换语言-->
+        <section class="testing">
+            <p>
+                <select class="select testing-select" id="source-lan">
+                    <c:forEach items="${requestScope.languagepairs}" var="pair">
+                        <option>${pair}</option>
+                    </c:forEach>
+                </select>
+                <span>|</span>
+            </p>
+            <p class="test-icon" style="vertical-align: middle"><i class="icon iconfont" id="change-lan">&#xe621;</i>
+            </p>
 
-    <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+            <p>
+                <select class="select testing-select" id="target-lan">
+                    <c:forEach items="${requestScope.languagepairs}" var="pair">
+                        <c:choose>
+                            <c:when test="${pair=='英语'}">
+                                <option selected="selected">${pair}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option>${pair}</option>
+                            </c:otherwise>
+                        </c:choose>
+
+                    </c:forEach>
+                </select>
+                <span>|</span>
+            </p>
+        </section>
+        <!--翻译内容-->
+        <section class="translation-content">
+            <textarea class="textarea textarea-large" id="chick-int" maxlength="2000"></textarea>
+            <a hrel="javascript:void(0)"><i class="icon iconfont" id="btn-textarea-clear">&#xe618;</i></a>
+        </section>
+        <!--翻译按钮-->
+        <section class="translate-btn" id="chick-btn">
+            <a href="javascript:void(0)" class="btn btn-big" id="btn-translate">翻译</a>
+        </section>
+        <!--翻译结果-->
+        <section class="translation-content-english" id="results">
+            <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
+
+            <p>
+                <a href="javascript:void(0)" id="text_audio"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
+                <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
+                <audio src="" controls="controls" id="audioPlay" hidden>
+                    Your browser does not support audio tag
+                </audio>
+            </p>
+        </section>
+
+    </section>
+    <section id="wrapper-hide">
+        <section class="index-wrapper">
+            <!--历史纪录-->
+            <section class="history" style="display: none">
+                <div class="history-list">
+                    <ul>
+                        <a href="javascript:">
+                            <li>
+                                <p><i class="icon iconfont">&#xe624;</i></p>
+
+                                <p class="word">就显示一行 就显示一行显示一行</p>
+
+                                <p class="word-en">yiwen yiwen yiwen</p>
+
+                                <p class="right"><i class="icon iconfont">&#xe618;</i></p>
+                            </li>
+                        </a>
+                        <a href="javascript:">
+                            <li>
+                                <p><i class="icon iconfont">&#xe624;</i></p>
+
+                                <p class="word">就显示一行 就显示一行显示一行</p>
+
+                                <p class="word-en">yiwen yiwen yiwen</p>
+
+                                <p class="right"><i class="icon iconfont">&#xe618;</i></p>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </section>
+
+        </section>
+        <!--banner-->
+        <section class="banner"><a href="#" id="banner1"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
+        <section class="banner"><a href="#"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
+
+    </section>
+</div>
+<!--底部-->
+</div>
+</div>
+<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
 </body>
 </html>
