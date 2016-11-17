@@ -207,7 +207,7 @@ public class OrderController extends BaseController {
                 ParamJson.put("Urgent", "加急");
             }
 
-            log.info("aaaaaaaaaaaaaaa.." + ParamJson.toString());
+            log.info("OrderDetailParamJson.." + ParamJson.toString());
 
             request.setAttribute("Params", ParamJson);
         } catch (BusinessException | SystemException | NumberFormatException e) {
