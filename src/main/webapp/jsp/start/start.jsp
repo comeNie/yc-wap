@@ -29,43 +29,43 @@
         <!--确认删除-->
         <div class="prompt-share-confirm">
             <ul>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li class="weix">
                         <p><i class="icon iconfont">&#xe61a;</i></p>
                         <p>微信</p>
                     </li>
                 </a>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li class="weixq">
                         <p><i class="icon iconfont">&#xe61f;</i></p>
                         <p>微信朋友圈</p>
                     </li>
                 </a>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li class="blog">
                         <p><i class="icon iconfont">&#xe627;</i></p>
                         <p>微博</p>
                     </li>
                 </a>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li class="qq">
                         <p><i class="icon iconfont">&#xe61e;</i></p>
                         <p>QQ</p>
                     </li>
                 </a>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li class="watercress">
                         <p><i class="icon iconfont">&#xe625;</i></p>
                         <p>豆瓣</p>
                     </li>
                 </a>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li class="message">
                         <p><i class="icon iconfont">&#xe622;</i></p>
                         <p>短信</p>
                     </li>
                 </a>
-                <a href="#">
+                <a href="javascript:void(0)">
                     <li class="copy">
                         <p><i class="icon iconfont">&#xe620;</i></p>
                         <p>复制链接</p>
@@ -128,18 +128,18 @@
     <!--翻译内容-->
     <section class="translation-content">
         <textarea class="textarea textarea-large" name="chick-int" id="chick-int"></textarea>
-        <a hrel="#"><i class="icon iconfont" id="btn-textarea-clear">&#xe618;</i></a>
+        <a hrel="javascript:void(0)"><i class="icon iconfont" id="btn-textarea-clear">&#xe618;</i></a>
     </section>
     <!--翻译按钮-->
     <section class="translate-btn" id="chick-btn">
-        <a href="#" class="btn btn-big" id="btn-translate">翻译</a>
+        <a href="javascript:void(0)" class="btn btn-big" id="btn-translate">翻译</a>
     </section>
     <!--翻译结果-->
     <section class="translation-content-english" id="results">
         <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
         <p>
-            <a href="#" id="text_audio"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
-            <a href="#" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
+            <a href="javascript:void(0)" id="text_audio"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
+            <a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
             <audio src="" controls="controls"  id="audioPlay" hidden>
                 Your browser does not support audio tag
             </audio>
@@ -204,7 +204,6 @@
     var beRead;
 
     var Language = "${pageContext.response.locale}";
-    console.info("locallanguage:"+Language);
     if (Language=="zh_CN"){
         $("#auto-zh").css("display","block");
         $("#auto-en").css("display", "none");
@@ -217,8 +216,14 @@
         srcvalue="en";
         tarvalue="zh";
     }
+    $(function() {
+        var audio = document.getElementById("audioPlay");
+        audio.addEventListener("loadeddata", //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
+                function() {
+                    $("#text_audio").css("display","block");
+                }, false);
+    });
     $(document).ready(function () {
-
         <!--监听输入的文本内容-->
         $("#chick-int").bind("input propertychange",function () {
             landetec=$("#chick-int").val();
@@ -291,9 +296,7 @@
         });
 
         $("#toAudio").bind("click",function () {
-            console.info("点啦这个小喇叭");
             beRead=$.trim($("#result-text").val());
-            console.info("beRead....."+beRead);
             if (beRead==""||beRead==null){
                 return;
             }
