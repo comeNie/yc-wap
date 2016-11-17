@@ -139,7 +139,7 @@
         <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
         <p>
             <a href="javascript:void(0)" id="text_audio"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
-            <a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
+            <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
             <audio src="" controls="controls"  id="audioPlay" hidden>
                 Your browser does not support audio tag
             </audio>
@@ -218,7 +218,7 @@
     }
     $(function() {
         var audio = document.getElementById("audioPlay");
-        audio.addEventListener("loadeddata", //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
+        audio.addEventListener("ended", //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
                 function() {
                     $("#text_audio").css("display","block");
                 }, false);
