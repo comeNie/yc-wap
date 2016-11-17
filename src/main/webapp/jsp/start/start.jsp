@@ -140,7 +140,7 @@
         <p>
             <a href="#" id="text_audio"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
             <a href="#" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
-            <audio src="" controls="controls"  id="audioPlay">
+            <audio src="" controls="controls"  id="audioPlay" hidden>
                 Your browser does not support audio tag
             </audio>
         </p>
