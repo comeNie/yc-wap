@@ -205,29 +205,28 @@
         $.ajax({
             async: true,
             type: "POST",
-            url: "<%=path%>/safe/editpssword",
+            url: "<%=path%>/login/checkregister",
             modal: true,
             timeout: 30000,
             data: {
                 uid:personUid,
+                phone:phone,
                 newpw: psdid,
                 code:codeid,
-                mode:2, //密码操作吗
-                isRegister:"1"
             },
             success: function (data) {
                 if (data.status == 1) {
-                    $("#codeLabel").css("display", "none");
+                    $("#confimPsd").css("display", "none");
                     var tourl = "<%=path%>/login/registersuccess";
                     window.location.href=tourl;
                 } else {
-                    $("#codeLabel").html(data.msg);
-                    $("#codeLabel").css("display", "block");
+                    $("#confimPsd").html(data.msg);
+                    $("#confimPsd").css("display", "block");
                 }
             },
             error: function () {
-                $("#codeLabel").html(data.msg);
-                $("#codeLabel").css("display", "block");
+                $("#confimPsd").html(data.msg);
+                $("#confimPsd").css("display", "block");
             }
         });
 

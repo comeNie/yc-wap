@@ -268,7 +268,6 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String check_code = request.getParameter("code");  //旧密码或验证码
         String newpw = request.getParameter("newpw");
-        String isRegister = request.getParameter("isRegister"); //注册的标志
         newpw = MD5Util.md5(newpw);
         String uid = request.getParameter("uid");
         Integer u = Integer.parseInt(uid);
@@ -292,19 +291,6 @@ public class SafeController extends BaseController {
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
                 session.setAttribute("password","true");
-                if(isRegister.equals("1")){         //注册用户需要创建余额账户
-                    //注册成功为用户创建一个余额的账户
-                    RegAccReq regAccReq = new RegAccReq();
-                    regAccReq.setTenantId(Constants.TenantID);
-                    regAccReq.setSystemId("Cloud-UAC_WEB");
-                    regAccReq.setExternalId(UUIDUtil.genId32());
-                    regAccReq.setAcctName(vo.getUsername());
-                    regAccReq.setRegCustomerId(vo.getUid()+"");
-                    regAccReq.setAcctType("1"); //账户类型
-                    regAccReq.setPayCheck("1"); //支付密碼是否验证
-                    long l = iAccountMaintainSV.createAccount(regAccReq);
-                    log.info(l);
-                }
             }else{
                 result.put("status","0");
                 result.put("msg",responseCode.getCodeMessage());

@@ -1,11 +1,16 @@
 package com.yc.wap.start;
 
-import com.alibaba.fastjson.JSONObject;
+
+import com.ai.opt.base.exception.BusinessException;
+import com.alibaba.fastjson.JSON;
+import com.yc.wap.home.HcicloudService;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
-import com.yc.wap.system.utils.FileUtil;
+
 import com.yc.wap.system.utils.HttpUtil;
 import com.yc.wap.system.utils.HttpsUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -15,10 +20,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -52,7 +62,7 @@ public class StartController extends BaseController{
         String tgtl=request.getParameter("tgtl");
         log.info("tgtl:"+tgtl);
         String text=request.getParameter("text");
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         jsonObject.put("srcl",srcl);
         jsonObject.put("tgtl",tgtl);
         jsonObject.put("text",text);
@@ -68,64 +78,60 @@ public class StartController extends BaseController{
             e.printStackTrace();
         }
 
-        JSONObject json = (JSONObject) JSONObject.parse(resp);
+        JSONObject json = JSONObject.fromObject(resp);
         JSONObject json2 = (JSONObject) json.getJSONArray("translation").get(0);
-        JSONObject fin = (JSONObject) json2.getJSONArray("translated").get(0);
-        log.info("fin.get--------"+fin.get("text"));
-        String target=fin.getString("text");
+        JSONArray arrayList = json2.getJSONArray("translated");
+        String target = "";
+        for (Object obj: arrayList) {
+            JSONObject j = JSONObject.fromObject(obj);
+            target += j.get("text");
+        }
         log.info("target=--------"+target);
-        log.info("resp-----"+resp);
         result.put("target",target);
 
         return result.returnMsg();
 
     }
     @RequestMapping(value="/lanDetection")
-    public @ResponseBody Object lanDetection(){
+    public @ResponseBody Object lanDetection() throws UnsupportedEncodingException {
         MsgBean result=new MsgBean();
         String finalLan=request.getParameter("text");
-        String detecUrl="http://translateport.yeekit.com:9006/detection?text="+finalLan;
-
-        String respon=HttpUtil.httpGet(detecUrl);
-        JSONObject json = (JSONObject) JSONObject.parse(respon);
-
-        String fintec=json.getString("result");
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("text", URLEncoder.encode(finalLan,"UTF-8"));
+        String detecUrl="http://translateport.yeekit.com:9006/detection";
+        String resultStr = HttpUtil.doGet(detecUrl,params);
+//        ?text="+finalLan;
+        log.info(resultStr);
+        JSONObject translated = JSONObject.fromObject(resultStr);
+        //返回失败信息
+        if (translated.getInt("errorCode") != 0) {
+            log.error("detection text is error:"+resultStr);
+            throw new BusinessException("The detection is fail.");
+        }
+        //获取语言
+        String fintec= translated.getString("result");
         result.put("fintec",fintec);
         return result.returnMsg();
     }
 
     @RequestMapping(value="/ttsSync")
-    public @ResponseBody Object ttsSync(String languages ,String beRead){
-        MsgBean result=new MsgBean();
-        //根据目标语言语种选择调用灵云能力
-        String config="";
-        String audioformat=",audioformat=mp3_16";
-        if (languages.equals("zh")){
-            config+="capkey=tts.cloud.wangjing";
-        }else if (languages.equals("en")) {
-            config+="capkey=tts.cloud.serena";
-        }else if (languages.equals("fr")) {
-            // TODO: 2016/11/4  增加俄语 法语 葡萄牙语的capkey
-            config+="capkey=tts.cloud.thomas";
-        }else if (languages.equals("ru")){
-            config+="capkey=tts.cloud.narae";
-        }else if (languages.equals("pt")){
-            config+="capkey=tts.cloud.vera";
-        }
+    public void ttsSync(String languages ,String beRead,HttpServletResponse response) throws Exception{
 
-        //得到带xml的语音块
-        byte[] lanresp = HttpUtil.TTShttpReq(beRead,config+audioformat);
-        //得到需要去掉的长度
-        String lanresponse= new String(lanresp);
-        String[] splits = lanresponse.split("</ResponseInfo>");
-        String xml = splits[0] + "</ResponseInfo>";
-        int offset = xml.getBytes().length;
-        log.info("offset----------"+offset);
-        //得到完整的语音块
-        byte[] audioBlock = FileUtil.ByteinfoFile(lanresp, offset);
-        log.info("audioBlock-------"+audioBlock);
-        result.put("audioBlock",audioBlock);
-        return result.returnMsg();
+        String agent = request.getHeader("User-Agent").toLowerCase();
+        HcicloudService hcicloudService = new HcicloudService();
+        try {
+            //写入文件
+            byte[] audioByte = hcicloudService.text2audio(agent,languages,beRead);
+
+            OutputStream os = response.getOutputStream();
+            response.addHeader("Accept-Ranges", "bytes");
+            response.addHeader("Content-Length", audioByte.length + "");
+            response.addHeader("Content-Type", "audio/mpeg;charset=UTF-8");
+            os.write(audioByte);
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
