@@ -1,6 +1,12 @@
 package com.yc.wap.start;
 
 
+<<<<<<< HEAD
+=======
+import com.ai.opt.base.exception.BusinessException;
+import com.alibaba.fastjson.JSON;
+import com.yc.wap.home.HcicloudService;
+>>>>>>> 6fceb0cebcb08645e70192e1fafec014f563b704
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 
@@ -18,10 +24,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+<<<<<<< HEAD
+=======
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+>>>>>>> 6fceb0cebcb08645e70192e1fafec014f563b704
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -86,15 +99,23 @@ public class StartController extends BaseController{
 
     }
     @RequestMapping(value="/lanDetection")
-    public @ResponseBody Object lanDetection(){
+    public @ResponseBody Object lanDetection() throws UnsupportedEncodingException {
         MsgBean result=new MsgBean();
         String finalLan=request.getParameter("text");
-        String detecUrl="http://translateport.yeekit.com:9006/detection?text="+finalLan;
-
-        String respon=HttpUtil.httpGet(detecUrl);
-        JSONObject json = (JSONObject) JSONObject.fromObject(respon);
-
-        String fintec=json.getString("result");
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("text", URLEncoder.encode(finalLan,"UTF-8"));
+        String detecUrl="http://translateport.yeekit.com:9006/detection";
+        String resultStr = HttpUtil.doGet(detecUrl,params);
+//        ?text="+finalLan;
+        log.info(resultStr);
+        JSONObject translated = JSONObject.fromObject(resultStr);
+        //返回失败信息
+        if (translated.getInt("errorCode") != 0) {
+            log.error("detection text is error:"+resultStr);
+            throw new BusinessException("The detection is fail.");
+        }
+        //获取语言
+        String fintec= translated.getString("result");
         result.put("fintec",fintec);
         return result.returnMsg();
     }
