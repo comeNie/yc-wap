@@ -28,124 +28,66 @@
 
 <body>
 <div class="wrapper-big">
-<!--分享弹出框-->
-<div class="eject-big">
-    <div class="prompt-share" id="share-eject">
-        <div class="prompt-share-title">请选择</div>
-        <!--确认删除-->
-        <div class="prompt-share-confirm">
-            <ul>
-                <a href="javascript:void(0)">
-                    <li class="weix">
-                        <p><i class="icon iconfont">&#xe61a;</i></p>
-                        <p>微信</p>
-                    </li>
-                </a>
-                <a href="javascript:void(0)">
-                    <li class="weixq">
-                        <p><i class="icon iconfont">&#xe61f;</i></p>
-                        <p>微信朋友圈</p>
-                    </li>
-                </a>
-                <a href="javascript:void(0)">
-                    <li class="blog">
-                        <p><i class="icon iconfont">&#xe627;</i></p>
-                        <p>微博</p>
-                    </li>
-                </a>
-                <a href="javascript:void(0)">
-                    <li class="qq">
-                        <p><i class="icon iconfont">&#xe61e;</i></p>
-                        <p>QQ</p>
-                    </li>
-                </a>
-                <a href="javascript:void(0)">
-                    <li class="watercress">
-                        <p><i class="icon iconfont">&#xe625;</i></p>
-                        <p>豆瓣</p>
-                    </li>
-                </a>
-                <a href="javascript:void(0)">
-                    <li class="message">
-                        <p><i class="icon iconfont">&#xe622;</i></p>
-                        <p>短信</p>
-                    </li>
-                </a>
-                <a href="javascript:void(0)">
-                    <li class="copy">
-                        <p><i class="icon iconfont">&#xe620;</i></p>
-                        <p>复制链接</p>
-                    </li>
-                </a>
-            </ul>
-    <div class="wrapper-big">
-        <!--分享弹出框-->
-        <div class="eject-big">
-            <div class="prompt-share" id="share-eject">
-                <div class="prompt-share-title">请选择</div>
-                <!--确认删除-->
-                <div class="prompt-share-confirm">
-                    <ul>
-                        <a href="javascript:void(0)">
-                            <li class="weix">
-                                <p><i class="icon iconfont">&#xe61a;</i></p>
-
-                                <p>微信</p>
-                            </li>
-                        </a>
-                        <a href="javascript:void(0)">
-                            <li class="weixq">
-                                <p><i class="icon iconfont">&#xe61f;</i></p>
-
-                                <p>微信朋友圈</p>
-                            </li>
-                        </a>
-                        <a href="javascript:void(0)">
-                            <li class="blog">
-                                <p><i class="icon iconfont">&#xe627;</i></p>
-
-                                <p>微博</p>
-                            </li>
-                        </a>
-                        <a href="javascript:void(0)">
-                            <li class="qq">
-                                <p><i class="icon iconfont">&#xe61e;</i></p>
-
-                                <p>QQ</p>
-                            </li>
-                        </a>
-                        <a href="javascript:void(0)">
-                            <li class="watercress">
-                                <p><i class="icon iconfont">&#xe625;</i></p>
-
-                                <p>豆瓣</p>
-                            </li>
-                        </a>
-                        <a href="javascript:void(0)">
-                            <li class="message">
-                                <p><i class="icon iconfont">&#xe622;</i></p>
-
-                                <p>短信</p>
-                            </li>
-                        </a>
-                        <a href="javascript:void(0)">
-                            <li class="copy">
-                                <p><i class="icon iconfont">&#xe620;</i></p>
-
-                                <p>复制链接</p>
-                            </li>
-                        </a>
-                    </ul>
+    <!--分享弹出框-->
+    <div class="eject-big">
+        <div class="prompt-share" id="share-eject">
+            <div class="prompt-share-title">请选择</div>
+            <!--确认删除-->
+            <div class="prompt-share-confirm">
+                <ul>
+                    <a href="javascript:void(0)">
+                        <li class="weix">
+                            <p><i class="icon iconfont">&#xe61a;</i></p>
+                            <p>微信</p>
+                        </li>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <li class="weixq">
+                            <p><i class="icon iconfont">&#xe61f;</i></p>
+                            <p>微信朋友圈</p>
+                        </li>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <li class="blog">
+                            <p><i class="icon iconfont">&#xe627;</i></p>
+                            <p>微博</p>
+                        </li>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <li class="qq">
+                            <p><i class="icon iconfont">&#xe61e;</i></p>
+                            <p>QQ</p>
+                        </li>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <li class="watercress">
+                            <p><i class="icon iconfont">&#xe625;</i></p>
+                            <p>豆瓣</p>
+                        </li>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <li class="message">
+                            <p><i class="icon iconfont">&#xe622;</i></p>
+                            <p>短信</p>
+                        </li>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <li class="copy">
+                            <p><i class="icon iconfont">&#xe620;</i></p>
+                            <p>复制链接</p>
+                        </li>
+                    </a>
+                </ul>
+                <div class="wrapper-big">
+                    <div class="close-icon"><i class="icon iconfont" id="close-icon">&#xe611;</i></div>
                 </div>
-                <div class="close-icon"><i class="icon iconfont" id="close-icon">&#xe611;</i></div>
+                <div class="mask" id="eject-mask"></div>
             </div>
-            <div class="mask" id="eject-mask"></div>
-        </div>
-        <!--弹出框结束-->
-        <section class="notice" style="display: none">
-            <p>公告信息等等等等</p>
-            <label><i class="icon iconfont">&#xe618;</i></label>
-        </section>
+            <!--弹出框结束-->
+            <section class="notice" style="display: none">
+                <p>公告信息等等等等</p>
+                <label><i class="icon iconfont">&#xe618;</i></label>
+            </section>
         <%--<nav class="wap-nav">--%>
         <%--<ul>--%>
         <%--<li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>--%>
@@ -476,21 +418,6 @@
 
             }
         });
-        <%--$.ajax({--%>
-        <%--url: "<%=path%>/lanDetection",--%>
-        <%--type: "POST",--%>
-        <%--data: {--%>
-        <%--text: landetec--%>
-        <%--},--%>
-        <%--success: function (result) {--%>
-        <%--var finLan = result.fintec;--%>
-        <%--console.info("finLan>>>>>>>" + finLan);--%>
-        <%--},--%>
-        <%--error: function (data) {--%>
-        <%--console.info(data);--%>
-        <%--}--%>
-
-        <%--});--%>
     }
 
 </script>
