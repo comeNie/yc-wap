@@ -1,12 +1,14 @@
 package com.yc.wap.start;
 
-import com.alibaba.fastjson.JSONObject;
+
 import com.yc.wap.home.HcicloudService;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
-import com.yc.wap.system.utils.FileUtil;
+
 import com.yc.wap.system.utils.HttpUtil;
 import com.yc.wap.system.utils.HttpsUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -54,7 +57,7 @@ public class StartController extends BaseController{
         String tgtl=request.getParameter("tgtl");
         log.info("tgtl:"+tgtl);
         String text=request.getParameter("text");
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         jsonObject.put("srcl",srcl);
         jsonObject.put("tgtl",tgtl);
         jsonObject.put("text",text);
@@ -70,13 +73,15 @@ public class StartController extends BaseController{
             e.printStackTrace();
         }
 
-        JSONObject json = (JSONObject) JSONObject.parse(resp);
+        JSONObject json = JSONObject.fromObject(resp);
         JSONObject json2 = (JSONObject) json.getJSONArray("translation").get(0);
-        JSONObject fin = (JSONObject) json2.getJSONArray("translated").get(0);
-        log.info("fin.get--------"+fin.get("text"));
-        String target=fin.getString("text");
+        JSONArray arrayList = json2.getJSONArray("translated");
+        String target = "";
+        for (Object obj: arrayList) {
+            JSONObject j = JSONObject.fromObject(obj);
+            target += j.get("text");
+        }
         log.info("target=--------"+target);
-        log.info("resp-----"+resp);
         result.put("target",target);
 
         return result.returnMsg();
@@ -89,7 +94,7 @@ public class StartController extends BaseController{
         String detecUrl="http://translateport.yeekit.com:9006/detection?text="+finalLan;
 
         String respon=HttpUtil.httpGet(detecUrl);
-        JSONObject json = (JSONObject) JSONObject.parse(respon);
+        JSONObject json = (JSONObject) JSONObject.fromObject(respon);
 
         String fintec=json.getString("result");
         result.put("fintec",fintec);

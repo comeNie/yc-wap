@@ -221,7 +221,7 @@
         audio.addEventListener("ended", //歌曲一经完整的加载完毕( 也可以写成上面提到的那些事件类型)
                 function() {
                     $("#text_audio").css("display","block");
-                }, false);
+                });
     });
     $(document).ready(function () {
         <!--监听输入的文本内容-->
@@ -393,7 +393,7 @@
             success: function (data) {
                 console.info(data);
                 if (data.status == 1) {//成功
-                    $("#result-text").val(data.target);
+                    $("#result-text").html(data.target);
                     IsTranslated = true;
                 } else {
 
