@@ -434,7 +434,9 @@
         } else if (lan == "pt") {
             lanText = "葡萄牙语";
         }
-        $("#source-lan option:selected").val(lanText);
+        if (lanText != "" || lanText != null){
+            $("#source-lan option[value=lanText]").attr("selected", true);
+        }
     }
 
 </script>
