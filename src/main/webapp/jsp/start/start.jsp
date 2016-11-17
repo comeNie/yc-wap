@@ -107,7 +107,7 @@
             <p>
                 <select class="select testing-select" id="source-lan">
                     <c:forEach items="${requestScope.languagepairs}" var="pair">
-                        <option>${pair}</option>
+                        <option value="${pair}">${pair}</option>
                     </c:forEach>
                 </select>
                 <span>|</span>
@@ -120,10 +120,10 @@
                     <c:forEach items="${requestScope.languagepairs}" var="pair">
                         <c:choose>
                             <c:when test="${pair=='英语'}">
-                                <option selected="selected">${pair}</option>
+                                <option value="${pair}" selected="selected">${pair}</option>
                             </c:when>
                             <c:otherwise>
-                                <option>${pair}</option>
+                                <option value="${pair}">${pair}</option>
                             </c:otherwise>
                         </c:choose>
 
@@ -435,7 +435,7 @@
             lanText = "葡萄牙语";
         }
         if (lanText != "" || lanText != null){
-            $("#source-lan option[value=lanText]").attr("selected", true);
+            $("#source-lan option[value=lanText]").prop("selected", true);
         }
     }
 
