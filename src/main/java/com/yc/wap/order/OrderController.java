@@ -2,8 +2,11 @@ package com.yc.wap.order;
 
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV;
+import com.ai.yc.order.api.orderclose.param.OrderCancelRequest;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
 import com.ai.yc.order.api.orderdetails.param.QueryOrderDetailsResponse;
 import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
@@ -13,11 +16,14 @@ import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
+import com.yc.wap.system.constants.ConstantsResultCode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * Created by Nozomi on 11/10/2016.
@@ -29,26 +35,14 @@ public class OrderController extends BaseController {
 
     private IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
     private IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
+    private IOrderCancelSV iOrderCancelSV = DubboConsumerFactory.getService(IOrderCancelSV.class);
 
     @RequestMapping(value = "")
     public String order() {
         String isUnPaid = request.getParameter("UnPaid");
         String isUnConfirm = request.getParameter("UnConfirm");
-        QueryOrderRequest req = new QueryOrderRequest();
-        req.setPageNo(1);
-        req.setPageSize(4);
-        req.setUserId((String) session.getAttribute("UID"));
-        log.info("GetAllOrderParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
-        try {
-            QueryOrderRsponse resp = iOrderQuerySV.queryOrder(req);
-            PageInfo<OrdOrderVo> order = resp.getPageInfo();
-            log.info("GetAllOrderReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(order));
-            // TODO request.set
-            return "order/order";
-        } catch (BusinessException | SystemException e) {
-            e.printStackTrace();
-            throw new RuntimeException("GetAllOrderFailed");
-        }
+
+        return "order/order";
     }
 
     @RequestMapping(value = "GetOrderShowNumber")
@@ -85,18 +79,38 @@ public class OrderController extends BaseController {
         return result.returnMsg();
     }
 
-    @RequestMapping(value = "GetMoreOrder")
+    @RequestMapping(value = "GetOrder")
     @ResponseBody
-    public Object GetMoreOrder() {
+    public Object GetOrder() {
         MsgBean result = new MsgBean();
-
-        return result.returnMsg();
+        int Page = Integer.parseInt(request.getParameter("Page"));
+        QueryOrderRequest req = new QueryOrderRequest();
+        req.setPageNo(Page);
+        req.setPageSize(4);
+        req.setUserId((String) session.getAttribute("UID"));
+        log.info("GetOrderParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
+        try {
+            QueryOrderRsponse resp = iOrderQuerySV.queryOrder(req);
+            PageInfo<OrdOrderVo> order = resp.getPageInfo();
+            log.info("GetOrderReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(order));
+            int Count = order.getCount();
+            int PageCount = order.getPageCount();
+            int PageNo = order.getPageNo();
+            List<OrdOrderVo> OrderList = order.getResult();
+            result.put("Count", Count);
+            result.put("PageCount", PageCount);
+            result.put("PageNo", PageNo);
+            result.put("OrderList", OrderList);
+            return result.returnMsg();
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
+            throw new RuntimeException("GetAllOrderFailed");
+        }
     }
 
     @RequestMapping(value = "OrderDetail")
     public String OrderDetail() {
         String OrderId = request.getParameter("OrderId");
-        OrderId = "2000000027472285";
         try {
             log.info("QueryOrderDetailsOrderId: " + OrderId);
             QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(Long.parseLong(OrderId));
@@ -106,6 +120,32 @@ public class OrderController extends BaseController {
             e.printStackTrace();
         }
         return "order/orderdetail";
+    }
+
+    @RequestMapping(value = "OrderCancel")
+    @ResponseBody
+    public Object OrderCancel() {
+        MsgBean result = new MsgBean();
+        String OrderId = request.getParameter("OrderId");
+        String reasonDesc = "Wap取消订单";
+        String operId = (String) session.getAttribute("UID");
+
+        OrderCancelRequest req = new OrderCancelRequest();
+        req.setOperId(operId);
+        req.setReasonDesc(reasonDesc);
+        req.setOrderId(Long.parseLong(OrderId));
+
+        try {
+            BaseResponse resp = iOrderCancelSV.handCancelNoPayOrder(req);
+            if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                return result.returnMsg();
+            } else {
+                throw new RuntimeException("OrderCancelFailed");
+            }
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
+            throw new RuntimeException("OrderCancelFailed");
+        }
     }
 
     @RequestMapping(value = "OrderError")

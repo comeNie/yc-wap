@@ -108,6 +108,7 @@ dependencies {
     compile "com.ai.yc.order:orderquery:${version}"
     compile "com.ai.yc.order:orderdetails:${version}"
     compile "com.ai.yc.order:ordersubmission:${version}"
+    compile "com.ai.yc.order:orderclose:${version}"
 
     //创建账户的包
     compile "com.ai.slp.balance:accountmaintain:${version}"
