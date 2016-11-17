@@ -46,7 +46,7 @@
             <ul>
                 <li class="img"><img src="<%=path%>/ui/images/4.jpg" /></li>
                 <li id="nameLi"></li>
-                <li>普通会员</li>
+                <%--<li>普通会员</li>--%>
             </ul>
         </section>
         <section class="personal-tab">
@@ -67,30 +67,30 @@
         </section>
         <section class="personal-list">
             <ul>
-                <a href="javascript:void(0)">
+                <a href="javascript:window.location.href='<%=path%>/order'">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-9.jpg" /></p>
                         <p>我的订单</p>
                     </li>
                 </a>
-                <a href="javascript:void(0)" onclick="toBalance()">
+                <a href="javascript:window.location.href='<%=path%>/account/balance'">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-10.jpg" /></p>
                         <p>我的账户</p>
                     </li>
                 </a>
-                <a href="javascript:void(0)" onclick="toSafe()">
+                <a href="javascript:window.location.href='<%=path%>/safe/safe'">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-11.jpg" /></p>
                         <p>安全设置</p>
                     </li>
                 </a>
-                <a href="javascript:void(0)">
-                    <li>
-                        <p><img src="<%=path%>/ui/images/icon-12.jpg" /></p>
-                        <p>我的积分</p>
-                    </li>
-                </a>
+                <%--<a href="javascript:void(0)">--%>
+                    <%--<li>--%>
+                        <%--<p><img src="<%=path%>/ui/images/icon-12.jpg" /></p>--%>
+                        <%--<p>我的积分</p>--%>
+                    <%--</li>--%>
+                <%--</a>--%>
             </ul>
         </section>
 
@@ -100,14 +100,7 @@
 </body>
 </html>
 <script>
-    function toBalance(){
-        var tourl = "<%=path%>/account/balance";
-        window.location.href=tourl;
-    }
-    function toSafe(){
-        var tourl = "<%=path%>/safe/safe";
-        window.location.href=tourl;
-    }
+
     $(function() {
         $("#nameLi").html("${username}");
 
