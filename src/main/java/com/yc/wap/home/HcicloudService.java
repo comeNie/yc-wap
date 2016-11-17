@@ -72,7 +72,7 @@ public class HcicloudService {
             audioformat = ",audioformat=mp3_16";
         }
         config += audioformat;
-
+        config += "speed=4";
         HttpPost post = new HttpPost(SERVER_URL);
         HttpResponse ttsResponse = null;
         CloseableHttpClient client = HttpClients.createDefault();
