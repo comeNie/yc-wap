@@ -157,8 +157,8 @@
     });
 
     var index = 0;
-    function lowEnough(){
-        var pageHeight = Math.max(document.body.scrollHeight,document.body.offsetHeight);
+    function lowEnough() {
+        var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
         var viewportHeight = window.innerHeight ||
                 document.documentElement.clientHeight ||
                 document.body.clientHeight || 0;
@@ -166,16 +166,16 @@
                 document.documentElement.scrollTop ||
                 document.body.scrollTop || 0;
 
-         console.log(pageHeight);
-         console.log(viewportHeight);
-         console.log(scrollHeight);
+//        console.log(pageHeight);
+//        console.log(viewportHeight);
+//        console.log(scrollHeight);
         return pageHeight - viewportHeight - scrollHeight < 20;
     }
 
-    function doSomething(){
+    function doSomething() {
         var htmlStr = "";
-        for(var i=0;i<10;i++){
-            htmlStr += "这是第"+index+"次加载<br>";
+        for (var i = 0; i < 10; i++) {
+            htmlStr += "这是第" + index + "次加载<br>";
         }
         $('#sample').append(htmlStr);
         index++;
@@ -183,15 +183,15 @@
         $('#spinner').hide();
     }
 
-    function checkScroll(){
-        if(!lowEnough()) return pollScroll();
+    function checkScroll() {
+        if (!lowEnough()) return pollScroll();
 
         $('#spinner').show();
-        setTimeout(doSomething,900);
+        setTimeout(doSomething, 900);
 
     }
-    function pollScroll(){
-        setTimeout(checkScroll,1000);
+    function pollScroll() {
+        setTimeout(checkScroll, 1000);
     }
     checkScroll();
 
