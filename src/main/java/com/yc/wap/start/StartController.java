@@ -1,7 +1,6 @@
 package com.yc.wap.start;
 
 
-import com.yc.wap.home.HcicloudService;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
