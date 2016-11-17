@@ -44,7 +44,14 @@
         <!--个人中心-->
         <section class="personal-banner">
             <ul>
-                <li class="img"><img src="<%=path%>/ui/images/4.jpg" /></li>
+                <li class="img">
+                    <c:if test="${userurl == null}">
+                        <img src="<%=path%>/ui/images/4.jpg" />
+                    </c:if>
+                    <c:if test="${userurl != null}">
+                        <img src="${userurl}">
+                    </c:if>
+                </li>
                 <li id="nameLi"></li>
                 <%--<li>普通会员</li>--%>
             </ul>

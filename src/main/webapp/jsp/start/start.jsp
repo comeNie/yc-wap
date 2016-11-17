@@ -140,7 +140,7 @@
         <p>
             <a href="#" id="text_audio"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
             <a href="#" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
-            <audio src="" controls="controls"  id="audioPlay" style="display: none">
+            <audio src="" controls="controls"  id="audioPlay">
                 Your browser does not support audio tag
             </audio>
         </p>
@@ -292,22 +292,21 @@
 
         $("#toAudio").bind("click",function () {
             console.info("点啦这个小喇叭");
-            beRead=$("#result-text").val();
+            beRead=$.trim($("#result-text").val());
             console.info("beRead....."+beRead);
             if (beRead==""||beRead==null){
                 return;
             }
             var ttslength=mbStringLength(beRead);
-            console.info("ttslenght>>>"+ttslength);
             if (ttslength>1024){
                 $("#text_audio").css("display","none");
             }
             var audioPlay=document.getElementById("audioPlay");
-            console.info("audioPlay>>>>>"+audioPlay.paused);
             if (audioPlay.paused){
                 var ttsUrl="<%=path%>/ttsSync?languages="+tarvalue+"&beRead="+beRead;
-                console.info("ttsUrl..."+ttsUrl);
+//                console.info("ttsUrl..."+ttsUrl);
                 $("#audioPlay").attr("src",ttsUrl);
+                audioPlay.play();
             }else{
                 audioPlay.pause;
             }

@@ -21,10 +21,8 @@ public class CenterController extends BaseController {
     @RequestMapping(value = "center")
     public String center() {
         log.info("account-center invoked");
-        String username = (String) session.getAttribute("username");
-        String uid = (String) session.getAttribute("UID");
-        request.setAttribute("username",username);
 
+        String uid = (String) session.getAttribute("UID");
         //查询用户信息
         SearchYCUserRequest userRequest = new SearchYCUserRequest();
         userRequest.setUserId(uid);
@@ -32,6 +30,9 @@ public class CenterController extends BaseController {
         log.info("message"+infoResponse.getResponseHeader().getResultMessage());
         log.info("url:"+ infoResponse.getUrl());
         log.info("info:"+ infoResponse);
+
+//        request.setAttribute("username",infoResponse.getUsername());
+        request.setAttribute("userurl",infoResponse.getUrl());
         return "center/center";
     }
 }
