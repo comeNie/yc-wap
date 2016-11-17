@@ -2,11 +2,8 @@ package com.yc.wap.start;
 
 
 import com.ai.opt.base.exception.BusinessException;
-import com.alibaba.fastjson.JSON;
-import com.yc.wap.home.HcicloudService;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
-
 import com.yc.wap.system.utils.HttpUtil;
 import com.yc.wap.system.utils.HttpsUtil;
 import net.sf.json.JSONArray;
@@ -16,7 +13,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
