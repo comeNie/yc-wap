@@ -412,14 +412,29 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    var finLan = result.fintec;
-                    console.info(finLan);
+                    var finLan = data.fintec;
+                    chooseLan(finLan);
                 }
             },
             error: function () {
 
             }
         });
+    }
+    function chooseLan(lan) {
+        var lanText;
+        if (lan == "zh") {
+            lanText = "中文";
+        } else if (lan == "en") {
+            lanText = "英文";
+        } else if (lan == "fr") {
+            lanText = "法语";
+        } else if (lan == "ru") {
+            lanText = "俄语";
+        } else if (lan == "pt") {
+            lanText = "葡萄牙语";
+        }
+        $("#source-lan option:selected").val(lanText);
     }
 
 </script>
