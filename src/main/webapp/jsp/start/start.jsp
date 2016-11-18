@@ -143,7 +143,7 @@
         <!--翻译内容-->
         <section class="translation-content">
             <textarea class="textarea textarea-large" id="chickText" maxlength="2000"></textarea>
-            <a hrel="javascript:void(0)" ><i class="icon iconfont" onclick="clear()">&#xe618;</i></a>
+            <a hrel="javascript:void(0)" ><i class="icon iconfont" id="clear">&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
         <section class="translate-btn" id="chickBtn">
@@ -154,6 +154,7 @@
             <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
 
             <p>
+                <label id="tipLabel">nsidnai</label>
                 <a href="javascript:void(0)" id="text_audio" onclick="playAudio()"><i class="icon iconfont">&#xe61b;</i></a>
                 <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
                 <audio src="" controls="controls" id="audioPlay" hidden>
@@ -213,11 +214,11 @@
 
 <script type="text/javascript">
     var IsTranslated = false;
-
+    var realLangeuage;
     $(function () {
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
-            $("#text_audio").css("display", "block");
+            $("#text_audio").css("display", "none");
         });
     });
     $(document).ready(function () {
@@ -235,7 +236,17 @@
             $("#results").css("display", "none");
             $("#chickBtn").css("display", "block");
         });
-
+        //清除
+        $("#clear").click(function(){
+            if (IsTranslated == true) {
+                $("#results").css("display", "none");
+                $("#btn-translate").css("display", "block");
+                $("#chickText").focus();
+                IsTranslated = false;
+            } else {
+                $("#chickText").val("");
+            }
+        });
 
 //        跳转到笔译下单
         $("#banner1").bind("click", function () {
@@ -287,19 +298,9 @@
         return totalLength;
     }
 
-    //清空内容
-    function clear(){
-        if (IsTranslated == true) {
-            $("#results").css("display", "none");
-            $("#btn-translate").css("display", "block");
-            $("#chickText").focus();
-            IsTranslated = false;
-        } else {
-            $("#chickText").val("");
-        }
-    }
 //    翻译按钮的点击事件
     function goTranslate() {
+
         var textStr = $("#chickText").val();
         if (textStr == "" || textStr == null) {
             $('#results').css("display", "none");
@@ -310,6 +311,30 @@
 
         var source = $("#source-lan").val();
         var target = $("#target-lan").val();
+        if(realLangeuage == target){
+            $("#result-text").html(textStr);
+            return;
+        }
+        if (realLangeuage != source){
+            switch (realLangeuage){
+                case "zh":
+                    $("#tipLabel").html("检测为简体中文");
+                    break;
+                case "en":
+                    $("#tipLabel").html("检测为英文");
+                    break;
+                case "fr":
+                    $("#tipLabel").html("检测为法语");
+                    break;
+                case "ru":
+                    $("#tipLabel").html("检测为俄语");
+                    break;
+                case "pt":
+                    $("#tipLabel").html("检测为葡萄牙语");
+                    break;
+            }
+            source = realLangeuage;
+        }
         $.ajax({
             async: true,
             type: "POST",
@@ -350,12 +375,9 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    var finLan = data.fintec;
-                    chooseLan(finLan);
+                    realLangeuage = data.fintec;
+                    chooseLan(realLangeuage);
                 }
-            },
-            error: function () {
-
             }
         });
     }
