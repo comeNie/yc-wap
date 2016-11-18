@@ -39,13 +39,6 @@ public class StartController extends BaseController{
     @RequestMapping(value = "index")
     public  String start(HttpServletRequest request) {
         log.info("StartController-index invoked");
-//        List<String> pairs=new ArrayList<>();
-//        pairs.add("中文");
-//        pairs.add("英语");
-//        pairs.add("法语");
-//        pairs.add("俄语");
-//        pairs.add("葡萄牙语");
-//        request.setAttribute("languagepairs",pairs);
 
         return "start/start";
     }
