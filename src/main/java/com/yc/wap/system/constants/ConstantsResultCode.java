@@ -16,4 +16,6 @@ public class ConstantsResultCode {
     public static final String ACCT_INFO_NOTFOUND = "101010";
     public static final String WEIXIN_SUCCESS = "SUCCESS";
     public static final String WEIXIN_FAILDE = "FAILED";
+
+    public static final String NOACCOUNT = "0001";//账户没有账本
 }

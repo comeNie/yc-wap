@@ -52,6 +52,7 @@ public class AccountController extends BaseController {
     @ResponseBody
     public Object GetBalance() {
         MsgBean result = new MsgBean();
+        String Balance = "0.00";
         String UID = (String) session.getAttribute("UID");
         AccountIdParam req = new AccountIdParam();
         req.setAccountId(Long.parseLong(UID));
@@ -61,6 +62,10 @@ public class AccountController extends BaseController {
             FundInfo resp = iFundQuerySV.queryUsableFund(req);
             if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 log.info("QueryUsableFundReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
+                // TODO result.put balance
+            } else if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.NOACCOUNT)) {
+                Balance = "0.00";
+                // TODO result.put balance
             } else {
                 log.info("QueryUsableFund: " + resp.getResponseHeader().getResultCode() + ", Msg: " + resp.getResponseHeader().getResultMessage());
                 throw new RuntimeException("QueryUsableFundFailed");
