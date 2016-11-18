@@ -68,7 +68,7 @@ public class WrittenController extends BaseController {
     private List GetDualList(String Language, String OrderType) {
         try {
             QuerySysDuadListReq req = new QuerySysDuadListReq();
-            req.setLanguage(Language);
+//            req.setLanguage(Language);
             req.setOrderType(OrderType);
             QuerySysDuadListRes resp = iQuerySysDuadSV.querySysDuadList(req);
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
@@ -83,7 +83,7 @@ public class WrittenController extends BaseController {
 
     private List GetPurposeList(String Language) {
         try {
-            QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList(Language);
+            QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList("");
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 throw new RuntimeException("GetPurposeListFailed");
             }
@@ -96,7 +96,7 @@ public class WrittenController extends BaseController {
 
     private List GetDomainList(String Language) {
         try {
-            QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList(Language);
+            QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList("");
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 throw new RuntimeException("GetDomainListFailed");
             }
@@ -135,6 +135,7 @@ public class WrittenController extends BaseController {
             req.setPurposeId(PurposeId);
             req.setTranslateLevel(TransLvId);
             req.setUrgent(isExpress);
+            req.setLanguage(QueryAutoOfferReq.LANGUAGE_ZH_CN);
             QueryAutoOfferRes resp = iQueryAutoOfferSV.queryAutoOffer(req);
             if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 String Price = resp.getPrice().toString();
