@@ -167,8 +167,8 @@ public class LoginController extends BaseController {
         res.setLoginway(Constants.RegisterModel.PhonePsdModel);
         res.setUserId(personUid);
         res.setOperationcode(code);
-        res.setUserName("yiyun" + RandomUtil.randomNum(10));
-        res.setNickname("译粉_" + RandomUtil.randomNum(8));
+//        res.setUserName("yiyun" + RandomUtil.randomNum(10));
+//        res.setNickname("译粉_" + RandomUtil.randomNum(8));
         try {
             YCInsertUserResponse resp = iycUserServiceSV.insertYCUser(res);
             String  message = resp.getResponseHeader().getResultMessage();  //通过code进行捕获

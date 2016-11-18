@@ -105,48 +105,56 @@
         <!--转换语言-->
         <section class="testing">
             <p>
-                <select class="select testing-select" id="source-lan">
-                    <c:forEach items="${requestScope.languagepairs}" var="pair">
-                        <option value="${pair}">${pair}</option>
-                    </c:forEach>
+                <select tabindex="5" class="select testing-select" id="source-lan">
+                    <%--自动检测--%>
+                    <option value="auto">自动检测</option>
+                    <%--中文简体--%>
+                    <option value="zh">简体中文</option>
+                    <%--英语--%>
+                    <option value="en">英语</option>
+                    <%--法语--%>
+                    <option value="fr">法语</option>
+                    <%--俄语--%>
+                    <option value="ru">俄语</option>
+                    <%--葡萄牙语--%>
+                    <option value="pt">葡萄牙语</option>
                 </select>
                 <span>|</span>
             </p>
-            <p class="test-icon" style="vertical-align: middle"><i class="icon iconfont" id="change-lan">&#xe621;</i>
+            <p class="test-icon" style="vertical-align: middle" onclick="changeSelect()"><i class="icon iconfont" id="change-lan">&#xe621;</i>
             </p>
 
             <p>
                 <select class="select testing-select" id="target-lan">
-                    <c:forEach items="${requestScope.languagepairs}" var="pair">
-                        <c:choose>
-                            <c:when test="${pair=='英语'}">
-                                <option value="${pair}" selected="selected">${pair}</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="${pair}">${pair}</option>
-                            </c:otherwise>
-                        </c:choose>
-
-                    </c:forEach>
+                    <%--中文简体--%>
+                    <option value="zh">简体中文</option>
+                    <%--英语--%>
+                    <option value="en" selected>英语</option>
+                    <%--法语--%>
+                    <option value="fr">法语</option>
+                    <%--俄语--%>
+                    <option value="ru">俄语</option>
+                    <%--葡萄牙语--%>
+                    <option value="pt">葡萄牙语</option>
                 </select>
                 <span>|</span>
             </p>
         </section>
         <!--翻译内容-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" id="chick-int" maxlength="2000"></textarea>
-            <a hrel="javascript:void(0)"><i class="icon iconfont" id="btn-textarea-clear">&#xe618;</i></a>
+            <textarea class="textarea textarea-large" id="chickText" maxlength="2000"></textarea>
+            <a hrel="javascript:void(0)" ><i class="icon iconfont" onclick="clear()">&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
-        <section class="translate-btn" id="chick-btn">
-            <a href="javascript:void(0)" class="btn btn-big" id="btn-translate">翻译</a>
+        <section class="translate-btn" id="chickBtn">
+            <a href="javascript:void(0)" onclick="goTranslate()" class="btn btn-big">翻译</a>
         </section>
         <!--翻译结果-->
         <section class="translation-content-english" id="results">
             <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
 
             <p>
-                <a href="javascript:void(0)" id="text_audio"><i class="icon iconfont" id="toAudio">&#xe61b;</i></a>
+                <a href="javascript:void(0)" id="text_audio" onclick="playAudio()"><i class="icon iconfont">&#xe61b;</i></a>
                 <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
                 <audio src="" controls="controls" id="audioPlay" hidden>
                     Your browser does not support audio tag
@@ -205,173 +213,103 @@
 
 <script type="text/javascript">
     var IsTranslated = false;
-    var sourcetext = "";
-    var srctext;
-    var tartext;
-    var srcvalue = "zh";
-    var tarvalue = "en";
-    var landetec;
-    var lanLength;
-    var beRead;
-
 
     $(function () {
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
             $("#text_audio").css("display", "block");
         });
-
-        var Language = "${pageContext.response.locale}";
-//        if (Language == "zh_CN") {
-//            $("#auto-zh").css("display", "block");
-//            $("#auto-en").css("display", "none");
-//            srcvalue = "zh";
-//        } else if (Language == "en_US") {
-//            $("#source-lan option:selected").attr("selected", "");
-//            $("#auto-en").css("display", "block");
-//            $("#auto-en").attr("selected", "selected");
-//            $("#auto-zh").css("display", "none");
-//            srcvalue = "en";
-//            tarvalue = "zh";
-//        }
     });
     $(document).ready(function () {
-        <!--监听输入的文本内容-->
-        $("#chick-int").bind("input propertychange", function () {
-            landetec = $("#chick-int").val();
-//            lanLength = count(escape(landetec));
-//            if (lanLength >= 2000) {
-//                $("#chick-int").val(landetec.substring(0, 2000));
-//            }
+//        监听输入的文本内容
+        $("#chickText").bind("input propertychange", function () {
+            landetec = $("#chickText").val();
             if (landetec == "" || landetec == null) {
                 return;
             }
             contentDetection(landetec);
         });
 
-
-        $("#btn-textarea-clear").bind("click", function () {
-            if (IsTranslated == true) {
-                $("#results").css("display", "none");
-                $("#btn-translate").css("display", "block");
-                $("#chick-int").focus();
-                IsTranslated = false;
-            } else {
-                window.location.href = "<%=path%>";
-            }
-        });
-
-        <!--翻译源内容文本框获取焦点-->
-        $("#chick-int").focus(function () {
+//        翻译源内容文本框获取焦点
+        $("#chickText").focus(function () {
             $("#results").css("display", "none");
-            $("#chick-btn").css("display", "block");
+            $("#chickBtn").css("display", "block");
         });
 
 
-        <!--选择源语言-->
-        $("#source-lan").bind("click", function () {
-            chooseSourLan();
-        });
-        <!--选择目标语言-->
-        $("#target-lan").bind("click", function () {
-            chooseTarLan();
-        });
-
-        <!--翻译-->
-        $("#chick-btn").bind("click", function () {
-            sourcetext = $("#chick-int").val();
-            if (sourcetext == "" || sourcetext == null) {
-                $('#results').css("display", "none");
-                return;
-            }
-            $("#chick-btn").css("display", "none");
-            $('#results').css("display", "block");
-            translate(sourcetext);
-        });
-
-        $("#toAudio").bind("click", function () {
-            beRead = $.trim($("#result-text").val());
-            if (beRead == "" || beRead == null) {
-                return;
-            }
-            var ttslength = mbStringLength(beRead);
-            if (ttslength > 1024) {
-                $("#text_audio").css("display", "none");
-            }
-            var audioPlay = document.getElementById("audioPlay");
-            if (audioPlay.paused) {
-                var ttsUrl = "<%=path%>/ttsSync?languages=" + tarvalue + "&beRead=" + beRead;
-//                console.info("ttsUrl..."+ttsUrl);
-                $("#audioPlay").attr("src", ttsUrl);
-                audioPlay.play();
-            } else {
-                audioPlay.pause;
-            }
-        });
-
-        function mbStringLength(s) {
-            var totalLength = 0;
-            var charCode;
-            for (var i = 0; i < s.length; i++) {
-                charCode = s.charCodeAt(i);
-                if (charCode < 0x007f) {
-                    totalLength = totalLength + 1;
-                } else if ((0x0080 <= charCode) && (charCode <= 0x07ff)) {
-                    totalLength += 2;
-                } else if ((0x0800 <= charCode) && (charCode <= 0xffff)) {
-                    totalLength += 3;
-                }
-            }
-            return totalLength;
-        }
-
-        <!--跳转到笔译下单-->
+//        跳转到笔译下单
         $("#banner1").bind("click", function () {
             window.location.href = "<%=path%>/written";
         });
 
+        $("#target-lan").bind("change",function(){
+            goTranslate();
+        });
+
+        $("#source-lan").bind("change",function(){
+            goTranslate();
+        });
 
     });
-
-    <!--手动选择源语言-->
-
-    function chooseSourLan() {
-        srctext = $("#source-lan option:selected").text();
-        if (srctext == "中文") {
-            srcvalue = "zh";
-        } else if (srctext == "英语") {
-            srcvalue = "en";
-        } else if (srctext == "法语") {
-            srcvalue = "fr";
-        } else if (srctext == "俄语") {
-            srcvalue = "ru";
-        } else if (srctext == "葡萄牙语") {
-            srcvalue = "pt";
+    //播放声音
+    function playAudio(){
+        var beRead = $.trim($("#result-text").val());
+        if (beRead == "" || beRead == null) {
+            return;
         }
-        console.info("srcvalue-----" + srcvalue);
+        var ttslength = mbStringLength(beRead);
+        if (ttslength > 1024) {
+            $("#text_audio").css("display", "none");
+        }
+        var audioPlay = document.getElementById("audioPlay");
+        if (audioPlay.paused) {
+            var target = $("#target-lan").val();
+            var ttsUrl = "<%=path%>/ttsSync?languages=" + target + "&beRead=" + beRead;
+            $("#audioPlay").attr("src", ttsUrl);
+            audioPlay.play();
+        } else {
+            audioPlay.pause;
+        }
+    }
+    function mbStringLength(s) {
+        var totalLength = 0;
+        var charCode;
+        for (var i = 0; i < s.length; i++) {
+            charCode = s.charCodeAt(i);
+            if (charCode < 0x007f) {
+                totalLength = totalLength + 1;
+            } else if ((0x0080 <= charCode) && (charCode <= 0x07ff)) {
+                totalLength += 2;
+            } else if ((0x0800 <= charCode) && (charCode <= 0xffff)) {
+                totalLength += 3;
+            }
+        }
+        return totalLength;
     }
 
-    <!--手动选择目标语种-->
-    function chooseTarLan() {
-        tartext = $("#target-lan option:selected").text();
-        console.info("tartext-------" + tartext);
-        if (tartext == "中文") {
-            tarvalue = "zh";
-        } else if (tartext == "英语") {
-            tarvalue = "en";
-        } else if (tartext == "法语") {
-            tarvalue = "fr";
-        } else if (tartext == "俄语") {
-            tarvalue = "ru";
-        } else if (tartext == "葡萄牙语") {
-            tarvalue = "pt";
+    //清空内容
+    function clear(){
+        if (IsTranslated == true) {
+            $("#results").css("display", "none");
+            $("#btn-translate").css("display", "block");
+            $("#chickText").focus();
+            IsTranslated = false;
+        } else {
+            $("#chickText").val("");
         }
-        console.info("tarvalue-----" + tarvalue);
     }
+//    翻译按钮的点击事件
+    function goTranslate() {
+        var textStr = $("#chickText").val();
+        if (textStr == "" || textStr == null) {
+            $('#results').css("display", "none");
+            return;
+        }
+        $("#chickBtn").css("display", "none");
+        $('#results').css("display", "block");
 
-    <!--翻译按钮的点击事件-->
-    function translate(sourcetext) {
-        console.info("sourcetext...." + sourcetext);
+        var source = $("#source-lan").val();
+        var target = $("#target-lan").val();
         $.ajax({
             async: true,
             type: "POST",
@@ -380,9 +318,9 @@
             showBusi: false,
             timeout: 30000,
             data: {
-                srcl: srcvalue,
-                tgtl: tarvalue,
-                text: sourcetext
+                srcl: source,
+                tgtl: target,
+                text: textStr
             },
             success: function (data) {
                 console.info(data);
@@ -390,16 +328,16 @@
                     $("#result-text").html(data.target);
                     IsTranslated = true;
                 } else {
-
+                    IsTranslated = false;
                 }
             },
             error: function (data) {
-                console.info(data);
+                IsTranslated = false;
             }
         });
 
     }
-
+//  调用接口查看语言
     function contentDetection(landetec) {
         $.ajax({
             async: true,
@@ -421,22 +359,39 @@
             }
         });
     }
+    //自动选择语言
     function chooseLan(lan) {
         var lanText;
-        if (lan == "zh") {
-            lanText = "中文";
-        } else if (lan == "en") {
-            lanText = "英文";
-        } else if (lan == "fr") {
-            lanText = "法语";
-        } else if (lan == "ru") {
-            lanText = "俄语";
-        } else if (lan == "pt") {
-            lanText = "葡萄牙语";
-        }
-        if (lanText != "" || lanText != null){
-            $("#source-lan option[value=lanText]").prop("selected", true);
+        var select = document.getElementById("source-lan");
+        if (lan != "" || lan != null){
+            for(var i=0; i<select.options.length; i++){
+                if(select.options[i].value == lan){
+                    select.options[i].selected = true;
+                    break;
+                }
+            }
         }
     }
 
+    //切换语言对
+    function changeSelect(){
+        var source = $("#source-lan").val();
+        var target = $("#target-lan").val();
+        if (source != "auto" && source != target){
+            var selectSource = document.getElementById("source-lan");
+            for(var i=0; i<selectSource.options.length; i++){
+                if(selectSource.options[i].value == target){
+                    selectSource.options[i].selected = true;
+                    break;
+                }
+            }
+            var selectTarget = document.getElementById("target-lan");
+            for(var i=0; i<selectTarget.options.length; i++){
+                if(selectTarget.options[i].value == source){
+                    selectTarget.options[i].selected = true;
+                    break;
+                }
+            }
+        }
+    }
 </script>
