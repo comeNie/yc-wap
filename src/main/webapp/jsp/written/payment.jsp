@@ -32,19 +32,30 @@
 
     <!--订单内容-->
     <div class="confirm-list">
-
-        <ul style="display: none">
-            <li class="word">使用优惠劵:</li>
+        <ul>
+            <li class="word">翻译主题:</li>
             <li>
                 <p>
                     <select class="select testing-select-big">
-                        <option>50元（有效期至2016-12-31）</option>
+                        <option>企业订单（8折）</option>
                     </select>
                     <span>|</span>
                 </p>
             </li>
         </ul>
-        <ul style="display: none">
+        <ul>
+            <li class="word">使用优惠劵:</li>
+            <li>
+                <p>
+                    <select class="select testing-select-big" disabled id="sel">
+                        <option>50元（有效期至2016-12-31）</option>
+                    </select>
+                    <span>|</span>
+                    <label></label>
+                </p>
+            </li>
+        </ul>
+        <ul>
             <li class="word">输入优惠码:</li>
             <li>
                 <p>
@@ -55,7 +66,7 @@
                 </p>
             </li>
         </ul>
-        <ul style="display: none">
+        <ul>
             <li><input type="radio" class="radio"/>翻译后付费</li>
         </ul>
 
@@ -80,8 +91,8 @@
     <input type="hidden" name="orderAmount" value="${Price}">
     <input type="hidden" name="currencyUnit" value="1">
     <input type="hidden" id="payType" name="payOrgCode" value="PP">
-    <input type="hidden" id="merchantUrl" name="merchantUrl">    <%--当前地址--%>
-    <input type="hidden" name="orderType" value="1">    <%--订单类型 目前只支持用户--%>
+    <input type="hidden" id="merchantUrl" name="merchantUrl"> <%--当前地址--%>
+    <input type="hidden" name="orderType" value="1"> <%--订单类型 目前只支持用户--%>
 </form>
 
 <!--底部-->
