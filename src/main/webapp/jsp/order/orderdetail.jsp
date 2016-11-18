@@ -29,39 +29,38 @@
     </jsp:include>
     <!--加载更多-->
     <section class="original-big">
-        <div class="original-cont">
+        <div class="original-cont" id="cont-name">
             <ul>
                 <li>
-                    <p>原文:</p>
-                    <p class="sm-word">翻译什么翻译什么翻译什么翻译什么翻译什么翻译什么翻译什么翻译什么</p>
+                    <p>翻译主题:</p>
+                    <p class="sm-word">${Params.translateName}</p>
                 </li>
             </ul>
-            <ul>
-                <li>
-                    <p>译文:<span>(修改中)</span></p>
-                    <p class="sm-word">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aen euismod bibendum
-                        laotreet. Proin ……</p>
-                </li>
-            </ul>
+            <%--<ul>--%>
+            <%--<li>--%>
+            <%--<p>译文:<span>(修改中)</span></p>--%>
+            <%--<p class="sm-word">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aen euismod bibendum--%>
+            <%--laotreet. Proin ……</p>--%>
+            <%--</li>--%>
+            <%--</ul>--%>
         </div>
-        <div id="cont-hid"><!--加载显示-->
+        <div id="cont-hid" style="display: none"><!--加载显示-->
             <div class="original-cont">
                 <ul>
                     <li>
                         <p>原文:</p>
-                        <p class="sm-word">翻译什么翻译什么翻译什么翻译什么翻译什么翻译什么翻译什么翻译什么</p>
+                        <p class="sm-word">${Params.needTranslateInfo}</p>
                     </li>
                 </ul>
                 <ul>
                     <li>
                         <p>译文:<span>(修改中)</span></p>
-                        <p class="sm-word">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aen euismod bibendum
-                            laotreet. Proin ……</p>
+                        <p class="sm-word">${Params.translateInfo}</p>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="click-more"><a href="#">点击查看更多</a></div>
+        <div class="click-more" id="click-more"><a href="#" id="more" flag="closed">点击查看更多</a></div>
     </section>
     <!--订单form-->
     <section class="my-order-content">
@@ -144,16 +143,16 @@
                 <li class="right">${Params.discountSum}</li>
             </ul>
             <%--<ul class="zhek">--%>
-                <%--<li>--%>
-                    <%--<p>－优惠码:</p>--%>
-                <%--</li>--%>
-                <%--<li class="right">32元</li>--%>
+            <%--<li>--%>
+            <%--<p>－优惠码:</p>--%>
+            <%--</li>--%>
+            <%--<li class="right">32元</li>--%>
             <%--</ul>--%>
             <%--<ul class="zhek">--%>
-                <%--<li>--%>
-                    <%--<p>－优惠卷:</p>--%>
-                <%--</li>--%>
-                <%--<li class="right">232元</li>--%>
+            <%--<li>--%>
+            <%--<p>－优惠卷:</p>--%>
+            <%--</li>--%>
+            <%--<li class="right">232元</li>--%>
             <%--</ul>--%>
             <ul class="top-ulborder ulborder">
                 <li>
@@ -203,7 +202,15 @@
 <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-
+        $("#click-more").bind("click", function () {
+            if ($("#more").attr("flag") == "closed") {
+                $("#cont-hid").css("display", "block");
+                $("#more").attr("flag", "opened");
+            } else if ($("#more").attr("flag") == "opened") {
+                $("#cont-hid").css("display", "none");
+                $("#more").attr("flag", "closed");
+            }
+        });
     });
 
     $(function () {

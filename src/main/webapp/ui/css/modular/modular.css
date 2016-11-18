@@ -29,8 +29,8 @@
 .prompt-confirm{ width:100%;float:left;padding:0.67rem 0;}
 .prompt-confirm ul{ width:100%;float:left;padding:0 0.8rem; }
 .prompt-confirm ul li{text-align:center;font-size:0.42rem;color:#666;margin-bottom:0.3rem;}
-.prompt-confirm-btn{width:100%;float:left;border-top:1px solid #c4c4c4}
-
+.prompt-confirm-btn{width:100%;float:left;border-top:1px solid #c4c4c4;text-align: center;}
+.prompt-confirm-btn a{width:100%;line-height:1.28rem;height:1.28rem;float:left}
 
 /**首页**/
 /**语言转换**/
@@ -337,6 +337,7 @@
 .about ul li img{width:8.85rem;height:1.06rem;text-align: center;}
 .about ul .blue{color:#1780e3}
 .about ul .td{text-indent:2em;}
+.about ul .word{font-weight:bold;}
 /**译员招募**/
 .rect-banner{width:100%;float:left;}
 .rect-banner img{width:16rem;height:7.04rem;}

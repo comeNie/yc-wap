@@ -36,7 +36,7 @@
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a class="btn btn-white" id="prompt-btn">确认</a>
+                <a hrel="#" id="prompt-btn">确认</a>
             </div>
 
         </div>

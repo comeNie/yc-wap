@@ -60,10 +60,10 @@ $(".my-order-list ul:last").css("border-bottom","none");
 });
 
 
-//订单详细
-$(function () {
-    var st = 100;
-    $('.click-more a').click(function () {
-		$('#cont-hid').toggle();
-    })
-  });
+// //订单详细
+// $(function () {
+//     var st = 100;
+//     $('.click-more a').click(function () {
+// 		$('#cont-hid').toggle();
+//     })
+//   });

@@ -140,6 +140,14 @@ public class OrderController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "OrderConfirm")
+    @ResponseBody
+    public Object OrderConfirm() {
+        MsgBean result = new MsgBean();
+
+        return result.returnMsg();
+    }
+
     @RequestMapping(value = "OrderDetail")
     public String OrderDetail() {
         String OrderId = request.getParameter("OrderId");
@@ -177,6 +185,10 @@ public class OrderController extends BaseController {
                 discountSum = discountSum + "折";
             }
 
+            String translateType = resp.getTranslateType();
+            String translateName = resp.getTranslateName();
+            String displayFlag  = resp.getDisplayFlag();
+
             String PriceDisplay = df.format(Double.parseDouble(OrderPrice));
             String OrderTime = sdf.format(Time);
             String TransLang = prodExtends.getLangungePairName();
@@ -189,7 +201,15 @@ public class OrderController extends BaseController {
             String contactTel = Contacts.getContactTel();
             String contactEmail = Contacts.getContactEmail();
 
+            String needTranslateInfo = ProdList.getNeedTranslateInfo();
+            String translateInfo = ProdList.getTranslateInfo();
+
+
             JSONObject ParamJson = new JSONObject();
+            ParamJson.put("translateType", translateType);
+            ParamJson.put("translateName", translateName);
+            ParamJson.put("displayFlag", displayFlag);
+
             ParamJson.put("OrderId", OrderId);
             ParamJson.put("PriceDisplay", PriceDisplay);
             ParamJson.put("OrderTime", OrderTime);
@@ -203,6 +223,9 @@ public class OrderController extends BaseController {
             ParamJson.put("contactName", contactName);
             ParamJson.put("contactTel", contactTel);
             ParamJson.put("contactEmail", contactEmail);
+
+            ParamJson.put("needTranslateInfo", needTranslateInfo);
+            ParamJson.put("translateInfo", translateInfo);
             if (isUrgent.equals("Y")) {
                 ParamJson.put("Urgent", "加急");
             }

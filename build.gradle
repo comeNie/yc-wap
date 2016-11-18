@@ -112,6 +112,7 @@ dependencies {
 
     //创建账户的包
     compile "com.ai.slp.balance:accountmaintain:${version}"
+    compile "com.ai.slp.balance:fundquery:${version}"
 
     //查询用户基本信息数据
     compile "com.ai.yc.user:userservice:${version}"

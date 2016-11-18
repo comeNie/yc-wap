@@ -5,6 +5,8 @@ package com.yc.wap.system.constants;
  */
 public class Constants {
 
+    public static final String TENANTID = "yeecloud";
+
     /**
      * ajax返回状态
      */
