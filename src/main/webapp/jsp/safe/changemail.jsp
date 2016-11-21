@@ -165,6 +165,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#phonetips").css("display", "none");
+                    $("#mail").attr("disabled","true");
                     countDown(60);
                 } else {
                     $("#phonetips").html(data.msg);

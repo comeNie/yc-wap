@@ -144,11 +144,11 @@
         </section>
         <!--翻译内容-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" id="chickText" maxlength="2000"></textarea>
+            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" maxlength="2000"></textarea>
             <a hrel="javascript:void(0)" ><i class="icon iconfont" id="clear">&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
-        <section class="translate-btn" id="chickBtn">
+        <section class="translate-btn" id="chick-btn">
             <a href="javascript:void(0)" onclick="goTranslate()" class="btn btn-big">翻译</a>
         </section>
         <!--翻译结果-->
@@ -156,8 +156,11 @@
             <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
 
             <p>
-                <label id="tipLabel">nsidnai</label>
-                <a href="javascript:void(0)" id="text_audio" onclick="playAudio()"><i class="icon iconfont">&#xe61b;</i></a>
+                <label id="tipLabel" style="font-size: 13px;color: #ff4949;"></label>
+                <a href="javascript:void(0)" id="text_audio" onclick="playAudio()">
+                    <i class="icon iconfont" id="hornid">&#xe61b;</i>
+                    <img src="<%=path%>/ui/images/loading_back.gif" id="loading" style="display:none;">
+                </a>
                 <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
                 <audio src="" controls="controls" id="audioPlay" hidden>
                     Your browser does not support audio tag
@@ -215,18 +218,25 @@
 
 
 <script type="text/javascript">
+
     var IsTranslated = false;
     var realLangeuage;
     $(function () {
+
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
-            $("#text_audio").css("display", "none");
+//            $("#text_audio").css("display", "none");
+        });
+        audio.addEventListener("playing",function () {
+            $("#loading").hide();
+            $("#hornid").show();
+            $("#text_audio").attr("onclick", "playAudio()");
         });
     });
     $(document).ready(function () {
 //        监听输入的文本内容
-        $("#chickText").bind("input propertychange", function () {
-            landetec = $("#chickText").val();
+        $("#chick-int").bind("input propertychange", function () {
+            landetec = $("#chick-int").val();
             if (landetec == "" || landetec == null) {
                 return;
             }
@@ -234,19 +244,19 @@
         });
 
 //        翻译源内容文本框获取焦点
-        $("#chickText").focus(function () {
+        $("#chick-int").focus(function () {
             $("#results").css("display", "none");
-            $("#chickBtn").css("display", "block");
+            $("#chick-btn").css("display", "block");
         });
         //清除
         $("#clear").click(function(){
             if (IsTranslated == true) {
                 $("#results").css("display", "none");
                 $("#btn-translate").css("display", "block");
-                $("#chickText").focus();
+                $("#chick-int").focus();
                 IsTranslated = false;
             } else {
-                $("#chickText").val("");
+                $("#chick-int").val("");
             }
         });
 
@@ -266,6 +276,7 @@
     });
     //播放声音
     function playAudio(){
+
         var beRead = $.trim($("#result-text").val());
         if (beRead == "" || beRead == null) {
             return;
@@ -279,6 +290,9 @@
             var target = $("#target-lan").val();
             var ttsUrl = "<%=path%>/ttsSync?languages=" + target + "&beRead=" + beRead;
             $("#audioPlay").attr("src", ttsUrl);
+            $("#loading").show();
+            $("#hornid").hide();
+            $("#text_audio").attr("onclick", "javascript:void(0)");
             audioPlay.play();
         } else {
             audioPlay.pause;
@@ -303,39 +317,40 @@
 //    翻译按钮的点击事件
     function goTranslate() {
 
-        var textStr = $("#chickText").val();
-        if (textStr == "" || textStr == null) {
+        var textStr = $("#chick-int").val();
+        if (textStr == "" || textStr == null) {         //判断为空,中断
             $('#results').css("display", "none");
             return;
         }
-        $("#chickBtn").css("display", "none");
+        $("#chick-btn").css("display", "none");
         $('#results').css("display", "block");
 
         var source = $("#source-lan").val();
         var target = $("#target-lan").val();
-        if(realLangeuage == target){
-            $("#result-text").html(textStr);
-            return;
-        }
+        $("#tipLabel").html("");
         if (realLangeuage != source){
             switch (realLangeuage){
                 case "zh":
-                    $("#tipLabel").html("检测为简体中文");
+                    $("#tipLabel").html("源语言检测为简体中文");
                     break;
                 case "en":
-                    $("#tipLabel").html("检测为英文");
+                    $("#tipLabel").html("源语言检测为英文");
                     break;
                 case "fr":
-                    $("#tipLabel").html("检测为法语");
+                    $("#tipLabel").html("源语言检测为法语");
                     break;
                 case "ru":
-                    $("#tipLabel").html("检测为俄语");
+                    $("#tipLabel").html("源语言检测为俄语");
                     break;
                 case "pt":
-                    $("#tipLabel").html("检测为葡萄牙语");
+                    $("#tipLabel").html("源语言检测为葡萄牙语");
                     break;
             }
             source = realLangeuage;
+        }
+        if(realLangeuage == target){
+            $("#result-text").html(textStr);
+            return;
         }
         $.ajax({
             async: true,
