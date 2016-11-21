@@ -129,7 +129,7 @@ public class OrderController extends BaseController {
         try {
             BaseResponse resp = iOrderCancelSV.handCancelNoPayOrder(req);
             if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
-                log.info("OrderCancelSussess");
+                log.info("OrderCancelSuccess");
                 return result.returnMsg();
             } else {
                 throw new RuntimeException("OrderCancelFailed");

@@ -75,7 +75,10 @@
             $('#spId').html("没有更多了");
             return;
         }
-        GetOrderList(index + 1);
+        if (GetOrderList(index + 1) == false) {
+            $('#spId').html("没有更多了");
+            return;
+        }
         pollScroll();
         $('#spinner').hide();
     }
@@ -103,6 +106,9 @@
             },
             success: function (data) {
                 if (data.status == 1) {
+                    if (data.Count == 0) {
+                        return false;
+                    }
                     PageCount = data.PageCount;
                     index = data.PageNo;
                     for (var key in data.OrderList) {

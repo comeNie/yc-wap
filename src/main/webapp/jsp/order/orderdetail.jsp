@@ -28,6 +28,10 @@
         <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
     </jsp:include>
     <!--加载更多-->
+
+    <%----%>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
+    <%----%>
     <section class="original-big">
         <div class="original-cont" id="cont-name">
             <ul>
