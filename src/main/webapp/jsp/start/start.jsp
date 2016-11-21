@@ -363,7 +363,6 @@
                 text: textStr
             },
             success: function (data) {
-                console.info(data);
                 if (data.status == 1) {//成功
                     $("#result-text").html(data.target);
                     IsTranslated = true;
