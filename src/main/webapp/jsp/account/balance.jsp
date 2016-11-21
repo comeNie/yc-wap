@@ -41,7 +41,7 @@
 
         <section class="form-big">
             <div class="balance">
-                账户余额:<span>12331.34元</span>
+                账户余额:<span id="balanceSpan">0.00元</span>
             </div>
             <div class="wap-btn"><a href="javascript:void(0)" onclick="toRecharge()"  class="btn submit-btn btn-blue">充值</a></div>
             <div class="balance-word">账户余额是在译云账户中的款项，下单时可以直接用于支付订单。</div>
@@ -54,13 +54,36 @@
 </body>
 </html>
 <script>
+    var b;
     function toRecharge(){
-        var tourl = "<%=path%>/account/recharge";
+        var tourl = "<%=path%>/account/recharge?balance="+b;
         window.location.href=tourl;
     }
     function retLeft() {
         var tourl = "<%=path%>/center/center";
         window.location.href=tourl;
 
+    }
+    $(function() {
+        loadBalance()
+    })
+    function loadBalance(){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/account/GetBalance",
+            modal: true,
+            timeout: 30000,
+            data: {
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    b = data.balance;
+                    $("#balanceSpan").html(data.balance);
+                }
+            },
+            error: function () {
+            }
+        });
     }
 </script>

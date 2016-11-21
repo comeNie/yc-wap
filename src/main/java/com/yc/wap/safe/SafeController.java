@@ -500,7 +500,7 @@ public class SafeController extends BaseController {
     @RequestMapping (value = "getpiccode")
     public @ResponseBody Object getpiccode(HttpServletResponse response) throws IOException {
         ImageCodeUtil util = new ImageCodeUtil();
-        String str= util.creatCode(120,40,5,20,response.getOutputStream());
+        String str= util.creatCode(120,41,5,20,response.getOutputStream());
         // 将认证码存入SESSION
         log.info("===========code:" + str);
         session.setAttribute("certCode", str);

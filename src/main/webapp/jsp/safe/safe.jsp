@@ -71,36 +71,38 @@
     var isPhone;
     var isPassword;
     $(function() {
-        var email = "${email}";
-        var password = "${password}";
-        var mobilePhone = "${mobilePhone}";
-        if(email == "" || email == null){
-            $("#emalRight").html("您还没有通过邮箱验证，请验证");
-            isEmail = 0;
-        }else {
-            var index = email.indexOf("@");
-            var email1 = email.slice(0,index-1);
-            var email2 = email.slice(index+2,email.length);
-            var hideMail = email1+"***"+email2;
-            $("#emalRight").html(hideMail);
-            isEmail = 1;
-        }
-        if(password != "true"){
-            $("#passwordLeft").html("设置密码");
-            isPassword = 0;
-        }else {
-            $("#passwordLeft").html("修改密码");
-            isPassword = 1;
-        }
-        if(mobilePhone == "" || mobilePhone == null){
-            $("#phoneRight").html("您还没有通过手机验证，请验证");
-            isPhone = 0;
-        }else {
-            var myphone1=mobilePhone.substr(0,3);
-            var myphone2=mobilePhone.substr(7,4);
-            var hidePhone=myphone1+"****"+myphone2;
-            $("#phoneRight").html(hidePhone);
-            isPhone = 1;
+        if(${isLogin=="1"}){
+            var email = "${email}";
+            var password = "${password}";
+            var mobilePhone = "${mobilePhone}";
+            if(email == "" || email == null){
+                $("#emalRight").html("您还没有通过邮箱验证，请验证");
+                isEmail = 0;
+            }else {
+                var index = email.indexOf("@");
+                var email1 = email.slice(0,index-1);
+                var email2 = email.slice(index+2,email.length);
+                var hideMail = email1+"***"+email2;
+                $("#emalRight").html(hideMail);
+                isEmail = 1;
+            }
+            if(password != "true"){
+                $("#passwordLeft").html("设置密码");
+                isPassword = 0;
+            }else {
+                $("#passwordLeft").html("修改密码");
+                isPassword = 1;
+            }
+            if(mobilePhone == "" || mobilePhone == null){
+                $("#phoneRight").html("您还没有通过手机验证，请验证");
+                isPhone = 0;
+            }else {
+                var myphone1=mobilePhone.substr(0,3);
+                var myphone2=mobilePhone.substr(7,4);
+                var hidePhone=myphone1+"****"+myphone2;
+                $("#phoneRight").html(hidePhone);
+                isPhone = 1;
+            }
         }
     })
     function retLeft(){

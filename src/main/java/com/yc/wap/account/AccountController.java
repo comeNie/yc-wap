@@ -30,7 +30,8 @@ public class AccountController extends BaseController {
     @RequestMapping(value = "recharge")
     public String recharge() {
         log.info("account-recharge invoked");
-
+        String balance = request.getParameter("balance");
+        request.setAttribute("balance",balance);
         return "account/recharge";
     }
 
@@ -63,9 +64,13 @@ public class AccountController extends BaseController {
             if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 log.info("QueryUsableFundReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
                 // TODO result.put balance
+
+                result.put("balance",resp.getBalance()+"");
+
             } else if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.NOACCOUNT)) {
                 Balance = "0.00";
                 // TODO result.put balance
+                result.put("balance",Balance);
             } else {
                 log.info("QueryUsableFund: " + resp.getResponseHeader().getResultCode() + ", Msg: " + resp.getResponseHeader().getResultMessage());
                 throw new RuntimeException("QueryUsableFundFailed");
