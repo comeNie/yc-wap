@@ -206,7 +206,6 @@ public class OrderController extends BaseController {
             String needTranslateInfo = ProdList.getNeedTranslateInfo();
             String translateInfo = ProdList.getTranslateInfo();
 
-
             JSONObject ParamJson = new JSONObject();
             ParamJson.put("translateType", translateType);
             ParamJson.put("translateName", translateName);
@@ -225,6 +224,7 @@ public class OrderController extends BaseController {
             ParamJson.put("contactName", contactName);
             ParamJson.put("contactTel", contactTel);
             ParamJson.put("contactEmail", contactEmail);
+            ParamJson.put("orderStateChange", orderStateChange);
 
             ParamJson.put("needTranslateInfo", needTranslateInfo);
             ParamJson.put("translateInfo", translateInfo);
