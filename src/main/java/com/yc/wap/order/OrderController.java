@@ -186,6 +186,9 @@ public class OrderController extends BaseController {
             }
 
             List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
+            for(OrderStateChgVo Vo : orderStateChange) {
+                log.info("Vo: " + Vo.getChgDesc());
+            }
 
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();

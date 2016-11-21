@@ -83,7 +83,7 @@ public class WrittenController extends BaseController {
 
     private List GetPurposeList(String Language) {
         try {
-            QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList("");
+            QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList();
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 throw new RuntimeException("GetPurposeListFailed");
             }
@@ -96,7 +96,7 @@ public class WrittenController extends BaseController {
 
     private List GetDomainList(String Language) {
         try {
-            QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList("");
+            QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList();
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 throw new RuntimeException("GetDomainListFailed");
             }

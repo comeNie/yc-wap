@@ -366,84 +366,27 @@
         <div class="track-list">
             <div class="track-list-title">订单动态</div>
             <div class="track-list-ctn">
-                <div class="track-state track-bule">
-                    <p>
-                        <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                        <span class="line"></span>
-                    </p>
-                    <ul>
-                        <li class="word">确认订单</li>
-                        <li>2015-04-07 09:53:51</li>
-                    </ul>
-                </div>
-                <div class="track-state track-bule">
-                    <p>
-                        <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                        <span class="line"></span>
-                    </p>
-                    <ul>
-                        <li class="word">您的订单已修改完成，请确认翻译结果</li>
-                        <li>2015-04-07 09:53:51</li>
-                    </ul>
-                </div>
-                <div class="track-state track-bule">
-                    <p>
-                        <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                        <span class="line"></span>
-                    </p>
-                    <ul>
-                        <li class="word">您的订单正在修改中，请耐心等待</li>
-                        <li>2015-04-07 09:53:51</li>
-                    </ul>
-                </div>
-                <div class="track-state track-ash">
-                    <p>
-                        <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                        <span class="line"></span>
-                    </p>
-                    <ul>
-                        <li class="word">您已申请延时确定译文</li>
-                        <li>2015-04-07 09:53:51</li>
-                    </ul>
-                </div>
-                <div class="track-state track-ash">
-                    <p>
-                        <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                        <span class="line"></span>
-                    </p>
-                    <ul>
-                        <li class="word">您的订单已翻译完成，请确认翻译结果</li>
-                        <li>2015-04-07 09:53:51</li>
-                    </ul>
-                </div>
-                <div class="track-state track-ash">
-                    <p>
-                        <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                        <span class="line"></span>
-                    </p>
-                    <ul>
-                        <li class="word">订单已被译员领取，正在翻译中，请耐心等待</li>
-                        <li>2015-04-07 09:53:51</li>
-                    </ul>
-                </div>
-                <div class="track-state track-ash">
-                    <p>
-                        <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                        <span class="line"></span>
-                    </p>
-                    <ul>
-                        <li class="word">已经提交订单，订单号5000345</li>
-                        <li>2015-04-07 09:53:51</li>
-                    </ul>
-                </div>
+                <c:forEach var="pair" items="${Params.orderStateChange}">
+                    <%--<div class="track-state track-ash">--%>
+                    <div class="track-state track-bule">
+                        <p>
+                            <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
+                            <span class="line"></span>
+                        </p>
+                        <ul>
+                            <li class="word">${pair.chgDesc}</li>
+                            <li>${pair.stateChgTime.time}</li>
+                        </ul>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </section>
 </div>
 
-<section class="order-submit-kou">
+<section class="order-submit-kou" id="bottom_button">
     <p class="cent blue"><a href="#">评价订单</a></p>
-    <%--<p class="cent green"><a href="javascript:window.location.href='<%=path%>/order/OrderTrack'">订单跟踪</a></p>--%>
+    <!--<p class="cent green"><a href="javascript:window.location.href='<%=path%>/order/OrderTrack'">订单跟踪</a></p>-->
     <p class="cent green"><a href="javascript:GoTrack()">订单跟踪</a></p>
 </section>
 </body>
@@ -472,11 +415,13 @@
     function GoDetail() {
         $("#OrderDetail").css("display", "block");
         $("#OrderTrack").css("display", "none");
+        $("#bottom_button").css("display", "block");
     }
 
     function GoTrack() {
         $("#OrderDetail").css("display", "none");
         $("#OrderTrack").css("display", "block");
+        $("#bottom_button").css("display", "none");
     }
 
 </script>
