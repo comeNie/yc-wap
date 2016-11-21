@@ -109,11 +109,10 @@
 <script>
 
     $(function() {
-        if("${isLogin=="1"}"){
-            console.log("已登录");
+        if(${isLogin=="1"}){
+            $("#nameLi").html("${username}");
+            loadOrder();
         }
-        $("#nameLi").html("${username}");
-        loadOrder();
     })
     function loadOrder(){
         $.ajax({

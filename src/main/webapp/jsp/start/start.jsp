@@ -155,7 +155,10 @@
 
             <p>
                 <label id="tipLabel" style="font-size: 13px;color: #ff4949;"></label>
-                <a href="javascript:void(0)" id="text_audio" onclick="playAudio()"><i class="icon iconfont">&#xe61b;</i></a>
+                <a href="javascript:void(0)" id="text_audio" onclick="playAudio()">
+                    <i class="icon iconfont" id="hornid">&#xe61b;</i>
+                    <img src="<%=path%>/ui/images/loading_back.gif" id="loading" style="display:none;">
+                </a>
                 <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
                 <audio src="" controls="controls" id="audioPlay" hidden>
                     Your browser does not support audio tag
@@ -213,12 +216,19 @@
 
 
 <script type="text/javascript">
+
     var IsTranslated = false;
     var realLangeuage;
     $(function () {
+
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
 //            $("#text_audio").css("display", "none");
+        });
+        audio.addEventListener("oncanplay",function () {
+            $("#loading").hide();
+            $("#hornid").show();
+            $("#text_audio").attr("onclick", "playAudio()");
         });
     });
     $(document).ready(function () {
@@ -264,6 +274,7 @@
     });
     //播放声音
     function playAudio(){
+
         var beRead = $.trim($("#result-text").val());
         if (beRead == "" || beRead == null) {
             return;
@@ -277,6 +288,9 @@
             var target = $("#target-lan").val();
             var ttsUrl = "<%=path%>/ttsSync?languages=" + target + "&beRead=" + beRead;
             $("#audioPlay").attr("src", ttsUrl);
+            $("#loading").show();
+            $("#hornid").hide();
+            $("#text_audio").attr("onclick", "javascript:void(0)");
             audioPlay.play();
         } else {
             audioPlay.pause;
@@ -302,7 +316,7 @@
     function goTranslate() {
 
         var textStr = $("#chick-int").val();
-        if (textStr == "" || textStr == null) {
+        if (textStr == "" || textStr == null) {         //判断为空,中断
             $('#results').css("display", "none");
             return;
         }
@@ -311,10 +325,6 @@
 
         var source = $("#source-lan").val();
         var target = $("#target-lan").val();
-        if(realLangeuage == target){
-            $("#result-text").html(textStr);
-            return;
-        }
         $("#tipLabel").html("");
         if (realLangeuage != source){
             switch (realLangeuage){
@@ -335,6 +345,10 @@
                     break;
             }
             source = realLangeuage;
+        }
+        if(realLangeuage == target){
+            $("#result-text").html(textStr);
+            return;
         }
         $.ajax({
             async: true,
