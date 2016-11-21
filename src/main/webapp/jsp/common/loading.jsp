@@ -20,14 +20,15 @@
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 </head>
-<body class="loading-bj">
-
-<section class="loading-wrapper" id="loading">
-    <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png" /></p>
-    <p class="img2"><div id="foo" style="margin-top:1rem;"></div></p>
-    <p class="img3">加载中</p>
-</section>
-
+<body>
+<div class="loading-bj" id="_loading">
+    <section class="loading-wrapper" >
+        <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>
+        <p class="img2">
+        <div id="foo" style="margin-top:1rem;"></div>
+        <p class="img3">加载中</p>
+    </section>
+</div>
 </body>
 </html>
 <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
@@ -38,11 +39,20 @@
 <script type="text/javascript" src="<%=path%>/js/modular/loading.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-
+        $("#_loading").css("display", "none");
     });
 
     $(function () {
 
     });
+
+    var Loading = {
+        ShowLoading: function () {
+            $("#_loading").css("display", "block");
+        },
+        HideLoading: function () {
+            $("#_loading").css("display", "none");
+        }
+    }
 
 </script>

@@ -1,6 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -28,7 +27,7 @@
 
 <body>
 <%----%>
-<%--<jsp:include page="/jsp/common/loading.jsp" flush="true"/>--%>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 <%----%>
 <!--分享弹出框-->
 <div class="eject-big">
@@ -212,7 +211,6 @@
 </div>
 </div>
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
-
 </body>
 </html>
 

@@ -185,10 +185,11 @@ public class OrderController extends BaseController {
                 discountSum = discountSum + "折";
             }
 
+
             List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
-            for(OrderStateChgVo Vo : orderStateChange) {
-                log.info("Vo: " + Vo.getChgDesc());
-            }
+//            for(OrderStateChgVo Vo : orderStateChange) {
+//                log.info("Vo: " + Vo.getChgDesc());
+//            }
 
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
@@ -238,6 +239,7 @@ public class OrderController extends BaseController {
             log.info("OrderDetailParamJson.." + ParamJson.toString());
 
             request.setAttribute("Params", ParamJson);
+            request.setAttribute("orderStateChange", orderStateChange);
         } catch (BusinessException | SystemException | NumberFormatException e) {
             e.printStackTrace();
         }

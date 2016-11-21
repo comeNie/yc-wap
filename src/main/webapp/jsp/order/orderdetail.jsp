@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
@@ -366,18 +368,31 @@
         <div class="track-list">
             <div class="track-list-title">订单动态</div>
             <div class="track-list-ctn">
-                <c:forEach var="pair" items="${Params.orderStateChange}">
-                    <%--<div class="track-state track-ash">--%>
-                    <div class="track-state track-bule">
-                        <p>
-                            <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                            <span class="line"></span>
-                        </p>
-                        <ul>
-                            <li class="word">${pair.chgDesc}</li>
-                            <li>${pair.stateChgTime.time}</li>
-                        </ul>
-                    </div>
+                <c:forEach var="pair" items="${orderStateChange}" varStatus="i">
+                    <c:if test="${i.index==1}">
+                        <div class="track-state track-bule">
+                            <p>
+                                <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
+                                <span class="line"></span>
+                            </p>
+                            <ul>
+                                <li class="word">${pair.chgDesc}</li>
+                                <li><fmt:formatDate type="both" value="${pair.stateChgTime}"/></li>
+                            </ul>
+                        </div>
+                    </c:if>
+                    <c:if test="${i.index!=1}">
+                        <div class="track-state track-ash">
+                            <p>
+                                <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
+                                <span class="line"></span>
+                            </p>
+                            <ul>
+                                <li class="word">${pair.chgDesc}</li>
+                                <li><fmt:formatDate type="both" value="${pair.stateChgTime}"/></li>
+                            </ul>
+                        </div>
+                    </c:if>
                 </c:forEach>
             </div>
         </div>
