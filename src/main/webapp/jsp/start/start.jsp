@@ -142,7 +142,7 @@
         </section>
         <!--翻译内容-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" id="chickText" maxlength="2000"></textarea>
+            <textarea class="textarea textarea-large" id="chick-intchickText" maxlength="2000"></textarea>
             <a hrel="javascript:void(0)" ><i class="icon iconfont" id="clear">&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
@@ -154,7 +154,7 @@
             <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
 
             <p>
-                <label id="tipLabel">nsidnai</label>
+                <label id="tipLabel" style="font-size: 13px;color: #ff4949;"></label>
                 <a href="javascript:void(0)" id="text_audio" onclick="playAudio()"><i class="icon iconfont">&#xe61b;</i></a>
                 <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
                 <audio src="" controls="controls" id="audioPlay" hidden>
@@ -218,7 +218,7 @@
     $(function () {
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
-            $("#text_audio").css("display", "none");
+//            $("#text_audio").css("display", "none");
         });
     });
     $(document).ready(function () {
@@ -315,22 +315,23 @@
             $("#result-text").html(textStr);
             return;
         }
+        $("#tipLabel").html("");
         if (realLangeuage != source){
             switch (realLangeuage){
                 case "zh":
-                    $("#tipLabel").html("检测为简体中文");
+                    $("#tipLabel").html("源语言检测为简体中文");
                     break;
                 case "en":
-                    $("#tipLabel").html("检测为英文");
+                    $("#tipLabel").html("源语言检测为英文");
                     break;
                 case "fr":
-                    $("#tipLabel").html("检测为法语");
+                    $("#tipLabel").html("源语言检测为法语");
                     break;
                 case "ru":
-                    $("#tipLabel").html("检测为俄语");
+                    $("#tipLabel").html("源语言检测为俄语");
                     break;
                 case "pt":
-                    $("#tipLabel").html("检测为葡萄牙语");
+                    $("#tipLabel").html("源语言检测为葡萄牙语");
                     break;
             }
             source = realLangeuage;

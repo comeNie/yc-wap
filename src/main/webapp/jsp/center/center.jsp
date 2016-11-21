@@ -58,15 +58,15 @@
         </section>
         <section class="personal-tab">
             <ul>
-                <a href="javascript:void(0)">
+                <a href="javascript:window.location.href='<%=path%>/order/?UnPaid=1'">
                     <li>
-                        <p>0</p>
+                        <p id="stayPay">0</p>
                         <p>待付款</p>
                     </li>
                 </a>
-                <a href="javascript:void(0)">
+                <a href="javascript:javascript:window.location.href='<%=path%>/order/?UnConfirm=1'">
                     <li class="none-border">
-                        <p>5</p>
+                        <p id="stayConfig">0</p>
                         <p>待确认</p>
                     </li>
                 </a>
@@ -109,7 +109,29 @@
 <script>
 
     $(function() {
+        if("${isLogin=="1"}"){
+            console.log("已登录");
+        }
         $("#nameLi").html("${username}");
-
+        loadOrder();
     })
+    function loadOrder(){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/order/GetOrderShowNumber",
+            modal: true,
+            timeout: 30000,
+            data: {
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#stayPay").html(data.unpaid);
+                    $("#stayConfig").html(data.unconfirm);
+                }
+            },
+            error: function () {
+            }
+        });
+    }
 </script>
