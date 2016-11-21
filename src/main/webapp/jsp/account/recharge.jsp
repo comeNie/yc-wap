@@ -45,13 +45,12 @@
                     <ul>
                         <li>
                             <p class="word">账户余额:</p>
-                            <p>100元</p>
+                            <p>${balance}元</p>
                         </li>
                         <li>
                             <p class="word">充值金额:</p>
                             <p><input id="price" type="text" class="input int-rech" placeholder="50"></p>
                             <p>元</p>
-
                         </li>
                         <label id="pricetip"></label>
                         <li>

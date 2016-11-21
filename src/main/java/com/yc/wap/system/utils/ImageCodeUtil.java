@@ -74,6 +74,7 @@ public class ImageCodeUtil {
             green = random.nextInt(255);
             blue = random.nextInt(255);
             g.setColor(new Color(red, green, blue));
+//            g.setColor(Color.RED);
             g.drawString(strRand, (i + 1) * x, codeY);
             // 将产生的四个随机数组合在一起。
             randomCode.append(strRand);
