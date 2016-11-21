@@ -38,13 +38,7 @@
 <script type="text/javascript" src="<%=path%>/js/modular/loading.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#loading').css({
-            "left": "0%",
-            "padding-top": "0%",
-            "position": "fixed",
-            "z-index": 9999,
-            "display":"block"
-        });
+
     });
 
     $(function () {

@@ -185,6 +185,8 @@ public class OrderController extends BaseController {
                 discountSum = discountSum + "折";
             }
 
+            List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
+
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
             String displayFlag  = resp.getDisplayFlag();
@@ -204,7 +206,6 @@ public class OrderController extends BaseController {
             String needTranslateInfo = ProdList.getNeedTranslateInfo();
             String translateInfo = ProdList.getTranslateInfo();
 
-
             JSONObject ParamJson = new JSONObject();
             ParamJson.put("translateType", translateType);
             ParamJson.put("translateName", translateName);
@@ -223,6 +224,7 @@ public class OrderController extends BaseController {
             ParamJson.put("contactName", contactName);
             ParamJson.put("contactTel", contactTel);
             ParamJson.put("contactEmail", contactEmail);
+            ParamJson.put("orderStateChange", orderStateChange);
 
             ParamJson.put("needTranslateInfo", needTranslateInfo);
             ParamJson.put("translateInfo", translateInfo);
