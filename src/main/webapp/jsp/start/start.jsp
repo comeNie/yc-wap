@@ -225,13 +225,12 @@
 
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
-            $("#hornid").attr("class","ash");
-//            $("#text_audio").css("display", "none");
+            $("#hornid").attr("class","icon iconfont ash");
         });
         audio.addEventListener("playing",function () {
             $("#loading").hide();
             $("#hornid").show();
-            $("#hornid").attr("class","blue");
+            $("#hornid").attr("class","icon iconfont blue");
             $("#text_audio").attr("onclick", "playAudio()");
         });
     });
