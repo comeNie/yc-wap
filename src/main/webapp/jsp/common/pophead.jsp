@@ -44,7 +44,7 @@
             </c:if>
         </c:if>
     </ul>
-    <div class="pop-nav">
+    <div class="pop-nav" id="pop-nav">
         <ul>
             <li>
                 <a href="javascript:window.location.href='<%=path%>/'">
@@ -62,6 +62,18 @@
 </body>
 </html>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#nav-list").bind("click", function () {
+            if($("#pop-nav").attr("opened")=="1"){
+                $("#pop-nav").css("display", "none");
+                $("#pop-nav").attr("opened", "0");
+            } else {
+                $("#pop-nav").css("display", "block");
+                $("#pop-nav").attr("opened", "1");
+            }
+        })
+    });
+
     function onLogout() {
         $.ajax({
             async: true,

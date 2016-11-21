@@ -158,7 +158,7 @@ public class LoginController extends BaseController {
         String createTime = date.toString();
 
         InsertYCUserRequest res = new InsertYCUserRequest();
-        res.setTenantId(Constants.TenantID);
+//        res.setTenantId(Constants.TenantID);
         res.setPassword(password);
         res.setRegip("0");
 //        domainname

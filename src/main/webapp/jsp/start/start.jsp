@@ -27,7 +27,6 @@
 
 <body>
 <%----%>
-<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 <%----%>
 <!--分享弹出框-->
 <div class="eject-big">
@@ -211,6 +210,7 @@
 </div>
 </div>
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 
