@@ -142,11 +142,11 @@
         </section>
         <!--翻译内容-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" id="chick-intchickText" maxlength="2000"></textarea>
+            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" maxlength="2000"></textarea>
             <a hrel="javascript:void(0)" ><i class="icon iconfont" id="clear">&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
-        <section class="translate-btn" id="chickBtn">
+        <section class="translate-btn" id="chick-btn">
             <a href="javascript:void(0)" onclick="goTranslate()" class="btn btn-big">翻译</a>
         </section>
         <!--翻译结果-->
@@ -223,8 +223,8 @@
     });
     $(document).ready(function () {
 //        监听输入的文本内容
-        $("#chickText").bind("input propertychange", function () {
-            landetec = $("#chickText").val();
+        $("#chick-int").bind("input propertychange", function () {
+            landetec = $("#chick-int").val();
             if (landetec == "" || landetec == null) {
                 return;
             }
@@ -232,19 +232,19 @@
         });
 
 //        翻译源内容文本框获取焦点
-        $("#chickText").focus(function () {
+        $("#chick-int").focus(function () {
             $("#results").css("display", "none");
-            $("#chickBtn").css("display", "block");
+            $("#chick-btn").css("display", "block");
         });
         //清除
         $("#clear").click(function(){
             if (IsTranslated == true) {
                 $("#results").css("display", "none");
                 $("#btn-translate").css("display", "block");
-                $("#chickText").focus();
+                $("#chick-int").focus();
                 IsTranslated = false;
             } else {
-                $("#chickText").val("");
+                $("#chick-int").val("");
             }
         });
 
@@ -301,12 +301,12 @@
 //    翻译按钮的点击事件
     function goTranslate() {
 
-        var textStr = $("#chickText").val();
+        var textStr = $("#chick-int").val();
         if (textStr == "" || textStr == null) {
             $('#results').css("display", "none");
             return;
         }
-        $("#chickBtn").css("display", "none");
+        $("#chick-btn").css("display", "none");
         $('#results').css("display", "block");
 
         var source = $("#source-lan").val();
