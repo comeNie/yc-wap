@@ -158,7 +158,7 @@
             <p>
                 <label id="tipLabel" style="font-size: 13px;color: #ff4949;"></label>
                 <a href="javascript:void(0)" id="text_audio" onclick="playAudio()">
-                    <i class="icon iconfont" id="hornid">&#xe61b;</i>
+                    <i class="icon iconfont ash" id="hornid">&#xe61b;</i>
                     <img src="<%=path%>/ui/images/loading_back.gif" id="loading" style="display:none;">
                 </a>
                 <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
@@ -225,11 +225,13 @@
 
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
+            $("#hornid").attr("class","ash");
 //            $("#text_audio").css("display", "none");
         });
         audio.addEventListener("playing",function () {
             $("#loading").hide();
             $("#hornid").show();
+            $("#hornid").attr("class","blue");
             $("#text_audio").attr("onclick", "playAudio()");
         });
     });
