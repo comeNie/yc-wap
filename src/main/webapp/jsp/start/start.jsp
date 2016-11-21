@@ -158,7 +158,7 @@
             <p>
                 <label id="tipLabel" style="font-size: 13px;color: #ff4949;"></label>
                 <a href="javascript:void(0)" id="text_audio" onclick="playAudio()">
-                    <i class="icon iconfont" id="hornid">&#xe61b;</i>
+                    <i class="icon iconfont ash" id="hornid">&#xe61b;</i>
                     <img src="<%=path%>/ui/images/loading_back.gif" id="loading" style="display:none;">
                 </a>
                 <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
@@ -225,11 +225,12 @@
 
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
-//            $("#text_audio").css("display", "none");
+            $("#hornid").attr("class","icon iconfont ash");
         });
         audio.addEventListener("playing",function () {
             $("#loading").hide();
             $("#hornid").show();
+            $("#hornid").attr("class","icon iconfont blue");
             $("#text_audio").attr("onclick", "playAudio()");
         });
     });
@@ -365,7 +366,6 @@
                 text: textStr
             },
             success: function (data) {
-                console.info(data);
                 if (data.status == 1) {//成功
                     $("#result-text").html(data.target);
                     IsTranslated = true;
