@@ -225,7 +225,7 @@
         audio.addEventListener("ended",function () {
 //            $("#text_audio").css("display", "none");
         });
-        audio.addEventListener("onplay",function () {
+        audio.addEventListener("playing",function () {
             $("#loading").hide();
             $("#hornid").show();
             $("#text_audio").attr("onclick", "playAudio()");
