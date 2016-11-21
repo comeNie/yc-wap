@@ -185,6 +185,8 @@ public class OrderController extends BaseController {
                 discountSum = discountSum + "折";
             }
 
+            List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
+
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
             String displayFlag  = resp.getDisplayFlag();

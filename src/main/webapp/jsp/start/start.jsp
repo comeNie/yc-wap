@@ -27,7 +27,9 @@
 </head>
 
 <body>
-
+<%----%>
+<%--<jsp:include page="/jsp/common/loading.jsp" flush="true"/>--%>
+<%----%>
 <!--分享弹出框-->
 <div class="eject-big">
     <div class="prompt-share" id="share-eject">
