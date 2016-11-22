@@ -83,7 +83,7 @@ public class LoginController extends BaseController {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UcMembersLoginRequest res = new UcMembersLoginRequest();
-        res.setTenantId(Constants.TenantID);
+        res.setTenantId(Constants.TENANTID);
         password = MD5Util.md5(password);
         res.setPassword(password);
         res.setUsername(username);
@@ -115,7 +115,6 @@ public class LoginController extends BaseController {
                 session.setAttribute("username",m.get("username"));
                 log.info("passHav:"+ m.get("passHav"));
                 session.setAttribute("password",m.get("passHav"));
-
                 session.setAttribute("mobilePhone",m.get("mobilephone"));
                 log.info(vo);
             }else {

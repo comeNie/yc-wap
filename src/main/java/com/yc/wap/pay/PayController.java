@@ -3,6 +3,7 @@ package com.yc.wap.pay;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.slp.balance.api.deposit.interfaces.IDepositSV;
 import com.ai.slp.balance.api.deposit.param.DepositParam;
+import com.ai.slp.balance.api.deposit.param.TransSummary;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -17,8 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Nozomi on 11/14/2016.
@@ -65,21 +65,34 @@ public class PayController extends BaseController {
     @ResponseBody
     public Object balancerecharge(){
         MsgBean result = new MsgBean();
+
+
+
         DepositParam param = new DepositParam();
-//        param.setAccountId(1);
-//        param.setBusiDesc("");
-//        param.setBusiSerialNo("");
-//        param.setCurrencyUnit("");
-//        param.setPayStyle("");
-//        param.setSubsId("");
-//        param.setTenantId(Constants.TenantID);
-//        param.setSystemId();
-//        param.setTransSummary();
+        param.setAccountId(11651);  //	账户ID
+        param.setBusiDesc("余额");    //业务描述
+        String uid = (String) session.getAttribute("UID");
+        String  time = (new Date()).getTime() + "";
+        String busiSerial = uid + time;
+        param.setBusiSerialNo(busiSerial);
+
+        TransSummary summary = new TransSummary();  //交易摘要
+        summary.setAmount(10);
+        summary.setSubjectId(100000);
+        List<TransSummary> transSummaryList = new ArrayList<TransSummary>();
+        transSummaryList.add(summary);
+        param.setTransSummary(transSummaryList);
+
+        param.setCurrencyUnit("RMB");   //币种,RMB:人民币  USD：美元
+        param.setBusiOperCode("300000");    //固定值
+        param.setPayStyle("1");   //业务渠道,0：余额 1：支付宝 2：网银 3：pay pal 5：后付 6：积分 7：优惠劵 对应serial表中的CHANNEL字段
+        param.setTenantId(Constants.TENANTID);
+        param.setSystemId("Cloud-UAC_WEB"); //固定值
         String string = iDepositSV.depositFund(param);
         log.info(string);
         return result.returnMsg();
     }
-    
+
     @RequestMapping(value = "payResult")
     public String payResult() {
         request.setAttribute("result", "success");

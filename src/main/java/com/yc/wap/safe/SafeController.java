@@ -202,7 +202,7 @@ public class SafeController extends BaseController {
         log.info(mode);
 
         UcMembersGetRequest res = new UcMembersGetRequest();
-        res.setTenantId(Constants.TenantID);
+        res.setTenantId(Constants.TENANTID);
         res.setGetmode(mode);
         res.setUsername(username);
         try {
@@ -246,7 +246,7 @@ public class SafeController extends BaseController {
     public @ResponseBody Object countryid() {
         MsgBean result = new MsgBean();
         CountryRequest res = new CountryRequest();
-        res.setTenantId(Constants.TenantID);
+        res.setTenantId(Constants.TENANTID);
         try {
             CountryResponse resp = iGnCountrySV.queryCountry(res);
             List<CountryVo> lists = resp.getResult();
@@ -276,7 +276,7 @@ public class SafeController extends BaseController {
             check_code = MD5Util.md5(check_code);
         }
         UcMembersEditPassRequest res = new UcMembersEditPassRequest();
-        res.setTenantId(Constants.TenantID);
+        res.setTenantId(Constants.TENANTID);
         res.setChecke_code(check_code);
         res.setChecke_mode(checke_mode);
         res.setNewpw(newpw);
@@ -313,7 +313,7 @@ public class SafeController extends BaseController {
         String phone = request.getParameter("phone");
         String uid = request.getParameter("uid");
         UcMembersEditMobileRequest res = new UcMembersEditMobileRequest();
-        res.setTenantId(Constants.TenantID);
+        res.setTenantId(Constants.TENANTID);
         res.setOperationcode(code);
         res.setMobilephone(phone);
         if (uid != null){
@@ -355,7 +355,7 @@ public class SafeController extends BaseController {
         String uid = request.getParameter("uid");
         Integer u = Integer.parseInt(uid);
         UcMembersEditEmailRequest res = new UcMembersEditEmailRequest();
-        res.setTenantId(Constants.TenantID);
+        res.setTenantId(Constants.TENANTID);
         res.setOperationcode(code);
         res.setEmail(mail);
         res.setUid(u);
@@ -393,7 +393,7 @@ public class SafeController extends BaseController {
         String info = request.getParameter("info");
         String uid = request.getParameter("uid");
         UcMembersGetOperationcodeRequest res = new UcMembersGetOperationcodeRequest();
-        res.setTenantId(Constants.TenantID);
+        res.setTenantId(Constants.TENANTID);
         res.setOperationtype(type);
         res.setUserinfo(info);
         if (uid != null){
@@ -462,7 +462,7 @@ public class SafeController extends BaseController {
         String type = request.getParameter("type");
         String code = request.getParameter("code");
         UcMembersActiveRequest res = new UcMembersActiveRequest();
-        res.setTenantId(Constants.TenantID);
+        res.setTenantId(Constants.TENANTID);
         res.setOperationtype(type);
         res.setOperationcode(code);
         res.setUid(u);

@@ -4,7 +4,9 @@ package com.yc.wap.system.constants;
  * Created by Nozomi on 11/2/2016.
  */
 public class Constants {
-
+    /**
+     * 租户ID
+     */
     public static final String TENANTID = "yeecloud";
 
     /**
@@ -73,11 +75,6 @@ public class Constants {
         public static final String NoQuick = "N";
 
     }
-
-    /**
-     * 租户ID
-     */
-    public static final String TenantID = "yeecloud";
 
     /**
      * 登录方式
