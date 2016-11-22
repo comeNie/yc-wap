@@ -64,6 +64,9 @@
             </ul>
         </div>
     </section>
+
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -104,6 +107,7 @@
                 isPhone = 1;
             }
         }
+        Loading.HideLoading();
     })
     function retLeft(){
         var tourl = "<%=path%>/center/center";

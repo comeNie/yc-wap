@@ -84,6 +84,9 @@
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -112,13 +115,15 @@
                     $.each(list,function(index ,value){
                         $('#selectid').append("<option>" + value.countryNameCn+"+"+value.countryCode + "</option>");
                     })
+                    Loading.HideLoading();
                 } else {
-
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#selectLabel").html("网络请求超时，请稍候再试");
                 $("#selectLabel").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }
@@ -197,6 +202,7 @@
             $("#agreeLabel").css("display", "none");
         }
 
+        Loading.ShowLoading();
 //        登录验证
         checkPhoneWithJump(phone,codeid,psdid);
 
@@ -219,14 +225,17 @@
                     $("#confimPsd").css("display", "none");
                     var tourl = "<%=path%>/login/registersuccess";
                     window.location.href=tourl;
+                    Loading.HideLoading();
                 } else {
                     $("#confimPsd").html(data.msg);
                     $("#confimPsd").css("display", "block");
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#confimPsd").html(data.msg);
                 $("#confimPsd").css("display", "block");
+                Loading.HideLoading();
             }
         });
 
@@ -250,7 +259,7 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
-
+        Loading.ShowLoading();
         getTestCode(phone);
     }
     //    发送验证码
@@ -271,14 +280,17 @@
                     $("#phoneLabel").css("display", "none");
                     personUid = data.uid;
                     countDown(60);
+                    Loading.HideLoading();
                 } else {
                     $("#phoneLabel").html(data.msg);
                     $("#phoneLabel").css("display", "block");
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phoneLabel").html(data.msg);
                 $("#phoneLabel").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }

@@ -64,7 +64,8 @@
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
-
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -72,6 +73,7 @@
         $("#leftRe").click(function() {
             window.history.go(-1);
         });
+        Loading.HideLoading();
     });
     $(function() {
         var mobilePhone = "${phone}";
@@ -110,6 +112,7 @@
         }else {
             type = 2
         }
+        Loading.ShowLoading();
         checkCode(code,type);
 
     }
@@ -141,14 +144,17 @@
                         var tourl = "<%=path%>/safe/changephone?phoneTitle=<spring:message code="safe.checkphone.change_jump"/>";
                         window.location.href=tourl;
                     }
+                    Loading.HideLoading();
                 } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }
@@ -161,6 +167,7 @@
         }else {
             type = 2
         }
+        Loading.ShowLoading();
         getTestCode(type);
     }
     function getTestCode(type) {
@@ -179,14 +186,17 @@
                 if (data.status == 1) {
                     $("#phonetips").css("display", "none");
                     countDown(60);
+                    Loading.HideLoading();
                 } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }

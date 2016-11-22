@@ -112,7 +112,8 @@
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
-
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -121,6 +122,9 @@
     var getPhone;
     var getuids;
     var getCode;
+    $(document).ready(function() {
+       Loading.HideLoading();
+    });
     $(function(){
         $("#next-btn1").click(function(){
             var phone = $("#nameid1").val();
@@ -147,6 +151,8 @@
             }else {
                 $("#codeLabel1").css("display","none");
             }
+
+            Loading.ShowLoading();
             jump1(phone,code);
 
         });
@@ -159,6 +165,8 @@
             }else {
                 $("#codeLabel2").css("display","none");
             }
+
+            Loading.ShowLoading();
             jump2(code);
 
         });
@@ -197,6 +205,7 @@
                 $("#confirmLabel3").css("display","none");
             }
 
+            Loading.ShowLoading();
             jump3(psdid);
 
         });
@@ -246,7 +255,10 @@
                     index ++;//index = 1
                     $("#next1").hide();
                     $("#next2").show();
+
+                    Loading.HideLoading();
                 } else {
+                    Loading.HideLoading();
                     if (data.status == 2){
                         createCode();
                         $("#codeLabel1").html(data.msg);
@@ -261,6 +273,7 @@
             error: function () {
                 $("#nameLabel1").html(data.msg);
                 $("#nameLabel1").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }
@@ -283,14 +296,20 @@
                     $("#next2").hide();
                     $("#next3").show();
                     getCode = code;
+
+                    Loading.HideLoading();
                 } else {
                     $("#codeLabel2").html(data.msg);
                     $("#codeLabel2").css("display", "block");
+
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#codeLabel2").html(data.msg);
                 $("#codeLabel2").css("display", "block");
+
+                Loading.HideLoading();
             }
         });
     }
@@ -313,22 +332,27 @@
                     $("#next3").hide();
                     $("#next4").show();
                     countDownFive();
+
+                    Loading.HideLoading();
                 } else {
                     $("#confirmLabel3").html(data.msg);
                     $("#confirmLabel3").css("display", "block");
 
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#confirmLabel3").html(data.msg);
                 $("#confirmLabel3").css("display", "block");
+
+                Loading.HideLoading();
             }
         });
     }
 
     //    发送验证码
     function getTestCode() {
-
+        Loading.ShowLoading();
         $.ajax({
             async: true,
             type: "POST",
@@ -343,14 +367,19 @@
                 if (data.status == 1) {
                     $("#codeLabel2").css("display", "none");
                     countDown(60);
+
+                    Loading.HideLoading();
                 } else {
                     $("#codeLabel2").html(data.msg);
                     $("#codeLabel2").css("display", "block");
+
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#codeLabel2").html(data.msg);
                 $("#codeLabel2").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }

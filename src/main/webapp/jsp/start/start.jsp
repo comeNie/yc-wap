@@ -211,6 +211,7 @@
 </div>
 </div>
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 
 </body>
 </html>
@@ -221,6 +222,7 @@
     var IsTranslated = false;
     var realLangeuage;
     $(function () {
+
 
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
@@ -233,6 +235,8 @@
             $("#soundGif").show();
             $("#text_audio").attr("onclick", "playAudio()");
         });
+
+        Loading.HideLoading();
     });
     $(document).ready(function () {
 //        监听输入的文本内容

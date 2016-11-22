@@ -165,15 +165,18 @@
             </ul>
         </div>
     </section>--%>
-</div>
+    </div>
 
-<%--底部視圖--%>
-<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+    <%--底部視圖--%>
+    <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
-    $(function () {
-    })
+    $(document).ready(function() {
+        Loading.HideLoading();
+    });
     function login() {
         var phone = $("#phoneid").val();
         var psd = $("#psdid").val();
@@ -209,6 +212,7 @@
         } else {
             $("#codeLabel").css("display", "none");
         }
+        Loading.ShowLoading();
         toJump(phone, psd,code);
     }
     function toJump(phone, psd,code) {
@@ -230,7 +234,9 @@
                     } else {
                         window.location.href = "<%=path%>" + "<%=ToUrl%>";
                     }
+                    Loading.HideLoading();
                 } else {
+                    Loading.HideLoading();
                     if (data.status == 2){
                         createCode();
                     }
@@ -238,10 +244,12 @@
                     $("#codeLabel").css("display", "block");
                     return;
                 }
+
             },
             error: function () {
                 $("#codeLabel").html(data.msg);
                 $("#codeLabel").css("display", "block");
+                Loading.HideLoading();
             }
         });
 

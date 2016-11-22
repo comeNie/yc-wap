@@ -67,6 +67,8 @@
     </div>
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -74,6 +76,7 @@
        $("#leftRe").click(function() {
             window.history.go(-1);
        });
+        Loading.HideLoading();
     });
     function finishChange() {
         var oldpsd = $("#oldPsdID").val();
@@ -119,7 +122,7 @@
         }else {
             $("#confirmLable").css("display","none");
         }
-
+        Loading.ShowLoading();
         checkChange(oldpsd,newpsd);
 
     }
@@ -141,15 +144,17 @@
                     $("#confirmLable").css("display", "none");
                     var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.change_jump"/>";
                     window.location.href=tourl;
+                    Loading.HideLoading();
                 } else {
                     $("#confirmLable").html(data.msg);
                     $("#confirmLable").css("display", "block");
-
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#confirmLable").html(data.msg);
                 $("#confirmLable").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }

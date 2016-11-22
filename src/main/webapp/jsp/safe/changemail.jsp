@@ -64,6 +64,9 @@
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script type="text/javascript">
@@ -71,6 +74,7 @@
         $("#leftRe").click(function() {
             window.history.go(-1);
         });
+        Loading.HideLoading();
     });
     function confirmBtn() {
         var mail = $("#mail").val();
@@ -97,7 +101,7 @@
         }else {
             $("#phonetips").css("display","none");
         }
-
+        Loading.ShowLoading();
         checkMail(mail,code);
 
 
@@ -119,14 +123,17 @@
                     $("#phonetips").css("display", "none");
                     var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changemail.navli"/>";
                     window.location.href=tourl;
+                    Loading.HideLoading();
                 } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }
@@ -147,6 +154,7 @@
         }else {
             $("#mailLabel").css("display","none");
         }
+        Loading.ShowLoading();
         getTestCode(mail);
     }
     //    发送验证码
@@ -167,14 +175,17 @@
                     $("#phonetips").css("display", "none");
                     $("#mail").attr("disabled","true");
                     countDown(60);
+                    Loading.HideLoading();
                 } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }

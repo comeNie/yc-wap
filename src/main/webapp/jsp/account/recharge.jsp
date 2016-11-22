@@ -75,11 +75,13 @@
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
-    $(function() {
-
+    $(document).ready(function() {
+        Loading.HideLoading();
     });
     function retLeft(){
         window.history.go(-1);

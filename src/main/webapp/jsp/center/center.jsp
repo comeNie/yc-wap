@@ -104,6 +104,8 @@
     </div>
     <section class="personal-ban1"><a href="javascript:void(0)"><img src="<%=path%>/ui/images/person-banner.jpg" /></a></section>
 
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -112,6 +114,8 @@
         if(${isLogin=="1"}){
             $("#nameLi").html("${username}");
             loadOrder();
+        }else {
+            Loading.HideLoading();
         }
     })
     function loadOrder(){
@@ -125,11 +129,15 @@
             },
             success: function (data) {
                 if (data.status == 1) {
+                    Loading.HideLoading();
                     $("#stayPay").html(data.unpaid);
                     $("#stayConfig").html(data.unconfirm);
+                }else {
+                    Loading.HideLoading();
                 }
             },
             error: function () {
+                Loading.HideLoading();
             }
         });
     }

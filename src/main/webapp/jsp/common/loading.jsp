@@ -21,7 +21,7 @@
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div class="loading-bj" id="_loading" hidden>
+<div class="loading-bj" id="_loading">
     <section class="loading-wrapper" >
         <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>
         <p class="img2">

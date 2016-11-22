@@ -50,7 +50,8 @@
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
-
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -78,11 +79,15 @@
             },
             success: function (data) {
                 if (data.status == 1) {
+                    Loading.HideLoading();
                     b = data.balance;
                     $("#balanceSpan").html(data.balance);
+                }else {
+                    Loading.HideLoading();
                 }
             },
             error: function () {
+                Loading.HideLoading();
             }
         });
     }

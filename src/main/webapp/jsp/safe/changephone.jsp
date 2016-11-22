@@ -70,6 +70,9 @@
     </div>
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -99,13 +102,15 @@
                     $.each(list,function(index ,value){
                         $('#selectid').append("<option>" + value.countryNameCn+"+"+value.countryCode + "</option>");
                     })
+                    Loading.HideLoading();
                 } else {
-                    alert("失败")
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html("网络请求超时，请稍候再试");
                 $("#phonetips").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }
@@ -135,7 +140,7 @@
         }else {
             $("#phonetips").css("display","none");
         }
-
+        Loading.ShowLoading();
         checkPhone(code,phone);
 
     }
@@ -156,14 +161,17 @@
                     $("#phonetips").css("display", "none");
                     var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.confirm_phone"/>";
                     window.location.href=tourl;
+                    Loading.HideLoading();
                 } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
+                Loading.HideLoading();
             }
         });
     }
@@ -184,6 +192,7 @@
         }else {
             $("#phoneLabel").css("display","none");
         }
+        Loading.ShowLoading();
         getTestCode(phone);
     }
 //    发送验证码
@@ -204,14 +213,17 @@
                     $("#phonetips").css("display", "none");
                     $("#phone").attr("disabled","true");
                     countDown(60);
+                    Loading.HideLoading();
                 } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
+                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
+                Loading.HideLoading();
             }
         });
 
