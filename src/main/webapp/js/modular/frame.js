@@ -21,16 +21,16 @@ $(".history-list .right .btn").click(function () {
 	});
 	}); 	
 //二级菜单下拉
-$(function () {
-    var st = 100;
-    $('.wap-second-nav #nav-list').click(function () {
-		$('.pop-nav').toggle();
-    })
-		$(".pop-nav").click(function () {
-                $(this).hide(1);
-            });
-
-  });
+// $(function () {
+//     var st = 100;
+//     $('.wap-second-nav #nav-list').click(function () {
+// 		$('.pop-nav').toggle();
+//     })
+// 		$(".pop-nav").click(function () {
+//                 $(this).hide(1);
+//             });
+//
+//   });
   
 //登录 table
 $(function(){
