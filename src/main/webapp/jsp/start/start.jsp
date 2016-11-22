@@ -26,9 +26,7 @@
 </head>
 
 <body>
-<%----%>
 
-<%----%>
 <!--分享弹出框-->
 <div class="eject-big">
     <div class="prompt-share" id="share-eject">
@@ -148,7 +146,8 @@
         </section>
         <!--翻译按钮-->
         <section class="translate-btn" id="chick-btn">
-            <a href="javascript:void(0)" onclick="goTranslate()" class="btn btn-big">翻译</a>
+            <a href="javascript:void(0)" onclick="goTranslate()" id="translateAid" class="btn btn-big">翻译</a>
+            <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="display:none;padding-left: 2.5rem">
         </section>
         <!--翻译结果-->
         <section class="translation-content-english" id="results">
@@ -212,6 +211,7 @@
 </div>
 </div>
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+
 </body>
 </html>
 
@@ -359,6 +359,8 @@
             $("#result-text").html(textStr);
             return;
         }
+        $("#translateAid").hide();
+        $("#translateGif").show();
         $.ajax({
             async: true,
             type: "POST",
@@ -376,17 +378,26 @@
                     $("#result-text").html(data.target);
                     $("#results").show();
                     $("#chick-btn").hide();
+
+                    $("#translateAid").show();
+                    $("#translateGif").hide();
                     IsTranslated = true;
                 } else {
                     IsTranslated = false;
                     $("#results").hide();
                     $("#chick-btn").show();
+
+                    $("#translateAid").show();
+                    $("#translateGif").hide();
                 }
             },
             error: function (data) {
                 IsTranslated = false;
                 $("#results").hide();
                 $("#chick-btn").show();
+
+                $("#translateAid").show();
+                $("#translateGif").hide();
             }
         });
 
