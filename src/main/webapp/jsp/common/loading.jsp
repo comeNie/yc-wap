@@ -21,7 +21,7 @@
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div class="loading-bj" id="_loading">
+<div class="loading-bj" id="_loading" hidden>
     <section class="loading-wrapper" >
         <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>
         <p class="img2">
@@ -39,7 +39,7 @@
 <script type="text/javascript" src="<%=path%>/js/modular/loading.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#_loading").css("display", "none");
+        $("#_loading").css("display", "block");
     });
 
     $(function () {

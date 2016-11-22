@@ -81,6 +81,7 @@
 .choice-list ul li p{float:left;position:relative;line-height:1.32rem;font-size:0.51rem;}
 .choice-list ul li p span{position:absolute;top:0;right:1.42rem;color:#c4c4c4;font-size:0.42rem}
 .choice-list ul li .word{width:2.98rem;float:left;font-size:0.51rem;line-height:1.32rem;color:#666}
+.choice-list label{width:100%;float:left;padding-left:3rem;color:red}
 .testing-select-small{width:5.56rem;height:1.32rem;border:1px solid #c4c4c4;font-size:0.42rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.46rem 0.12rem;border-radius:0.21rem}
 .testing .test-icon{margin:0.22rem 0.4rem;color:#666;font-size:0.34rem;}

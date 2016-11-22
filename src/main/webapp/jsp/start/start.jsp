@@ -27,7 +27,7 @@
 
 <body>
 <%----%>
-<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
+
 <%----%>
 <!--分享弹出框-->
 <div class="eject-big">
@@ -159,6 +159,7 @@
                 <a href="javascript:void(0)" id="text_audio" onclick="playAudio()">
                     <i class="icon iconfont ash" id="hornid">&#xe61b;</i>
                     <img src="<%=path%>/ui/images/loading_back.gif" id="loading" style="display:none;">
+                    <img src="<%=path%>/ui/images/首页声音.gif" id="soundGif" style="display:none;">
                 </a>
                 <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
                 <audio src="" controls="controls" id="audioPlay" hidden>
@@ -223,12 +224,13 @@
 
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
-            $("#hornid").attr("class","icon iconfont ash");
+            $("#hornid").show();
+            $("#soundGif").hide();
         });
         audio.addEventListener("playing",function () {
             $("#loading").hide();
-            $("#hornid").show();
-            $("#hornid").attr("class","icon iconfont blue");
+            $("#hornid").hide();
+            $("#soundGif").show();
             $("#text_audio").attr("onclick", "playAudio()");
         });
     });
@@ -244,14 +246,17 @@
 
 //        翻译源内容文本框获取焦点
         $("#chick-int").focus(function () {
-            $("#results").css("display", "none");
-            $("#chick-btn").css("display", "block");
+            $("#results").hide();
+//            css("display", "none");
+//            $("#chick-btn").css("display", "block");
+            $('#chick-btn').show();
+            $('#wrapper-hide').hide();
         });
         //清除
         $("#clear").click(function(){
             if (IsTranslated == true) {
-                $("#results").css("display", "none");
-                $("#btn-translate").css("display", "block");
+                $("#results").hide()
+                $("#btn-translate").show();
                 $("#chick-int").focus();
                 IsTranslated = false;
             } else {
@@ -291,6 +296,7 @@
             $("#audioPlay").attr("src", ttsUrl);
             $("#loading").show();
             $("#hornid").hide();
+            $("#soundGif").hide();
             $("#text_audio").attr("onclick", "javascript:void(0)");
             audioPlay.play();
         } else {
@@ -318,11 +324,13 @@
 
         var textStr = $("#chick-int").val();
         if (textStr == "" || textStr == null) {         //判断为空,中断
-            $('#results').css("display", "none");
+            $('#results').hide();
             return;
         }
-        $("#chick-btn").css("display", "none");
-        $('#results').css("display", "block");
+//        $("#chick-btn").css("display", "none");
+//        $('#results').css("display", "block");
+//        $("#chick-btn").hide()
+//        $("#results").show();
 
         var source = $("#source-lan").val();
         var target = $("#target-lan").val();
@@ -366,13 +374,19 @@
             success: function (data) {
                 if (data.status == 1) {//成功
                     $("#result-text").html(data.target);
+                    $("#results").show();
+                    $("#chick-btn").hide();
                     IsTranslated = true;
                 } else {
                     IsTranslated = false;
+                    $("#results").hide();
+                    $("#chick-btn").show();
                 }
             },
             error: function (data) {
                 IsTranslated = false;
+                $("#results").hide();
+                $("#chick-btn").show();
             }
         });
 
