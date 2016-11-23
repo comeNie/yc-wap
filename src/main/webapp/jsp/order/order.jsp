@@ -34,14 +34,27 @@
         <jsp:param name="Title" value="我的订单"/>
         <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
     </jsp:include>
-        <div id="sample"></div>
+    <section class="tij-cg" id="error" style="display: none">
+        <ul>
+            <li><i class="icon iconfont red">&#xe62b;</i></li>
+            <li class="word red">您还没有相应的订单</li>
+        </ul>
+    </section>
+    <div id="sample"></div>
     <div class="loading" id="spinner"><a href="#" id="spId">上拉加载</a></div>
 </div>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
-
 <script type="text/javascript">
+    var index = 0;
+    var PageCount = 1;
+    var tips = "";
+    var btn1 = "";
+    var btn2 = "";
+    var statusFlag = ""; //0正常 1待支付 2待确认 3待报价
+    var detailUrl = "<%=path%>/order/OrderDetail?OrderId=";
+
     $(document).ready(function () {
         Loading.HideLoading();
     });
@@ -50,53 +63,52 @@
 
     });
 
-    var index = 0;
-    var PageCount = 1;
-    var tips = "";
-    var btn1 = "";
-    var btn2 = "";
-    var statusFlag = ""; //0正常 1待支付 2待确认 3待报价
-    var detailUrl = "<%=path%>/order/OrderDetail?OrderId=";
-    function lowEnough() {
-        var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
-        var viewportHeight = window.innerHeight ||
-                document.documentElement.clientHeight ||
-                document.body.clientHeight || 0;
-        var scrollHeight = window.pageYOffset ||
-                document.documentElement.scrollTop ||
-                document.body.scrollTop || 0;
-
-//        console.log(pageHeight);
-//        console.log(viewportHeight);
-//        console.log(scrollHeight);
-        return pageHeight - viewportHeight - scrollHeight < 20;
-    }
-
-    function doSomething() {
-        if (index == PageCount) {
-            $('#spId').html("没有更多了");
-            return;
-        }
-        if (GetOrderList(index + 1) == false) {
-            $('#spId').html("没有更多了");
-            return;
-        }
-        pollScroll();
-        $('#spinner').hide();
-    }
-
-    function checkScroll() {
-        if (!lowEnough()) return pollScroll();
-        $('#spinner').show();
-        setTimeout(doSomething, 900);
-    }
-
-    function pollScroll() {
-        setTimeout(checkScroll, 1000);
-    }
-    checkScroll();
+    //    function lowEnough() {
+    //        var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
+    //        var viewportHeight = window.innerHeight ||
+    //                document.documentElement.clientHeight ||
+    //                document.body.clientHeight || 0;
+    //        var scrollHeight = window.pageYOffset ||
+    //                document.documentElement.scrollTop ||
+    //                document.body.scrollTop || 0;
+    //
+    ////        console.log(pageHeight);
+    ////        console.log(viewportHeight);
+    ////        console.log(scrollHeight);
+    //        return pageHeight - viewportHeight - scrollHeight < 20;
+    //    }
+    //
+    //    function doSomething() {
+    //        if (Empty) {
+    //            $('#error').css("display", "block");
+    //            return;
+    //        }
+    //        if (index == PageCount) {
+    //            $('#spId').html("没有更多了");
+    //            return;
+    //        }
+    //        if (!GetOrderList(index + 1)) {
+    //            $('#spinner').hide();
+    //            return;
+    //        }
+    //        pollScroll();
+    //        $('#spinner').hide();
+    //    }
+    //
+    //    function checkScroll() {
+    //        if (!lowEnough()) return pollScroll();
+    //        $('#spinner').show();
+    //        setTimeout(doSomething, 1000);
+    //    }
+    //
+    //    function pollScroll() {
+    //        setTimeout(checkScroll, 1000);
+    //    }
+    //    checkScroll();
 
     function GetOrderList(page) {
+        var isUnPaid = "${isUnPaid}";
+        var isUnConfirm = "${isUnConfirm}";
         $.ajax({
             async: true,
             type: "POST",
@@ -104,11 +116,14 @@
             modal: true,
             timeout: 30000,
             data: {
-                Page: page
+                Page: page,
+                isUnPaid: isUnPaid,
+                isUnConfirm: isUnConfirm
             },
             success: function (data) {
                 if (data.status == 1) {
                     if (data.Count == 0) {
+                        Empty = true;
                         return false;
                     }
                     PageCount = data.PageCount;

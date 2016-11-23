@@ -61,9 +61,10 @@
         <!--转换语言-->
         <section class="testing">
             <p>
-                <select class="select testing-select-big">
-                    <option>检测语言：中文</option>
-                    <option>检测语言：英文</option>
+                <select id="dual" class="select testing-select-big">
+                    <c:forEach items="${DualList}" var="pair">
+                        <option dualId="${pair.duadId}">${pair.sourceCn}->${pair.targetCn}</option>
+                    </c:forEach>
                 </select>
                 <span>|</span>
             </p>
@@ -243,6 +244,9 @@
     }
 
     function saveContent(Content, ContentLength) {
+        //语言对
+        var DualId = $("#dual").find("option:selected").attr("dualId");
+        var DualVal = $("#dual").val();
         //用途
         var PurposeId = $("#purpose").find("option:selected").attr("purposeId");
         var PurposeVal = $("#purpose").val();
@@ -267,8 +271,8 @@
             data: {
                 Content: Content,
                 ContentLength: ContentLength,
-                DualId: "1",
-                DualVal: "中文啊->英文啊",
+                DualId: DualId,
+                DualVal: DualVal,
                 PurposeId: PurposeId,
                 PurposeVal: PurposeVal,
                 DomainId: DomainId,

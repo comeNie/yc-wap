@@ -22,6 +22,10 @@
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
 </head>
 <body>
 <div class="wrapper-big" id="OrderDetail">
@@ -406,10 +410,7 @@
 </section>
 </body>
 </html>
-<script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
-<script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
-<script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("#click-more").bind("click", function () {

@@ -94,11 +94,20 @@ public class OrderController extends BaseController {
     @ResponseBody
     public Object GetOrder() {
         MsgBean result = new MsgBean();
+        String isUnPaid = request.getParameter("isUnPaid");
+        String isUnConfirm = request.getParameter("isUnConfirm");
+
         int Page = Integer.parseInt(request.getParameter("Page"));
         QueryOrderRequest req = new QueryOrderRequest();
         req.setPageNo(Page);
         req.setPageSize(4);
         req.setUserId((String) session.getAttribute("UID"));
+        if(isUnPaid.equals("1")) {
+            req.setDisplayFlag(Constants.Order.UNPAID);
+        }
+        if(isUnConfirm.equals("1")) {
+            req.setDisplayFlag(Constants.Order.UNCONFIRM);
+        }
         log.info("GetOrderParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
         try {
             QueryOrderRsponse resp = iOrderQuerySV.queryOrder(req);
