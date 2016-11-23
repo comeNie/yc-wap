@@ -53,7 +53,7 @@
         <div class="order-list">
             <ul>
                 <li>手机:</li>
-                <li><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码（必填）"></li>
+                <li><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码"></li>
             </ul>
             <ul>
                 <li>姓名:</li>
@@ -76,12 +76,14 @@
 <section class="add-btn">
     <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交订单</a>
 </section>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.multi-switch').multiSwitch();
+//        $('.multi-switch').multiSwitch();
+        Loading.HideLoading();
         $("#submit").bind("click", function () {
             var phone = $("#phone").val();
             var name = $("#name").val();
@@ -90,34 +92,34 @@
             var emailCheck = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
             if (phone == "" || phone == null) {
-                $("#EjectTitle").html("请输入手机号码");
+                $("#EjectTitle").html("请输入手机号");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             } else {
                 if (!phoneCheck.test(phone)) {
-                    $("#EjectTitle").html("请输入正确的手机号码");
+                    $("#EjectTitle").html("请输入正确的手机号");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     return;
                 }
             }
-//
-//            if (name == "" || name == null) {
-//                $("#EjectTitle").html("请输入姓名");
-//                $('#eject-mask').fadeIn(100);
-//                $('#prompt').slideDown(100);
-//                return;
-//            }
+
+            if (name == "" || name == null) {
+                $("#EjectTitle").html("请输入姓名");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
+            }
 
             if (email == "" || email == null) {
-//                $("#EjectTitle").html("请输入邮箱");
-//                $('#eject-mask').fadeIn(100);
-//                $('#prompt').slideDown(100);
-//                return;
+                $("#EjectTitle").html("请输入邮箱");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
             } else {
                 if (!emailCheck.test(email)) {
-                    $("#EjectTitle").html("请输入正确邮箱地址");
+                    $("#EjectTitle").html("请输入正确邮箱");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     return;
@@ -145,6 +147,8 @@
         var today = new Date();
         var TimeZoneOffset = today.stdTimezoneOffset();
 
+        Loading.ShowLoading();
+
         $.ajax({
             async: true,
             type: "POST",
@@ -170,7 +174,7 @@
 
             },
             complete: function () {
-
+                Loading.HideLoading();
             }
         });
     }

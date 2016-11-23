@@ -39,7 +39,7 @@
 <script type="text/javascript" src="<%=path%>/js/modular/loading.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#_loading").css("display", "block");
+//        $("#_loading").css("display", "block");
     });
 
     $(function () {

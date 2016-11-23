@@ -154,28 +154,7 @@
 </div>
 <!--底部-->
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
-
-<%--协议--%>
-<div class="wrapper-big" id="license" style="display: none">
-
-    <section class="about">
-        <ul>
-            <li class="td">
-                译云平台在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《用户协议》（以下简称“本协议”），确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权注册、登录或使用本协议所涉服务。您的注册、登录、使用等行为将视为对本协议的接受，
-                并同意接受本协议各项条款的约束。如果您未满18周岁，请在法定监护人的陪同下阅读本协议，并特别注意未成年人使用条款。
-            </li>
-            <li class="td">
-                本协议约定译云平台与用户之间关于“译云”软件服务（以下简称“服务”）的权利义务。“用户”是指注册、登录、使用本服务的个人。本协议可由译云平台随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本网站查阅最新版协议条款。在译云平台修改协议条款后，如果用户不接受修改后的条款，请立即停止使用译云平台提供的服务，用户继续使用译云平台提供的服务将被视为接受修改后的协议。
-            </li>
-            <li>一．账号注册</li>
-            <li class="td">1-1．用户在使用本服务前需要注册一个“译云”账号。“译云”账号应当使用电子邮箱或手机号码绑定注册，请用户使用尚未与“译云”账号绑定的电子邮箱或手机号码。</li>
-            <li class="td">
-                1-2．在用户注册及使用本服务时，译云平台需要搜集能识别用户身份的个人信息以便译云平台可以在必要时联系用户，或为用户提供更好的使用体验。译云平台搜集的信息包括但不限于用户的姓名、性别、年龄、出生日期、身份证号、地址、学校情况、公司情况、所属行业、个人说明；译云平台同意对这些信息的使用将受限于第三条用户个人隐私信息保护的约束。
-            </li>
-        </ul>
-    </section>
-</div>
-
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 
 </body>
 </html>
@@ -187,24 +166,25 @@
     });
 
     $(document).ready(function () {
+        Loading.HideLoading();
         $("#submit").bind("click", function () {
             var Content = $("#chick-int").val();
             var ContentLength = count(escape(Content));
 
             if (ContentLength == 0) {
-                $("#EjectTitle").html("没写字呢卧槽");
+                $("#EjectTitle").html("请输入翻译内容");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             }
             if (ContentLength >= 2000) {
-                $("#EjectTitle").html("超出2000了卧槽");
+                $("#EjectTitle").html("翻译内容超出2000字");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             }
             if (!$("#isRead").prop("checked")) {
-                $("#EjectTitle").html("没读协议呢卧槽");
+                $("#EjectTitle").html("请阅读翻译协议");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
@@ -266,15 +246,7 @@
     }
 
     function toLicense() {
-        $("#body").css("display", "none");
-        $("#_bottom").css("display", "none");
-        $("#license").css("display", "block");
-    }
-
-    function toBody() {
-        $("#body").css("display", "block");
-        $("#_bottom").css("display", "block");
-        $("#license").css("display", "none");
+        window.location.href = "<%=path%>/common/agreement"
     }
 
     function saveContent(Content, ContentLength) {
@@ -326,10 +298,10 @@
 
             },
             beforeSend: function () {
-
+                Loading.ShowLoading();
             },
             complete: function () {
-
+                Loading.HideLoading();
             }
         });
     }
