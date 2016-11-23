@@ -40,8 +40,8 @@
             <li class="word red">您还没有相应的订单</li>
         </ul>
     </section>
-    <div id="sample"></div>
-    <div class="loading" id="spinner"><a href="#" id="spId">上拉加载</a></div>
+    <div id="wrapper"></div>
+    <%--<div class="loading" id="spinner"><a href="#" id="spId">上拉加载</a></div>--%>
 </div>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
@@ -57,6 +57,17 @@
 
     $(document).ready(function () {
         Loading.HideLoading();
+        GetOrderList(index + 1);
+
+        $(window).scroll(function () {
+            if ($(document).scrollTop() <= 0) {
+                alert("滚动条已经到达顶部为0");
+            }
+
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                alert("滚动条已经到达底部为" + $(document).scrollTop());
+            }
+        });
     });
 
     $(function () {
@@ -145,7 +156,7 @@
                         } else if (statusFlag == "3") {
                             var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + "</p></li></ul></div></section>";
                         }
-                        $('#sample').append(htmlStr);
+                        $('#wrapper').append(htmlStr);
                     }
                 }
             },
