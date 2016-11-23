@@ -23,6 +23,11 @@
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -36,7 +41,7 @@
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a hrel="#" id="prompt-btn">确认</a>
+                <a href="#" id="prompt-btn">确认</a>
             </div>
 
         </div>
@@ -152,10 +157,6 @@
 
 <%--协议--%>
 <div class="wrapper-big" id="license" style="display: none">
-    <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="协议"/>
-        <jsp:param name="BackTo" value="javascript:toBody()"/>
-    </jsp:include>
 
     <section class="about">
         <ul>
@@ -178,11 +179,7 @@
 
 </body>
 </html>
-<script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
-<script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
-<script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
-<script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
+
 <script type="text/javascript">
     $(function () {
         LvChange();
