@@ -46,7 +46,11 @@ public class OrderController extends BaseController {
     public String order() {
         String isUnPaid = request.getParameter("UnPaid");
         String isUnConfirm = request.getParameter("UnConfirm");
-
+        String isLogin = (String) session.getAttribute("isLogin");
+        if(isLogin==null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            return "login/login";
+        }
         return "order/order";
     }
 

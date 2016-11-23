@@ -61,24 +61,24 @@ public class PayController extends BaseController {
         response.getWriter().flush();
     }
 
-    @RequestMapping(value = "balancerecharge")
+    @RequestMapping(value = "BalanceRecharge")
     @ResponseBody
-    public Object balancerecharge(){
+    public Object BalanceRecharge(){
         MsgBean result = new MsgBean();
 
-
+        String uid = (String) session.getAttribute("UID");
+        String time = (new Date()).getTime() + "";
+        String busiSerial = uid + time;
 
         DepositParam param = new DepositParam();
         param.setAccountId(11651);  //	账户ID
         param.setBusiDesc("余额");    //业务描述
-        String uid = (String) session.getAttribute("UID");
-        String  time = (new Date()).getTime() + "";
-        String busiSerial = uid + time;
         param.setBusiSerialNo(busiSerial);
 
         TransSummary summary = new TransSummary();  //交易摘要
         summary.setAmount(10);
         summary.setSubjectId(100000);
+
         List<TransSummary> transSummaryList = new ArrayList<TransSummary>();
         transSummaryList.add(summary);
         param.setTransSummary(transSummaryList);

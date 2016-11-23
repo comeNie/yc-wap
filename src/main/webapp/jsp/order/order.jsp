@@ -21,6 +21,10 @@
         <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
         <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
         <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
+        <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
+        <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     </head>
 </head>
 <body>
@@ -30,18 +34,16 @@
         <jsp:param name="Title" value="我的订单"/>
         <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
     </jsp:include>
-    <div id="sample"></div>
-    <div class="loading" id="spinner"><a href="#" id="spId">正在加载…</a></div>
+        <div id="sample"></div>
+    <div class="loading" id="spinner"><a href="#" id="spId">上拉加载</a></div>
 </div>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
-<script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
-<script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
-<script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-
+        Loading.HideLoading();
     });
 
     $(function () {
@@ -136,10 +138,10 @@
 
             },
             beforeSend: function () {
-
+                Loading.ShowLoading();
             },
             complete: function () {
-
+                Loading.HideLoading();
             }
         });
     }
