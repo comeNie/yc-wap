@@ -61,16 +61,9 @@
         <!--转换语言-->
         <section class="testing">
             <p>
-                <select class="select testing-select">
+                <select class="select testing-select-big">
                     <option>检测语言：中文</option>
                     <option>检测语言：英文</option>
-                </select>
-                <span>|</span>
-            </p>
-            <p class="test-icon"><i class="icon iconfont">&#xe621;</i></p>
-            <p>
-                <select class="select testing-select">
-                    <option>英文</option>
                 </select>
                 <span>|</span>
             </p>
@@ -78,7 +71,7 @@
         <!--文字翻译-->
         <section class="translation-content">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
-                      placeholder="最多2000字啊啊啊"></textarea>
+                      placeholder="最多可输入2000字"></textarea>
             <a hrel="#"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">

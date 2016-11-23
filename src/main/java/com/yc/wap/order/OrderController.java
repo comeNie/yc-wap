@@ -51,6 +51,8 @@ public class OrderController extends BaseController {
             log.info("UserNotLogin");
             return "login/login";
         }
+        request.setAttribute("isUnPaid", isUnPaid);
+        request.setAttribute("isUnConfirm", isUnConfirm);
         return "order/order";
     }
 
