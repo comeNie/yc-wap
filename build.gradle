@@ -16,7 +16,6 @@ configurations.all {
     exclude group: "org.slf4j", module: "slf4j-log4j12"
 }
 
-version = "1.0-SNAPSHOT"
 
 configurations {
     optUedTemplate
@@ -99,24 +98,24 @@ dependencies {
 
     //yc
     compile "com.ai.yc.ucenter:members:1.1.1-SNAPSHOT"
-    compile "com.ai.yc.common:country:${version}"
+    compile "com.ai.yc.common:country:1.0-SNAPSHOT"
 
-    compile "com.ai.yc.common:sysduad:${version}"
-    compile "com.ai.yc.common:syspurpose:${version}"
-    compile "com.ai.yc.common:sysdomain:${version}"
-    compile "com.ai.yc.order:autooffer:${version}"
-    compile "com.ai.yc.order:orderquery:${version}"
-    compile "com.ai.yc.order:orderdetails:${version}"
-    compile "com.ai.yc.order:ordersubmission:${version}"
-    compile "com.ai.yc.order:orderclose:${version}"
+    compile "com.ai.yc.common:sysduad:1.0-SNAPSHOT"
+    compile "com.ai.yc.common:syspurpose:1.0-SNAPSHOT"
+    compile "com.ai.yc.common:sysdomain:1.0-SNAPSHOT"
+    compile "com.ai.yc.order:autooffer:1.0-SNAPSHOT"
+    compile "com.ai.yc.order:orderquery:1.0-SNAPSHOT"
+    compile "com.ai.yc.order:orderdetails:1.0-SNAPSHOT"
+    compile "com.ai.yc.order:ordersubmission:1.0-SNAPSHOT"
+    compile "com.ai.yc.order:orderclose:1.0-SNAPSHOT"
 
     //创建账户的包
-    compile "com.ai.slp.balance:accountmaintain:${version}"
-    compile "com.ai.slp.balance:fundquery:${version}"
-    compile "com.ai.slp.balance:deposit:${version}"
+    compile "com.ai.slp.balance:accountmaintain:1.0-SNAPSHOT"
+    compile "com.ai.slp.balance:fundquery:1.0-SNAPSHOT"
+    compile "com.ai.slp.balance:deposit:1.0-SNAPSHOT"
 
     //查询用户基本信息数据
-    compile "com.ai.yc.user:userservice:${version}"
+    compile "com.ai.yc.user:userservice:1.0-SNAPSHOT"
 
 }
 
