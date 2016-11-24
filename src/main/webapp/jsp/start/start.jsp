@@ -171,7 +171,7 @@
     <section id="wrapper-hide">
         <section class="index-wrapper">
             <!--历史纪录-->
-            <section class="history" style="display: none">
+            <section class="history" style="display: block">
                 <div class="history-list">
                     <ul>
                         <a href="javascript:">
