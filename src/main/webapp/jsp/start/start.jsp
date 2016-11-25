@@ -174,27 +174,13 @@
             <section class="history" style="display: block">
                 <div class="history-list">
                     <ul>
-                        <a href="javascript:">
-                            <li>
-                                <p><i class="icon iconfont">&#xe624;</i></p>
-
-                                <p class="word">就显示一行 就显示一行显示一行</p>
-
-                                <p class="word-en">yiwen yiwen yiwen</p>
-
-                                <p class="right"><i class="icon iconfont">&#xe618;</i></p>
-                            </li>
-                        </a>
-                        <a href="javascript:">
-                            <li>
-                                <p><i class="icon iconfont">&#xe624;</i></p>
-
-                                <p class="word">就显示一行 就显示一行显示一行</p>
-
-                                <p class="word-en">yiwen yiwen yiwen</p>
-
-                                <p class="right"><i class="icon iconfont">&#xe618;</i></p>
-                            </li>
+                        <a href="javascript:" id="myHistory">
+                            <%--<li>--%>
+                                <%--<p><i class="icon iconfont">&#xe624;</i></p>--%>
+                                <%--<p class="word">就显示一行 就显示一行显示一行</p>--%>
+                                <%--<p class="word-en">yiwen yiwen yiwen</p>--%>
+                                <%--<p class="right"><i class="icon iconfont">&#xe618;</i></p>--%>
+                            <%--</li>--%>
                         </a>
                     </ul>
                 </div>
@@ -220,10 +206,13 @@
 <script type="text/javascript">
 
     var IsTranslated = false;
-    var realLangeuage;
+    var realLangeuage="zh";
+
     $(function () {
 
-
+        //初始化数据库
+        initDatabase();
+        showAllTheData();
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
             $("#hornid").show();
@@ -251,8 +240,6 @@
 //        翻译源内容文本框获取焦点
         $("#chick-int").focus(function () {
             $("#results").hide();
-//            css("display", "none");
-//            $("#chick-btn").css("display", "block");
             $('#chick-btn').show();
             $('#wrapper-hide').hide();
         });
@@ -322,7 +309,86 @@
         }
         return totalLength;
     }
+    //创建数据库
+    function initDatabase()  {
+        var db = getCurrentDb();//初始化数据库
+        if(!db) {alert("您的浏览器不支持HTML5本地数据库");return;}
+        db.transaction(function (trans) {//启动一个事务，并设置回调函数
+            //执行创建表的Sql脚本
+            trans.executeSql("create table if not exists History(id integer PRIMARY KEY AUTOINCREMENT ,sourceLan text,sourceCode text ,targetLan text,targetCode text)")
+        });
+    }
+    //打开数据库
+    function getCurrentDb() {
+        //打开数据库，或者直接连接数据库参数：数据库名称，版本，概述，大小
+        //如果数据库不存在那么创建之
+        var db = openDatabase("MyDB", "1.0", "历史记录", 1024 * 1024);
+        return db;
+    }
+    //展示所有数据
+    function showAllTheData() {
+        $("#myHistory").empty();
+        var db = getCurrentDb();
+        db.transaction(function (trans) {
+            trans.executeSql("select * from History",[],function (ts, data) {
+                if (data) {
+                    if (data.rows.length <= 3){
+                        for (var i = data.rows.length; i >0; i--) {
+                            appendDataToTable(data.rows.item(i-1));//获取某行数据的json对象
+                        }
+                    }else {
+                        for (var i = data.rows.length; i > data.rows.length-3; i--) {
+                            appendDataToTable(data.rows.item(i-1));//获取某行数据的json对象
+                        }
+                    }
+                }
+            });
+        });
+    }
+    //将数据展示到表格里面
+    function appendDataToTable(data) {
+        //sourceLan targetLan
+        var sourceLan = data.sourceLan;
+        var targetLan = data.targetLan;
+        var sourceCode = data.sourceCode;
+        var targetCode = data.targetCode;
+        var idLan = data.id;
+        var strHtml = "";
+        strHtml += "<li id='li"+idLan+"'>";
+        strHtml += "<p><i class='icon iconfont' >&#xe624;</i></p>";
+        strHtml += "<p class='word' id='word"+idLan+"'>"+sourceLan+"</p>";
+        strHtml += "<p class='word-en' id='word-en"+idLan+"'>"+targetLan+"</p>";
+        strHtml += "<p class='right'><i class='icon iconfont' id='his"+idLan+"'>&#xe618;</i></p>";
+        strHtml += "</li>";
+        $("#myHistory").append(strHtml);
 
+        //绑定事件进行删除
+        $("#his"+idLan).click(function () {
+            var db = getCurrentDb();
+            db.transaction(function (trans) {
+                trans.executeSql("delete from History WHERE ROWID =?",[idLan],function () {
+                    $("#li"+idLan).remove();
+                });
+            },function (ts, error) {alert(error);});
+        });
+        $("#word"+idLan).click(function() {
+            transHis(sourceLan,sourceCode,targetCode);
+        });
+        $("#word-en"+idLan).click(function() {
+            transHis(sourceLan,sourceCode,targetCode);
+        });
+    }
+    function transHis(sourceLan,sourceCode,targetCode){
+        $("#chick-int").val(sourceLan);
+
+        realLangeuage = sourceCode;
+        chooseLan(sourceCode,"source-lan");
+        chooseLan(targetCode,"target-lan");
+        $("#results").hide();
+        $('#chick-btn').show();
+        $('#wrapper-hide').hide();
+        goTranslate();
+    }
 //    翻译按钮的点击事件
     function goTranslate() {
 
@@ -331,10 +397,6 @@
             $('#results').hide();
             return;
         }
-//        $("#chick-btn").css("display", "none");
-//        $('#results').css("display", "block");
-//        $("#chick-btn").hide()
-//        $("#results").show();
 
         var source = $("#source-lan").val();
         var target = $("#target-lan").val();
@@ -385,7 +447,20 @@
 
                     $("#translateAid").show();
                     $("#translateGif").hide();
+
                     IsTranslated = true;
+                    var db = getCurrentDb();
+                    db.transaction(function(trans){
+                       trans.executeSql("SELECT * FROM History WHERE sourceLan=? AND sourceCode=? AND targetCode=?",[textStr,source,target],function(trans,result){
+                           if (result.rows.length == 0){
+                               //执行sql脚本，插入数据
+                               db.transaction(function (trans) {
+                                   trans.executeSql("insert into History(sourceLan,sourceCode,targetLan,targetCode) values(?,?,?,?)", [textStr,source, data.target,target]);
+                               });
+                           }
+                       });
+                    });
+
                 } else {
                     IsTranslated = false;
                     $("#results").hide();
@@ -420,15 +495,15 @@
             success: function (data) {
                 if (data.status == 1) {
                     realLangeuage = data.fintec;
-                    chooseLan(realLangeuage);
+                    chooseLan(realLangeuage,"source-lan");
                 }
             }
         });
     }
     //自动选择语言
-    function chooseLan(lan) {
-        var lanText;
-        var select = document.getElementById("source-lan");
+    function chooseLan(lan,name) {
+//        var lanText;
+        var select = document.getElementById(name);
         if (lan != "" || lan != null){
             for(var i=0; i<select.options.length; i++){
                 if(select.options[i].value == lan){
