@@ -41,7 +41,7 @@
         </ul>
     </section>
     <div id="wrapper"></div>
-    <%--<div class="loading" id="spinner"><a href="#" id="spId">上拉加载</a></div>--%>
+    <div class="loading" id="spinner" style="display: none"><a href="#" id="spId">没有更多了</a></div>
 </div>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
@@ -52,6 +52,7 @@
     var tips = "";
     var btn1 = "";
     var btn2 = "";
+    var isEmpty = false;
     var statusFlag = ""; //0正常 1待支付 2待确认 3待报价
     var detailUrl = "<%=path%>/order/OrderDetail?OrderId=";
 
@@ -60,12 +61,21 @@
         GetOrderList(index + 1);
 
         $(window).scroll(function () {
+            if (isEmpty) {
+                return;
+            }
+
             if ($(document).scrollTop() <= 0) {
-                alert("滚动条已经到达顶部为0");
+                console.log("滚动条已经到达顶部为0");
             }
 
             if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
-                alert("滚动条已经到达底部为" + $(document).scrollTop());
+                console.log("滚动条已经到达底部为" + $(document).scrollTop());
+                if (index == PageCount) {
+                    $("#spinner").css("display", "block");
+                    return;
+                }
+                GetOrderList(index + 1);
             }
         });
     });
@@ -73,49 +83,6 @@
     $(function () {
 
     });
-
-    //    function lowEnough() {
-    //        var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
-    //        var viewportHeight = window.innerHeight ||
-    //                document.documentElement.clientHeight ||
-    //                document.body.clientHeight || 0;
-    //        var scrollHeight = window.pageYOffset ||
-    //                document.documentElement.scrollTop ||
-    //                document.body.scrollTop || 0;
-    //
-    ////        console.log(pageHeight);
-    ////        console.log(viewportHeight);
-    ////        console.log(scrollHeight);
-    //        return pageHeight - viewportHeight - scrollHeight < 20;
-    //    }
-    //
-    //    function doSomething() {
-    //        if (Empty) {
-    //            $('#error').css("display", "block");
-    //            return;
-    //        }
-    //        if (index == PageCount) {
-    //            $('#spId').html("没有更多了");
-    //            return;
-    //        }
-    //        if (!GetOrderList(index + 1)) {
-    //            $('#spinner').hide();
-    //            return;
-    //        }
-    //        pollScroll();
-    //        $('#spinner').hide();
-    //    }
-    //
-    //    function checkScroll() {
-    //        if (!lowEnough()) return pollScroll();
-    //        $('#spinner').show();
-    //        setTimeout(doSomething, 1000);
-    //    }
-    //
-    //    function pollScroll() {
-    //        setTimeout(checkScroll, 1000);
-    //    }
-    //    checkScroll();
 
     function GetOrderList(page) {
         var isUnPaid = "${isUnPaid}";
@@ -134,8 +101,8 @@
             success: function (data) {
                 if (data.status == 1) {
                     if (data.Count == 0) {
-                        Empty = true;
-                        return false;
+                        $("#error").css("display", "block");
+                        isEmpty = true;
                     }
                     PageCount = data.PageCount;
                     index = data.PageNo;

@@ -166,6 +166,11 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "OrderDetail")
     public String OrderDetail() {
         String OrderId = request.getParameter("OrderId");
+        String isLogin = (String) session.getAttribute("isLogin");
+        if(isLogin==null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            return "login/login";
+        }
         try {
             log.info("QueryOrderDetailsOrderId: " + OrderId);
             QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(Long.parseLong(OrderId));
