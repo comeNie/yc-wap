@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -63,13 +64,13 @@
                     </ul>
                     <ul>
                         <li>
-                            <p>译文:<span>(修改中)</span></p>
+                            <p>译文:</p>
                             <p class="sm-word">${Params.translateInfo}</p>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="click-more" id="click-more"><a href="#" id="more" flag="closed">点击查看更多</a></div>
+            <div class="click-more" id="click-more"><a href="javascript:void(0)" id="more" flag="closed">点击查看更多</a></div>
         </section>
         <section class="my-order-content">
             <div class="my-order-list">
@@ -347,10 +348,27 @@
 
 
 <div class="wrapper-big" id="OrderTrack" style="display: none">
-    <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="订单跟踪"/>
-        <jsp:param name="BackTo" value="javascript:GoDetail()"/>
-    </jsp:include>
+    <nav class="wap-second-nav">
+        <ul>
+            <a href="javascript:GoDetail()"><i class="icon iconfont left">&#xe626;</i></a>
+            <li>订单跟踪</li>
+            <a href="javascript:" id="nav-list1"><i class="icon iconfont right">&#xe629;</i></a>
+        </ul>
+        <div class="pop-nav" id="pop-nav1">
+            <ul>
+                <li>
+                    <a href="javascript:window.location.href='<%=path%>/'">
+                        <spring:message code="popnav.public.index"/></a>|
+                    <a href="javascript:window.location.href='<%=path%>/center/center'">
+                        <spring:message code="popnav.public.ucenter"/></a>|
+                    <a href="javascript:window.location.href='<%=path%>/order'">
+                        <spring:message code="popnav.public.order"/></a>|
+                    <a href="javascript:onLogout()">
+                        <spring:message code="popnav.public.exit"/></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <!--跟踪-->
     <section class="original-big">
         <div class="track-title">
@@ -404,8 +422,7 @@
 </div>
 
 <section class="order-submit-kou" id="bottom_button">
-    <p class="cent blue"><a href="#">评价订单</a></p>
-    <!--<p class="cent green"><a href="javascript:window.location.href='<%=path%>/order/OrderTrack'">订单跟踪</a></p>-->
+    <p class="cent blue"><a href="javascript:void(0)">评价订单</a></p>
     <p class="cent green"><a href="javascript:GoTrack()">订单跟踪</a></p>
 </section>
 </body>
@@ -422,6 +439,16 @@
                 $("#more").attr("flag", "closed");
             }
         });
+
+        $("#nav-list1").bind("click", function () {
+            if($("#pop-nav1").attr("opened")=="1"){
+                $("#pop-nav1").css("display", "none");
+                $("#pop-nav1").attr("opened", "0");
+            } else {
+                $("#pop-nav1").css("display", "block");
+                $("#pop-nav1").attr("opened", "1");
+            }
+        })
     });
 
     $(function () {
@@ -438,6 +465,32 @@
         $("#OrderDetail").css("display", "none");
         $("#OrderTrack").css("display", "block");
         $("#bottom_button").css("display", "none");
+    }
+
+    function onLogout() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/login/Logout",
+            modal: true,
+            timeout: 30000,
+            data: {},
+            success: function (data) {
+                if (data.status == 1) {
+                    var ToUrl = "<%=path%>/";
+                    window.location.href = ToUrl;
+                }
+            },
+            error: function (data) {
+                console.log(data);
+            },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+
+            }
+        });
     }
 
 </script>
