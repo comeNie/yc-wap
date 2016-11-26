@@ -259,7 +259,6 @@
                     Loading.HideLoading();
                 } else {
                     Loading.HideLoading();
-                    createCode();
                     $("#codeLabel1").css("display","none");
                     var tourl = "<%=path%>/login/findfail";
                     window.location.href=tourl;
