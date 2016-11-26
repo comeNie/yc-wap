@@ -44,7 +44,7 @@ public class PayController extends BaseController {
         map.put("returnUrl", returnUrl);
         map.put("notifyUrl", notifyUrl);
         map.put("merchantUrl",merchantUrl);
-        map.put("requestSource", "1");
+        map.put("requestSource", "2");
         map.put("orderAmount", String.valueOf(orderAmount));
         map.put("currencyUnit",currencyUnit);
         map.put("subject", "orderPay");
@@ -95,12 +95,14 @@ public class PayController extends BaseController {
 
     @RequestMapping(value = "payResult")
     public String payResult() {
+        log.info("PayResult-NOTIFY_URL");
         request.setAttribute("result", "success");
         return "written/payresult";
     }
 
     @RequestMapping(value = "payResultView")
     public String payResultView() {
+        log.info("PayResult-RETURN_URL");
         request.setAttribute("result", "fail");
         return "written/payresult";
     }

@@ -5,7 +5,7 @@ apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 apply plugin: "APIJarProcess"
 
-sourceCompatibility = 1.7   // 设置 JDK 版本
+//sourceCompatibility = 1.7   // 设置 JDK 版本
 sourceSets.main.java.srcDir 'src'   // 设置 Java 源码所在目录
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 

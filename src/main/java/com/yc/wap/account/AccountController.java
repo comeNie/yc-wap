@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
+
 /**
  * Created by ldy on 2016/11/9.
  */
@@ -31,8 +33,20 @@ public class AccountController extends BaseController {
     public String recharge() {
         log.info("account-recharge invoked");
         String balance = request.getParameter("balance");
-        request.setAttribute("balance",balance);
+
+        request.setAttribute("balance", balance);
         return "account/recharge";
+    }
+
+    @RequestMapping(value = "GetBusiSerial")
+    @ResponseBody
+    public Object GetBusiSerial() {
+        MsgBean result = new MsgBean();
+        String uid = (String) session.getAttribute("UID");
+        String time = (new Date()).getTime() + "";
+        String busiSerial = uid + time;
+        result.put("busiSerial", busiSerial);
+        return result.returnMsg();
     }
 
     @RequestMapping(value = "rechargesuccess")
@@ -65,12 +79,12 @@ public class AccountController extends BaseController {
                 log.info("QueryUsableFundReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
                 // TODO result.put balance
 
-                result.put("balance",resp.getBalance()+"");
+                result.put("balance", resp.getBalance() + "");
 
             } else if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.NOACCOUNT)) {
                 Balance = "0.00";
                 // TODO result.put balance
-                result.put("balance",Balance);
+                result.put("balance", Balance);
             } else {
                 log.info("QueryUsableFund: " + resp.getResponseHeader().getResultCode() + ", Msg: " + resp.getResponseHeader().getResultMessage());
                 throw new RuntimeException("QueryUsableFundFailed");

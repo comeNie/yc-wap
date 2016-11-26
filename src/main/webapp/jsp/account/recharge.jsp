@@ -72,6 +72,15 @@
         </section>
     </div>
 
+    <form id="toPayForm" method="post" action="<%=path%>/pay/gotoPay">
+        <input type="hidden" id="orderId" name="orderId" value="0">
+        <input type="hidden" name="orderAmount" value="1">
+        <input type="hidden" name="currencyUnit" value="1">
+        <input type="hidden" id="payType" name="payOrgCode" value="ZFB">
+        <input type="hidden" id="merchantUrl" name="merchantUrl"> <%--当前地址--%>
+        <input type="hidden" name="orderType" value="1"> <%--订单类型 目前只支持用户--%>
+    </form>
+
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
@@ -110,7 +119,15 @@
         }else {
             $("#inputid").css("display","none");
         }
-        var tourl = "<%=path%>/account/rechargesuccess";
-        window.location.href=tourl;
+        <%--var tourl = "<%=path%>/account/rechargesuccess";--%>
+        <%--window.location.href=tourl;--%>
+        GetSerial();
+        $("#toPayForm").submit();
+    }
+
+    function GetSerial() {
+        var timestamp=new Date().getTime();
+        var Serial = "${UID}" + timestamp;
+        $("#orderId").val(Serial);
     }
 </script>
