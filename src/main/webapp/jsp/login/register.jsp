@@ -229,14 +229,14 @@
                 } else {
                     $("#confimPsd").html(data.msg);
                     $("#confimPsd").css("display", "block");
-                    $("#phone").removeAttrs("disabled");
+                    $("#phone").attr("disabled",false);
                     Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#confimPsd").html(data.msg);
                 $("#confimPsd").css("display", "block");
-                $("#phone").removeAttrs("disabled");
+                $("#phone").attr("disabled",false);
                 Loading.HideLoading();
             }
         });
