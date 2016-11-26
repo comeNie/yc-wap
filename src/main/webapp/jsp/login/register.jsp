@@ -278,17 +278,20 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#phoneLabel").css("display", "none");
+                    $("#phone").attr("disabled","true");
                     personUid = data.uid;
                     countDown(60);
                     Loading.HideLoading();
                 } else {
                     $("#phoneLabel").html(data.msg);
+                    $("#phone").attr("disabled","false");
                     $("#phoneLabel").css("display", "block");
                     Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phoneLabel").html(data.msg);
+                $("#phone").attr("disabled","false");
                 $("#phoneLabel").css("display", "block");
                 Loading.HideLoading();
             }

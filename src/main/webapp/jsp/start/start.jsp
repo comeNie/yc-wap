@@ -224,6 +224,11 @@
             $("#soundGif").show();
             $("#text_audio").attr("onclick", "playAudio()");
         });
+        audio.addEventListener("error",function(){
+            $("#loading").hide();
+            $("#hornid").show();
+            $("#soundGif").hide();
+        },false);
 
         Loading.HideLoading();
     });

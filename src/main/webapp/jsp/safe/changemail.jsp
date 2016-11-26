@@ -179,12 +179,14 @@
                 } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
+                    $("#mail").attr("disabled","false");
                     Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
+                $("#mail").attr("disabled","false");
                 Loading.HideLoading();
             }
         });
