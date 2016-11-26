@@ -259,21 +259,16 @@
                     Loading.HideLoading();
                 } else {
                     Loading.HideLoading();
-                    if (data.status == 2){
-                        createCode();
-                        $("#codeLabel1").html(data.msg);
-                        $("#codeLabel1").css("display","block");
-                        return;
-                    }
+                    createCode();
                     $("#codeLabel1").css("display","none");
                     var tourl = "<%=path%>/login/findfail";
                     window.location.href=tourl;
                 }
             },
             error: function () {
-                $("#nameLabel1").html(data.msg);
-                $("#nameLabel1").css("display", "block");
                 Loading.HideLoading();
+                var tourl ="<%=path%>/jsp/common/404.jsp";
+                window.location.href=tourl;
             }
         });
     }

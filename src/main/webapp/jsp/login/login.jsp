@@ -237,9 +237,7 @@
                     Loading.HideLoading();
                 } else {
                     Loading.HideLoading();
-                    if (data.status == 2){
-                        createCode();
-                    }
+                    createCode();
                     $("#codeLabel").html(data.msg);
                     $("#codeLabel").css("display", "block");
                     return;
@@ -247,6 +245,7 @@
 
             },
             error: function () {
+                createCode();
                 $("#codeLabel").html(data.msg);
                 $("#codeLabel").css("display", "block");
                 Loading.HideLoading();
