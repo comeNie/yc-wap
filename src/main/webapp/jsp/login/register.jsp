@@ -229,12 +229,14 @@
                 } else {
                     $("#confimPsd").html(data.msg);
                     $("#confimPsd").css("display", "block");
+                    $("#phone").removeAttrs("disabled");
                     Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#confimPsd").html(data.msg);
                 $("#confimPsd").css("display", "block");
+                $("#phone").removeAttrs("disabled");
                 Loading.HideLoading();
             }
         });
@@ -284,14 +286,13 @@
                     Loading.HideLoading();
                 } else {
                     $("#phoneLabel").html(data.msg);
-                    $("#phone").attr("disabled","false");
                     $("#phoneLabel").css("display", "block");
                     Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phoneLabel").html(data.msg);
-                $("#phone").attr("disabled","false");
+//                $("#phone").removeAttrs("disabled");
                 $("#phoneLabel").css("display", "block");
                 Loading.HideLoading();
             }

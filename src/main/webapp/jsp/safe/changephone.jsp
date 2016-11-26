@@ -165,12 +165,14 @@
                 } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
+                    $("#phone").removeAttrs("disabled");
                     Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
+                $("#phone").removeAttrs("disabled");
                 Loading.HideLoading();
             }
         });
@@ -217,14 +219,14 @@
                 } else {
                     $("#phonetips").html(data.msg);
                     $("#phonetips").css("display", "block");
-                    $("#phone").attr("disabled","false");
+
                     Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phonetips").html(data.msg);
                 $("#phonetips").css("display", "block");
-                $("#phone").attr("disabled","false");
+
                 Loading.HideLoading();
             }
         });
