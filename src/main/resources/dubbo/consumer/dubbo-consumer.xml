@@ -34,5 +34,6 @@
 	<dubbo:reference id="iycUserServiceSV" registry="ycRegistry" interface="com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV" />
 	<dubbo:reference id="iFundQuerySV" registry="ycRegistry" interface="com.ai.slp.balance.api.fundquery.interfaces.IFundQuerySV" />
 	<dubbo:reference id="iDepositSV" registry="ycRegistry" interface="com.ai.slp.balance.api.deposit.interfaces.IDepositSV" />
+	<dubbo:reference id="iDeductSV" registry="ycRegistry" interface="com.ai.slp.balance.api.deduct.interfaces.IDeductSV" />
 
 </beans>

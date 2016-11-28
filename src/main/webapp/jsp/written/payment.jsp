@@ -76,7 +76,7 @@
 
         <%--start--%>
         <ul>
-            <li class="zhifb"><input type="radio" id="alipay" name="choose" class="radio"/>
+            <li class="zhifb"><input type="radio" id="alipay" name="choose" class="radio" checked/>
                 <img src="<%=path%>/ui/images/zhifb.png" id="imgAliPay"/></li>
             <li class="unionpay"><input type="radio" id="unipay" name="choose" class="radio"/>
                 <img src="<%=path%>/ui/images/unionpay.png" id="imgUniPay"/></li>
@@ -114,10 +114,21 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var ToUrl = "<%=path%>/written/PayResult";
         $("#submit").bind("click", function () {
-//            window.location.href = ToUrl;
-            $("#toPayForm").submit();
+            var a = $("input[name='choose']:checked").val();
+            if (a == null || a == "" || a == 0) {
+                return;
+            } else {
+                if (a == "1") {
+                    $("#payType").val("ZFB");
+                    $("#toPayForm").submit();
+                } else if (a == "2") {
+                    $("#payType").val("YL");
+                    $("#toPayForm").submit();
+                } else {
+                    // 余额支付
+                }
+            }
         });
 
         $("#imgAliPay").bind("click", function () {
