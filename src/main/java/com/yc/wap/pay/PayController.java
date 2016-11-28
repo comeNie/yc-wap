@@ -94,17 +94,31 @@ public class PayController extends BaseController {
     }
 
     @RequestMapping(value = "payResult")
-    public String payResult() {
+    public void payResult() {
         log.info("PayResult-NOTIFY_URL");
-        request.setAttribute("result", "success");
-        return "written/payresult";
+        String orderId = request.getParameter("orderId");
+        String payStates = request.getParameter("payStates");
+        log.info("orderId" + orderId + ",payStates" + payStates);
+        if(payStates.equals("00")) {
+            request.setAttribute("result", "success");
+        } else if(payStates.equals("01")) {
+            request.setAttribute("result", "fail");
+        }
+//        return "written/payresult";
     }
 
     @RequestMapping(value = "payResultView")
-    public String payResultView() {
+    public void payResultView() {
         log.info("PayResult-RETURN_URL");
-        request.setAttribute("result", "fail");
-        return "written/payresult";
+        String orderId = request.getParameter("orderId");
+        String payStates = request.getParameter("payStates");
+        log.info("orderId" + orderId + ",payStates" + payStates);
+        if(payStates.equals("00")) {
+            request.setAttribute("result", "success");
+        } else if(payStates.equals("01")) {
+            request.setAttribute("result", "fail");
+        }
+//        return "written/payresult";
     }
 
 }
