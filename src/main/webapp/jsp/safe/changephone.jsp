@@ -108,8 +108,8 @@
                 }
             },
             error: function () {
-                $("#phonetips").html("网络请求超时，请稍候再试");
-                $("#phonetips").css("display", "block");
+                var tourl ="<%=path%>/jsp/common/404.jsp";
+                window.location.href=tourl;
                 Loading.HideLoading();
             }
         });
@@ -117,7 +117,7 @@
     function confirmBtn() {
         var phone = $("#phone").val();
         if (phone == "" || phone == null){
-            $("#phoneLabel").html("请输入手机号");
+            $("#phoneLabel").html("<spring:message code="safe.changephone.enterPhone"/>");
             $("#phoneLabel").css("display","block");
             return;
         }else {
@@ -125,7 +125,7 @@
         }
         var t = /^1\d{10}$/;
         if(!t.test(phone)){
-            $("#phoneLabel").html("请输入正确手机号");
+            $("#phoneLabel").html("<spring:message code="safe.changephone.enterRightPhone"/>");
             $("#phoneLabel").css("display","block");
             return;
         }else {
@@ -134,7 +134,7 @@
 
         var code = $("#codeid").val();
         if (code == "" || code == null){
-            $("#phonetips").html("请输入短信验证码");
+            $("#phonetips").html("<spring:message code="safe.changephone.enterCode"/>");
             $("#phonetips").css("display","block");
             return;
         }else {
@@ -180,7 +180,7 @@
     function getnumberonclick(){
         var phone = $("#phone").val();
         if (phone == "" || phone == null){
-            $("#phoneLabel").html("请输入手机号");
+            $("#phoneLabel").html("<spring:message code="safe.changephone.enterPhone"/>");
             $("#phoneLabel").css("display","block");
             return;
         }else {
@@ -188,7 +188,7 @@
         }
         var t = /^1\d{10}$/;
         if(!t.test(phone)){
-            $("#phoneLabel").html("请输入正确手机号");
+            $("#phoneLabel").html("<spring:message code="safe.changephone.enterRightPhone"/>");
             $("#phoneLabel").css("display","block");
             return;
         }else {
@@ -243,7 +243,7 @@
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
-            var txtStr = '重新获取(' + wait + ')';
+            var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';
             $("#getnumber").html(txtStr);
 //            $("#getnumber").attr("class","ash-cl");
             // 按钮里面的内容呈现倒计时状态

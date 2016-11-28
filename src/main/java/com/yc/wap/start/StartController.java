@@ -4,6 +4,7 @@ package com.yc.wap.start;
 import com.ai.opt.base.exception.BusinessException;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
+import com.yc.wap.system.utils.ConfigUtil;
 import com.yc.wap.system.utils.HttpUtil;
 import com.yc.wap.system.utils.HttpsUtil;
 import net.sf.json.JSONArray;
@@ -32,7 +33,7 @@ import java.util.Map;
  */
 @Controller
 public class StartController extends BaseController{
-    public static String TRANSREQ = "https://translateport.yeekit.com/translate";
+//    public static String TRANSREQ = "https://translateport.yeekit.com/translate";
 
     private Log log = LogFactory.getLog(StartController.class);
 
@@ -63,7 +64,7 @@ public class StartController extends BaseController{
         String resp = null;
         try {
 
-            resp = HttpsUtil.HttpsPost(TRANSREQ, jsonObject.toString(), "UTF-8");
+            resp = HttpsUtil.HttpsPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject.toString(), "UTF-8");
         } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
             e.printStackTrace();
         }
@@ -88,7 +89,7 @@ public class StartController extends BaseController{
         String finalLan=request.getParameter("text");
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("text", URLEncoder.encode(finalLan,"UTF-8"));
-        String detecUrl="http://translateport.yeekit.com:9006/detection";
+        String detecUrl= ConfigUtil.getProperty("yee.detection.url");
         String resultStr = HttpUtil.doGet(detecUrl,params);
 //        ?text="+finalLan;
         log.info(resultStr);

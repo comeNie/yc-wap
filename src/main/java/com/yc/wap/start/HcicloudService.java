@@ -1,5 +1,6 @@
 package com.yc.wap.start;
 
+import com.yc.wap.system.utils.ConfigUtil;
 import com.yc.wap.system.utils.MD5Util;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,11 +25,11 @@ public class HcicloudService {
     private static final Logger LOGGER = LoggerFactory.getLogger(HcicloudService.class);
 
 //    @Value("${hcicloud.appkey}")
-    private String APPKEY = "ad5d5421";
-//    @Value("${hcicloud.devkey}")
-    private String DEVKEY = "bca4b0015b309b76301bb10efdf90561";
-//    @Value("${hcicloud.url}")
-    private String SERVER_URL = "http://test.api.hcicloud.com:8880/tts/SynthText";
+//    private String APPKEY = "ad5d5421";
+////    @Value("${hcicloud.devkey}")
+//    private String DEVKEY = "bca4b0015b309b76301bb10efdf90561";
+////    @Value("${hcicloud.url}")
+//    private String SERVER_URL = "http://test.api.hcicloud.com:8880/tts/SynthText";
     private static final  byte[] WAVHEAD8K = {82, 73, 70, 70, 2, 70, 0, 0, 87, 65, 86, 69, 102, 109, 116, 32, 16, 0, 0, 0, 1, 0, 1, 0, 64, 31, 0, 0, -128, 62, 0, 0, 2, 0, 16, 0, 100, 97, 116, 97, -34, 69, 0, 0};
 //    @Autowired
 //    private CloseableHttpClient client;
@@ -68,18 +69,18 @@ public class HcicloudService {
         }
         config += audioformat;
         config += ",speed=4";
-        HttpPost post = new HttpPost(SERVER_URL);
+        HttpPost post = new HttpPost(ConfigUtil.getProperty("hcicloud.url"));
         HttpResponse ttsResponse = null;
         CloseableHttpClient client = HttpClients.createDefault();
         SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date=new Date();
         String dataStr = dateFormater.format(date);
 
-        post.setHeader("x-app-key", APPKEY);
+        post.setHeader("x-app-key", ConfigUtil.getProperty("hcicloud.appkey"));
         post.setHeader("x-sdk-version", "3.6");
         post.setHeader("x-request-date", dateFormater.format(date));
         post.setHeader("x-task-config", config);
-        post.setHeader("x-session-key", MD5Util.encodePassword(dataStr + DEVKEY ));
+        post.setHeader("x-session-key", MD5Util.encodePassword(dataStr + ConfigUtil.getProperty("hcicloud.devkey") ));
         post.setHeader("x-udid", "101:1234567890");
 
 //        System.out.println(MD5Util.MD5(dataStr + DEVKEY ));
