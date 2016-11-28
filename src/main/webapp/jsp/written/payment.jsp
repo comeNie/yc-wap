@@ -95,8 +95,7 @@
     <input type="hidden" name="orderAmount" value="${Price}">
     <input type="hidden" name="currencyUnit" value="1">
     <input type="hidden" id="payType" name="payOrgCode" value="ZFB">
-    <input type="hidden" id="merchantUrl" name="merchantUrl"> <%--当前地址--%>
-    <input type="hidden" name="orderType" value="1"> <%--订单类型 目前只支持用户--%>
+    <input type="hidden" id="merchantUrl" name="merchantUrl">
 </form>
 
 <!--底部-->
