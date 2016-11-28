@@ -4,7 +4,7 @@ MAINTAINER gucl<gucl@asiainfo.com>
 
 # Install tomcat7
 RUN rm -rf /opt/apache-tomcat-7.0.72/webapps/* && mkdir /opt/apache-tomcat-7.0.72/webapps/ROOT
-# 如门户中心的为portal-web.war
+# 如门户中心的为yc-wap.war
 COPY ./build/libs/yc-wap.war /opt/apache-tomcat-7.0.72/webapps/ROOT/ROOT.war
 RUN cd /opt/apache-tomcat-7.0.72/webapps/ROOT && jar -xf ROOT.war && rm -rf /opt/apache-tomcat-7.0.72/webapps/ROOT.war
 

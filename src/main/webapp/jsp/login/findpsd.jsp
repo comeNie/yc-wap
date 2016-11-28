@@ -151,7 +151,7 @@
             }else {
                 $("#codeLabel1").css("display","none");
             }
-
+            $("#codeLabel2").css("display","none");
             Loading.ShowLoading();
             jump1(phone,code);
 
@@ -165,7 +165,8 @@
             }else {
                 $("#codeLabel2").css("display","none");
             }
-
+            $("#psdLabel3").css("display","none");
+            $("#confirmLabel3").css("display","none");
             Loading.ShowLoading();
             jump2(code);
 

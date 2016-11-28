@@ -25,12 +25,14 @@ configurations {
 repositories {
     maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
 }
+
 buildscript {
     repositories {
         maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
     }
     dependencies {
         classpath group: 'com.ai.runner.plugin', name: 'apijarprocessplugin', version: '1.0'
+        classpath group: 'com.ai', name: 'yuicompressorplugin', version: '0.3.1'
     }
 }
 
@@ -129,7 +131,26 @@ def getJsCommonLibs = task("getJsCommonLibs", type: com.ai.runner.gradle.plugin.
     jarPaths = configurations.jsCommonLibs.files.asType(List)
     destinationDir file("src/main/webapp/resources/spm_modules") //这里面的路径建议保持默认
 }
+task copyWebFiles(){
+    //创建目录
+    mkdir('build/war')
+    //先复制过去
+    copy{
+        from 'src/main/webapp'
+        into 'build/war'
+    }
+}
+task compressFiles(type:com.ai.ipaas.gradle.plugin.YUICompressorTask){
+    sourceBase =  "$projectDir/src/main/webapp"
+    sourcePath =  '/resources'
+    destPath =    "$buildDir/war/"
+}
 
+task buildWar(dependsOn:[build,'copyWebFiles','compressFiles'], type: War){
+    from 'build/war'
+    baseName 'yc-wap'
+
+}
 eclipse {
     wtp {
         facet {

@@ -1,4 +1,4 @@
-!/bin/sh
+#!/bin/sh
 #env
 APP_NAME="yc-wap.web"
 
