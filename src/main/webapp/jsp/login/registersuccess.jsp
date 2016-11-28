@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>注册成功</title>
+    <title><spring:message code="login.registersuccess.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -36,14 +36,14 @@
         <nav class="wap-second-nav">
             <ul>
                 <a href="javascript:" onclick="leftRe()"><i  class="icon iconfont left">&#xe626;</i></a>
-                <li>注册</li>
+                <li><spring:message code="login.registersuccess.title"/></li>
             </ul>
         </nav>
         <section class="tij-cg">
             <ul>
                 <li><i class="icon iconfont">&#xe612;</i></li>
-                <li class="word">恭喜您注册成功</li>
-                <li><span id="spanTime">5s</span>内自动回到<a href="javascript:void(0)" onclick="goLogin()">登录页面</a>恭喜您获得平台赠送的翻译体验金，欢迎您体验人工翻译服务</li>
+                <li class="word"><spring:message code="login.registersuccess.gongxi"/></li>
+                <li><span id="spanTime">5s</span><spring:message code="login.registersuccess.huidao"/><a href="javascript:void(0)" onclick="goLogin()"><spring:message code="login.registersuccess.jiemian"/></a><spring:message code="login.registersuccess.message"/></li>
             </ul>
         </section>
     </div>

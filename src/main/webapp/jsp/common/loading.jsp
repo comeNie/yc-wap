@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -26,7 +27,7 @@
         <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>
         <p class="img2">
         <div id="foo" style="margin-top:1rem;"></div>
-        <p class="img3">加载中</p>
+        <p class="img3"><spring:message code="loading.loadingtitle"/></p>
     </section>
 </div>
 </body>

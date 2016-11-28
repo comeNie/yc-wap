@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>找回密码</title>
+    <title><spring:message code="login.findpsd.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -35,7 +35,7 @@
         <nav class="wap-second-nav">
             <ul>
                 <a href="javascript:" onclick="leftRe()"><i class="icon iconfont left">&#xe626;</i></a>
-                <li>找回密码</li>
+                <li><spring:message code="login.findpsd.title"/></li>
             </ul>
         </nav>
         <section class="form-big">
@@ -45,16 +45,16 @@
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="nameid1" type="text" class="input input-large" placeholder="手机号"></p>
+                                <p><input id="nameid1" type="text" class="input input-large" placeholder="<spring:message code="login.findpsd.phone"/>"></p>
                                 <label id="nameLabel1"></label>
                             </li>
                             <li class="int-border">
-                                <p><input id="codeid1" type="text" class="input input-yzm" placeholder="验证码"></p>
+                                <p><input id="codeid1" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>"></p>
                                 <img id="checkCodeImg" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
                                 <p style="float:right" class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
                                 <label id="codeLabel1"></label>
                             </li>
-                            <li><a href="javascript:void(0)" id="next-btn1" class="submit-btn btn-blue">下一步</a></li>
+                            <li><a href="javascript:void(0)" id="next-btn1" class="submit-btn btn-blue"><spring:message code="login.findpsd.next"/></a></li>
                         </ul>
                     </div>
                 </div>
@@ -63,17 +63,17 @@
             <div id="next2">
                 <div class="set-password">
                     <div class="set-phone">
-                        <p>已验证手机</p>
+                        <p><spring:message code="safe.checkphone.hadcheckPhone"/></p>
                         <p class="word" id="phone2"></p>
                     </div>
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="codeid2" type="text" class="input input-small" placeholder="请输入动态码"></p>
-                                <p class="yzm"><a id="getnumber" onclick="getTestCode()" href="javascript:void(0)"  class="btn bnt-yzm">获取动态码</a></p>
+                                <p><input id="codeid2" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>"></p>
+                                <p class="yzm"><a id="getnumber" onclick="getTestCode()" href="javascript:void(0)"  class="btn bnt-yzm"><spring:message code="login.register.getcode"/></a></p>
                                 <label id="codeLabel2"></label>
                             </li>
-                            <li><a href="javascript:void(0)" id="next-btn2" class="submit-btn btn-blue">下一步</a></li>
+                            <li><a href="javascript:void(0)" id="next-btn2" class="submit-btn btn-blue"><spring:message code="login.findpsd.next"/></a></li>
                         </ul>
                     </div>
                 </div>
@@ -84,14 +84,14 @@
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="psdid3" type="password" class="input input-large" placeholder="新密码"></p>
+                                <p><input id="psdid3" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input1"/>"></p>
                                 <label id="psdLabel3"></label>
                             </li>
                             <li>
-                                <p><input id="confirmid3" type="password" class="input input-large" placeholder="确认密码"></p>
+                                <p><input id="confirmid3" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input2"/>"></p>
                                 <label id="confirmLabel3"></label>
                             </li>
-                            <li><a href="javascript:void(0)" id="next-btn3" class="submit-btn btn-blue">下一步</a></li>
+                            <li><a href="javascript:void(0)" id="next-btn3" class="submit-btn btn-blue"><spring:message code="login.findpsd.next"/></a></li>
                         </ul>
                     </div>
                 </div>
@@ -101,8 +101,8 @@
                 <section class="tij-cg">
                     <ul>
                         <li><i class="icon iconfont">&#xe612;</i></li>
-                        <li class="word">密码设置成功</li>
-                        <li><span id="spanTime">5s</span>内自动回到<a href="javascript:void(0)" onclick="goLogin()">登录页面</a></li>
+                        <li class="word"><spring:message code="login.findpsd.success"/></li>
+                        <li><span id="spanTime">5s</span><spring:message code="login.registersuccess.huidao"/><a href="javascript:void(0)" onclick="goLogin()"><spring:message code="login.registersuccess.jiemian"/></a></li>
                     </ul>
                 </section>
             </div>
@@ -130,7 +130,7 @@
             var phone = $("#nameid1").val();
             var code = $("#codeid1").val();
             if (phone == "" || phone == null) {
-                $("#nameLabel1").html("请输入手机号");
+                $("#nameLabel1").html("<spring:message code="login.register.enterphone"/>");
                 $("#nameLabel1").css("display","block");
                 return;
             }else {
@@ -138,14 +138,14 @@
             }
             var t = /^1\d{10}$/;
             if(!t.test(phone)){
-                $("#nameLabel1").html("请输入正确手机号");
+                $("#nameLabel1").html("<spring:message code="login.register.enterRightphone"/>");
                 $("#nameLabel1").css("display","block");
                 return;
             }else {
                 $("#nameLabel1").css("display","none");
             }
             if (code == "" || code == null) {
-                $("#codeLabel1").html("请输入验证码");
+                $("#codeLabel1").html("<spring:message code="login.login.entercode"/>");
                 $("#codeLabel1").css("display","block");
                 return;
             }else {
@@ -159,7 +159,7 @@
         $("#next-btn2").click(function(){
             var code = $("#codeid2").val();
             if (code == "" || code == null) {
-                $("#codeLabel2").html("请输入动态码");
+                $("#codeLabel2").html("<spring:message code="login.register.entercode"/>");
                 $("#codeLabel2").css("display","block");
                 return;
             }else {
@@ -174,7 +174,7 @@
             var psdid = $("#psdid3").val();
             var confimid = $("#confirmid3").val();
             if (psdid == "" || psdid == null){
-                $("#psdLabel3").html("请输入密码");
+                $("#psdLabel3").html("<spring:message code="login.login.enterpsd"/>");
                 $("#psdLabel3").css("display","block");
                 return;
             }else {
@@ -190,7 +190,7 @@
             }
 
             if (confimid == "" || confimid == null){
-                $("#confirmLabel3").html("请输入密码");
+                $("#confirmLabel3").html("<spring:message code="login.login.enterpsd"/>");
                 $("#confirmLabel3").css("display","block");
                 return;
             }else {
@@ -383,12 +383,12 @@
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
             $("#getnumber").attr("onclick", "getTestCode()");
-            $("#getnumber").html("获取动态码");//改变按钮中value的值
+            $("#getnumber").html("<spring:message code="login.register.getcode"/>");//改变按钮中value的值
 //            $("#getnumber").attr("class","");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
-            var txtStr = '重新获取(' + wait + ')';
+            var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';
             $("#getnumber").html(txtStr);
 //            $("#getnumber").attr("class","ash-cl");
             // 按钮里面的内容呈现倒计时状态

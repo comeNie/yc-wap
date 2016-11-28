@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>注册</title>
+    <title><spring:message code="login.login.zhuce"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -36,8 +36,8 @@
         <nav class="wap-second-nav" >
             <ul>
                 <a href="javascript:" onclick="leftRe()"><i class="icon iconfont left">&#xe626;</i></a>
-                <li>注册</li>
-                <a href="javascript:void(0)" class="btn login-btn right1" onclick="jumpLogin()">登录</a>
+                <li><spring:message code="login.login.zhuce"/></li>
+                <a href="javascript:void(0)" class="btn login-btn right1" onclick="jumpLogin()"><spring:message code="login.login.title"/></a>
             </ul>
         </nav>
 
@@ -54,25 +54,25 @@
                             <label id="selectLabel"></label>
                         </li>
                         <li>
-                            <p><input id="phone" type="text" class="input input-large" placeholder="用请输入手机号"></p>
+                            <p><input id="phone" type="text" class="input input-large" placeholder="<spring:message code="login.register.enterphone"/>"></p>
                             <label id="phoneLabel"></label>
                         </li>
                         <li>
-                            <p><input id="codeid" type="text" class="input input-small" placeholder="请输入动态码"></p>
-                            <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm" onclick="getnumberonclick()">获取动态码</a></p>
+                            <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>"></p>
+                            <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm" onclick="getnumberonclick()"><spring:message code="login.register.getcode"/></a></p>
                             <label id="codeLabel"></label>
                         </li>
                         <li>
-                            <p><input id="psdid" type="password" class="input input-large" placeholder="请输入密码"></p>
+                            <p><input id="psdid" type="password" class="input input-large" placeholder="<spring:message code="login.login.enterpsd"/>"></p>
                             <label id="psdLabel"></label>
                         </li>
                         <li>
-                            <p><input id="confimid" type="password" class="input input-large" placeholder="请再输入密码"></p>
+                            <p><input id="confimid" type="password" class="input input-large" placeholder="<spring:message code="login.register.enterpsdagain"/>"></p>
                             <label id="confimPsd"></label>
                         </li>
-                        <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()">立即注册</a></li>
+                        <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()"><spring:message code="login.register.lijizhuce"/></a></li>
                         <li class="left">
-                            <p><input id="checkid" type="checkbox" class="checkbox" checked></p>我已经阅读并同意<a href="javascript:void(0)" onclick="look()">《译云用户协议》</a>
+                            <p><input id="checkid" type="checkbox" class="checkbox" checked></p><spring:message code="login.register.agree"/><a href="javascript:void(0)" onclick="look()"><spring:message code="login.register.look"/></a>
                             <label id="agreeLabel"></label>
                         </li>
 
@@ -121,8 +121,8 @@
                 }
             },
             error: function () {
-                $("#selectLabel").html("网络请求超时，请稍候再试");
-                $("#selectLabel").css("display", "block");
+                var tourl ="<%=path%>/jsp/common/404.jsp";
+                window.location.href=tourl;
                 Loading.HideLoading();
             }
         });
@@ -137,7 +137,7 @@
         var psdid = $("#psdid").val();
         var confimid = $("#confimid").val();
         if (phone == "" || phone == null){
-            $("#phoneLabel").html("请输入手机号");
+            $("#phoneLabel").html("<spring:message code="login.register.enterphone"/>");
             $("#phoneLabel").css("display","block");
             return;
         }else {
@@ -146,7 +146,7 @@
 
         var t = /^1\d{10}$/;
         if(!t.test(phone)){
-            $("#phoneLabel").html("请输入正确手机号");
+            $("#phoneLabel").html("<spring:message code="login.register.enterRightphone"/>");
             $("#phoneLabel").css("display","block");
             return;
         }else {
@@ -154,7 +154,7 @@
         }
 
         if (codeid == "" || codeid == null){
-            $("#codeLabel").html("请输入验证码");
+            $("#codeLabel").html("<spring:message code="login.login.entercode"/>");
             $("#codeLabel").css("display","block");
             return;
         }else {
@@ -162,7 +162,7 @@
         }
 
         if (psdid == "" || psdid == null){
-            $("#psdLabel").html("请输入密码");
+            $("#psdLabel").html("<spring:message code="login.login.enterpsd"/>");
             $("#psdLabel").css("display","block");
             return;
         }else {
@@ -178,7 +178,7 @@
         }
 
         if (confimid == "" || confimid == null){
-            $("#confimPsd").html("请输入密码");
+            $("#confimPsd").html("<spring:message code="login.login.enterpsd"/>");
             $("#confimPsd").css("display","block");
             return;
         }else {
@@ -195,7 +195,7 @@
 
 
         if (!$("#checkid").prop("checked")){
-            $("#agreeLabel").html("您还未接收翻译条款");
+            $("#agreeLabel").html("<spring:message code="login.register.lookTip"/>");
             $("#agreeLabel").css("display","block");
             return;
         }else {
@@ -247,7 +247,7 @@
     function getnumberonclick(){
         var phone = $("#phone").val();
         if (phone == "" || phone == null){
-            $("#phoneLabel").html("请输入手机号");
+            $("#phoneLabel").html("<spring:message code="login.register.enterphone"/>");
             $("#phoneLabel").css("display","block");
             return;
         }else {
@@ -255,7 +255,7 @@
         }
         var t = /^1\d{10}$/;
         if(!t.test(phone)){
-            $("#phoneLabel").html("请输入正确手机号");
+            $("#phoneLabel").html("<spring:message code="login.register.enterRightphone"/>");
             $("#phoneLabel").css("display","block");
             return;
         }else {
@@ -309,7 +309,7 @@
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
-            var txtStr = '重新获取(' + wait + ')';
+            var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';
             $("#getnumber").html(txtStr);
 //            $("#getnumber").attr("class","ash-cl");
             // 按钮里面的内容呈现倒计时状态

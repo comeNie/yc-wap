@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>找回密码失败</title>
+    <title><spring:message code="login.findfail.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -36,13 +36,13 @@
         <nav class="wap-second-nav">
             <ul>
                 <a href="javascript:window.history.go(-1)" ><i class="icon iconfont left">&#xe626;</i></a>
-                <li>找回密码</li>
+                <li><spring:message code="login.findfail.title"/></li>
             </ul>
         </nav>
         <section class="tij-cg">
             <ul>
                 <li><i class="icon iconfont red">&#xe628;</i></li>
-                <li>很遗憾，您没有绑定过任何信息，无法找回密码可以拨打400-119-8080电话，咨询人工客服</li>
+                <li><spring:message code="login.findfail.message"/></li>
             </ul>
         </section>
     </div>

@@ -20,7 +20,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>登录</title>
+    <title><spring:message code="login.login.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -38,8 +38,8 @@
         <nav class="wap-second-nav">
          <ul>
              <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
-             <li>登录</li>
-             <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()">注册</a>
+             <li><spring:message code="login.login.title"/></li>
+             <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()"><spring:message code="login.login.zhuce"/></a>
          </ul>
         </nav>
         <%--<!--tab-->
@@ -128,21 +128,21 @@
                 <div class="set-int">
                     <ul>
                         <li>
-                            <p><input id="phoneid" type="text" class="input input-large" placeholder="用户名/邮箱/手机号"></p>
+                            <p><input id="phoneid" type="text" class="input input-large" placeholder="<spring:message code="login.login.phonepliceholder"/>"></p>
                             <label id="phoneLabel"></label>
                         </li>
                         <li>
-                            <p><input id="psdid" type="password" class="input input-large" placeholder="密码"></p>
+                            <p><input id="psdid" type="password" class="input input-large" placeholder="<spring:message code="login.login.mima"/>"></p>
                             <label id="psdLabel"></label>
                         </li>
                         <li class="int-border">
-                            <p><input id="codeInput" type="text" class="input input-yzm" placeholder="验证码"></p>
+                            <p><input id="codeInput" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>"></p>
                             <img id="checkCodeId" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
                             <p style="float:right" class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh"></i></a></p>
                             <label id="codeLabel"></label>
                         </li>
-                        <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()">立即登录</a></li>
-                        <li class="right"><a href="javascript:void(0)" onclick="forgetpsd()">忘记密码 </a></li>
+                        <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()"><spring:message code="login.login.lijidenglu"/></a></li>
+                        <li class="right"><a href="javascript:void(0)" onclick="forgetpsd()"><spring:message code="login.login.wangjimima"/></a></li>
                     </ul>
                 </div>
             </div>
@@ -182,7 +182,7 @@
         var psd = $("#psdid").val();
         var code = $("#codeInput").val();
         if (phone == "" || phone == null) {
-            $("#phoneLabel").html("请输入用户名/邮箱/手机号");
+            $("#phoneLabel").html("<spring:message code="login.login.enterphone"/>");
             $("#phoneLabel").css("display", "block");
             return;
         } else {
@@ -190,7 +190,7 @@
         }
 
         if (psd == "" || psd == null) {
-            $("#psdLabel").html("请输入密码");
+            $("#psdLabel").html("<spring:message code="login.login.enterpsd"/>");
             $("#psdLabel").css("display", "block");
             return;
         } else {
@@ -206,7 +206,7 @@
         }
 
         if (code == "" || code == null) {
-            $("#codeLabel").html("请输入验证码");
+            $("#codeLabel").html("<spring:message code="login.login.entercode"/>");
             $("#codeLabel").css("display", "block");
             return;
         } else {
