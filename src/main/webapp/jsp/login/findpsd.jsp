@@ -152,6 +152,7 @@
                 $("#codeLabel1").css("display","none");
             }
             $("#codeLabel2").css("display","none");
+            $("#codeid2").val("");
             Loading.ShowLoading();
             jump1(phone,code);
 
@@ -167,6 +168,8 @@
             }
             $("#psdLabel3").css("display","none");
             $("#confirmLabel3").css("display","none");
+            $("#psdid3").val("");
+            $("#confirmid3").val("");
             Loading.ShowLoading();
             jump2(code);
 
