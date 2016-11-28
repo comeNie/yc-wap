@@ -79,7 +79,7 @@
     function confirmBtn() {
         var mail = $("#mail").val();
         if (mail == "" || mail == null){
-            $("#mailLabel").html("请输入邮箱");
+            $("#mailLabel").html("<spring:message code="safe.changemail.shuruyouxiang"/>");
             $("#mailLabel").css("display","block");
             return;
         }else {
@@ -87,7 +87,7 @@
         }
         var t = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
         if (!t.test(mail)){
-            $("#mailLabel").html("请输入正确邮箱");
+            $("#mailLabel").html("<spring:message code="safe.changemail.rightMail"/>");
             $("#mailLabel").css("display","block");
             return;
         }else {
@@ -95,7 +95,7 @@
         }
         var code = $("#codeid").val();
         if (code == "" || code == null){
-            $("#phonetips").html("请输入邮箱验证码");
+            $("#phonetips").html("<spring:message code="safe.changemail.mailCode"/>");
             $("#phonetips").css("display","block");
             return;
         }else {
@@ -142,7 +142,7 @@
     function getnumberonclick(){
         var mail = $("#mail").val();
         if (mail == "" || mail == null){
-            $("#mailLabel").html("请输入邮箱");
+            $("#mailLabel").html("<spring:message code="safe.changemail.shuruyouxiang"/>");
             $("#mailLabel").css("display","block");
             return;
         }else {
@@ -150,7 +150,7 @@
         }
         var t = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
         if (!t.test(mail)){
-            $("#mailLabel").html("请输入正确邮箱");
+            $("#mailLabel").html("<spring:message code="safe.changemail.rightMail"/>");
             $("#mailLabel").css("display","block");
             return;
         }else {
@@ -203,7 +203,7 @@
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
-            var txtStr = '重新获取(' + wait + ')';
+            var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';
             $("#getnumber").html(txtStr);
 //            $("#getnumber").attr("class","ash-cl");
             // 按钮里面的内容呈现倒计时状态

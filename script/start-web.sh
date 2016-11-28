@@ -21,18 +21,6 @@ sed -i "s%ccs.zk_address=.*%ccs.zk_address=${ZK_ADDR}%g" ./paas/paas-conf.proper
 # 各中心要根据情况自己修改成与dubbo.properties中对应的配置项
 sed -i "s%dubbo.registry.address=.*%dubbo.registry.address=${REST_REGISTRY_ADDR}%g" ./dubbo.properties
 
-# sso.properties
-sed -i "s%casServerLoginUrl=.*%casServerLoginUrl=${casServerLoginUrl}%g" ./sso.properties
-sed -i "s%casServerUrlPrefix=.*%casServerUrlPrefix=${casServerUrlPrefix}%g" ./sso.properties
-sed -i "s%serverName=.*%serverName=${serverName}%g" ./sso.properties
-sed -i "s%logOutServerUrl=.*%logOutServerUrl=${logOutServerUrl}%g" ./sso.properties
-sed -i "s%logOutBackUrl=.*%logOutBackUrl=${logOutBackUrl}%g" ./sso.properties
-sed -i "s%casServerLoginUrl_Inner=.*%casServerLoginUrl_Inner=${casServerLoginUrl_Inner}%g" ./sso.properties
-sed -i "s%casServerUrlPrefix_Inner=.*%casServerUrlPrefix_Inner=${casServerUrlPrefix_Inner}%g" ./sso.properties
-sed -i "s%serverName_Inner=.*%serverName_Inner=${serverName_Inner}%g" ./sso.properties
-sed -i "s%logOutServerUrl_Inner=.*%logOutServerUrl_Inner=${logOutServerUrl_Inner}%g" ./sso.properties
-sed -i "s%logOutBackUrl_Inner=.*%logOutBackUrl_Inner=${logOutBackUrl_Inner}%g" ./sso.properties
-
 #email-conf.properties
 sed -i "s%email.hostname=.*%email.hostname=${EMAIL_HOSTNAME}%g" ./email/email-conf.properties
 sed -i "s%email.from.mail=.*%email.from.mail=${EMAIL_FROM_MAIL}%g" ./email/email-conf.properties
@@ -47,6 +35,15 @@ sed -i "s%ACTION_URL=.*%ACTION_URL=${ACTION_URL}%g" ./config.properties
 sed -i "s%APP_ACTION_URL=.*%APP_ACTION_URL=${APP_ACTION_URL}%g" ./config.properties
 sed -i "s%NOTIFY_URL=.*%NOTIFY_URL=${NOTIFY_URL}%g" ./config.properties
 sed -i "s%RETURN_URL=.*%RETURN_URL=${RETURN_URL}%g" ./config.properties
+
+sed -i "s%hcicloud.url=.*%hcicloud.url=${HCICLOUD_URL}%g" ./config.properties
+sed -i "s%hcicloud.appkey=.*%hcicloud.appkey=${HCICLOUD_APPKEY}%g" ./config.properties
+sed -i "s%hcicloud.devkey=.*%hcicloud.devkey=${HCICLOUD_DEVKEY}%g" ./config.properties
+
+sed -i "s%yeekit.translate.url=.*%yeekit.translate.url=${YEEKIT_TRANSLATE_URL}%g" ./config.properties
+sed -i "s%yeekit.translate.appkid=.*%yeekit.translate.appkid=${YEEKIT_TRANSLATE_APPKID}%g" ./config.properties
+sed -i "s%yeekit.translate.appkey=.*%yeekit.translate.appkey=${YEEKIT_TRANSLATE_APPKEY}%g" ./config.properties
+sed -i "s%yee.detection.url=.*%yee.detection.url=${YEE_DETECTION_URL}%g" ./config.properties
 
 #FocusSms.properties
 sed -i "s%SoaServerIpAddressA=.*%SoaServerIpAddressA=${SoaServerIpAddressA}%g" ./FocusSms.properties

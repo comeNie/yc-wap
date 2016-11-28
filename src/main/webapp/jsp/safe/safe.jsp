@@ -36,8 +36,9 @@
 <body>
 
     <%--头部--%>
+    <spring:message code="safe.safe.title" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="安全设置"/>
+        <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:retLeft()"/>
     </jsp:include>
 
@@ -46,19 +47,19 @@
         <div class="setting-list">
             <ul>
                 <a href="javascript:void(0)" onclick="changepsd()">
-                    <li id="passwordLeft">修改密码</li>
+                    <li id="passwordLeft"><spring:message code="safe.safe.xiugaimima"/></li>
                     <li class="right"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
             <ul>
                 <a href="javascript:void(0)" onclick="changePhone()">
-                    <li>手机验证</li>
+                    <li><spring:message code="safe.safe.shoujiyanzheng"/></li>
                     <li class="right" id="phoneRight"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
             <ul class="none-border" onclick="changeMail()">
                 <a href="javascript:void(0)">
-                    <li>邮箱验证</li>
+                    <li><spring:message code="safe.safe.youxiangyanzheng"/></li>
                     <li class="right" id="emalRight"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
@@ -79,7 +80,7 @@
             var password = "${password}";
             var mobilePhone = "${mobilePhone}";
             if(email == "" || email == null){
-                $("#emalRight").html("您还没有通过邮箱验证，请验证");
+                $("#emalRight").html("<spring:message code="safe.safe.mailTip"/>");
                 isEmail = 0;
             }else {
                 var index = email.indexOf("@");
@@ -90,14 +91,14 @@
                 isEmail = 1;
             }
             if(password != "true"){
-                $("#passwordLeft").html("设置密码");
+                $("#passwordLeft").html("<spring:message code="safe.safe.shezhemima"/>");
                 isPassword = 0;
             }else {
-                $("#passwordLeft").html("修改密码");
+                $("#passwordLeft").html("<spring:message code="safe.safe.xiugaimima"/>");
                 isPassword = 1;
             }
             if(mobilePhone == "" || mobilePhone == null){
-                $("#phoneRight").html("您还没有通过手机验证，请验证");
+                $("#phoneRight").html("<spring:message code="safe.safe.phoneTip"/>");
                 isPhone = 0;
             }else {
                 var myphone1=mobilePhone.substr(0,3);
@@ -131,7 +132,7 @@
             var tourl = "<%=path%>/safe/checkphone?jump=mail&phone="+"${email}";
             window.location.href = tourl;
         } else {
-            var tourl = "<%=path%>/safe/changemail?mailTitle=绑定";
+            var tourl = "<%=path%>/safe/changemail?mailTitle=<spring:message code="safe.safe.bangding"/>";
             window.location.href = tourl;
         }
     }
@@ -141,7 +142,7 @@
             var tourl = "<%=path%>/safe/checkphone?jump=phone&phone="+"${mobilePhone}";
             window.location.href = tourl;
         } else {
-            var tourl = "<%=path%>/safe/changephone?phoneTitle=绑定";
+            var tourl = "<%=path%>/safe/changephone?phoneTitle=<spring:message code="safe.safe.bangding"/>";
             window.location.href = tourl;
         }
     }

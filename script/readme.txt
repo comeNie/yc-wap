@@ -14,16 +14,6 @@ docker push 10.19.13.20:5000/yc-wap-web:v1.0
 #--net=host  表示为主机(host)模式  去掉该配置，默认为桥接(bridge)模式
 #-e 代表需要设置的环境变量
 docker run -d --name yc-wap-web-v1.0  -p 14115:8080  \
--e "casServerLoginUrl=http://10.19.13.14:14125/uac/login"  \
--e "casServerUrlPrefix=http://10.19.13.14:14125/uac"   \
--e "serverName=http://localhost:8080"   \
--e "logOutServerUrl=http://10.19.13.14:14125/uac/logout"   \
--e "logOutBackUrl=http://10.19.13.14:14125/uac"   \
--e "casServerLoginUrl_Inner=http://10.19.13.14:14125/uac/login"  \
--e "casServerUrlPrefix_Inner=http://10.19.13.14:14125/uac"   \
--e "serverName_Inner=http://localhost:8080"   \
--e "logOutServerUrl_Inner=http://10.19.13.14:14125/uac/logout"   \
--e "logOutBackUrl_Inner=http://10.19.13.14:14125/uac"   \
 -e "SDK_MODE=0" \
 -e "PAAS_AUTH_URL=http://10.1.245.4:19811/service-portal-uac-web/service/auth" \
 -e "PAAS_AUTH_PID=D14F7D708109471AB6F3084B2ABAE9A6" \
@@ -41,6 +31,13 @@ docker run -d --name yc-wap-web-v1.0  -p 14115:8080  \
 -e "APP_ACTION_URL=http://10.19.13.24:14110/opt-pay/pay/gotoPayByOrg" \
 -e "NOTIFY_URL=http://10.1.52.75:8080/pay/payResult" \
 -e "RETURN_URL=http://10.1.52.75:8080/pay/payResultView" \
+-e "HCICLOUD_URL=http://test.api.hcicloud.com:8880/tts/SynthText" \
+-e "HCICLOUD_APPKEY=cd5d5472" \
+-e "HCICLOUD_DEVKEY=2f4f930a5acae2e86f5c313cccefb856" \
+-e "YEEKIT_TRANSLATE_URL=https://translateport.yeekit.com/translate" \
+-e "YEEKIT_TRANSLATE_APPKID=58105e00cabc3" \
+-e "YEEKIT_TRANSLATE_APPKEY=53eeb0bb6c1b613ab361a4f8057b2bd9" \
+-e "YEE_DETECTION_URL=http://translateport.yeekit.com:9006/detection" \
 -e "SoaServerIpAddressA=10.19.13.29" \
 -e "SoaServerIpPortA=8082" \
 -e "HttpServerIpAddressA=10.19.13.29" \

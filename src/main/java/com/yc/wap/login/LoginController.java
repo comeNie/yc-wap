@@ -128,7 +128,9 @@ public class LoginController extends BaseController {
                 }
             }
         }catch (Exception e){
-            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            log.info
+                    ("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+
             result.put("status","0");
             if (isEmail){
                 result.put("msg","邮箱或密码错误");

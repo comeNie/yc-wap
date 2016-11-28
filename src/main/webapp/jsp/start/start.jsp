@@ -12,7 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>首页</title>
+    <title><spring:message code="start.title"/></title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -30,50 +30,50 @@
 <!--分享弹出框-->
 <div class="eject-big">
     <div class="prompt-share" id="share-eject">
-        <div class="prompt-share-title">请选择</div>
+        <div class="prompt-share-title"><spring:message code="start.qingxuanze"/></div>
         <!--确认删除-->
         <div class="prompt-share-confirm">
             <ul>
                 <a href="#">
                     <li class="weix">
                         <p><i class="icon iconfont">&#xe61a;</i></p>
-                        <p>微信</p>
+                        <p><spring:message code="start.weixin"/></p>
                     </li>
                 </a>
                 <a href="#">
                     <li class="weixq">
                         <p><i class="icon iconfont">&#xe61f;</i></p>
-                        <p>微信朋友圈</p>
+                        <p><spring:message code="start.weixinquan"/></p>
                     </li>
                 </a>
                 <a href="#">
                     <li class="blog">
                         <p><i class="icon iconfont">&#xe627;</i></p>
-                        <p>微博</p>
+                        <p><spring:message code="start.weibo"/></p>
                     </li>
                 </a>
                 <a href="#">
                     <li class="qq">
                         <p><i class="icon iconfont">&#xe61e;</i></p>
-                        <p>QQ</p>
+                        <p><spring:message code="start.qq"/></p>
                     </li>
                 </a>
                 <a href="#">
                     <li class="watercress">
                         <p><i class="icon iconfont">&#xe625;</i></p>
-                        <p>豆瓣</p>
+                        <p><spring:message code="start.douban"/></p>
                     </li>
                 </a>
                 <a href="#">
                     <li class="message">
                         <p><i class="icon iconfont">&#xe622;</i></p>
-                        <p>短信</p>
+                        <p><spring:message code="start.duanxin"/></p>
                     </li>
                 </a>
                 <a href="#">
                     <li class="copy">
                         <p><i class="icon iconfont">&#xe620;</i></p>
-                        <p>复制链接</p>
+                        <p><spring:message code="start.copy"/></p>
                     </li>
                 </a>
             </ul>
@@ -106,17 +106,17 @@
             <p>
                 <select tabindex="5" class="select testing-select" id="source-lan">
                     <%--自动检测--%>
-                    <option value="auto">自动检测</option>
+                    <option value="auto"><spring:message code="start.zidongjiance"/></option>
                     <%--中文简体--%>
-                    <option value="zh">简体中文</option>
+                    <option value="zh"><spring:message code="start.zh"/></option>
                     <%--英语--%>
-                    <option value="en">英语</option>
+                    <option value="en"><spring:message code="start.en"/></option>
                     <%--法语--%>
-                    <option value="fr">法语</option>
+                    <option value="fr"><spring:message code="start.fr"/></option>
                     <%--俄语--%>
-                    <option value="ru">俄语</option>
+                    <option value="ru"><spring:message code="start.ru"/></option>
                     <%--葡萄牙语--%>
-                    <option value="pt">葡萄牙语</option>
+                    <option value="pt"><spring:message code="start.pt"/></option>
                 </select>
                 <span>|</span>
             </p>
@@ -126,15 +126,15 @@
             <p>
                 <select class="select testing-select" id="target-lan">
                     <%--中文简体--%>
-                    <option value="zh">简体中文</option>
+                    <option value="zh"><spring:message code="start.zh"/></option>
                     <%--英语--%>
-                    <option value="en" selected>英语</option>
+                    <option value="en" selected><spring:message code="start.en"/></option>
                     <%--法语--%>
-                    <option value="fr">法语</option>
+                    <option value="fr"><spring:message code="start.fr"/></option>
                     <%--俄语--%>
-                    <option value="ru">俄语</option>
+                    <option value="ru"><spring:message code="start.ru"/></option>
                     <%--葡萄牙语--%>
-                    <option value="pt">葡萄牙语</option>
+                    <option value="pt"><spring:message code="start.pt"/></option>
                 </select>
                 <span>|</span>
             </p>
@@ -146,7 +146,7 @@
         </section>
         <!--翻译按钮-->
         <section class="translate-btn" id="chick-btn">
-            <a href="javascript:void(0)" onclick="goTranslate()" id="translateAid" class="btn btn-big">翻译</a>
+            <a href="javascript:void(0)" onclick="goTranslate()" id="translateAid" class="btn btn-big"><spring:message code="start.fanyi"/></a>
             <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="display:none;padding-left: 2.5rem">
         </section>
         <!--翻译结果-->
@@ -317,7 +317,7 @@
     //创建数据库
     function initDatabase()  {
         var db = getCurrentDb();//初始化数据库
-        if(!db) {alert("您的浏览器不支持HTML5本地数据库");return;}
+        if(!db) {return;}
         db.transaction(function (trans) {//启动一个事务，并设置回调函数
             //执行创建表的Sql脚本
             trans.executeSql("create table if not exists History(id integer PRIMARY KEY AUTOINCREMENT ,sourceLan text,sourceCode text ,targetLan text,targetCode text)")
@@ -409,19 +409,19 @@
         if (realLangeuage != source){
             switch (realLangeuage){
                 case "zh":
-                    $("#tipLabel").html("源语言检测为简体中文");
+                    $("#tipLabel").html("<spring:message code="start.testZH"/>");
                     break;
                 case "en":
-                    $("#tipLabel").html("源语言检测为英文");
+                    $("#tipLabel").html("<spring:message code="start.testEN"/>");
                     break;
                 case "fr":
-                    $("#tipLabel").html("源语言检测为法语");
+                    $("#tipLabel").html("<spring:message code="start.testFR"/>");
                     break;
                 case "ru":
-                    $("#tipLabel").html("源语言检测为俄语");
+                    $("#tipLabel").html("<spring:message code="start.testRU"/>");
                     break;
                 case "pt":
-                    $("#tipLabel").html("源语言检测为葡萄牙语");
+                    $("#tipLabel").html("<spring:message code="start.testPT"/>");
                     break;
             }
             source = realLangeuage;

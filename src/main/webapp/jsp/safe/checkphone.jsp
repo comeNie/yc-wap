@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>验证</title>
+    <title><spring:message code="safe.checkphone.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -45,14 +45,14 @@
         <section class="index-wrapper ">
             <div class="set-password">
                 <div class="set-phone">
-                    <p id="ptitle"><spring:message code="safe.checkphone.psd_p"/></p>
+                    <p id="ptitle"><spring:message code="safe.checkphone.hadcheckPhone"/></p>
                     <p class="word" id="phone"></p>
                 </div>
                 <div class="set-int">
                     <ul>
                         <li>
                             <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="safe.checkphone.small_input"/>"></p>
-                            <p class="yzm"><a id="getnumber" onclick="getnumberonclick()"class="btn bnt-yzm">获取验证码</a></p>
+                            <p class="yzm"><a id="getnumber" onclick="getnumberonclick()"class="btn bnt-yzm"><spring:message code="safe.checkphone.yzm_input"/></a></p>
                             <label id="phonetips"></label>
                         </li>
                         <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
@@ -80,8 +80,8 @@
 
         var s = "${jump}";
         if (s == "mail") {
-            $("#ptitle").html("已验证邮箱");
-            $("#navtitle").html("验证邮箱");
+            $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckMail"/>");
+            $("#navtitle").html("<spring:message code="safe.checkphone.checkMail"/>");
             var index = mobilePhone.indexOf("@");
             var email1 = mobilePhone.slice(0,index-1);
             var email2 = mobilePhone.slice(index+2,mobilePhone.length);
@@ -98,7 +98,7 @@
 //        校验验证码为空
         var code = $("#codeid").val();
         if (code == "" || code == null){
-            $("#phonetips").html("请输入验证码");
+            $("#phonetips").html("<spring:message code="safe.checkphone.small_input"/>");
             $("#phonetips").css("display","block");
             return;
         }else {
@@ -209,7 +209,7 @@
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
-            var txtStr = '重新获取(' + wait + ')';
+            var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';
             $("#getnumber").html(txtStr);
             // 按钮里面的内容呈现倒计时状态
             $("#getnumber").attr("disabled", "block");

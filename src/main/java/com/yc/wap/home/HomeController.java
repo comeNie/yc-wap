@@ -43,16 +43,6 @@ public class HomeController extends BaseController{
 		return "home";
 	}
 
-//	public void tts() {
-//		byte[] resp = HttpUtil.TTShttpReq("吃葡萄不吐葡萄皮不吃葡萄到吐葡萄皮");
-//
-//		String result = new String(resp);
-//		String[] splits = result.split("</ResponseInfo>");
-//		String xml = splits[0] + "</ResponseInfo>";
-//		int offset = xml.getBytes().length;
-//
-//		FileUtil.ByteinfoFile(resp, FILE, offset);
-//	}
 
 
 	
