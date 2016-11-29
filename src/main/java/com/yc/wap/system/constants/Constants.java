@@ -264,4 +264,26 @@ public class Constants {
         public static final String UNCONFIRM = "50";
     }
 
+    /**
+     * 支付类型
+     */
+    public static final class PayType {
+        //业务渠道,0：余额 
+        // 1：支付宝
+        //  2：网银 
+        // 3：pay pal
+        //  5：后付
+        //  6：积分 
+        // 7：优惠劵
+        // 对应serial表中的CHANNEL字段
+        public static final String YUE = "0";
+        public static final String ZFB = "1";
+        public static final String YL = "2";
+        public static final String PP = "3";
+
+    }
+
+    // 不知道
+    public static final String BusinessCode = "300001";
+
 }

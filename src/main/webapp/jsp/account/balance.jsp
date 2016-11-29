@@ -81,7 +81,7 @@
                 if (data.status == 1) {
                     Loading.HideLoading();
                     b = data.balance;
-                    $("#balanceSpan").html(data.balance);
+                    $("#balanceSpan").html(data.balance+"元");
                 }else {
                     Loading.HideLoading();
                 }

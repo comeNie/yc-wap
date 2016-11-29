@@ -98,6 +98,11 @@
     <input type="hidden" id="merchantUrl" name="merchantUrl">
 </form>
 
+<form id="toBalancePay" method="post" action="<%=path%>/pay/BalancePayment">
+    <input type="hidden" name="orderId" value="${OrderId}">
+    <input type="hidden" name="orderAmount" value="${Price}">
+</form>
+
 <!--底部-->
 <section class="order-submit">
     <div class="left">
@@ -126,7 +131,7 @@
                     $("#payType").val("YL");
                     $("#toPayForm").submit();
                 } else {
-                    // 余额支付
+                    $("#toBalancePay").submit();
                 }
             }
         });

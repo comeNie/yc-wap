@@ -75,21 +75,22 @@ public class PayController extends BaseController {
     }
 
     @RequestMapping(value = "payResult")
-    public String payResult() {
+    public void payResult() {
         log.info("PayResult-NOTIFY_URL");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
         String orderAmount = request.getParameter("orderAmount");
+        String payOrgCode = request.getParameter("payOrgCode");
         log.info("orderId" + orderId + ",payStates" + payStates + ",orderAmount: " + orderAmount);
         if (payStates.equals("00")) {
             request.setAttribute("result", "success");
-            BalanceRecharge(orderId, orderAmount);
+            BalanceRecharge(orderId, orderAmount, payOrgCode);
 
 
         } else if (payStates.equals("01")) {
             request.setAttribute("result", "fail");
         }
-        return "written/payresult";
+//        return "written/payresult";
     }
 
     @RequestMapping(value = "payResultView")
@@ -103,27 +104,33 @@ public class PayController extends BaseController {
         } else if (payStates.equals("01")) {
             request.setAttribute("result", "fail");
         }
+        request.setAttribute("OrderId", orderId);
         return "written/payresult";
     }
 
-    private boolean BalanceRecharge(String orderId, String Amount) {
-        String UID = (String) session.getAttribute("UID");
+    private boolean BalanceRecharge(String orderId, String Amount, String payOrgCode) {
+        Double _Amount = Double.valueOf(Amount)*1000;
+        String UID = "4444319";// (String) session.getAttribute("UID");
 
         SearchYCUserRequest req = new SearchYCUserRequest();
         req.setUserId(UID);
         YCUserInfoResponse resp = iycUserServiceSV.searchYCUserInfo(req);
-        String AccountId = resp.getUserId();
+        Long AccountId = resp.getAccountId();
 
+        log.info("BalanceRecharge:");
         log.info("UID: " + UID);
         log.info("AccountId: " + AccountId);
+        log.info("orderId: " + orderId);
+        log.info("Amount: " + _Amount.longValue());
+        log.info("payOrgCode: " + payOrgCode);
 
         DepositParam param = new DepositParam();
-        param.setAccountId(Long.parseLong(AccountId));  //	账户ID
+        param.setAccountId(AccountId);  //	账户ID
         param.setBusiDesc("余额");    //业务描述
         param.setBusiSerialNo(orderId);
 
         TransSummary summary = new TransSummary();  //交易摘要
-        summary.setAmount(Long.parseLong(Amount) * 1000);
+        summary.setAmount(_Amount.longValue());
         summary.setSubjectId(100000);
 
         List<TransSummary> transSummaryList = new ArrayList<TransSummary>();
@@ -132,7 +139,11 @@ public class PayController extends BaseController {
 
         param.setCurrencyUnit("RMB");   //币种,RMB:人民币  USD：美元
         param.setBusiOperCode("300000");    //固定值
-        param.setPayStyle("1");   //业务渠道,0：余额 1：支付宝 2：网银 3：pay pal 5：后付 6：积分 7：优惠劵 对应serial表中的CHANNEL字段
+        if (payOrgCode.equals("ZFB")) {
+            param.setPayStyle(Constants.PayType.ZFB);
+        } else if (payOrgCode.equals("YL")) {
+            param.setPayStyle(Constants.PayType.YL);
+        }
         param.setTenantId(Constants.TENANTID);
         param.setSystemId("Cloud-UAC_WEB"); //固定值
 
@@ -159,7 +170,7 @@ public class PayController extends BaseController {
         DeductParam Param = new DeductParam();
         Param.setSystemId(TENANTID);
         Param.setExternalId(OrderId);
-        Param.setBusinessCode("1");
+        Param.setBusinessCode(Constants.BusinessCode);
         Param.setAccountId(Long.parseLong(AccountId));
         Param.setCheckPwd(0);
         Param.setTotalAmount(Long.parseLong(Amount));
