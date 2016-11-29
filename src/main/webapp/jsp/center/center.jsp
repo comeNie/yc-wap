@@ -118,6 +118,9 @@
             Loading.HideLoading();
         }
     })
+    function retLeft(){
+        window.history.go(-1);
+    }
     function loadOrder(){
         $.ajax({
             async: true,
