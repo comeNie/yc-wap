@@ -158,7 +158,7 @@
                 <a href="javascript:void(0)" id="text_audio" onclick="playAudio()">
                     <i class="icon iconfont ash" id="hornid">&#xe61b;</i>
                     <img src="<%=path%>/ui/images/loading_back.gif" id="loading" style="display:none;">
-                    <img src="<%=path%>/ui/images/首页声音.gif" id="soundGif" style="display:none;">
+                    <img src="<%=path%>/ui/images/voice.gif" id="soundGif" style="display:none;">
                 </a>
                 <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
                 <audio src="" controls="controls" id="audioPlay" hidden>
