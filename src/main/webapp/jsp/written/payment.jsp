@@ -28,6 +28,22 @@
 </head>
 <body>
 <div class="wrapper-big" id="body">
+    <div class="eject-big">
+        <div class="prompt" id="prompt">
+            <div class="prompt-title">请选择</div>
+            <div class="prompt-confirm">
+                <ul>
+                    <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+                </ul>
+            </div>
+            <div class="prompt-confirm-btn">
+                <a href="#" id="prompt-btn">确认</a>
+            </div>
+
+        </div>
+        <div class="mask" id="eject-mask"></div>
+    </div>
+
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="支付订单"/>
@@ -125,6 +141,7 @@
 
 <script type="text/javascript">
     var balance = "0.00";
+    var balanceBuzu = false;
     $(document).ready(function () {
         GetBalance();
 
@@ -140,7 +157,13 @@
                     $("#payType").val("YL");
                     $("#toPayForm").submit();
                 } else if (a == "4") {
-                    $("#toBalancePay").submit();
+                    if (!balanceBuzu) {
+                        $("#toBalancePay").submit();
+                    } else {
+                        $("#EjectTitle").html("余额不足，请选用其他支付方式");
+                        $('#eject-mask').fadeIn(100);
+                        $('#prompt').slideDown(100);
+                    }
                 }
             }
         });
@@ -177,6 +200,7 @@
                     $("#balance").css("display", "block");
                     if (data.balance < ${PriceDisplay}) {
                         $("#buzu").css("display", "block");
+                        balanceBuzu = true;
                     }
                 }
             },

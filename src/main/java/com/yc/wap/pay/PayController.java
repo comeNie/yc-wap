@@ -118,8 +118,13 @@ public class PayController extends BaseController {
     }
 
     private boolean BalanceRecharge(String orderId, String Amount, String payOrgCode) {
+        char[] Order = orderId.toCharArray();
+        String UID = "";
+        for (int i = 3; i < orderId.length() - 13; i++) {
+            UID += Order[i];
+        }
+
         Double _Amount = Double.valueOf(Amount)*1000;
-        String UID = "4444319";// (String) session.getAttribute("UID");
 
         SearchYCUserRequest req = new SearchYCUserRequest();
         req.setUserId(UID);
