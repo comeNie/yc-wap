@@ -1,6 +1,6 @@
 #!/bin/sh
 #env
-APP_NAME="yc-wap.web"
+APP_NAME="yc.wap.web"
 
 #set base home
 RESOURCES_HOME=${CATALINA_HOME}/webapps/ROOT/WEB-INF/classes
@@ -58,4 +58,4 @@ sed -i "s%yeecloudPassword=.*%yeecloudPassword=${yeecloudPassword}%g" ${RESOURCE
 sed -i "s%MessageFormYeecloud=.*%MessageFormYeecloud=${MessageFormYeecloud}%g" ${RESOURCES_HOME}/FocusSms.properties
 
 
-nohup ${CATALINA_HOME}/bin/catalina.sh run >> /${APP_NAME}.log  2>&1 &
+nohup ${CATALINA_HOME}/bin/catalina.sh run >> /${APP_NAME}.log
