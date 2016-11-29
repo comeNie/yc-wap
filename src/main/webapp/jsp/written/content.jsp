@@ -315,7 +315,8 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    window.location.href = "<%=path%>/login/login";
+                    var tourl = "<%=path%>/login/login?source="+window.location.pathname+window.location.search;
+                    window.location.href=tourl;
                 }
             },
             error: function (data) {

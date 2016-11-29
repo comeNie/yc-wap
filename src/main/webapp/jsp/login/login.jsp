@@ -13,6 +13,7 @@
 <%
     String path = request.getContextPath();
     String ToUrl = (String) session.getAttribute("ToUrl");
+
     System.out.println("LoginToUrl: " + ToUrl);
 %>
 
@@ -37,7 +38,7 @@
         <!--登录-->
         <nav class="wap-second-nav">
          <ul>
-             <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
+             <a href="javascript:void(0)" onclick="leftBtn()"><i class="icon iconfont left">&#xe626;</i></a>
              <li><spring:message code="login.login.title"/></li>
              <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()"><spring:message code="login.login.zhuce"/></a>
          </ul>
@@ -176,6 +177,7 @@
 <script>
     $(document).ready(function() {
         Loading.HideLoading();
+
     });
     function login() {
         var phone = $("#phoneid").val();
@@ -261,7 +263,10 @@
         var tourl = "<%=path%>/login/register";
         window.location.href = tourl;
     }
-
+    function leftBtn(){
+        var tourl = "<%=path%>${sourceURL}";
+        window.location.href = tourl;
+    }
     //验证码代码
     function createCode() {
         var d =  new Date();

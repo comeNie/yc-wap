@@ -38,6 +38,12 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "login")
     public String login() {
         MsgBean result = new MsgBean();
+        String source = request.getParameter("source");
+        if (!source.equals("/login/register")){
+            session.setAttribute("sourceURL",source);
+        }
+
+
         return "login/login";
     }
 
@@ -128,8 +134,7 @@ public class LoginController extends BaseController {
                 }
             }
         }catch (Exception e){
-            log.info
-                    ("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
 
             result.put("status","0");
             if (isEmail){

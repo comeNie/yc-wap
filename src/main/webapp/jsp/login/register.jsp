@@ -93,8 +93,10 @@
     var personUid;
     function leftRe() {
         window.history.go(-1);
+
     }
     $(function() {
+//        console.log(window.location.pathname);
         //加载国家的数据
         loadCountry();
     });
@@ -128,7 +130,7 @@
         });
     }
     function jumpLogin() {
-        var tourl = "<%=path%>/login/login";
+        var tourl = "<%=path%>/login/login?source="+window.location.pathname+window.location.search;
         window.location.href=tourl;
     }
     function confirmAction() {
