@@ -43,6 +43,12 @@ public class PayController extends BaseController {
 
     private String TENANTID = ConfigUtil.getProperty("TENANT_ID");
 
+    //买家账号
+    //hhmxwt9319@sandbox.com
+    //登录密码
+    //111111
+    //支付密码
+    //111111
 
     @RequestMapping(value = "/gotoPay")
     public void gotoPayByOrg(String orderId, String orderAmount, String currencyUnit, String merchantUrl, String payOrgCode,
@@ -84,8 +90,11 @@ public class PayController extends BaseController {
         log.info("orderId" + orderId + ",payStates" + payStates + ",orderAmount: " + orderAmount);
         if (payStates.equals("00")) {
             request.setAttribute("result", "success");
-            BalanceRecharge(orderId, orderAmount, payOrgCode);
-
+            String orderIndex = orderId.substring(0, 3);
+            log.info("orderIndex: " + orderIndex);
+            if(orderIndex.equals("901")) {
+                BalanceRecharge(orderId, orderAmount, payOrgCode);
+            }
 
         } else if (payStates.equals("01")) {
             request.setAttribute("result", "fail");
@@ -117,12 +126,13 @@ public class PayController extends BaseController {
         YCUserInfoResponse resp = iycUserServiceSV.searchYCUserInfo(req);
         Long AccountId = resp.getAccountId();
 
-        log.info("BalanceRecharge:");
+        log.info("----------BalanceRecharge----------");
         log.info("UID: " + UID);
         log.info("AccountId: " + AccountId);
-        log.info("orderId: " + orderId);
+        log.info("OrderId: " + orderId);
         log.info("Amount: " + _Amount.longValue());
-        log.info("payOrgCode: " + payOrgCode);
+        log.info("PayOrgCode: " + payOrgCode);
+        log.info("----------BalanceRecharge----------");
 
         DepositParam param = new DepositParam();
         param.setAccountId(AccountId);  //	账户ID

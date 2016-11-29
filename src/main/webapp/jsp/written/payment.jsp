@@ -37,11 +37,11 @@
     <!--订单内容-->
     <div class="confirm-list">
         <ul>
-            <li class="word">翻译主题:</li>
+            <li class="word">订单性质:</li>
             <li>
                 <p>
-                    <select class="select testing-select-big">
-                        <option>企业订单（8折）</option>
+                    <select class="select testing-select-big" disabled id="sel">
+                        <option>个人订单</option>
                     </select>
                     <span>|</span>
                 </p>
@@ -52,7 +52,7 @@
             <li>
                 <p>
                     <select class="select testing-select-big" disabled id="sel">
-                        <option>50元（有效期至2016-12-31）</option>
+                        <option>暂无可用优惠券</option>
                     </select>
                     <span>|</span>
                     <label></label>
@@ -63,36 +63,40 @@
             <li class="word">输入优惠码:</li>
             <li>
                 <p>
-                    <select class="select testing-select-big">
-                        <option>1214141212335</option>
+                    <select class="select testing-select-big" disabled id="sel">
+                        <option>暂无可用优惠码</option>
                     </select>
                     <span>|</span>
                 </p>
             </li>
         </ul>
-        <ul>
-            <li><input type="radio" class="radio"/>翻译后付费</li>
-        </ul>
 
-        <%--start--%>
+        <%--<ul>--%>
+            <%--<li><input type="radio" name="choose" class="radio" value="1"/>翻译后付费</li>--%>
+        <%--</ul>--%>
+
         <ul>
-            <li class="zhifb"><input type="radio" id="alipay" name="choose" class="radio" checked/>
+            <li class="zhifb"><input type="radio" id="alipay" name="choose" class="radio" value="2" checked/>
                 <img src="<%=path%>/ui/images/zhifb.png" id="imgAliPay"/></li>
-            <li class="unionpay"><input type="radio" id="unipay" name="choose" class="radio"/>
+            <li class="unionpay"><input type="radio" id="unipay" name="choose" class="radio" value="3"/>
                 <img src="<%=path%>/ui/images/unionpay.png" id="imgUniPay"/></li>
         </ul>
 
-        <ul>
-            <li id="imgCash" class="word-ash"><input type="radio" id="cash" name="choose" class="radio"/>账户余额支付（余额：20元）
+        <ul id="balance" style="display: none">
+            <li id="imgCash" class="word-ash">
+                <input type="radio" id="cash" name="choose" class="radio" value="4"/>
+                <a id="balanceNumber">账户余额支付（余额：0元）</a>
             </li>
-            <li class="right"><a href="#">余额不足，请先充值</a></li>
+            <li class="right" id="buzu" style="display: none">
+                <a href="javascript:toRecharge()">余额不足，请先充值</a>
+            </li>
         </ul>
     </div>
 </div>
 
 <form id="toPayForm" method="post" action="<%=path%>/pay/gotoPay">
     <input type="hidden" name="orderId" value="${OrderId}">
-    <input type="hidden" name="orderAmount" value="${Price}">
+    <input type="hidden" name="orderAmount" value="${PriceDisplay}">
     <input type="hidden" name="currencyUnit" value="1">
     <input type="hidden" id="payType" name="payOrgCode" value="ZFB">
     <input type="hidden" id="merchantUrl" name="merchantUrl">
@@ -100,7 +104,7 @@
 
 <form id="toBalancePay" method="post" action="<%=path%>/pay/BalancePayment">
     <input type="hidden" name="orderId" value="${OrderId}">
-    <input type="hidden" name="orderAmount" value="${Price}">
+    <input type="hidden" name="orderAmount" value="${PriceDisplay}">
 </form>
 
 <!--底部-->
@@ -114,23 +118,28 @@
     </div>
     <div class="right"><a href="javascript:void(0)" id="submit">确认支付</a></div>
 </section>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
+
 </body>
 </html>
 
 <script type="text/javascript">
+    var balance = "0.00";
     $(document).ready(function () {
+        GetBalance();
+
         $("#submit").bind("click", function () {
             var a = $("input[name='choose']:checked").val();
             if (a == null || a == "" || a == 0) {
                 return;
             } else {
-                if (a == "1") {
+                if (a == "2") {
                     $("#payType").val("ZFB");
                     $("#toPayForm").submit();
-                } else if (a == "2") {
+                } else if (a == "3") {
                     $("#payType").val("YL");
                     $("#toPayForm").submit();
-                } else {
+                } else if (a == "4") {
                     $("#toBalancePay").submit();
                 }
             }
@@ -152,4 +161,38 @@
     $(function () {
 
     });
+
+    function GetBalance() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/account/GetBalance",
+            modal: true,
+            timeout: 30000,
+            data: {},
+            success: function (data) {
+                if (data.status == 1) {
+                    balance = data.balance;
+                    $("#balanceNumber").html("账户余额支付（余额：" + data.balance + "元）");
+                    $("#balance").css("display", "block");
+                    if (data.balance < ${PriceDisplay}) {
+                        $("#buzu").css("display", "block");
+                    }
+                }
+            },
+            error: function (data) {
+
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
+    }
+
+    function toRecharge() {
+        window.location.href = '<%=path%>/account/recharge?balance=' + balance;
+    }
 </script>
