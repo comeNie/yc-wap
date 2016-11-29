@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.DecimalFormat;
-import java.util.Date;
 
 /**
  * Created by ldy on 2016/11/9.
@@ -33,7 +32,6 @@ public class AccountController extends BaseController {
     private IFundQuerySV iFundQuerySV = DubboConsumerFactory.getService(IFundQuerySV.class);
     private IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
 
-
     @RequestMapping(value = "recharge")
     public String recharge() {
         log.info("account-recharge invoked");
@@ -41,24 +39,6 @@ public class AccountController extends BaseController {
 
         request.setAttribute("balance", balance);
         return "account/recharge";
-    }
-
-    @RequestMapping(value = "GetBusiSerial")
-    @ResponseBody
-    public Object GetBusiSerial() {
-        MsgBean result = new MsgBean();
-        String uid = (String) session.getAttribute("UID");
-        String time = (new Date()).getTime() + "";
-        String busiSerial = uid + time;
-        result.put("busiSerial", busiSerial);
-        return result.returnMsg();
-    }
-
-    @RequestMapping(value = "rechargesuccess")
-    public String rechargesuccess() {
-        log.info("account-rechargesuccess invoked");
-
-        return "account/rechargesuccess";
     }
 
     @RequestMapping(value = "balance")
@@ -104,6 +84,13 @@ public class AccountController extends BaseController {
             throw new RuntimeException("QueryUsableFundFailed");
         }
         return result.returnMsg();
+    }
+
+    @RequestMapping(value = "rechargesuccess")
+    public String rechargesuccess() {
+        log.info("account-rechargesuccess invoked");
+
+        return "account/rechargesuccess";
     }
 
 }

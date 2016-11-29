@@ -135,7 +135,7 @@
 
     function GetSerial() {
         var timestamp = new Date().getTime();
-        var Serial = "${UID}" + timestamp;
+        var Serial = "901${UID}" + timestamp;
         $("#orderId").val(Serial);
     }
 
