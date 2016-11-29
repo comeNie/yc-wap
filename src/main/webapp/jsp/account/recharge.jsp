@@ -109,7 +109,14 @@
             $("#pricetip").css("display", "block");
             return;
         } else {
-            $("#pricetip").css("display", "none");
+            if (parseInt(price) < 10 || parseInt(price) > 500){
+                $("#pricetip").html("充值金额10~500之间");
+                $("#pricetip").css("display", "block");
+                return;
+            }else{
+
+                $("#pricetip").css("display", "none");
+            }
         }
         var a = $("input[name='way']:checked").val();
         if (a == null || a == "" || a == 0) {
