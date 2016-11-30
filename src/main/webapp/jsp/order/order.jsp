@@ -151,7 +151,34 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    window.location.reload();
+                    window.location.href = "<%=path%>/order";
+                }
+            },
+            error: function (data) {
+
+            },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+
+            }
+        });
+    }
+
+    function ConfirmOrder(OrderId) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/order/OrderConfirm",
+            modal: true,
+            timeout: 30000,
+            data: {
+                OrderId: OrderId
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    window.location.href = "<%=path%>/order";
                 }
             },
             error: function (data) {

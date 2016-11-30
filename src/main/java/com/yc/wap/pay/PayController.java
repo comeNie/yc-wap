@@ -164,8 +164,7 @@ public class PayController extends BaseController {
 
         try {
             String serialCode = iDepositSV.depositFund(param);
-            log.info("serialCode: " + serialCode);
-
+            log.info("BalanceRecharge SerialCode: " + serialCode);
             return true;
         } catch (BusinessException | SystemException e) {
             e.printStackTrace();
@@ -204,4 +203,7 @@ public class PayController extends BaseController {
             throw new RuntimeException("BalancePaymentFail");
         }
     }
+
+    //支付成功以后 订单状态20 显示状态23
+    //开始时间 支付时间取支付宝
 }

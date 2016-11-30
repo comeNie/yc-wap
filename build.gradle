@@ -111,6 +111,9 @@ dependencies {
     compile "com.ai.yc.order:ordersubmission:1.0-SNAPSHOT"
     compile "com.ai.yc.order:orderclose:1.0-SNAPSHOT"
 
+    compile "com.ai.yc.order:orderstate:1.0-SNAPSHOT"
+    compile "com.ai.yc.order:orderpay:1.0-SNAPSHOT"
+
     //创建账户的包
     compile "com.ai.slp.balance:accountmaintain:1.0-SNAPSHOT"
     compile "com.ai.slp.balance:fundquery:1.0-SNAPSHOT"
