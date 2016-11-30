@@ -91,7 +91,8 @@
             $('#prompt').slideDown(100);
             return;
         }
-        var tourl = "<%=path%>/login/register";
+        var tourl = "<%=path%>/login/login?to=register";
         window.location.href=tourl;
     }
+
 </script>

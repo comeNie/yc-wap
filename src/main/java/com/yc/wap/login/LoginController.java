@@ -38,19 +38,9 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "login")
     public String login() {
         MsgBean result = new MsgBean();
-        String source = request.getParameter("source");
-        if (!source.equals("/login/register")){
-            session.setAttribute("sourceURL",source);
-        }
-
-
+        String to = request.getParameter("to");
+        request.setAttribute("to",to);
         return "login/login";
-    }
-
-    @RequestMapping(value = "register")
-    public String register() {
-        MsgBean result = new MsgBean();
-        return "login/register";
     }
 
     @RequestMapping(value = "registersuccess")

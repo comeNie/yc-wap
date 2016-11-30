@@ -35,7 +35,7 @@
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="协议规则"/>
-        <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
+        <jsp:param name="BackTo" value="javascript:retLeft()"/>
     </jsp:include>
     <section class="about">
         <ul>
@@ -132,3 +132,10 @@
     </section>
 </body>
 </html>
+<script>
+    function retLeft(){
+        window.history.go(-1);
+        <%--var tourl = "<%=path%>/";--%>
+        <%--window.location.href=tourl;--%>
+    }
+</script>
