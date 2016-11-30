@@ -1,5 +1,6 @@
 package com.yc.wap.common;
 
+import com.yc.wap.system.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value = "common")
-public class CommonController {
+public class CommonController extends BaseController {
 
     @RequestMapping(value = "aboutus")
     public String aboutus() {

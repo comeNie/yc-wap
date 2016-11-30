@@ -65,7 +65,7 @@
         countDown();
     })
     function goLogin() {
-        var tourl = "<%=path%>/login/login";
+        var tourl = "<%=path%>/login/login?to=login";
         window.location.href=tourl;
     }
     var wait = 5;

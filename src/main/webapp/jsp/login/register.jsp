@@ -55,16 +55,16 @@
                         </li>
                         <li>
                             <p><input id="phone" type="text" class="input input-large" placeholder="<spring:message code="login.register.enterphone"/>"></p>
-                            <label id="phoneLabel"></label>
+                            <label id="phoneLabel1"></label>
                         </li>
                         <li>
                             <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>"></p>
                             <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm" onclick="getnumberonclick()"><spring:message code="login.register.getcode"/></a></p>
-                            <label id="codeLabel"></label>
+                            <label id="codeLabel1"></label>
                         </li>
                         <li>
-                            <p><input id="psdid" type="password" class="input input-large" placeholder="<spring:message code="login.login.enterpsd"/>"></p>
-                            <label id="psdLabel"></label>
+                            <p><input id="psdids" type="password" class="input input-large" placeholder="<spring:message code="login.login.enterpsd"/>"></p>
+                            <label id="psdLabel1"></label>
                         </li>
                         <li>
                             <p><input id="confimid" type="password" class="input input-large" placeholder="<spring:message code="login.register.enterpsdagain"/>"></p>
@@ -130,53 +130,53 @@
         });
     }
     function jumpLogin() {
-        var tourl = "<%=path%>/login/login?source="+window.location.pathname+window.location.search;
+        var tourl = "<%=path%>/login/login?to=login";
         window.location.href=tourl;
     }
     function confirmAction() {
         var phone = $("#phone").val();
         var codeid = $("#codeid").val();
-        var psdid = $("#psdid").val();
+        var psdid = $("#psdids").val();
         var confimid = $("#confimid").val();
         if (phone == "" || phone == null){
-            $("#phoneLabel").html("<spring:message code="login.register.enterphone"/>");
-            $("#phoneLabel").css("display","block");
+            $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
+            $("#phoneLabel1").css("display","block");
             return;
         }else {
-            $("#phoneLabel").css("display","none");
+            $("#phoneLabel1").css("display","none");
         }
 
         var t = /^1\d{10}$/;
         if(!t.test(phone)){
-            $("#phoneLabel").html("<spring:message code="login.register.enterRightphone"/>");
-            $("#phoneLabel").css("display","block");
+            $("#phoneLabel1").html("<spring:message code="login.register.enterRightphone"/>");
+            $("#phoneLabel1").css("display","block");
             return;
         }else {
-            $("#phoneLabel").css("display","none");
+            $("#phoneLabel1").css("display","none");
         }
 
         if (codeid == "" || codeid == null){
-            $("#codeLabel").html("<spring:message code="login.login.entercode"/>");
-            $("#codeLabel").css("display","block");
+            $("#codeLabel1").html("<spring:message code="login.login.entercode"/>");
+            $("#codeLabel1").css("display","block");
             return;
         }else {
-            $("#codeLabel").css("display","none");
+            $("#codeLabel1").css("display","none");
         }
 
         if (psdid == "" || psdid == null){
-            $("#psdLabel").html("<spring:message code="login.login.enterpsd"/>");
-            $("#psdLabel").css("display","block");
+            $("#psdLabel1").html("<spring:message code="login.login.enterpsd"/>");
+            $("#psdLabel1").css("display","block");
             return;
         }else {
-            $("#psdLabel").css("display","none");
+            $("#psdLabel1").css("display","none");
         }
         var t = /^[0-9a-zA-Z]{6,16}$/;
         if (!t.test(psdid)){
-            $("#psdLabel").html("<spring:message code="safe.changepsd.alert_newLength"/>");
-            $("#psdLabel").css("display","block");
+            $("#psdLabel1").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+            $("#psdLabel1").css("display","block");
             return;
         }else {
-            $("#psdLabel").css("display","none");
+            $("#psdLabel1").css("display","none");
         }
 
         if (confimid == "" || confimid == null){
@@ -249,19 +249,19 @@
     function getnumberonclick(){
         var phone = $("#phone").val();
         if (phone == "" || phone == null){
-            $("#phoneLabel").html("<spring:message code="login.register.enterphone"/>");
-            $("#phoneLabel").css("display","block");
+            $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
+            $("#phoneLabel1").css("display","block");
             return;
         }else {
-            $("#phoneLabel").css("display","none");
+            $("#phoneLabel1").css("display","none");
         }
         var t = /^1\d{10}$/;
         if(!t.test(phone)){
-            $("#phoneLabel").html("<spring:message code="login.register.enterRightphone"/>");
-            $("#phoneLabel").css("display","block");
+            $("#phoneLabel1").html("<spring:message code="login.register.enterRightphone"/>");
+            $("#phoneLabel1").css("display","block");
             return;
         }else {
-            $("#phoneLabel").css("display","none");
+            $("#phoneLabel1").css("display","none");
         }
         Loading.ShowLoading();
         getTestCode(phone);
@@ -281,21 +281,21 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    $("#phoneLabel").css("display", "none");
+                    $("#phoneLabel1").css("display", "none");
                     $("#phone").attr("disabled","true");
                     personUid = data.uid;
                     countDown(60);
                     Loading.HideLoading();
                 } else {
-                    $("#phoneLabel").html(data.msg);
-                    $("#phoneLabel").css("display", "block");
+                    $("#phoneLabel1").html(data.msg);
+                    $("#phoneLabel1").css("display", "block");
                     Loading.HideLoading();
                 }
             },
             error: function () {
-                $("#phoneLabel").html(data.msg);
+                $("#phoneLabel1").html(data.msg);
 //                $("#phone").removeAttrs("disabled");
-                $("#phoneLabel").css("display", "block");
+                $("#phoneLabel1").css("display", "block");
                 Loading.HideLoading();
             }
         });
