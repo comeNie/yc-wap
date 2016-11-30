@@ -151,14 +151,18 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    window.location.href = "<%=path%>/order";
+                    <%--window.location.href = "<%=path%>/order";--%>
+                    setTimeout(function () {
+                        Loading.HideLoading();
+                        window.location.reload(true);
+                    }, 800);
                 }
             },
             error: function (data) {
-
+                Loading.HideLoading();
             },
             beforeSend: function () {
-
+                Loading.ShowLoading();
             },
             complete: function () {
 
@@ -177,15 +181,19 @@
                 OrderId: OrderId
             },
             success: function (data) {
-                if (data.status == 1) {
-                    window.location.href = "<%=path%>/order";
-                }
+                    if (data.status == 1) {
+                        <%--window.location.href = "<%=path%>/order";--%>
+                        setTimeout(function () {
+                            Loading.ShowLoading();
+                            window.location.reload(true);
+                        }, 800);
+                    }
             },
             error: function (data) {
-
+                Loading.ShowLoading();
             },
             beforeSend: function () {
-
+                Loading.ShowLoading();
             },
             complete: function () {
 
