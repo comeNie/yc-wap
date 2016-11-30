@@ -353,7 +353,8 @@
                 if (data.status == 1) {
                     var list = data.list;
                     $.each(list,function(index ,value){
-                        $('#selectid').append("<option>" + value.countryNameCn+"+"+value.countryCode + "</option>");
+                        $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameCn+"+"+value.countryCode + "</option>");
+                        localStorage.setItem(value.countryValue,value.regularExpression);
                     })
                     Loading.HideLoading();
                 } else {
@@ -391,8 +392,9 @@
         }else {
             $("#phoneLabel1").css("display","none");
         }
-
-        var t = /^1\d{10}$/;
+        var selectValue = $('#selectid').val();
+        var reg = localStorage.getItem(selectValue);
+        var t = new RegExp(reg);
         if(!t.test(phone)){
             $("#phoneLabel1").html("<spring:message code="login.register.enterRightphone"/>");
             $("#phoneLabel1").css("display","block");
@@ -501,7 +503,9 @@
         }else {
             $("#phoneLabel1").css("display","none");
         }
-        var t = /^1\d{10}$/;
+        var selectValue = $('#selectid').val();
+        var reg = localStorage.getItem(selectValue);
+        var t = new RegExp(reg);
         if(!t.test(phone)){
             $("#phoneLabel1").html("<spring:message code="login.register.enterRightphone"/>");
             $("#phoneLabel1").css("display","block");
