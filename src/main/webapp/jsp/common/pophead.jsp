@@ -37,7 +37,7 @@
         </c:if>
         <c:if test="${show!=false}">
             <c:if test="${isLogin==null || isLogin=='0'}">
-                <a href="javascript:window.location.href='<%=path%>/login/login?to=login'" class="btn login-btn right1">登陆</a>
+                <a href="javascript:window.location.href='<%=path%>/login/login?to=login'" class="btn login-btn right1">登录</a>
             </c:if>
             <c:if test="${isLogin=='1'}">
                 <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>

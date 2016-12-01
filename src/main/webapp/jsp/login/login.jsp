@@ -355,6 +355,7 @@
                     $.each(list,function(index ,value){
                         $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameCn+"+"+value.countryCode + "</option>");
                         localStorage.setItem(value.countryValue,value.regularExpression);
+                        localStorage.setItem(value.countryValue+"1",value.countryCode);
                     })
                     Loading.HideLoading();
                 } else {
@@ -393,9 +394,10 @@
             $("#phoneLabel1").css("display","none");
         }
         var selectValue = $('#selectid').val();
+        var code = localStorage.getItem(selectValue+"1");
         var reg = localStorage.getItem(selectValue);
         var t = new RegExp(reg);
-        if(!t.test(phone)){
+        if(!t.test(code+phone)){
             $("#phoneLabel1").html("<spring:message code="login.register.enterRightphone"/>");
             $("#phoneLabel1").css("display","block");
             return;
@@ -504,9 +506,10 @@
             $("#phoneLabel1").css("display","none");
         }
         var selectValue = $('#selectid').val();
+        var code = localStorage.getItem(selectValue+"1");
         var reg = localStorage.getItem(selectValue);
         var t = new RegExp(reg);
-        if(!t.test(phone)){
+        if(!t.test(code+phone)){
             $("#phoneLabel1").html("<spring:message code="login.register.enterRightphone"/>");
             $("#phoneLabel1").css("display","block");
             return;
