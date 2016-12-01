@@ -110,8 +110,7 @@
                         var StateShow = GetStateShow(data.OrderList[key].displayFlag);
                         var orderId = data.OrderList[key].orderId;
                         var translateName = data.OrderList[key].translateName;
-                        var d = new Date(data.OrderList[key].orderTime);
-                        var date = (d.getFullYear()) + "-" + (d.getMonth() + 1) + "-" + (d.getDate()) + " " + (d.getHours()) + ":" + (d.getMinutes()) + ":" + (d.getSeconds());
+                        var date = new Date(data.OrderList[key].orderTime).Format("yyyy-MM-dd hh:mm:ss");
                         var price = (data.OrderList[key].totalFee / 1000).toFixed(2);
 
                         if (statusFlag == "0") {
@@ -119,7 +118,7 @@
                         } else if (statusFlag == "1") {
                             var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn blue'><a href='#'>" + btn1 + "</a></p><p class='bord-btn ash'><a href='javascript:CancelOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         } else if (statusFlag == "2") {
-                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn ash'><a href='#'>" + btn2 + "</a></p></li></ul></div></section>";
+                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn ash'><a href='javascript:ConfirmOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         } else if (statusFlag == "3") {
                             var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + "</p></li></ul></div></section>";
                         }
@@ -139,6 +138,24 @@
         });
     }
 
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3),
+            "S": this.getMilliseconds()
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+
     function CancelOrder(OrderId) {
         $.ajax({
             async: true,
@@ -151,7 +168,6 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    <%--window.location.href = "<%=path%>/order";--%>
                     setTimeout(function () {
                         Loading.HideLoading();
                         window.location.reload(true);
@@ -181,13 +197,12 @@
                 OrderId: OrderId
             },
             success: function (data) {
-                    if (data.status == 1) {
-                        <%--window.location.href = "<%=path%>/order";--%>
-                        setTimeout(function () {
-                            Loading.ShowLoading();
-                            window.location.reload(true);
-                        }, 800);
-                    }
+                if (data.status == 1) {
+                    setTimeout(function () {
+                        Loading.ShowLoading();
+                        window.location.reload(true);
+                    }, 800);
+                }
             },
             error: function (data) {
                 Loading.ShowLoading();

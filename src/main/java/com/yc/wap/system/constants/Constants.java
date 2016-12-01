@@ -262,6 +262,9 @@ public class Constants {
         // 客户端显示状态
         public static final String UNPAID = "11";
         public static final String UNCONFIRM = "50";
+        public static final String FINISH = "90";
+        public static final String CONFIRMED = "51";
+        public static final String UNEVALUATE = "52";
     }
 
     /**

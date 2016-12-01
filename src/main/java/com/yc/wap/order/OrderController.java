@@ -13,6 +13,9 @@ import com.ai.yc.order.api.orderquery.interfaces.IOrderQuerySV;
 import com.ai.yc.order.api.orderquery.param.OrdOrderVo;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRequest;
 import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
+import com.ai.yc.order.api.orderstate.interfaces.IOrderStateUpdateSV;
+import com.ai.yc.order.api.orderstate.param.OrderStateUpdateRequest;
+import com.ai.yc.order.api.orderstate.param.OrderStateUpdateResponse;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -41,13 +44,14 @@ public class OrderController extends BaseController {
     private IOrderQuerySV iOrderQuerySV = DubboConsumerFactory.getService(IOrderQuerySV.class);
     private IQueryOrderDetailsSV iQueryOrderDetailsSV = DubboConsumerFactory.getService(IQueryOrderDetailsSV.class);
     private IOrderCancelSV iOrderCancelSV = DubboConsumerFactory.getService(IOrderCancelSV.class);
+    private IOrderStateUpdateSV iOrderStateUpdateSV = DubboConsumerFactory.getService(IOrderStateUpdateSV.class);
 
     @RequestMapping(value = "")
     public String order() {
         String isUnPaid = request.getParameter("UnPaid");
         String isUnConfirm = request.getParameter("UnConfirm");
         String isLogin = (String) session.getAttribute("isLogin");
-        if(isLogin==null || isLogin.equals("") || isLogin.equals("0")) {
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
             log.info("UserNotLogin");
             return "login/login";
         }
@@ -102,10 +106,10 @@ public class OrderController extends BaseController {
         req.setPageNo(Page);
         req.setPageSize(4);
         req.setUserId((String) session.getAttribute("UID"));
-        if(isUnPaid.equals("1")) {
+        if (isUnPaid.equals("1")) {
             req.setDisplayFlag(Constants.Order.UNPAID);
         }
-        if(isUnConfirm.equals("1")) {
+        if (isUnConfirm.equals("1")) {
             req.setDisplayFlag(Constants.Order.UNCONFIRM);
         }
         log.info("GetOrderParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
@@ -159,15 +163,30 @@ public class OrderController extends BaseController {
     @ResponseBody
     public Object OrderConfirm() {
         MsgBean result = new MsgBean();
+        String OrderId = request.getParameter("OrderId");
+        OrderStateUpdateRequest req = new OrderStateUpdateRequest();
+        req.setOrderId(Long.parseLong(OrderId));
+        req.setDisplayFlag(Constants.Order.UNEVALUATE);
+        req.setState(Constants.Order.CONFIRMED);
 
-        return result.returnMsg();
+        try {
+            OrderStateUpdateResponse resp = iOrderStateUpdateSV.updateState(req);
+            if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                return result.returnMsg();
+            } else {
+                throw new RuntimeException("OrderConfirmFailed: " + resp.getResponseHeader().getResultMessage());
+            }
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
+            throw new RuntimeException("OrderConfirmFailed");
+        }
     }
 
     @RequestMapping(value = "OrderDetail")
     public String OrderDetail() {
         String OrderId = request.getParameter("OrderId");
         String isLogin = (String) session.getAttribute("isLogin");
-        if(isLogin==null || isLogin.equals("") || isLogin.equals("0")) {
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
             log.info("UserNotLogin");
             return "login/login";
         }
@@ -213,7 +232,7 @@ public class OrderController extends BaseController {
 
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
-            String displayFlag  = resp.getDisplayFlag();
+            String displayFlag = resp.getDisplayFlag();
 
             String PriceDisplay = df.format(Double.parseDouble(OrderPrice));
             String OrderTime = sdf.format(Time);

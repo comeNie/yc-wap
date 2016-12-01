@@ -9,6 +9,11 @@ import com.ai.slp.balance.api.deduct.param.DeductResponse;
 import com.ai.slp.balance.api.deposit.interfaces.IDepositSV;
 import com.ai.slp.balance.api.deposit.param.DepositParam;
 import com.ai.slp.balance.api.deposit.param.TransSummary;
+import com.ai.yc.order.api.orderpay.interfaces.IOrderPayProcessedResultSV;
+import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultBaseInfo;
+import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultFeeInfo;
+import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultProdInfo;
+import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultRequest;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
@@ -40,6 +45,7 @@ public class PayController extends BaseController {
     private IDepositSV iDepositSV = DubboConsumerFactory.getService(IDepositSV.class);
     private IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
     private IDeductSV iDeductSV = DubboConsumerFactory.getService(IDeductSV.class);
+    private IOrderPayProcessedResultSV iOrderPayProcessedResultSV = DubboConsumerFactory.getService(IOrderPayProcessedResultSV.class);
 
     private String TENANTID = ConfigUtil.getProperty("TENANT_ID");
 
@@ -82,29 +88,25 @@ public class PayController extends BaseController {
 
     @RequestMapping(value = "payResult")
     public void payResult() {
-        log.info("PayResult-NOTIFY_URL");
+        log.info("PayResult-NOTIFY_URL-Callback");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
         String orderAmount = request.getParameter("orderAmount");
         String payOrgCode = request.getParameter("payOrgCode");
         log.info("orderId" + orderId + ",payStates" + payStates + ",orderAmount: " + orderAmount);
         if (payStates.equals("00")) {
-            request.setAttribute("result", "success");
             String orderIndex = orderId.substring(0, 3);
-            log.info("orderIndex: " + orderIndex);
             if(orderIndex.equals("901")) {
                 BalanceRecharge(orderId, orderAmount, payOrgCode);
+            } else {
+                OrderPayFinished(orderId);
             }
-
-        } else if (payStates.equals("01")) {
-            request.setAttribute("result", "fail");
         }
-//        return "written/payresult";
     }
 
     @RequestMapping(value = "payResultView")
     public String payResultView() {
-        log.info("PayResult-RETURN_URL");
+        log.info("PayResult-RETURN_URL-Callback");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
         log.info("orderId" + orderId + ",payStates" + payStates);
@@ -146,6 +148,7 @@ public class PayController extends BaseController {
 
         TransSummary summary = new TransSummary();  //交易摘要
         summary.setAmount(_Amount.longValue());
+//        summary.setAmount(test);
         summary.setSubjectId(100000);
 
         List<TransSummary> transSummaryList = new ArrayList<TransSummary>();
@@ -204,6 +207,14 @@ public class PayController extends BaseController {
         }
     }
 
-    //支付成功以后 订单状态20 显示状态23
-    //开始时间 支付时间取支付宝
+    private void OrderPayFinished(String OrderId) {
+        //支付成功以后 订单状态20 显示状态23
+        //开始时间 支付时间取支付宝回调
+        OrderPayProcessedResultRequest req = new OrderPayProcessedResultRequest();
+        OrderPayProcessedResultBaseInfo BaseInfo = new OrderPayProcessedResultBaseInfo();
+        OrderPayProcessedResultFeeInfo FeeInfo = new OrderPayProcessedResultFeeInfo();
+        OrderPayProcessedResultProdInfo ProdInfo = new OrderPayProcessedResultProdInfo();
+
+
+    }
 }
