@@ -96,7 +96,7 @@ public class PayController extends BaseController {
         log.info("orderId" + orderId + ",payStates" + payStates + ",orderAmount: " + orderAmount);
         if (payStates.equals("00")) {
             String orderIndex = orderId.substring(0, 3);
-            if(orderIndex.equals("901")) {
+            if (orderIndex.equals("901")) {
                 BalanceRecharge(orderId, orderAmount, payOrgCode);
             } else {
                 OrderPayFinished(orderId);
@@ -126,7 +126,7 @@ public class PayController extends BaseController {
             UID += Order[i];
         }
 
-        Double _Amount = Double.valueOf(Amount)*1000;
+        Double _Amount = Double.valueOf(Amount) * 1000;
 
         SearchYCUserRequest req = new SearchYCUserRequest();
         req.setUserId(UID);
@@ -191,30 +191,30 @@ public class PayController extends BaseController {
         YCUserInfoResponse resp = iycUserServiceSV.searchYCUserInfo(req);
         Long AccountId = resp.getAccountId();
 
+        com.ai.slp.balance.api.deduct.param.TransSummary Summary = new com.ai.slp.balance.api.deduct.param.TransSummary();
+        Summary.setSubjectId(Constants.SubjectID);
+        List<com.ai.slp.balance.api.deduct.param.TransSummary> TransSummary = new ArrayList<com.ai.slp.balance.api.deduct.param.TransSummary>();
+        TransSummary.add(Summary);
+
         DeductParam Param = new DeductParam();
         Param.setTenantId(TENANTID);
-        Param.setSystemId(TENANTID);
+        Param.setSystemId("Cloud-UAC_WEB");
         Param.setExternalId(OrderId);
         Param.setBusinessCode(Constants.BusinessCode);
         Param.setAccountId(AccountId);
         Param.setCheckPwd(0);
-        Param.setTotalAmount(Long.parseLong(Amount));
-        Param.setChannel("中译语通科技有限公司");
-
-        com.ai.slp.balance.api.deduct.param.TransSummary Summary = new com.ai.slp.balance.api.deduct.param.TransSummary();
-        Summary.setSubjectId(300001L);
-        List<com.ai.slp.balance.api.deduct.param.TransSummary> TransSummary = new ArrayList<com.ai.slp.balance.api.deduct.param.TransSummary>();
-        TransSummary.add(Summary);
-
+        Param.setTotalAmount(Long.parseLong(Amount) * 1000);
+        Param.setCurrencyUnit("1"); //1-RMB 2-USD
+        Param.setChannel(Constants.COMPANY);
         Param.setTransSummary(TransSummary);
 
         log.info("BalancePaymentParam: " + com.alibaba.fastjson.JSONArray.toJSONString(Param));
         try {
             DeductResponse response = iDeductSV.deductFund(Param);
-            if (response.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+            if (response.getResponseHeader().getResultCode().equals(ConstantsResultCode.FUNDSUCCESS1)) {
                 String serialNo = response.getSerialNo();
                 log.info("BalancePaySuccess: " + serialNo);
-                // Todo 支付成功
+                OrderPayFinished(OrderId);
             } else {
                 log.info("BalancePayFail: " + response.getResponseHeader().getResultCode() + response.getResponseHeader().getResultMessage());
                 throw new RuntimeException("BalancePaymentFail");

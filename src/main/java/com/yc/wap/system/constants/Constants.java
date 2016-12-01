@@ -285,8 +285,12 @@ public class Constants {
         public static final String PP = "3";
 
     }
+    public static final String COMPANY = "中译语通科技有限公司";
 
-    // 不知道
+    // 业务操作类型
     public static final String BusinessCode = "300001";
+
+    // 资金类型
+    public static final long SubjectID = 100000L;
 
 }
