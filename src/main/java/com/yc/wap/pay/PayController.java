@@ -10,10 +10,7 @@ import com.ai.slp.balance.api.deposit.interfaces.IDepositSV;
 import com.ai.slp.balance.api.deposit.param.DepositParam;
 import com.ai.slp.balance.api.deposit.param.TransSummary;
 import com.ai.yc.order.api.orderpay.interfaces.IOrderPayProcessedResultSV;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultBaseInfo;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultFeeInfo;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultProdInfo;
-import com.ai.yc.order.api.orderpay.param.OrderPayProcessedResultRequest;
+import com.ai.yc.order.api.orderpay.param.*;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
@@ -30,10 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * Created by Nozomi on 11/14/2016.
@@ -93,13 +88,16 @@ public class PayController extends BaseController {
         String payStates = request.getParameter("payStates");
         String orderAmount = request.getParameter("orderAmount");
         String payOrgCode = request.getParameter("payOrgCode");
-        log.info("orderId" + orderId + ",payStates" + payStates + ",orderAmount: " + orderAmount);
+        String outOrderId = request.getParameter("outOrderId");
+
+        log.info("orderId" + orderId + ", payStates" + payStates + ", orderAmount: " + orderAmount);
+
         if (payStates.equals("00")) {
             String orderIndex = orderId.substring(0, 3);
             if (orderIndex.equals("901")) {
                 BalanceRecharge(orderId, orderAmount, payOrgCode);
             } else {
-                OrderPayFinished(orderId);
+                OrderPayFinished(orderId, payOrgCode, Long.parseLong(orderAmount) * 1000, outOrderId);
             }
         }
     }
@@ -109,7 +107,7 @@ public class PayController extends BaseController {
         log.info("PayResult-RETURN_URL-Callback");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
-        log.info("orderId" + orderId + ",payStates" + payStates);
+        log.info("orderId" + orderId + ", payStates" + payStates);
         if (payStates.equals("00")) {
             request.setAttribute("result", "success");
         } else if (payStates.equals("01")) {
@@ -177,8 +175,20 @@ public class PayController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "OrderPay")
+    public String OrderPay() {
+        log.info("-----pay-OrderPay-----");
+        String OrderId = request.getParameter("OrderId");
+        String Amount = request.getParameter("OrderAmount");
+        log.info("OrderId: " + OrderId + ", Amount: " + Amount);
+
+        request.setAttribute("OrderId", OrderId);
+        request.setAttribute("PriceDisplay", Amount);
+        return "written/payment";
+    }
+
     @RequestMapping(value = "BalancePayment")
-    public void BalancePayment() {
+    public String BalancePayment() {
         String OrderId = request.getParameter("orderId");
         String Amount = request.getParameter("orderAmount");
         log.info("-----BalancePayment-----");
@@ -214,40 +224,66 @@ public class PayController extends BaseController {
             if (response.getResponseHeader().getResultCode().equals(ConstantsResultCode.FUNDSUCCESS1)) {
                 String serialNo = response.getSerialNo();
                 log.info("BalancePaySuccess: " + serialNo);
-                OrderPayFinished(OrderId);
+                OrderPayFinished(OrderId, "YE", Long.parseLong(Amount), OrderId);
+                request.setAttribute("result", "success");
             } else {
                 log.info("BalancePayFail: " + response.getResponseHeader().getResultCode() + response.getResponseHeader().getResultMessage());
-                throw new RuntimeException("BalancePaymentFail");
+                request.setAttribute("result", "fail");
             }
         } catch (BusinessException | SystemException e) {
             e.printStackTrace();
             throw new RuntimeException("BalancePaymentFail");
         }
-    }
-
-    @RequestMapping(value = "OrderPay")
-    public String OrderPay() {
-        log.info("-----pay-OrderPay-----");
-        String OrderId = request.getParameter("OrderId");
-        String Amount = request.getParameter("OrderAmount");
-        log.info("OrderId: " + OrderId + ", Amount: " + Amount);
-
         request.setAttribute("OrderId", OrderId);
-        request.setAttribute("PriceDisplay", Amount);
-
-        return "written/payment";
+        return "written/payresult";
     }
 
+    private boolean OrderPayFinished(String OrderId, String PayType, long Amount, String outOrderId) {
+        Timestamp ts = new Timestamp(new Date().getTime()); // 测试
+        String UID = (String) session.getAttribute("UID"); // 取不到
 
-    private void OrderPayFinished(String OrderId) {
-        //支付成功以后 订单状态20 显示状态23
-        //开始时间 支付时间取支付宝回调
+        SearchYCUserRequest request = new SearchYCUserRequest();
+        request.setUserId(UID);
+        YCUserInfoResponse response = iycUserServiceSV.searchYCUserInfo(request);
+        Long AccountId = response.getAccountId();
 
         OrderPayProcessedResultRequest req = new OrderPayProcessedResultRequest();
         OrderPayProcessedResultBaseInfo BaseInfo = new OrderPayProcessedResultBaseInfo();
         OrderPayProcessedResultFeeInfo FeeInfo = new OrderPayProcessedResultFeeInfo();
         OrderPayProcessedResultProdInfo ProdInfo = new OrderPayProcessedResultProdInfo();
 
+        BaseInfo.setOrderId(Long.parseLong(OrderId));
+        BaseInfo.setOrderType(Constants.OrderType2.PERSIONAL);
+        BaseInfo.setUserType(Constants.UserType.PERSON);
+        BaseInfo.setUserId(UID);
+        BaseInfo.setAccountId(AccountId);
+        BaseInfo.setState(Constants.Order.UNRECEIVE);
+        BaseInfo.setDisplayFlag(Constants.Order.TRANSING);
 
+        FeeInfo.setPayStyle(PayType);
+        FeeInfo.setTotalFee(Amount);
+        FeeInfo.setAdjustFee(Amount);
+        FeeInfo.setPaidFee(Amount);
+        FeeInfo.setPayTime(ts);
+        FeeInfo.setExternalId(outOrderId); // 余额支付没有
+
+        ProdInfo.setStateTime(ts);
+
+        req.setBaseInfo(BaseInfo);
+        req.setFeeInfo(FeeInfo);
+        req.setProdInfo(ProdInfo);
+
+        try {
+            OrderPayProcessedResultResponse resp = iOrderPayProcessedResultSV.orderPayProcessedResult(req);
+            if(resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                return true;
+            } else {
+                log.info("OrderPayFinishedProcessedFail: " + resp.getResponseHeader().getResultCode() + resp.getResponseHeader().getResultMessage());
+                throw new RuntimeException("OrderPayFinishedProcessedFail");
+            }
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
+            throw new RuntimeException("OrderPayFinishedProcessedFail");
+        }
     }
 }

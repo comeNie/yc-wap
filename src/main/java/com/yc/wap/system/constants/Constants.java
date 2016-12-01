@@ -52,6 +52,16 @@ public class Constants {
     }
 
     /**
+     * 订单类型
+     */
+    public static class OrderType2 {
+        // 个人订单
+        public static final String PERSIONAL = "1";
+        // 企业订单
+        public static final String ENTERPRISE = "2";
+    }
+
+    /**
      * 翻译级别
      */
     public static class TranslateLevel {
@@ -259,12 +269,13 @@ public class Constants {
      * 订单查询
      */
     public static final class Order {
-        // 客户端显示状态
         public static final String UNPAID = "11";
         public static final String UNCONFIRM = "50";
         public static final String FINISH = "90";
         public static final String CONFIRMED = "51";
         public static final String UNEVALUATE = "52";
+        public static final String UNRECEIVE = "20";
+        public static final String TRANSING = "23";
     }
 
     /**
@@ -285,6 +296,18 @@ public class Constants {
         public static final String PP = "3";
 
     }
+
+    /**
+     * 用户类型
+     */
+    public static final class UserType {
+        // 10：个人 11：企业 12：代理人
+        public static final String PERSON = "10";
+        public static final String ENTERPISE = "11";
+        public static final String AGENT = "12";
+
+    }
+
     public static final String COMPANY = "中译语通科技有限公司";
 
     // 业务操作类型
