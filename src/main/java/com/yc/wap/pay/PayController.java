@@ -165,6 +165,8 @@ public class PayController extends BaseController {
         param.setTenantId(Constants.TENANTID);
         param.setSystemId("Cloud-UAC_WEB"); //固定值
 
+        log.info("BalanceRechargeParam: " + com.alibaba.fastjson.JSONArray.toJSONString(param));
+
         try {
             String serialCode = iDepositSV.depositFund(param);
             log.info("BalanceRecharge SerialCode: " + serialCode);
@@ -176,30 +178,46 @@ public class PayController extends BaseController {
     }
 
     @RequestMapping(value = "BalancePayment")
-    public void BalancePayment(String OrderId, String Amount) {
+    public void BalancePayment() {
+        String OrderId = request.getParameter("orderId");
+        String Amount = request.getParameter("orderAmount");
+        log.info("-----BalancePayment-----");
+        log.info("OrderId: " + OrderId + ", Amount: " + Amount);
+
         String UID = (String) session.getAttribute("UID");
 
         SearchYCUserRequest req = new SearchYCUserRequest();
         req.setUserId(UID);
         YCUserInfoResponse resp = iycUserServiceSV.searchYCUserInfo(req);
-        String AccountId = resp.getUserId();
+        Long AccountId = resp.getAccountId();
 
         DeductParam Param = new DeductParam();
+        Param.setTenantId(TENANTID);
         Param.setSystemId(TENANTID);
         Param.setExternalId(OrderId);
         Param.setBusinessCode(Constants.BusinessCode);
-        Param.setAccountId(Long.parseLong(AccountId));
+        Param.setAccountId(AccountId);
         Param.setCheckPwd(0);
         Param.setTotalAmount(Long.parseLong(Amount));
         Param.setChannel("中译语通科技有限公司");
 
+        com.ai.slp.balance.api.deduct.param.TransSummary Summary = new com.ai.slp.balance.api.deduct.param.TransSummary();
+        Summary.setSubjectId(300001L);
+        List<com.ai.slp.balance.api.deduct.param.TransSummary> TransSummary = new ArrayList<com.ai.slp.balance.api.deduct.param.TransSummary>();
+        TransSummary.add(Summary);
+
+        Param.setTransSummary(TransSummary);
+
+        log.info("BalancePaymentParam: " + com.alibaba.fastjson.JSONArray.toJSONString(Param));
         try {
             DeductResponse response = iDeductSV.deductFund(Param);
             if (response.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 String serialNo = response.getSerialNo();
+                log.info("BalancePaySuccess: " + serialNo);
                 // Todo 支付成功
             } else {
-                // Todo 支付失败
+                log.info("BalancePayFail: " + response.getResponseHeader().getResultCode() + response.getResponseHeader().getResultMessage());
+                throw new RuntimeException("BalancePaymentFail");
             }
         } catch (BusinessException | SystemException e) {
             e.printStackTrace();
@@ -207,9 +225,24 @@ public class PayController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "OrderPay")
+    public String OrderPay() {
+        log.info("-----pay-OrderPay-----");
+        String OrderId = request.getParameter("OrderId");
+        String Amount = request.getParameter("OrderAmount");
+        log.info("OrderId: " + OrderId + ", Amount: " + Amount);
+
+        request.setAttribute("OrderId", OrderId);
+        request.setAttribute("PriceDisplay", Amount);
+
+        return "written/payment";
+    }
+
+
     private void OrderPayFinished(String OrderId) {
         //支付成功以后 订单状态20 显示状态23
         //开始时间 支付时间取支付宝回调
+
         OrderPayProcessedResultRequest req = new OrderPayProcessedResultRequest();
         OrderPayProcessedResultBaseInfo BaseInfo = new OrderPayProcessedResultBaseInfo();
         OrderPayProcessedResultFeeInfo FeeInfo = new OrderPayProcessedResultFeeInfo();

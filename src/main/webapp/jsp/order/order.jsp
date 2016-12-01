@@ -44,6 +44,10 @@
     <div class="loading" id="spinner" style="display: none"><a href="#" id="spId">没有更多了</a></div>
 </div>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
+<form id="ToOrderPay" method="post" action="<%=path%>/pay/OrderPay">
+    <input type="hidden" id="OrderId" name="OrderId" value="">
+    <input type="hidden" id="OrderAmount" name="OrderAmount" value="">
+</form>
 </body>
 </html>
 <script type="text/javascript">
@@ -116,7 +120,7 @@
                         if (statusFlag == "0") {
                             var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li></ul></div></section>";
                         } else if (statusFlag == "1") {
-                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn blue'><a href='#'>" + btn1 + "</a></p><p class='bord-btn ash'><a href='javascript:CancelOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
+                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn blue'><a href='javascript:ToOrderPay(" + orderId + "," + price + ")'>" + btn1 + "</a></p><p class='bord-btn ash'><a href='javascript:CancelOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         } else if (statusFlag == "2") {
                             var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn ash'><a href='javascript:ConfirmOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         } else if (statusFlag == "3") {
@@ -214,6 +218,12 @@
 
             }
         });
+    }
+
+    function ToOrderPay(OrderId, Amount) {
+        $("#OrderId").val(OrderId);
+        $("#OrderAmount").val(Amount);
+        $("#ToOrderPay").submit();
     }
 
     /**

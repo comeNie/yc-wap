@@ -330,9 +330,11 @@ public class WrittenController extends BaseController {
         DecimalFormat df = new DecimalFormat("######0.00");
         String PriceDisplay = df.format(Double.parseDouble(Price) / 1000);
         String currencyUnit = WrittenContextJSON.getString("currencyUnit");
+        String OrderId = request.getParameter("orderid");
         request.setAttribute("currencyUnit", currencyUnit);
         request.setAttribute("Price", Price);
         request.setAttribute("PriceDisplay", PriceDisplay);
+        request.setAttribute("OrderId", OrderId);
         return "written/payment";
     }
 

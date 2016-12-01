@@ -8,8 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
-    String OrderId = request.getParameter("orderid");
-    request.setAttribute("OrderId", OrderId);
 %>
 <html>
 <head>
