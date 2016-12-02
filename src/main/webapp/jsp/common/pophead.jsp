@@ -17,6 +17,9 @@
     request.setAttribute("index", index);
     request.setAttribute("show", show);
     request.setAttribute("isLogin", session.getAttribute("isLogin"));
+    response.setHeader("Pragma","No-cache");
+    response.setHeader("Cache-Control","no-cache");
+    response.setDateHeader("Expires", 0);
 %>
 
 <!DOCTYPE html>
