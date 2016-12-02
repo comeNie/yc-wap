@@ -27,7 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -55,8 +58,21 @@ public class PayController extends BaseController {
     public void gotoPayByOrg(String orderId, String orderAmount, String currencyUnit, String merchantUrl, String payOrgCode,
                              HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        String notifyUrl = ConfigUtil.getProperty("NOTIFY_URL");//+"/"+orderType+"/"+ UserUtil.getUserId();
-        String returnUrl = ConfigUtil.getProperty("RETURN_URL");
+        HttpSession session = request.getSession();
+        Enumeration<?> enumeration = session.getAttributeNames();
+        log.info("-----Sessions-----");
+        while (enumeration.hasMoreElements()) {
+            String name = enumeration.nextElement().toString();
+            Object value = session.getAttribute(name);
+            log.info("SessionName: " + name + ", SessionValue: " + value);
+        }
+        log.info("-----Sessions-----");
+
+        String notifyUrl = ConfigUtil.getProperty("NOTIFY_URL") + "?uid=" + session.getAttribute("UID");
+        String returnUrl = ConfigUtil.getProperty("RETURN_URL") + "?uid=" + session.getAttribute("UID");
+
+        String infoStr = orderId + VerifyUtil.SEPARATOR + orderAmount + VerifyUtil.SEPARATOR + notifyUrl + VerifyUtil.SEPARATOR + TENANTID;
+        String infoMd5 = VerifyUtil.encodeParam(infoStr, ConfigUtil.getProperty("REQUEST_KEY"));
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("tenantId", TENANTID);
@@ -69,45 +85,61 @@ public class PayController extends BaseController {
         map.put("currencyUnit", currencyUnit);
         map.put("subject", "orderPay");
         map.put("payOrgCode", payOrgCode);
-        // 加密
-        String infoStr = orderId + VerifyUtil.SEPARATOR + orderAmount + VerifyUtil.SEPARATOR + notifyUrl + VerifyUtil.SEPARATOR + TENANTID;
-        String infoMd5 = VerifyUtil.encodeParam(infoStr, ConfigUtil.getProperty("REQUEST_KEY"));
         map.put("infoMd5", infoMd5);
-        log.info("开始前台通知:" + map);
+
+        log.info("PaymentParams: " + map);
         String htmlStr = PaymentUtil.generateAutoSubmitForm(ConfigUtil.getProperty("ACTION_URL"), map);
-        log.info("发起支付申请:" + htmlStr);
+        log.info("SendPayment: " + htmlStr);
+
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(htmlStr);
         response.getWriter().flush();
     }
 
     @RequestMapping(value = "payResult")
-    public void payResult() {
+    public void payResult(String uid) throws ParseException {
         log.info("PayResult-NOTIFY_URL-Callback");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
         String orderAmount = request.getParameter("orderAmount");
         String payOrgCode = request.getParameter("payOrgCode");
         String outOrderId = request.getParameter("outOrderId");
+        String notifyTime = request.getParameter("notifyTime");
 
-        log.info("orderId" + orderId + ", payStates" + payStates + ", orderAmount: " + orderAmount);
+        log.info("-----PayResult-----");
+        log.info("orderId: " + orderId);
+        log.info("payStates: " + payStates);
+        log.info("orderAmount: " + orderAmount);
+        log.info("payOrgCode: " + payOrgCode);
+        log.info("outOrderId: " + outOrderId);
+        log.info("notifyTime: " + notifyTime);
+        log.info("uid: " + uid);
+        log.info("-----PayResult-----");
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmss");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp ts = Timestamp.valueOf(sdf2.format(sdf1.parse(notifyTime)));
 
         if (payStates.equals("00")) {
             String orderIndex = orderId.substring(0, 3);
             if (orderIndex.equals("901")) {
-                BalanceRecharge(orderId, orderAmount, payOrgCode);
+                BalanceRecharge(orderId, orderAmount, payOrgCode, uid);
             } else {
-                OrderPayFinished(orderId, payOrgCode, Long.parseLong(orderAmount) * 1000, outOrderId);
+                OrderPayFinished(orderId, payOrgCode, Long.parseLong(orderAmount) * 1000, outOrderId, ts, uid);
             }
         }
     }
 
     @RequestMapping(value = "payResultView")
-    public String payResultView() {
+    public String payResultView(String uid) {
         log.info("PayResult-RETURN_URL-Callback");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
-        log.info("orderId" + orderId + ", payStates" + payStates);
+
+        log.info("-----PayResult-----");
+        log.info("orderId: " + orderId + ", payStates: " + payStates + ", uid: " + uid);
+        log.info("-----PayResult-----");
+
         if (payStates.equals("00")) {
             request.setAttribute("result", "success");
         } else if (payStates.equals("01")) {
@@ -117,54 +149,46 @@ public class PayController extends BaseController {
         return "written/payresult";
     }
 
-    private boolean BalanceRecharge(String orderId, String Amount, String payOrgCode) {
-        char[] Order = orderId.toCharArray();
-        String UID = "";
-        for (int i = 3; i < orderId.length() - 13; i++) {
-            UID += Order[i];
-        }
-
+    private boolean BalanceRecharge(String orderId, String Amount, String payOrgCode, String uid) {
         Double _Amount = Double.valueOf(Amount) * 1000;
 
         SearchYCUserRequest req = new SearchYCUserRequest();
-        req.setUserId(UID);
+        req.setUserId(uid);
         YCUserInfoResponse resp = iycUserServiceSV.searchYCUserInfo(req);
         Long AccountId = resp.getAccountId();
 
         log.info("----------BalanceRecharge----------");
-        log.info("UID: " + UID);
+        log.info("UID: " + uid);
         log.info("AccountId: " + AccountId);
         log.info("OrderId: " + orderId);
         log.info("Amount: " + _Amount.longValue());
         log.info("PayOrgCode: " + payOrgCode);
         log.info("----------BalanceRecharge----------");
 
-        DepositParam param = new DepositParam();
-        param.setAccountId(AccountId);  //	账户ID
-        param.setBusiDesc("余额");    //业务描述
-        param.setBusiSerialNo(orderId);
-
-        TransSummary summary = new TransSummary();  //交易摘要
+        TransSummary summary = new TransSummary();
         summary.setAmount(_Amount.longValue());
-//        summary.setAmount(test);
         summary.setSubjectId(100000);
 
         List<TransSummary> transSummaryList = new ArrayList<TransSummary>();
         transSummaryList.add(summary);
-        param.setTransSummary(transSummaryList);
 
-        param.setCurrencyUnit("RMB");   //币种,RMB:人民币  USD：美元
-        param.setBusiOperCode("300000");    //固定值
+        DepositParam param = new DepositParam();
+        param.setAccountId(AccountId);
+        param.setBusiDesc("余额");
+        param.setBusiSerialNo(orderId);
+        param.setTransSummary(transSummaryList);
+        param.setCurrencyUnit("RMB");
+        param.setBusiOperCode(Constants.BusinessOperCode);
+        param.setTenantId(Constants.TENANTID);
+        param.setSystemId(Constants.SystemId);
+
         if (payOrgCode.equals("ZFB")) {
             param.setPayStyle(Constants.PayType.ZFB);
         } else if (payOrgCode.equals("YL")) {
             param.setPayStyle(Constants.PayType.YL);
         }
-        param.setTenantId(Constants.TENANTID);
-        param.setSystemId("Cloud-UAC_WEB"); //固定值
 
         log.info("BalanceRechargeParam: " + com.alibaba.fastjson.JSONArray.toJSONString(param));
-
         try {
             String serialCode = iDepositSV.depositFund(param);
             log.info("BalanceRecharge SerialCode: " + serialCode);
@@ -191,6 +215,8 @@ public class PayController extends BaseController {
     public String BalancePayment() {
         String OrderId = request.getParameter("orderId");
         String Amount = request.getParameter("orderAmount");
+        Double _Amount = Double.valueOf(Amount) * 1000;
+
         log.info("-----BalancePayment-----");
         log.info("OrderId: " + OrderId + ", Amount: " + Amount);
 
@@ -208,12 +234,12 @@ public class PayController extends BaseController {
 
         DeductParam Param = new DeductParam();
         Param.setTenantId(TENANTID);
-        Param.setSystemId("Cloud-UAC_WEB");
+        Param.setSystemId(Constants.SystemId);
         Param.setExternalId(OrderId);
         Param.setBusinessCode(Constants.BusinessCode);
         Param.setAccountId(AccountId);
         Param.setCheckPwd(0);
-        Param.setTotalAmount(Long.parseLong(Amount) * 1000);
+        Param.setTotalAmount(_Amount.longValue());
         Param.setCurrencyUnit("1"); //1-RMB 2-USD
         Param.setChannel(Constants.COMPANY);
         Param.setTransSummary(TransSummary);
@@ -224,7 +250,9 @@ public class PayController extends BaseController {
             if (response.getResponseHeader().getResultCode().equals(ConstantsResultCode.FUNDSUCCESS1)) {
                 String serialNo = response.getSerialNo();
                 log.info("BalancePaySuccess: " + serialNo);
-                OrderPayFinished(OrderId, "YE", Long.parseLong(Amount), OrderId);
+
+                Timestamp ts = new Timestamp(new Date().getTime());
+                OrderPayFinished(OrderId, "YE", Long.parseLong(Amount) * 1000, serialNo, ts, UID);
                 request.setAttribute("result", "success");
             } else {
                 log.info("BalancePayFail: " + response.getResponseHeader().getResultCode() + response.getResponseHeader().getResultMessage());
@@ -238,12 +266,9 @@ public class PayController extends BaseController {
         return "written/payresult";
     }
 
-    private boolean OrderPayFinished(String OrderId, String PayType, long Amount, String outOrderId) {
-        Timestamp ts = new Timestamp(new Date().getTime()); // 测试
-        String UID = (String) session.getAttribute("UID"); // 取不到
-
+    private boolean OrderPayFinished(String OrderId, String PayType, long Amount, String outOrderId, Timestamp FinishTime, String uid) {
         SearchYCUserRequest request = new SearchYCUserRequest();
-        request.setUserId(UID);
+        request.setUserId(uid);
         YCUserInfoResponse response = iycUserServiceSV.searchYCUserInfo(request);
         Long AccountId = response.getAccountId();
 
@@ -255,7 +280,7 @@ public class PayController extends BaseController {
         BaseInfo.setOrderId(Long.parseLong(OrderId));
         BaseInfo.setOrderType(Constants.OrderType2.PERSIONAL);
         BaseInfo.setUserType(Constants.UserType.PERSON);
-        BaseInfo.setUserId(UID);
+        BaseInfo.setUserId(uid);
         BaseInfo.setAccountId(AccountId);
         BaseInfo.setState(Constants.Order.UNRECEIVE);
         BaseInfo.setDisplayFlag(Constants.Order.TRANSING);
@@ -264,18 +289,20 @@ public class PayController extends BaseController {
         FeeInfo.setTotalFee(Amount);
         FeeInfo.setAdjustFee(Amount);
         FeeInfo.setPaidFee(Amount);
-        FeeInfo.setPayTime(ts);
-        FeeInfo.setExternalId(outOrderId); // 余额支付没有
+        FeeInfo.setPayTime(FinishTime);
+        FeeInfo.setExternalId(outOrderId);
 
-        ProdInfo.setStateTime(ts);
+        ProdInfo.setStateTime(FinishTime);
 
         req.setBaseInfo(BaseInfo);
         req.setFeeInfo(FeeInfo);
         req.setProdInfo(ProdInfo);
 
+        log.info("OrderPayFinishedProcessedParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
         try {
             OrderPayProcessedResultResponse resp = iOrderPayProcessedResultSV.orderPayProcessedResult(req);
-            if(resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+            if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                log.info("OrderPayFinishedProcessedSuccess: " + resp.getOrderId() + resp.getResponseHeader().getResultMessage());
                 return true;
             } else {
                 log.info("OrderPayFinishedProcessedFail: " + resp.getResponseHeader().getResultCode() + resp.getResponseHeader().getResultMessage());
