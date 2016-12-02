@@ -63,7 +63,7 @@
             <p>
                 <select id="dual" class="select testing-select-big">
                     <c:forEach items="${DualList}" var="pair">
-                        <option dualId="${pair.duadId}">${pair.sourceCn}->${pair.targetCn}</option>
+                        <option dualId="${pair.duadId}" DualValEn="${pair.sourceEn} → ${pair.targetEn}">${pair.sourceCn} → ${pair.targetCn}</option>
                     </c:forEach>
                 </select>
                 <span>|</span>
@@ -246,6 +246,7 @@
     function saveContent(Content, ContentLength) {
         //语言对
         var DualId = $("#dual").find("option:selected").attr("dualId");
+        var DualValEn = $("#dual").find("option:selected").attr("DualValEn");
         var DualVal = $("#dual").val();
         //用途
         var PurposeId = $("#purpose").find("option:selected").attr("purposeId");
@@ -273,6 +274,7 @@
                 ContentLength: ContentLength,
                 DualId: DualId,
                 DualVal: DualVal,
+                DualValEn: DualValEn,
                 PurposeId: PurposeId,
                 PurposeVal: PurposeVal,
                 DomainId: DomainId,

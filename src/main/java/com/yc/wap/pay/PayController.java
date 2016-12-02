@@ -106,6 +106,8 @@ public class PayController extends BaseController {
         String outOrderId = request.getParameter("outOrderId");
         String notifyTime = request.getParameter("notifyTime");
 
+        Double _Amount = Double.valueOf(orderAmount) * 1000;
+
         log.info("-----PayResult-----");
         log.info("orderId: " + orderId);
         log.info("payStates: " + payStates);
@@ -125,7 +127,7 @@ public class PayController extends BaseController {
             if (orderIndex.equals("901")) {
                 BalanceRecharge(orderId, orderAmount, payOrgCode, uid);
             } else {
-                OrderPayFinished(orderId, payOrgCode, Long.parseLong(orderAmount) * 1000, outOrderId, ts, uid);
+                OrderPayFinished(orderId, payOrgCode, _Amount.longValue(), outOrderId, ts, uid);
             }
         }
     }
@@ -252,7 +254,7 @@ public class PayController extends BaseController {
                 log.info("BalancePaySuccess: " + serialNo);
 
                 Timestamp ts = new Timestamp(new Date().getTime());
-                OrderPayFinished(OrderId, "YE", Long.parseLong(Amount) * 1000, serialNo, ts, UID);
+                OrderPayFinished(OrderId, "YE", _Amount.longValue(), serialNo, ts, UID);
                 request.setAttribute("result", "success");
             } else {
                 log.info("BalancePayFail: " + response.getResponseHeader().getResultCode() + response.getResponseHeader().getResultMessage());

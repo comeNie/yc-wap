@@ -19,6 +19,7 @@ import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -120,6 +121,7 @@ public class WrittenController extends BaseController {
         String DomainId = request.getParameter("DomainId");
 
         String DualVal = request.getParameter("DualVal");
+        String DualValEn = request.getParameter("DualValEn");
         String PurposeVal = request.getParameter("PurposeVal");
         String DomainVal = request.getParameter("DomainVal");
         String TransLvVal = request.getParameter("TransLvVal");
@@ -159,6 +161,7 @@ public class WrittenController extends BaseController {
 
                 JSONObject WrittenShowJSON = new JSONObject();
                 WrittenShowJSON.put("DualVal", DualVal);
+                WrittenShowJSON.put("DualValEn", DualValEn);
                 WrittenShowJSON.put("PurposeVal", PurposeVal);
                 WrittenShowJSON.put("DomainVal", DomainVal);
                 WrittenShowJSON.put("TransLvVal", TransLvVal);
@@ -240,19 +243,21 @@ public class WrittenController extends BaseController {
         WrittenContextJSON.put("TimeZone", TimeZone);
         session.setAttribute("WrittenContextJSON", WrittenContextJSON);
 
-        String OrderId = OrderSubmit(WrittenContextJSON).toString();
+        JSONObject WrittenShowJSON = JSONObject.fromObject(session.getAttribute("WrittenShowJSON"));
+
+        String OrderId = OrderSubmit(WrittenContextJSON, WrittenShowJSON).toString();
         result.put("OrderId", OrderId);
         return result.returnMsg();
     }
 
-    private Long OrderSubmit(JSONObject WrittenContextJSON) {
+    private Long OrderSubmit(JSONObject WrittenContextJSON, JSONObject WrittenShowJSON) {
         Timestamp Time = new Timestamp(System.currentTimeMillis());
         String UserId = (String) session.getAttribute("UID");
 
         LanguagePairInfo languagePairInfo = new LanguagePairInfo();
-        languagePairInfo.setLanguagePairId("1");
-        languagePairInfo.setLanguagePairName("啊");
-        languagePairInfo.setLanguageNameEn("a");
+        languagePairInfo.setLanguagePairId(WrittenContextJSON.getString("DualId"));
+        languagePairInfo.setLanguagePairName(WrittenShowJSON.getString("DualVal"));
+        languagePairInfo.setLanguageNameEn(WrittenShowJSON.getString("DualValEn"));
         List<LanguagePairInfo> LanguagePair = new ArrayList<LanguagePairInfo>();
         LanguagePair.add(languagePairInfo);
 
