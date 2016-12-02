@@ -96,7 +96,10 @@
 
     }
     $(function() {
-//        console.log(window.location.pathname);
+        var phone = $("#phone").val();
+        var codeid = $("#codeid").val();
+        var psdid = $("#psdids").val();
+        var confimid = $("#confimid").val();
         //加载国家的数据
         loadCountry();
     });

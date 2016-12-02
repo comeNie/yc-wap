@@ -71,6 +71,11 @@
 </html>
 <script type="text/javascript">
     $(document).ready(function() {
+        $("#codeid").val("");
+        $("#getnumber").removeAttr("disabled");
+        $("#getnumber").attr("onclick", "getnumberonclick()");
+        $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
+
         $("#leftRe").click(function() {
             window.history.go(-1);
         });

@@ -238,6 +238,7 @@
         $("#codeid").val("");
         $("#psdids").val("");
         $("#confimid").val("");
+        $("#phone").attr("disabled",false);
         if("${to}"=="login"){
             $("#loginDiv").show();
             $("#registerDiv").hide();
@@ -335,7 +336,7 @@
 
     }
     function leftBtn(){
-        window.history.back();
+        window.history.back(-1);
     }
     //验证码代码
     function createCode() {

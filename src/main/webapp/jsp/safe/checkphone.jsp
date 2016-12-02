@@ -70,14 +70,19 @@
 </html>
 <script>
     $(document).ready(function() {
+
         $("#leftRe").click(function() {
             window.history.go(-1);
         });
         Loading.HideLoading();
     });
     $(function() {
+        $("#codeid").val("");
         var mobilePhone = "${phone}";
-
+        $("#getnumber").removeAttr("disabled");
+        $("#getnumber").attr("onclick", "getnumberonclick()");
+        $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
+        
         var s = "${jump}";
         if (s == "mail") {
             $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckMail"/>");
