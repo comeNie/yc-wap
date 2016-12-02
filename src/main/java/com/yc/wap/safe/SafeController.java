@@ -216,7 +216,7 @@ public class SafeController extends BaseController {
                 log.info(m);
                 UcMembersVo vo = new UcMembersVo(m);
                 result.put("userPhone",vo.getMobilephone());
-                result.put("uids",vo.getUid()+"");
+                result.put("uids",m.get("uid")+"");
                 result.put("username",vo.getUsername());
                 result.put("email",vo.getEmail());
                 result.put("password",vo.getPassword());

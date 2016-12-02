@@ -300,7 +300,7 @@
                         window.location.href = "<%=path%>" + "<%=ToUrl%>";
                     }
                     Loading.HideLoading();
-                } else {
+                } else{
                     Loading.HideLoading();
                     createCode();
                     $("#codeLabel").html(data.msg);

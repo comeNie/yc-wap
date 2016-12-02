@@ -126,6 +126,11 @@
        Loading.HideLoading();
     });
     $(function(){
+        $("#psdid3").val("");
+        $("#confirmid3").val("");
+        $("#nameid1").val("");
+        $("#codeid1").val("");
+        $("#codeid2").val("");
         $("#next-btn1").click(function(){
             var phone = $("#nameid1").val();
             var code = $("#codeid1").val();
@@ -263,6 +268,11 @@
                     Loading.HideLoading();
                 } else {
                     Loading.HideLoading();
+                    if (data.status == 2){
+                        $("#codeLabel1").css("display","block");
+                        $("#codeLabel1").html(data.msg);
+                        return;
+                    }
                     $("#codeLabel1").css("display","none");
                     var tourl = "<%=path%>/login/findfail";
                     window.location.href=tourl;
@@ -304,10 +314,9 @@
                 }
             },
             error: function () {
-                $("#codeLabel2").html(data.msg);
-                $("#codeLabel2").css("display", "block");
-
                 Loading.HideLoading();
+                var tourl ="<%=path%>/jsp/common/404.jsp";
+                window.location.href=tourl;
             }
         });
     }

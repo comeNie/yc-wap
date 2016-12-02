@@ -35,7 +35,7 @@
     <div class="wrapper-big"><!--包含除底部外的所有层-->
         <nav class="wap-second-nav">
             <ul>
-                <a href="javascript:" onclick="leftRe()"><i  class="icon iconfont left">&#xe626;</i></a>
+                <a href="javascript:void(0)" onclick="leftRe()"><i  class="icon iconfont left">&#xe626;</i></a>
                 <li><spring:message code="login.registersuccess.title"/></li>
             </ul>
         </nav>
@@ -55,15 +55,16 @@
 </html>
 <script>
     $(document).ready(function() {
-        $("#leftRe").click(function() {
-            window.history.go(-1);
-        });
+
 
 
     });
     $(function() {
         countDown();
     })
+    function leftRe(){
+        window.history.go(-1);
+    }
     function goLogin() {
         var tourl = "<%=path%>/login/login?to=login";
         window.location.href=tourl;
