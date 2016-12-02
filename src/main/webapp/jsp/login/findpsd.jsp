@@ -34,8 +34,8 @@
     <div class="wrapper-big"><!--包含除底部外的所有层-->
         <nav class="wap-second-nav">
             <ul>
-                <a href="javascript:" onclick="leftRe()"><i class="icon iconfont left">&#xe626;</i></a>
-                <li><spring:message code="login.findpsd.title"/></li>
+                <a href="javascript:" onclick="leftRe()" id="leftId"><i class="icon iconfont left" >&#xe626;</i></a>
+                <li id="liTitle"><spring:message code="login.findpsd.title"/></li>
             </ul>
         </nav>
         <section class="form-big">
@@ -216,18 +216,26 @@
             }
 
             Loading.ShowLoading();
+            $("#leftId").hide();
+            $("#liTitle").html("<spring:message code="login.findpsd.successTitle"/>")
             jump3(psdid);
 
         });
     });
     function leftRe() {
+//        $("#psdid3").val("");
+//        $("#confirmid3").val("");
+//        $("#nameid1").val("");
+        $("#codeid1").val("");
+        $("#codeid2").val("");
 
         if (index == 0){
-            window.history.go(-1);
+            window.history.back(-1);
         }else if (index == 1){
             $("#next1").show();
             $("#next2").hide();
             index --;
+            createCode();
         }else if (index == 2){
 
             $("#next2").show();
@@ -352,7 +360,7 @@
                         if(fiveWait==0){
                             fiveWait = 5;
                             goLogin();
-                            $("#spanTime").html("5s");
+//                            $("#spanTime").html("5s");
                         }
                     },1000);
                     Loading.HideLoading();
@@ -431,25 +439,7 @@
         var tourl = "<%=path%>/login/login?to=login";
         window.location.href=tourl;
     }
-//    var fiveWait = 5;
-//    function countDownFive() {
-//        if (fiveWait == 0) {
-//            goLogin();
-//        }else {
-//            fiveWait --;
-//            $("#spanTime").html(fiveWait+"s");
-//            setTimeout(function(){countDownFive();},1000);
-//        }
-//    }
-//    var timer = setInterval(function(){
-//        fiveWait--;
-//        $("#spanTime").html(fiveWait+"s");
-//        if(fiveWait==0){
-//            fiveWait = 5;
-//            goLogin();
-//            $("#spanTime").html("5s");
-//        }
-//    },1000);
+
 
     //验证码代码
     function createCode() {

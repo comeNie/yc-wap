@@ -82,6 +82,11 @@
         });
     });
     $(function() {
+
+        $("#codeid").val("");
+        $("#getnumber").removeAttr("disabled");
+        $("#getnumber").attr("onclick", "getnumberonclick()");
+        $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
        //加载国家的数据
         loadCountry();
     });

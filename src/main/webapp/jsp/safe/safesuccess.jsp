@@ -35,7 +35,7 @@
     <div class="wrapper-big"><!--包含除底部外的所有层-->
         <nav class="wap-second-nav">
             <ul>
-                <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
+                <%--<a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>--%>
                 <li><spring:message code="safe.safesuccess.title"/></li>
             </ul>
 
@@ -60,9 +60,9 @@
 </html>
 <script>
     $(document).ready(function() {
-        $("#leftRe").click(function() {
-            window.history.go(-1);
-        });
+//        $("#leftRe").click(function() {
+//            window.history.go(-1);
+//        });
     });
 
     $(function() {
