@@ -189,7 +189,8 @@
             }else {
                 $("#psdLabel3").css("display","none");
             }
-            var t = /^[0-9a-zA-Z]{6,16}$/;
+//            var t = /^[0-9a-zA-Z]{6,16}$/;
+            var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
             if (!t.test(psdid)){
                 $("#psdLabel3").html("<spring:message code="safe.changepsd.alert_newLength"/>");
                 $("#psdLabel3").css("display","block");
@@ -236,6 +237,9 @@
             $("#next3").show();
             $("#next4").hide();
             index --;
+            clearInterval(timer);
+            fiveWait = 5;
+            $("#spanTime").html("5s");
         }
 
     }
@@ -320,6 +324,8 @@
             }
         });
     }
+    var timer;
+    var fiveWait = 5;
     function jump3(psd){
         $.ajax({
             async: true,
@@ -338,8 +344,17 @@
                     index ++;//index = 3
                     $("#next3").hide();
                     $("#next4").show();
-                    countDownFive();
 
+                    var fiveWait = 5;
+                    timer = setInterval(function(){
+                        fiveWait--;
+                        $("#spanTime").html(fiveWait+"s");
+                        if(fiveWait==0){
+                            fiveWait = 5;
+                            goLogin();
+                            $("#spanTime").html("5s");
+                        }
+                    },1000);
                     Loading.HideLoading();
                 } else {
                     $("#confirmLabel3").html(data.msg);
@@ -416,16 +431,25 @@
         var tourl = "<%=path%>/login/login?to=login";
         window.location.href=tourl;
     }
-    var fiveWait = 5;
-    function countDownFive() {
-        if (fiveWait == 0) {
-            goLogin();
-        }else {
-            fiveWait --;
-            $("#spanTime").html(fiveWait+"s");
-            setTimeout(function(){countDownFive();},1000);
-        }
-    }
+//    var fiveWait = 5;
+//    function countDownFive() {
+//        if (fiveWait == 0) {
+//            goLogin();
+//        }else {
+//            fiveWait --;
+//            $("#spanTime").html(fiveWait+"s");
+//            setTimeout(function(){countDownFive();},1000);
+//        }
+//    }
+//    var timer = setInterval(function(){
+//        fiveWait--;
+//        $("#spanTime").html(fiveWait+"s");
+//        if(fiveWait==0){
+//            fiveWait = 5;
+//            goLogin();
+//            $("#spanTime").html("5s");
+//        }
+//    },1000);
 
     //验证码代码
     function createCode() {

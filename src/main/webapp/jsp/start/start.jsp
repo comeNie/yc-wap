@@ -175,12 +175,6 @@
                 <div class="history-list">
                     <ul>
                         <a href="javascript:" id="myHistory">
-                            <%--<li>--%>
-                                <%--<p><i class="icon iconfont">&#xe624;</i></p>--%>
-                                <%--<p class="word">就显示一行 就显示一行显示一行</p>--%>
-                                <%--<p class="word-en">yiwen yiwen yiwen</p>--%>
-                                <%--<p class="right"><i class="icon iconfont">&#xe618;</i></p>--%>
-                            <%--</li>--%>
                         </a>
                     </ul>
                 </div>

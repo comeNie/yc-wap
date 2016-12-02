@@ -48,19 +48,16 @@
         </section>
     </div>
 
+
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
 </body>
 </html>
 <script>
-    $(document).ready(function() {
 
-
-
-    });
     $(function() {
-        countDown();
+
     })
     function leftRe(){
         window.history.go(-1);
@@ -69,14 +66,16 @@
         var tourl = "<%=path%>/login/login?to=login";
         window.location.href=tourl;
     }
+
+
     var wait = 5;
-    function countDown() {
-        if (wait == 0) {
+    var timer = setInterval(function(){
+        wait--;
+        $("#spanTime").html(wait+"s");
+        if(wait==0){
+            wait = 5;
             goLogin();
-        }else {
-            wait --;
-           $("#spanTime").html(wait+"s");
-            setTimeout(function(){countDown();},1000);
+            $("#spanTime").html("5s");
         }
-    }
+    },1000);
 </script>

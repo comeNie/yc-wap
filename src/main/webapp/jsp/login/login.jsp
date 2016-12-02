@@ -231,7 +231,13 @@
 <script>
 
     $(function(){
-
+        $("#phoneid").val("");
+        $("#psdid").val("");
+        $("#codeInput").val("");
+        $("#phone").val("");
+        $("#codeid").val("");
+        $("#psdids").val("");
+        $("#confimid").val("");
         if("${to}"=="login"){
             $("#loginDiv").show();
             $("#registerDiv").hide();
@@ -261,7 +267,8 @@
         } else {
             $("#psdLabel").css("display", "none");
         }
-        var t = /^[0-9a-zA-Z]{6,16}$/;
+//        var t = /^[0-9a-zA-Z]{6,16}$/;
+        var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
         if (!t.test(psd)) {
             $("#psdLabel").html("<spring:message code="safe.changepsd.alert_newLength"/>");
             $("#psdLabel").css("display", "block");
@@ -328,7 +335,7 @@
 
     }
     function leftBtn(){
-        window.history.go(-1);
+        window.history.back();
     }
     //验证码代码
     function createCode() {
@@ -420,7 +427,8 @@
         }else {
             $("#psdLabel1").css("display","none");
         }
-        var t = /^[0-9a-zA-Z]{6,16}$/;
+//        var t = /^[0-9a-zA-Z]{6,16}$/;
+        var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
         if (!t.test(psdid)){
             $("#psdLabel1").html("<spring:message code="safe.changepsd.alert_newLength"/>");
             $("#psdLabel1").css("display","block");

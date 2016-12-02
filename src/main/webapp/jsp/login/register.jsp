@@ -170,7 +170,8 @@
         }else {
             $("#psdLabel1").css("display","none");
         }
-        var t = /^[0-9a-zA-Z]{6,16}$/;
+//        var t = /^[0-9a-zA-Z]{6,16}$/;
+        var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
         if (!t.test(psdid)){
             $("#psdLabel1").html("<spring:message code="safe.changepsd.alert_newLength"/>");
             $("#psdLabel1").css("display","block");
