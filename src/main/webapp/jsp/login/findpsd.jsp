@@ -360,7 +360,6 @@
                         if(fiveWait==0){
                             fiveWait = 5;
                             goLogin();
-//                            $("#spanTime").html("5s");
                         }
                     },1000);
                     Loading.HideLoading();
@@ -392,6 +391,7 @@
             data: {
                 type: 6,
                 info:getPhone,
+                domain:"${domainname}"
             },
             success: function (data) {
                 if (data.status == 1) {
@@ -420,13 +420,11 @@
             $("#getnumber").removeAttr("disabled");
             $("#getnumber").attr("onclick", "getTestCode()");
             $("#getnumber").html("<spring:message code="login.register.getcode"/>");//改变按钮中value的值
-//            $("#getnumber").attr("class","");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
             var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';
             $("#getnumber").html(txtStr);
-//            $("#getnumber").attr("class","ash-cl");
             // 按钮里面的内容呈现倒计时状态
             $("#getnumber").attr("disabled", "block");
             $("#getnumber").attr("onclick", "javascript:void(0)");

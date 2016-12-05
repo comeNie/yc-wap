@@ -98,6 +98,8 @@ public class Constants {
         public static final String PhoneCodeModel = "3";
         //4：用户名密码
         public static final String UsernamePsdModel = "4";
+        //5:都行
+        public static final String ALLModel = "5";
 
     }
 

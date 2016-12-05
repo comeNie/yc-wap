@@ -1,9 +1,7 @@
 package com.yc.wap.safe;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.UUIDUtil;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
-import com.ai.slp.balance.api.accountmaintain.param.RegAccReq;
 import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
 import com.ai.yc.common.api.country.param.CountryRequest;
 import com.ai.yc.common.api.country.param.CountryResponse;
@@ -311,11 +309,13 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String code = request.getParameter("code");
         String phone = request.getParameter("phone");
-        String uid = request.getParameter("uid");
+        String uid = request.getParameter("uidd");
+        String domainvalue = request.getParameter("domainvalue");
         UcMembersEditMobileRequest res = new UcMembersEditMobileRequest();
         res.setTenantId(Constants.TENANTID);
         res.setOperationcode(code);
         res.setMobilephone(phone);
+        res.setDomainname(domainvalue);
         if (uid != null){
 
             Integer u = Integer.parseInt(uid);
@@ -331,6 +331,8 @@ public class SafeController extends BaseController {
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
                 session.setAttribute("mobilePhone",phone);
+                session.setAttribute("domainname",domainvalue);
+//                session.setAttribute("domainname");
             }else{
                 result.put("status","0");
                 result.put("msg",responseCode.getCodeMessage());
@@ -399,7 +401,15 @@ public class SafeController extends BaseController {
         res.setUserinfo(info);
         String domainvalue="";
         if (domainName != null){
-            domainvalue = request.getParameter("domainvalue");
+            CountryRequest countryRequest = new CountryRequest();
+            countryRequest.setTenantId(Constants.TENANTID);
+            CountryResponse countryResponse = iGnCountrySV.queryCountry(countryRequest);
+            List<CountryVo> lists = countryResponse.getResult();
+            for (CountryVo vo:lists) {
+                if (domainName.equals(vo.getCountryValue())){
+                    domainvalue = vo.getCountryCode();
+                }
+            }
             res.setDomainname(domainName);
             if (domainvalue.equals("86")){
                 domainvalue = "";

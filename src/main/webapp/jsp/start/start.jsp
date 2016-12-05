@@ -80,7 +80,7 @@
         </div>
         <div class="close-icon"><i class="icon iconfont" id="close-icon">&#xe611;</i></div>
     </div>
-    <div class="mask" id="eject-mask"></div>
+    <div class="mask" id="eject-mask1"></div>
 </div>
 <!--弹出框结束-->
 <div class="wrapper-big"><!--包含除底部外的所有层-->
@@ -190,6 +190,22 @@
 <!--底部-->
 </div>
 </div>
+<!--上传提示弹出框-->
+<div class="eject-big">
+    <div class="prompt" id="prompt">
+        <div class="prompt-title">请选择</div>
+        <div class="prompt-confirm">
+            <ul>
+                <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+            </ul>
+        </div>
+        <div class="prompt-confirm-btn">
+            <a class="btn btn-white" id="prompt-btn">确认</a>
+        </div>
+
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 
@@ -226,6 +242,30 @@
 
         Loading.HideLoading();
     });
+    function browserLanguage(){
+        var language = navigator.browserLanguage?(navigator.browserLanguage).toLowerCase():navigator.language;
+        language = language.substr(0,2)
+        switch (language){
+            case "zh":
+                chooseLan("zh","source-lan");
+                chooseLan("en","target-lan");
+                break;
+            case "en":
+                chooseLan("zh","source-lan");
+                chooseLan("en","target-lan");
+                break;
+            case "fr":
+                alert("fr");
+                break;
+            case "ru":
+
+                break;
+            case "pt":
+
+                break;
+        }
+
+    }
     $(document).ready(function () {
 //        监听输入的文本内容
         $("#chick-int").bind("input propertychange", function () {
@@ -403,20 +443,30 @@
         if (realLangeuage != source){
             switch (realLangeuage){
                 case "zh":
+//                    chooseLan("zh","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testZH"/>");
                     break;
                 case "en":
+//                    chooseLan("en","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testEN"/>");
                     break;
                 case "fr":
+//                    chooseLan("fr","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testFR"/>");
                     break;
                 case "ru":
+//                    chooseLan("ru","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testRU"/>");
                     break;
                 case "pt":
+//                    chooseLan("pt","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testPT"/>");
                     break;
+                default:
+                    $("#EjectTitle").html("系统不支持该语言");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
+                    return;
             }
             source = realLangeuage;
         }
@@ -504,12 +554,19 @@
 //        var lanText;
         var select = document.getElementById(name);
         if (lan != "" || lan != null){
+//            var a = 0;
             for(var i=0; i<select.options.length; i++){
+//                a++;
                 if(select.options[i].value == lan){
                     select.options[i].selected = true;
                     break;
                 }
             }
+//            if (a == 6){
+//                $("#EjectTitle").html("系统不支持该语言");
+//                $('#eject-mask').fadeIn(100);
+//                $('#prompt').slideDown(100);
+//            }
         }
     }
 
