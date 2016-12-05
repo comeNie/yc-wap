@@ -392,10 +392,19 @@ public class SafeController extends BaseController {
         String type = request.getParameter("type");
         String info = request.getParameter("info");
         String uid = request.getParameter("uid");
+        String domainName = request.getParameter("domain");
         UcMembersGetOperationcodeRequest res = new UcMembersGetOperationcodeRequest();
         res.setTenantId(Constants.TENANTID);
         res.setOperationtype(type);
         res.setUserinfo(info);
+        String domainvalue="";
+        if (domainName != null){
+            domainvalue = request.getParameter("domainvalue");
+            res.setDomainname(domainName);
+            if (domainvalue.equals("86")){
+                domainvalue = "";
+            }
+        }
         if (uid != null){
             Integer u = Integer.parseInt(uid);
             res.setUid(u);
@@ -434,7 +443,8 @@ public class SafeController extends BaseController {
                         result.put("msg","验证码发送失败");
                     }
                 }else {
-                    if(!SmsSenderUtil.sendMessage(info,"验证码是:"+vo.getOperationcode())){
+
+                    if(!SmsSenderUtil.sendMessage(domainvalue+info,"验证码是:"+vo.getOperationcode())){
                         result.put("status","0");
                         result.put("msg","验证码发送失败");
                     }

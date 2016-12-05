@@ -39,7 +39,9 @@ public class LoginController extends BaseController {
     public String login() {
         MsgBean result = new MsgBean();
         String to = request.getParameter("to");
+        String success = request.getParameter("success");
         request.setAttribute("to",to);
+        request.setAttribute("success",success);
         return "login/login";
     }
 
@@ -149,6 +151,7 @@ public class LoginController extends BaseController {
         String password = request.getParameter("newpw");
         String personUid = request.getParameter("uid");
         String code = request.getParameter("code");
+
         password = MD5Util.md5(password);
         Date date = new Date();
         String createTime = date.toString();

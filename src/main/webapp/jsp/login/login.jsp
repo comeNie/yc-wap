@@ -336,7 +336,12 @@
 
     }
     function leftBtn(){
-        window.history.back(-1);
+        if ("${success}" == "success"){
+            window.history.go(-3);
+        }else {
+            window.history.go(-1);
+        }
+
     }
     //验证码代码
     function createCode() {
@@ -525,11 +530,12 @@
         }else {
             $("#phoneLabel1").css("display","none");
         }
+
         Loading.ShowLoading();
-        getTestCode(phone);
+        getTestCode(phone,selectValue,code);
     }
     //    发送验证码
-    function getTestCode(phone) {
+    function getTestCode(phone,selectValue,domainvalue) {
 
         $.ajax({
             async: true,
@@ -540,6 +546,8 @@
             data: {
                 type: 1,
                 info:phone,
+                domain:selectValue,
+                domainvalue:domainvalue,
             },
             success: function (data) {
                 if (data.status == 1) {
