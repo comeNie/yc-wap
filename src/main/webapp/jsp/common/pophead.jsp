@@ -17,6 +17,7 @@
     request.setAttribute("index", index);
     request.setAttribute("show", show);
     request.setAttribute("isLogin", session.getAttribute("isLogin"));
+
     response.setHeader("Pragma","No-cache");
     response.setHeader("Cache-Control","no-cache");
     response.setDateHeader("Expires", 0);
@@ -78,6 +79,11 @@
     });
 
     function onLogout() {
+        window.onload=function()
+        {
+            window.history.go(1);
+        };
+
         $.ajax({
             async: true,
             type: "POST",
@@ -88,7 +94,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     var ToUrl = "<%=path%>/";
-                    window.location.href = ToUrl;
+                    window.location.href = ToUrl + "?bindLogout=1";
                 }
             },
             error: function (data) {

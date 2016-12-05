@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Map;
 
 /**
@@ -188,6 +189,10 @@ public class LoginController extends BaseController {
     public Object Logout(HttpServletResponse response) {
         log.info("-----Logout-----");
         MsgBean result = new MsgBean();
+        Enumeration em = request.getSession().getAttributeNames();
+        while(em.hasMoreElements()){
+            request.getSession().removeAttribute(em.nextElement().toString());
+        }
         session.invalidate();
         return result.returnMsg();
     }
