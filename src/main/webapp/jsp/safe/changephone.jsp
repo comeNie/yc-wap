@@ -151,10 +151,10 @@
             $("#phonetips").css("display","none");
         }
         Loading.ShowLoading();
-        checkPhone(code,phone);
+        checkPhone(code,phone,selectValue);
 
     }
-    function checkPhone(code,phone){
+    function checkPhone(code,phone,domainvalue){
         $.ajax({
             async: true,
             type: "POST",
@@ -164,7 +164,8 @@
             data: {
                 uid: "${UID}",
                 code:code,
-                phone:phone
+                phone:phone,
+                domainvalue:domainvalue,
             },
             success: function (data) {
                 if (data.status == 1) {
@@ -208,10 +209,10 @@
             $("#phoneLabel").css("display","none");
         }
         Loading.ShowLoading();
-        getTestCode(phone);
+        getTestCode(phone,selectValue);
     }
 //    发送验证码
-    function getTestCode(phone) {
+    function getTestCode(phone,selectValue) {
         $.ajax({
             async: true,
             type: "POST",
@@ -221,7 +222,8 @@
             data: {
                 type: 2,
                 info:phone,
-                uid:"${UID}"
+                uid:"${UID}",
+                domain:selectValue,
             },
             success: function (data) {
                 if (data.status == 1) {

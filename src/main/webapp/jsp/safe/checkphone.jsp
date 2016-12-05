@@ -82,7 +82,7 @@
         $("#getnumber").removeAttr("disabled");
         $("#getnumber").attr("onclick", "getnumberonclick()");
         $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
-        
+
         var s = "${jump}";
         if (s == "mail") {
             $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckMail"/>");
@@ -185,7 +185,8 @@
             data: {
                 type: type,
                 info:"${phone}",
-                uid:${UID}
+                uid:${UID},
+                domain:"${domainname}"
             },
             success: function (data) {
                 if (data.status == 1) {

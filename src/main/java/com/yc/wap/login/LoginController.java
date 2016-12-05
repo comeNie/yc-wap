@@ -86,18 +86,7 @@ public class LoginController extends BaseController {
         password = MD5Util.md5(password);
         res.setPassword(password);
         res.setUsername(username);
-        String loginmode;
-        boolean isEmail = RegexUtils.checkIsEmail(username);
-        boolean isPhone = RegexUtils.checkIsPhone(username);
-        if (isEmail) {
-            loginmode = Constants.LoginModel.MailModel;
-        } else if (isPhone) {
-            loginmode = Constants.LoginModel.PhonePsdModel;
-        } else {
-            loginmode = Constants.LoginModel.UsernamePsdModel;
-        }
-        log.info(loginmode);
-        res.setLoginmode(loginmode);
+        res.setLoginmode(Constants.LoginModel.ALLModel);
         try {
             UcMembersLoginResponse resp = iUcMembersSV.ucLoginMember(res);
 
@@ -114,29 +103,17 @@ public class LoginController extends BaseController {
                 session.setAttribute("username",m.get("username"));
                 log.info("passHav:"+ m.get("passHav"));
                 session.setAttribute("password",m.get("passHav"));
+                session.setAttribute("domainname",m.get("domainname"));
                 session.setAttribute("mobilePhone",m.get("mobilephone"));
                 log.info(vo);
             }else {
                 result.put("status","0");
-                if (isEmail){
-                    result.put("msg","邮箱或密码错误");
-                }else if (isPhone){
-                    result.put("msg","手机号或密码错误");
-                }else {
-                    result.put("msg","用户名或密码错误");
-                }
+                result.put("msg",code.getCodeMessage());
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
-
             result.put("status","0");
-            if (isEmail){
-                result.put("msg","邮箱或密码错误");
-            }else if (isPhone){
-                result.put("msg","手机号或密码错误");
-            }else {
-                result.put("msg","用户名或密码错误");
-            }
+            result.put("msg","登录失败");
         }
         return result.returnMsg();
     }

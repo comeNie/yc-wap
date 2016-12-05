@@ -532,10 +532,10 @@
         }
 
         Loading.ShowLoading();
-        getTestCode(phone,selectValue,code);
+        getTestCode(phone,selectValue);
     }
     //    发送验证码
-    function getTestCode(phone,selectValue,domainvalue) {
+    function getTestCode(phone,selectValue) {
 
         $.ajax({
             async: true,
@@ -547,7 +547,6 @@
                 type: 1,
                 info:phone,
                 domain:selectValue,
-                domainvalue:domainvalue,
             },
             success: function (data) {
                 if (data.status == 1) {
