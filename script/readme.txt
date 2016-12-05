@@ -29,8 +29,8 @@ docker run -d --name yc-wap-v1.0  -p 14115:8080  \
 -e "REQUEST_KEY=7igfgyfwn2jlyjs3bdns6lhysnzy5y7l" \
 -e "ACTION_URL=http://10.19.13.24:14110/opt-pay/pay/gotoPayByOrg" \
 -e "APP_ACTION_URL=http://10.19.13.24:14110/opt-pay/pay/gotoPayByOrg" \
--e "NOTIFY_URL=http://10.1.52.75:8080/pay/payResult" \
--e "RETURN_URL=http://10.1.52.75:8080/pay/payResultView" \
+-e "NOTIFY_URL=http://10.19.13.26:14115/pay/payResult" \
+-e "RETURN_URL=http://10.19.13.26:14115/pay/payResultView" \
 -e "HCICLOUD_URL=http://test.api.hcicloud.com:8880/tts/SynthText" \
 -e "HCICLOUD_APPKEY=cd5d5472" \
 -e "HCICLOUD_DEVKEY=2f4f930a5acae2e86f5c313cccefb856" \
