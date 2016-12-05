@@ -60,11 +60,27 @@
         </div>
         <!--转换语言-->
         <section class="testing">
+            <%--<p>--%>
+            <%--<select id="dual" class="select testing-select-big">--%>
+            <%--<c:forEach items="${DualList}" var="pair">--%>
+            <%--<option dualId="${pair.duadId}" DualValEn="${pair.sourceEn} → ${pair.targetEn}">${pair.sourceCn} → ${pair.targetCn}</option>--%>
+            <%--</c:forEach>--%>
+            <%--</select>--%>
+            <%--<span>|</span>--%>
+            <%--</p>--%>
+
             <p>
-                <select id="dual" class="select testing-select-big">
-                    <c:forEach items="${DualList}" var="pair">
-                        <option dualId="${pair.duadId}" DualValEn="${pair.sourceEn} → ${pair.targetEn}">${pair.sourceCn} → ${pair.targetCn}</option>
+                <select id="dualSource" class="select testing-select" onchange="DualChange()">
+                    <c:forEach items="${DualMap}" var="pair">
+                        <option>${pair.key}</option>
                     </c:forEach>
+                </select>
+                <span>|</span>
+            </p>
+            <p class="test-icon"><i class="icon iconfont">&#xe621;</i></p>
+            <p>
+                <select id="dualTarget" class="select testing-select">
+
                 </select>
                 <span>|</span>
             </p>
@@ -157,6 +173,7 @@
     $(function () {
         LvChange();
         ServChange();
+        DualChange();
     });
 
     $(document).ready(function () {
@@ -239,15 +256,30 @@
         }
     }
 
+    function DualChange() {
+        var key = $("#dualSource").val();
+        var Map = ${DualJson};
+
+        var obj = document.getElementById("dualTarget");
+        obj.options.length = 0;
+        for (var k in Map) {
+            if (k == key) {
+                for (var v in Map[k]) {
+                    obj.add(new Option(v, Map[k][v]));
+                }
+            }
+        }
+    }
+
     function toLicense() {
         window.location.href = "<%=path%>/common/agreement"
     }
 
     function saveContent(Content, ContentLength) {
         //语言对
-        var DualId = $("#dual").find("option:selected").attr("dualId");
-        var DualValEn = $("#dual").find("option:selected").attr("DualValEn");
-        var DualVal = $("#dual").val();
+        var DualId = $("#dualTarget").val();
+        var DualValEn = $("#dualSource").val() + " → " + $("#dualTarget").find("option:selected").text();
+        var DualVal = $("#dualSource").val() + " → " + $("#dualTarget").find("option:selected").text();
         //用途
         var PurposeId = $("#purpose").find("option:selected").attr("purposeId");
         var PurposeVal = $("#purpose").val();
@@ -318,7 +350,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     var tourl = "<%=path%>/login/login?to=login";
-                    window.location.href=tourl;
+                    window.location.href = tourl;
                 }
             },
             error: function (data) {
