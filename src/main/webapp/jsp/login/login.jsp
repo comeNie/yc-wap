@@ -231,13 +231,7 @@
 <script>
 
     $(function(){
-        $("#phoneid").val("");
-        $("#psdid").val("");
-        $("#codeInput").val("");
-        $("#phone").val("");
-        $("#codeid").val("");
-        $("#psdids").val("");
-        $("#confimid").val("");
+        clearText();
         $("#phone").attr("disabled",false);
         if("${to}"=="login"){
             $("#loginDiv").show();
@@ -333,7 +327,7 @@
     function registJump() {
         $("#loginDiv").hide();
         $("#registerDiv").show();
-
+        clearText();
     }
     function leftBtn(){
         if ("${success}" == "success"){
@@ -342,6 +336,15 @@
             window.history.go(-1);
         }
 
+    }
+    function clearText(){
+        $("#phoneid").val("");
+        $("#psdid").val("");
+        $("#codeInput").val("");
+        $("#phone").val("");
+        $("#codeid").val("");
+        $("#psdids").val("");
+        $("#confimid").val("");
     }
     //验证码代码
     function createCode() {
@@ -386,6 +389,7 @@
         if("${to}"=="login"){
             $("#loginDiv").show();
             $("#registerDiv").hide();
+            clearText();
         }else {
             window.history.go(-1);
         }
@@ -393,6 +397,7 @@
     function jumpLogin() {
         $("#loginDiv").show();
         $("#registerDiv").hide();
+        clearText();
     }
     function confirmAction() {
         var phone = $("#phone").val();

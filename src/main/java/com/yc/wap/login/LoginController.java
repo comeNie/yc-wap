@@ -131,8 +131,8 @@ public class LoginController extends BaseController {
         String code = request.getParameter("code");
 
         password = MD5Util.md5(password);
-        Date date = new Date();
-        String createTime = date.toString();
+//        Date date = new Date();
+//        String createTime = date.toString();
 
         InsertYCUserRequest res = new InsertYCUserRequest();
 //        res.setTenantId(Constants.TenantID);
