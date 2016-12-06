@@ -60,6 +60,7 @@ public class WrittenController extends BaseController {
 
         JSONArray DualArray = JSONArray.fromObject(DualList);
         Map<String, Map<String, String>> DualMap = new HashMap<String, Map<String, String>>();
+        Map<String, Map<String, String>> DualMapEn = new HashMap<String, Map<String, String>>();
         Map<String, String> TargetMap = new HashMap<String, String>();
 
         String SourceFlag = "";
@@ -77,7 +78,7 @@ public class WrittenController extends BaseController {
                     TargetMap.clear();
                 }
 
-                for(String key : DualMap.keySet()) {
+                for (String key : DualMap.keySet()) {
                     if (sourceCn.equals(key)) {
                         TargetMap = DualMap.get(key);
                     }
@@ -87,16 +88,49 @@ public class WrittenController extends BaseController {
                 TargetMap.put(targetCn, Id);
             }
         }
-        DualMap.put(SourceFlag, TargetMap);
-
+        DualMap.put(SourceFlag, new HashMap<String, String>(TargetMap));
         JSONObject DualJson = JSONObject.fromObject(DualMap);
+        TargetMap.clear();
+        SourceFlag = "";
+
+        for (Object k : DualArray) {
+            JSONObject v = JSONObject.fromObject(k);
+            String sourceEn = v.getString("sourceEn");
+            String targetEn = v.getString("targetEn");
+            String Id = v.getString("duadId");
+
+            if (SourceFlag.equals(sourceEn)) {
+                TargetMap.put(targetEn, Id);
+            } else {
+                if (!TargetMap.isEmpty()) {
+                    DualMapEn.put(SourceFlag, new HashMap<String, String>(TargetMap));
+                    TargetMap.clear();
+                }
+
+                for (String key : DualMapEn.keySet()) {
+                    if (sourceEn.equals(key)) {
+                        TargetMap = DualMapEn.get(key);
+                    }
+                }
+
+                SourceFlag = sourceEn;
+                TargetMap.put(targetEn, Id);
+            }
+        }
+        DualMapEn.put(SourceFlag, new HashMap<String, String>(TargetMap));
+        JSONObject DualJsonEn = JSONObject.fromObject(DualMapEn);
+
         log.info("-------DualMap&JSON-------");
         log.info(DualMap);
         log.info(DualJson);
+        log.info(DualMapEn);
+        log.info(DualJsonEn);
         log.info("-------DualMap&JSON-------");
 
         request.setAttribute("DualMap", DualMap);
         request.setAttribute("DualJson", DualJson);
+        request.setAttribute("DualMapEn", DualMapEn);
+        request.setAttribute("DualJsonEn", DualJsonEn);
         request.setAttribute("DualList", DualList);
         request.setAttribute("PurposeList", PurposeList);
         request.setAttribute("DomainList", DomainList);

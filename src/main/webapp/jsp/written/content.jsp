@@ -41,7 +41,7 @@
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a href="#" id="prompt-btn">确认</a>
+                <a class="btn btn-white" id="prompt-btn">确认</a>
             </div>
 
         </div>
@@ -278,8 +278,30 @@
     function saveContent(Content, ContentLength) {
         //语言对
         var DualId = $("#dualTarget").val();
-        var DualValEn = $("#dualSource").val() + " → " + $("#dualTarget").find("option:selected").text();
-        var DualVal = $("#dualSource").val() + " → " + $("#dualTarget").find("option:selected").text();
+        var targetCn = "";
+        var targetEn = "";
+        var sourceCn = "";
+        var sourceEn = "";
+        var DualJson = ${DualJson};
+        var DualJsonEn = ${DualJsonEn};
+        for (var k in DualJson) {
+            for (var v in DualJson[k]) {
+                if (DualId == DualJson[k][v]) {
+                    sourceCn = k;
+                    targetCn = v;
+                }
+            }
+        }
+        for (var o in DualJsonEn) {
+            for (var p in DualJsonEn[o]) {
+                if (DualId == DualJsonEn[o][p]) {
+                    sourceEn = o;
+                    targetEn = p;
+                }
+            }
+        }
+        var DualValCn = sourceCn + " → " + targetCn;
+        var DualValEn = sourceEn + " → " + targetEn;
         //用途
         var PurposeId = $("#purpose").find("option:selected").attr("purposeId");
         var PurposeVal = $("#purpose").val();
@@ -305,7 +327,7 @@
                 Content: Content,
                 ContentLength: ContentLength,
                 DualId: DualId,
-                DualVal: DualVal,
+                DualVal: DualValCn,
                 DualValEn: DualValEn,
                 PurposeId: PurposeId,
                 PurposeVal: PurposeVal,
