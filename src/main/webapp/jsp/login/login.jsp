@@ -345,6 +345,15 @@
         $("#codeid").val("");
         $("#psdids").val("");
         $("#confimid").val("");
+        $("#phoneLabel").css("display", "none");
+        $("#phoneLabel1").css("display", "none");
+        $("#codeLabel1").css("display","none");
+        $("#psdLabel1").css("display","none");
+        $("#confimPsd").css("display","none");
+        $("#agreeLabel").css("display", "none");
+        $("#psdLabel").css("display", "none");
+        $("#codeLabel").css("display", "none");
+        $("#phone").attr("disabled",false);
     }
     //验证码代码
     function createCode() {
@@ -390,6 +399,7 @@
             $("#loginDiv").show();
             $("#registerDiv").hide();
             clearText();
+            wait = 0;
         }else {
             window.history.go(-1);
         }
@@ -398,6 +408,7 @@
         $("#loginDiv").show();
         $("#registerDiv").hide();
         clearText();
+        wait = 0;
     }
     function confirmAction() {
         var phone = $("#phone").val();
