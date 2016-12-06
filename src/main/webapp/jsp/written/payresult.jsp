@@ -74,6 +74,9 @@
     });
 
     function toDetail(OrderId) {
+        if (OrderId.substring(0, 3) == "901") {
+            return;
+        }
         var ToUrl = "<%=path%>/order/OrderDetail";
         window.location.href = ToUrl + "?OrderId=" + OrderId;
     }
