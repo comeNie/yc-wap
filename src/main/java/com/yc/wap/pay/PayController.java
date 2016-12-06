@@ -83,7 +83,7 @@ public class PayController extends BaseController {
         map.put("requestSource", "2");
         map.put("orderAmount", orderAmount);
         map.put("currencyUnit", currencyUnit);
-        map.put("subject", "orderPay");
+        map.put("subject", orderId); //订单名字
         map.put("payOrgCode", payOrgCode);
         map.put("infoMd5", infoMd5);
 

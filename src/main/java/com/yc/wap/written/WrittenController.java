@@ -19,7 +19,7 @@ import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
-import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,9 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 
 /**
@@ -60,9 +58,49 @@ public class WrittenController extends BaseController {
         log.info("GetPurposeListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(PurposeList));
         log.info("GetDomainListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(DomainList));
 
+        JSONArray DualArray = JSONArray.fromObject(DualList);
+        Map<String, Map<String, String>> DualMap = new HashMap<String, Map<String, String>>();
+        Map<String, String> TargetMap = new HashMap<String, String>();
+
+        String SourceFlag = "";
+        for (Object k : DualArray) {
+            JSONObject v = JSONObject.fromObject(k);
+            String sourceCn = v.getString("sourceCn");
+            String targetCn = v.getString("targetCn");
+            String Id = v.getString("duadId");
+
+            if (SourceFlag.equals(sourceCn)) {
+                TargetMap.put(targetCn, Id);
+            } else {
+                if (!TargetMap.isEmpty()) {
+                    DualMap.put(SourceFlag, new HashMap<String, String>(TargetMap));
+                    TargetMap.clear();
+                }
+
+                for(String key : DualMap.keySet()) {
+                    if (sourceCn.equals(key)) {
+                        TargetMap = DualMap.get(key);
+                    }
+                }
+
+                SourceFlag = sourceCn;
+                TargetMap.put(targetCn, Id);
+            }
+        }
+        DualMap.put(SourceFlag, TargetMap);
+
+        JSONObject DualJson = JSONObject.fromObject(DualMap);
+        log.info("-------DualMap&JSON-------");
+        log.info(DualMap);
+        log.info(DualJson);
+        log.info("-------DualMap&JSON-------");
+
+        request.setAttribute("DualMap", DualMap);
+        request.setAttribute("DualJson", DualJson);
         request.setAttribute("DualList", DualList);
         request.setAttribute("PurposeList", PurposeList);
         request.setAttribute("DomainList", DomainList);
+
         return "written/content";
     }
 
