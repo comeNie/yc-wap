@@ -141,7 +141,7 @@
         </section>
         <!--翻译内容-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" maxlength="2000"></textarea>
+            <textarea class="textarea textarea-large" name="chick-int" id="chick-int"></textarea>
             <a hrel="javascript:void(0)" ><i class="icon iconfont" id="clear">&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
@@ -273,6 +273,9 @@
             if (landetec == "" || landetec == null) {
                 return;
             }
+//            var countLength = count(escape(landetec));
+//            if (countLength > 2000){
+//            }
             contentDetection(landetec);
         });
 
@@ -472,6 +475,12 @@
         }
         if(realLangeuage == target){
             $("#result-text").html(textStr);
+            $("#results").show();
+            $("#chick-btn").hide();
+
+            $("#translateAid").show();
+            $("#translateGif").hide();
+            IsTranslated = true;
             return;
         }
         $("#translateAid").hide();
