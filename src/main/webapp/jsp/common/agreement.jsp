@@ -13,6 +13,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     String path = request.getContextPath();
+    request.setAttribute("Flag",request.getParameter("Flag"));
 %>
 
 <html>
@@ -134,8 +135,13 @@
 </html>
 <script>
     function retLeft(){
-        window.history.go(-1);
-        <%--var tourl = "<%=path%>/";--%>
-        <%--window.location.href=tourl;--%>
+        if ("${Flag}" == "/login/login"){
+            var href = "<%=path%>/login/login?to=register";
+            window.location.href = href;
+            location.replace("<%=path%>/login/login?to=register");
+        }else{
+
+            window.history.go(-1);
+        }
     }
 </script>

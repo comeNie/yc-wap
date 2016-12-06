@@ -400,7 +400,12 @@
             $("#registerDiv").hide();
             clearText();
             wait = 0;
-        }else {
+        }
+//        else if(document.referrer.indexOf("agreement")){
+//            console.log(window.history);
+//            window.history.go(-2);
+//        }
+        else {
             window.history.go(-1);
         }
     }
@@ -607,7 +612,8 @@
         }
     }
     function look() {
-        var href = "<%=path%>/common/agreement";
+        var u = window.location.pathname;
+        var href = "<%=path%>/common/agreement?Flag="+u;
         window.location.href = href;
     }
 </script>
