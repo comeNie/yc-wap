@@ -309,7 +309,7 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String code = request.getParameter("code");
         String phone = request.getParameter("phone");
-        String uid = request.getParameter("uidd");
+        String uid = request.getParameter("uid");
         String domainvalue = request.getParameter("domainvalue");
         UcMembersEditMobileRequest res = new UcMembersEditMobileRequest();
         res.setTenantId(Constants.TENANTID);
@@ -332,7 +332,6 @@ public class SafeController extends BaseController {
                 log.info(vo);
                 session.setAttribute("mobilePhone",phone);
                 session.setAttribute("domainname",domainvalue);
-//                session.setAttribute("domainname");
             }else{
                 result.put("status","0");
                 result.put("msg",responseCode.getCodeMessage());
@@ -454,7 +453,7 @@ public class SafeController extends BaseController {
                     }
                 }else {
 
-                    if(!SmsSenderUtil.sendMessage(domainvalue+info,"验证码是:"+vo.getOperationcode())){
+                    if(!SmsSenderUtil.sendMessage("+"+domainvalue+info,"验证码是:"+vo.getOperationcode())){
                         result.put("status","0");
                         result.put("msg","验证码发送失败");
                     }

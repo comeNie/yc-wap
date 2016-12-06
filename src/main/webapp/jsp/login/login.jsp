@@ -231,13 +231,7 @@
 <script>
 
     $(function(){
-        $("#phoneid").val("");
-        $("#psdid").val("");
-        $("#codeInput").val("");
-        $("#phone").val("");
-        $("#codeid").val("");
-        $("#psdids").val("");
-        $("#confimid").val("");
+        clearText();
         $("#phone").attr("disabled",false);
         if("${to}"=="login"){
             $("#loginDiv").show();
@@ -333,7 +327,7 @@
     function registJump() {
         $("#loginDiv").hide();
         $("#registerDiv").show();
-
+        clearText();
     }
     function leftBtn(){
         if ("${success}" == "success"){
@@ -342,6 +336,24 @@
             window.history.go(-1);
         }
 
+    }
+    function clearText(){
+        $("#phoneid").val("");
+        $("#psdid").val("");
+        $("#codeInput").val("");
+        $("#phone").val("");
+        $("#codeid").val("");
+        $("#psdids").val("");
+        $("#confimid").val("");
+        $("#phoneLabel").css("display", "none");
+        $("#phoneLabel1").css("display", "none");
+        $("#codeLabel1").css("display","none");
+        $("#psdLabel1").css("display","none");
+        $("#confimPsd").css("display","none");
+        $("#agreeLabel").css("display", "none");
+        $("#psdLabel").css("display", "none");
+        $("#codeLabel").css("display", "none");
+        $("#phone").attr("disabled",false);
     }
     //验证码代码
     function createCode() {
@@ -386,6 +398,8 @@
         if("${to}"=="login"){
             $("#loginDiv").show();
             $("#registerDiv").hide();
+            clearText();
+            wait = 0;
         }else {
             window.history.go(-1);
         }
@@ -393,6 +407,8 @@
     function jumpLogin() {
         $("#loginDiv").show();
         $("#registerDiv").hide();
+        clearText();
+        wait = 0;
     }
     function confirmAction() {
         var phone = $("#phone").val();
