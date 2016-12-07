@@ -84,10 +84,10 @@
 </div>
 <!--弹出框结束-->
 <div class="wrapper-big"><!--包含除底部外的所有层-->
-    <section class="notice" style="display: none">
-        <p>公告信息等等等等</p>
-        <label><i class="icon iconfont">&#xe618;</i></label>
-    </section>
+    <%--<section class="notice" style="display: none">--%>
+        <%--<p>公告信息等等等等</p>--%>
+        <%--<label><i class="icon iconfont">&#xe618;</i></label>--%>
+    <%--</section>--%>
     <%--<nav class="wap-nav">--%>
     <%--<ul>--%>
     <%--<li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>--%>
@@ -182,32 +182,33 @@
 
         </section>
         <!--banner-->
-        <section class="banner"><a href="#" id="banner1"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
-        <section class="banner"><a href="#"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
+        <section class="banner"><a href="javascript:void (0)" id="banner1"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
+        <section class="banner"><a href="javascript:void (0)"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
 
     </section>
-</div>
-<!--底部-->
-</div>
-</div>
-<!--上传提示弹出框-->
-<div class="eject-big">
-    <div class="prompt" id="prompt">
-        <div class="prompt-title">请选择</div>
-        <div class="prompt-confirm">
-            <ul>
-                <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
-            </ul>
-        </div>
-        <div class="prompt-confirm-btn">
-            <a class="btn btn-white" id="prompt-btn">确认</a>
-        </div>
+    <!--上传提示弹出框-->
+    <div class="eject-big">
+        <div class="prompt" id="prompt">
+            <div class="prompt-title">请选择</div>
+            <div class="prompt-confirm">
+                <ul>
+                    <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+                </ul>
+            </div>
+            <div class="prompt-confirm-btn">
+                <a class="btn btn-white" id="prompt-btn">确认</a>
+            </div>
 
+        </div>
+        <div class="mask" id="eject-mask"></div>
     </div>
-    <div class="mask" id="eject-mask"></div>
+
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </div>
+
+<!--底部-->
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
-<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
+
 
 </body>
 </html>
@@ -242,30 +243,6 @@
 
         Loading.HideLoading();
     });
-    function browserLanguage(){
-        var language = navigator.browserLanguage?(navigator.browserLanguage).toLowerCase():navigator.language;
-        language = language.substr(0,2)
-        switch (language){
-            case "zh":
-                chooseLan("zh","source-lan");
-                chooseLan("en","target-lan");
-                break;
-            case "en":
-                chooseLan("zh","source-lan");
-                chooseLan("en","target-lan");
-                break;
-            case "fr":
-                alert("fr");
-                break;
-            case "ru":
-
-                break;
-            case "pt":
-
-                break;
-        }
-
-    }
     $(document).ready(function () {
 //        监听输入的文本内容
         $("#chick-int").bind("input propertychange", function () {
@@ -273,10 +250,12 @@
             if (landetec == "" || landetec == null) {
                 return;
             }
-//            var countLength = count(escape(landetec));
-//            if (countLength > 2000){
-//            }
             contentDetection(landetec);
+            if(!checkLength(landetec)){
+                var tex = landetec.substr(0,2000);
+                $("#chick-int").val(tex);
+                return;
+            }
         });
 
 //        翻译源内容文本框获取焦点
@@ -287,6 +266,9 @@
         });
         //清除
         $("#clear").click(function(){
+            if ($("#chick-int").val() == ""){
+                location.reload();
+            }
             if (IsTranslated == true) {
                 $("#results").hide()
                 $("#btn-translate").show();
@@ -302,15 +284,34 @@
             window.location.href = "<%=path%>/written";
         });
 
+        //源语言对事件
         $("#target-lan").bind("change",function(){
             goTranslate();
         });
-
+        //对应语言对事件
         $("#source-lan").bind("change",function(){
             goTranslate();
         });
 
     });
+    //检测文本长度
+    function checkLength(landetec) {
+        if (landetec.length > 2000){
+            var t = landetec.length-2000;
+            $("#EjectTitle").html("抱歉，最多支持输入2000个字符，您已超过"+t+"字符。");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+
+            setTimeout(function(){
+
+                $('#eject-mask').fadeOut(200);
+                $('#prompt').slideUp(200);
+            },5000);
+            return false;
+        }else {
+            return true;
+        }
+    }
     //播放声音
     function playAudio(){
 
@@ -439,30 +440,27 @@
             $('#results').hide();
             return;
         }
-
+        if(!checkLength(textStr)){
+            return;
+        }
         var source = $("#source-lan").val();
         var target = $("#target-lan").val();
         $("#tipLabel").html("");
         if (realLangeuage != source){
             switch (realLangeuage){
                 case "zh":
-//                    chooseLan("zh","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testZH"/>");
                     break;
                 case "en":
-//                    chooseLan("en","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testEN"/>");
                     break;
                 case "fr":
-//                    chooseLan("fr","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testFR"/>");
                     break;
                 case "ru":
-//                    chooseLan("ru","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testRU"/>");
                     break;
                 case "pt":
-//                    chooseLan("pt","source-lan");
                     $("#tipLabel").html("<spring:message code="start.testPT"/>");
                     break;
                 default:
@@ -560,22 +558,14 @@
     }
     //自动选择语言
     function chooseLan(lan,name) {
-//        var lanText;
         var select = document.getElementById(name);
         if (lan != "" || lan != null){
-//            var a = 0;
             for(var i=0; i<select.options.length; i++){
-//                a++;
                 if(select.options[i].value == lan){
                     select.options[i].selected = true;
                     break;
                 }
             }
-//            if (a == 6){
-//                $("#EjectTitle").html("系统不支持该语言");
-//                $('#eject-mask').fadeIn(100);
-//                $('#prompt').slideDown(100);
-//            }
         }
     }
 

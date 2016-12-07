@@ -18,7 +18,7 @@ html,body {height:100%;position:relative;}
 img{vertical-align:middle}
 
 
-.select,.btn,.input,.textarea{outline:none;resize:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+.select,.btn,.input,.textarea,.p{outline:none;resize:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}
 .checkbox{width:0.5rem;height:0.5rem;margin-right:0.2rem;}
 /**按钮**/
 .btn{cursor: pointer;}
@@ -35,4 +35,4 @@ img{vertical-align:middle}
 .input-large:hover{border:1px solid #1780e3}
 .input-yzm{width:10rem;height:1.6rem;background:#fff;color:#666;font-size:0.51rem;padding:0 0.42rem 0 0;line-height:1.6rem;}
 .int-rech{width:9.04rem;height:1.34rem;border:1px solid #c4c4c4;background:#fff;border-radius:5px;padding:0 0.42rem;color:#666;font-size:0.51rem}
-.int-passwod{width:6.5rem;height:1.7rem;border:1px solid #c4c4c4;border-radius:5px;font-size:0.51rem;color:#666;padding:0 0.42rem;}
+.int-passwod{width:6.5rem;height:1.5rem;border:1px solid #c4c4c4;border-radius:5px;font-size:0.51rem;color:#666;padding:0 0.42rem;}

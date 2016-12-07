@@ -24,7 +24,7 @@
 .prompt-payment-btn a{width:4.92rem;text-align:center;color:#1780e3;font-size:0.51rem;float:left;line-height:1.28rem;border-right:1px solid #c7c7c7}
 .prompt-payment-btn .none-border{border-right:none;}
 /**提示弹出框**/
-.prompt{width:8.64rem;min-height:5.33rem; background:#fff;position:fixed;top:50%;left:50%;margin-top:-2.66rem;margin-left:-4.32rem;z-index:999;border-radius:5px;display:none;}
+.prompt{width:8.64rem;min-height:5rem; background:#fff;position:fixed;top:50%;left:50%;margin-top:-2.66rem;margin-left:-4.32rem;z-index:999;border-radius:5px;display:none;}
 .prompt-title{ width:100%; float:left;height:1.28rem;color:#999;font-size:0.42rem;text-align:center;line-height:1.28rem;border-bottom:1px solid #c4c4c4;}
 .prompt-confirm{ width:100%;float:left;padding:0.67rem 0;}
 .prompt-confirm ul{ width:100%;float:left;padding:0 0.8rem; }
@@ -95,6 +95,7 @@
 .choice-list ul li .a-link{color:#999}
 .wap-btn{width:100%;}
 .choice-list ul li img{width:2.66rem;height:0.76rem;}
+.choice-list ul li .radio-img{width:0.5rem;height:0.5rem;}
 .choice-list ul li .ml-a{margin-left:1rem;}
 /**联系方式**/
 .add-contact{width:100%;float:left;height:2.92rem;margin-top:0.42rem;background:url(../../images/add-contact-bj.png) no-repeat;background-size:100%;}
@@ -180,6 +181,8 @@
 .confirm-list ul .zhifb img{width:2.26rem;height:0.72rem;}
 .confirm-list ul .unionpay{margin-left:1rem;}
 .confirm-list ul .unionpay img{width:2.9rem;height:0.74rem;}
+.confirm-list ul .zhifb .radio-img,.confirm-list ul .unionpay .radio-img{width:0.5rem;height:0.5rem;margin-right:6px;}
+.confirm-list ul .radio-img{width:0.5rem;height:0.5rem;margin-right:6px;}
 .confirm-list ul .word-ash{color:#888}
 .confirm-list ul .right{float:right}
 .confirm-list ul .right a{color:#1780e3}
@@ -366,3 +369,16 @@
 .loading-wrapper .img3{margin-top:4rem;color:#999}
 .loading-bj{}
 #sel{background-color:#e8e8e8;}
+/**优惠卷**/
+.account-tab{width:100%;float:left;height:2.04rem;border-bottom:1px solid #c4c4c4;border-top:1px solid #c4c4c4;background:#fff;}
+.account-tab ul{width:100%;float:left;}
+.account-tab ul li{width:8rem;height:2.04rem;float:left;text-align: center;border-right:1px solid #eee;padding-top:0.1rem;line-height:2.04rem;}
+.account-tab ul a{color:#666;font-size:0.51rem}
+.account-tab ul .none-border{border-right:none}
+.account-tab ul .current{width:8rem;height:2.04rem;float:left;text-align: center;border-bottom:2px solid #1780e3;}
+.coupon-bj{width:14.8rem;height:3.79rem;background:url(../../images/yhj.png) no-repeat;background-size:14.8rem 3.79rem;margin-top:0.42rem;}
+.coupon-left{width:9.6rem;float:left;padding:0.5rem;}
+.coupon-left ul li{font-size:0.29rem;color:#fff;line-height:0.75rem;}
+.coupon-left ul .word{font-size:0.64rem;font-weight:bold;}
+.coupon-right{width:4.8rem;float:left;text-align: center;line-height:3.79rem;font-size:1.28rem;color:#fff}
+.coupon-right span{font-size:0.85rem}
