@@ -59,10 +59,21 @@
     var isEmpty = false;
     var statusFlag = ""; //0正常 1待支付 2待确认 3待报价
     var detailUrl = "<%=path%>/order/OrderDetail?OrderId=";
+    var indexArray = new Array();
 
     $(document).ready(function () {
         Loading.HideLoading();
     });
+
+    Array.prototype.contains = function (obj) {
+        var i = this.length;
+        while (i--) {
+            if (this[i] === obj) {
+                return true;
+            }
+        }
+        return false;
+    };
 
     function lowEnough() {
         var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
@@ -79,9 +90,12 @@
             $("#spinner").css("display", "block");
             return;
         }
+        if (indexArray.contains(index + 1)) {
+            return;
+        }
 
+        indexArray.push(index + 1);
         GetOrderList(index + 1);
-
         pollScroll();
     }
 
@@ -106,7 +120,7 @@
         var isUnPaid = "${isUnPaid}";
         var isUnConfirm = "${isUnConfirm}";
         $.ajax({
-            async: false,
+            async: true,
             type: "POST",
             url: "<%=path%>/order/GetOrder",
             modal: true,
@@ -131,6 +145,10 @@
                         var date = new Date(data.OrderList[key].orderTime).Format("yyyy-MM-dd hh:mm:ss");
                         var price = (data.OrderList[key].totalFee / 1000).toFixed(2);
 
+                        if (orderId == null || orderId == "") {
+                            continue;
+                        }
+
                         if (statusFlag == "0") {
                             var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li></ul></div></section>";
                         } else if (statusFlag == "1") {
@@ -140,6 +158,7 @@
                         } else if (statusFlag == "3") {
                             var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + "</p></li></ul></div></section>";
                         }
+
                         $('#wrapper').append(htmlStr);
                     }
                 }
