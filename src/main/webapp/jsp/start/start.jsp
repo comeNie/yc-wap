@@ -239,6 +239,7 @@
             $("#loading").hide();
             $("#hornid").show();
             $("#soundGif").hide();
+            $("#text_audio").attr("onclick", "playAudio()");
         },false);
 
         Loading.HideLoading();
@@ -303,10 +304,9 @@
             $('#prompt').slideDown(100);
 
             setTimeout(function(){
-
                 $('#eject-mask').fadeOut(200);
                 $('#prompt').slideUp(200);
-            },5000);
+            },3000);
             return false;
         }else {
             return true;
