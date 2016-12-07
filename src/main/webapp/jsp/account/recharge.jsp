@@ -49,18 +49,20 @@
                     </li>
                     <li>
                         <p class="word">充值金额:</p>
-                        <p><input id="price" type="text" class="input int-rech"></p>
+                        <p><input id="price" type="text" class="input int-rech" placeholder="10~500"></p>
                         <p>元</p>
                         <label id="pricetip"></label>
                     </li>
                     <li>
                         <p class="word">充值方式:</p>
-                        <p>
+                        <p id="zfb">
                             <input type="radio" class="radio" name="way" value="1" checked>
+                        <%--<img src="<%=path%>/ui/images/radio.jpg" class="radio-img" >--%>
                             <img src="<%=path%>/ui/images/zhifb.png">
                         </p>
-                        <p class="ml-a">
+                        <p class="ml-a" id="yl">
                             <input type="radio" class="radio" name="way" value="2">
+                        <%--<img  src="<%=path%>/ui/images/radio1.jpg" class="radio-img" >--%>
                             <img src="<%=path%>/ui/images/unionpay.png">
                         </p>
                         <label id="inputid"></label>
@@ -71,21 +73,22 @@
             </div>
         </div>
     </section>
+    <form id="toPayForm" method="post" action="<%=path%>/pay/gotoPay">
+        <input type="hidden" id="orderId" name="orderId" value="0">
+        <input type="hidden" id="orderAmount" name="orderAmount" value="123.00">
+        <input type="hidden" id="currencyUnit" name="currencyUnit" value="1">
+        <input type="hidden" id="payType" name="payOrgCode" value="YL">
+        <input type="hidden" id="merchantUrl" name="merchantUrl">
+    </form>
+
 </div>
 
-<form id="toPayForm" method="post" action="<%=path%>/pay/gotoPay">
-    <input type="hidden" id="orderId" name="orderId" value="0">
-    <input type="hidden" id="orderAmount" name="orderAmount" value="123.00">
-    <input type="hidden" id="currencyUnit" name="currencyUnit" value="1">
-    <input type="hidden" id="payType" name="payOrgCode" value="YL">
-    <input type="hidden" id="merchantUrl" name="merchantUrl">
-</form>
+<%--loading--%>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 
 <%--底部視圖--%>
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
-<%--loading--%>
-<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 <script>
@@ -118,6 +121,7 @@
                 $("#pricetip").css("display", "none");
             }
         }
+        console.log($("#zfb").val());
         var a = $("input[name='way']:checked").val();
         if (a == null || a == "" || a == 0) {
             $("#inputid").html("请选择支付方式");
