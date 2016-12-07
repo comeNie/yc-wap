@@ -31,7 +31,6 @@
 </head>
 <body>
 <div class="wrapper-big" id="body">
-    <!--上传提示弹出框-->
     <div class="eject-big">
         <div class="prompt" id="prompt">
             <div class="prompt-title">请选择</div>
@@ -144,7 +143,6 @@
                             <option transLv="100230">出版级</option>
                         </select>
                         <span>|</span>
-                    </p>
                     </p>
                 </li>
                 <li class="word-checkbox">

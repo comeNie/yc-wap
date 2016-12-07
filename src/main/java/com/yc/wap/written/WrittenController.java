@@ -121,9 +121,7 @@ public class WrittenController extends BaseController {
         JSONObject DualJsonEn = JSONObject.fromObject(DualMapEn);
 
         log.info("-------DualMap&JSON-------");
-        log.info(DualMap);
         log.info(DualJson);
-        log.info(DualMapEn);
         log.info(DualJsonEn);
         log.info("-------DualMap&JSON-------");
 

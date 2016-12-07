@@ -53,7 +53,7 @@
             <ul>
                 <li><i class="icon iconfont red">&#xe62b;</i></li>
                 <li class="word red">您的订单支付失败！</li>
-                <li>您的订单号:<a href="javascript:toDetail(${OrderId})">${OrderId}</a>，若有任何疑问，欢迎致电咨询:<br>400-119-8080
+                <li>您的订单号:<a href="javascript:toDetail('${OrderId}')">${OrderId}</a>，若有任何疑问，欢迎致电咨询:<br>400-119-8080
                 </li>
             </ul>
         </section>
@@ -74,7 +74,8 @@
     });
 
     function toDetail(OrderId) {
-        if (OrderId.substring(0, 3) == "901") {
+        var Order = OrderId + "";
+        if (Order.substring(0, 3) == "901") {
             return;
         }
         var ToUrl = "<%=path%>/order/OrderDetail";

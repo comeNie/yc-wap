@@ -62,27 +62,41 @@
 
     $(document).ready(function () {
         Loading.HideLoading();
+    });
+
+    function lowEnough() {
+        var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
+        var viewportHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;
+        var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        return pageHeight - viewportHeight - scrollHeight < 20;
+    }
+
+    function doSomething() {
+        if (isEmpty) {
+            return;
+        }
+        if (index == PageCount) {
+            $("#spinner").css("display", "block");
+            return;
+        }
+
         GetOrderList(index + 1);
 
-        $(window).scroll(function () {
-            if (isEmpty) {
-                return;
-            }
+        pollScroll();
+    }
 
-            if ($(document).scrollTop() <= 0) {
-                console.log("滚动条已经到达顶部为0");
-            }
+    function checkScroll() {
+        if (!lowEnough()) {
+            return pollScroll();
+        }
+        setTimeout(doSomething, 100);
+    }
 
-            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
-                console.log("滚动条已经到达底部为" + $(document).scrollTop());
-                if (index == PageCount) {
-                    $("#spinner").css("display", "block");
-                    return;
-                }
-                GetOrderList(index + 1);
-            }
-        });
-    });
+    function pollScroll() {
+        setTimeout(checkScroll, 100);
+    }
+
+    checkScroll();
 
     $(function () {
 
@@ -92,7 +106,7 @@
         var isUnPaid = "${isUnPaid}";
         var isUnConfirm = "${isUnConfirm}";
         $.ajax({
-            async: true,
+            async: false,
             type: "POST",
             url: "<%=path%>/order/GetOrder",
             modal: true,
