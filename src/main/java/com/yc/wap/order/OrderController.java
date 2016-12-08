@@ -187,6 +187,7 @@ public class OrderController extends BaseController {
     public String OrderDetail() {
         String OrderId = request.getParameter("OrderId");
         String isLogin = (String) session.getAttribute("isLogin");
+        String FromRes = request.getParameter("FromRes");
         if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
             log.info("UserNotLogin");
             return "login/login";
@@ -280,6 +281,7 @@ public class OrderController extends BaseController {
 
             request.setAttribute("Params", ParamJson);
             request.setAttribute("orderStateChange", orderStateChange);
+            request.setAttribute("FromRes", FromRes);
         } catch (BusinessException | SystemException | NumberFormatException e) {
             e.printStackTrace();
         }
