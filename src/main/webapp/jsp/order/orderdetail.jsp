@@ -401,7 +401,7 @@
                 </li>
                 <li>
                     <p>订单状态：</p>
-                    <p>${Params.displayFlag}</p>
+                    <p id="OrderStatus">Status</p>
                 </li>
             </ul>
         </div>
@@ -451,6 +451,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var status = GetStateShow('${Params.displayFlag}');
+        $("#OrderStatus").html(status);
+
         $("#click-more").bind("click", function () {
             if ($("#more").attr("flag") == "closed") {
                 $("#cont-hid").css("display", "block");
@@ -522,6 +525,29 @@
 
             }
         });
+    }
+
+    /**
+     * @return {string}
+     */
+    function GetStateShow(state) {
+        if (state == "11") {
+            return "待支付";
+        } else if (state == "13") {
+            return "待报价";
+        } else if (state == "23") {
+            return "翻译中";
+        } else if (state == "50") {
+            return "待确认";
+        } else if (state == "52") {
+            return "待评价";
+        } else if (state == "90") {
+            return "已完成";
+        } else if (state == "91") {
+            return "已关闭";
+        } else if (state == "92") {
+            return "已退款";
+        }
     }
 
 </script>
