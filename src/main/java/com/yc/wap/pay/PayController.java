@@ -179,7 +179,7 @@ public class PayController extends BaseController {
         param.setBusiDesc("余额");
         param.setBusiSerialNo(orderId);
         param.setTransSummary(transSummaryList);
-        param.setCurrencyUnit("RMB");
+        param.setCurrencyUnit("CNY");
         param.setBusiOperCode(Constants.BusinessOperCode);
         param.setTenantId(Constants.TENANTID);
         param.setSystemId(Constants.SystemId);
