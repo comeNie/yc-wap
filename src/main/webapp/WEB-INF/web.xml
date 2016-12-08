@@ -45,18 +45,23 @@
     </filter-mapping> -->
 
     <!-- 统一会话 -->
-    <!-- <filter>
+    <filter>
         <filter-name>sessionFilter</filter-name>
         <filter-class>com.ai.opt.uni.session.filter.CacheSessionFilter</filter-class>
         <init-param>
             <param-name>ignore_suffix</param-name>
             <param-value>.png,.jpg,.jpeg,.gif,.css,.js,.html,.htm</param-value>
         </init-param>
+        <init-param>
+            <param-name>cookie_name</param-name>
+            <param-value>YC_WAP_JESSIONID</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>sessionFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping> -->
+
+    </filter-mapping>
     <!-- 单点登录 -->
     <!--
     <filter>
