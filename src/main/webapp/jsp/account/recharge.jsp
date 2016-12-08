@@ -55,17 +55,17 @@
                     </li>
                     <li>
                         <p class="word">充值方式:</p>
-                        <p id="zfb">
-                            <input type="radio" class="radio" name="way" value="1" checked>
-                        <%--<img src="<%=path%>/ui/images/radio.jpg" class="radio-img" >--%>
+                        <p id="zfbP" onclick="zfbAction()">
+                            <%--<input type="radio" class="radio" name="way" value="1" checked>--%>
+                            <img id="zfbImg" src="<%=path%>/ui/images/radio.jpg" class="radio-img" >
                             <img src="<%=path%>/ui/images/zhifb.png">
                         </p>
-                        <p class="ml-a" id="yl">
-                            <input type="radio" class="radio" name="way" value="2">
-                        <%--<img  src="<%=path%>/ui/images/radio1.jpg" class="radio-img" >--%>
+                        <p class="ml-a" id="ylP" onclick="ylAction()">
+                            <%--<input type="radio" class="radio" name="way" value="2">--%>
+                            <img id="ylImg"  src="<%=path%>/ui/images/radio1.jpg" class="radio-img" >
                             <img src="<%=path%>/ui/images/unionpay.png">
                         </p>
-                        <label id="inputid"></label>
+                        <%--<label id="inputid"></label>--%>
                     </li>
                 </ul>
             </div>
@@ -95,8 +95,19 @@
     $(document).ready(function () {
         Loading.HideLoading();
     });
+    var types = 0;
     function retLeft() {
         window.history.go(-1);
+    }
+    function zfbAction(){
+        types = 0;
+        $("#zfbImg").attr("src","<%=path%>/ui/images/radio.jpg");
+        $("#ylImg").attr("src","<%=path%>/ui/images/radio1.jpg");
+    }
+    function ylAction(){
+        types = 1;
+        $("#zfbImg").attr("src","<%=path%>/ui/images/radio1.jpg");
+        $("#ylImg").attr("src","<%=path%>/ui/images/radio.jpg");
     }
     function confirm() {
         var price = $("#price").val();
@@ -121,20 +132,10 @@
                 $("#pricetip").css("display", "none");
             }
         }
-        console.log($("#zfb").val());
-        var a = $("input[name='way']:checked").val();
-        if (a == null || a == "" || a == 0) {
-            $("#inputid").html("请选择支付方式");
-            $("#inputid").css("display", "block");
-            return;
+        if (types == 0) {
+            $("#payType").val("ZFB");
         } else {
-            $("#inputid").css("display", "none");
-            if (a=="1") {
-                $("#payType").val("ZFB");
-            } else {
-                $("#payType").val("YL");
-            }
-
+            $("#payType").val("YL");
         }
         GetSerial();
 

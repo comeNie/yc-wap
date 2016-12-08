@@ -32,8 +32,8 @@ docker run -d --name yc-wap-v1.0  -p 14115:8080  \
 -e "NOTIFY_URL=http://10.19.13.26:14115/pay/payResult" \
 -e "RETURN_URL=http://10.19.13.26:14115/pay/payResultView" \
 -e "HCICLOUD_URL=http://test.api.hcicloud.com:8880/tts/SynthText" \
--e "HCICLOUD_APPKEY=cd5d5472" \
--e "HCICLOUD_DEVKEY=2f4f930a5acae2e86f5c313cccefb856" \
+-e "HCICLOUD_APPKEY=ad5d5421" \
+-e "HCICLOUD_DEVKEY=bca4b0015b309b76301bb10efdf90561" \
 -e "YEEKIT_TRANSLATE_URL=https://translateport.yeekit.com/translate" \
 -e "YEEKIT_TRANSLATE_APPKID=58105e00cabc3" \
 -e "YEEKIT_TRANSLATE_APPKEY=53eeb0bb6c1b613ab361a4f8057b2bd9" \

@@ -60,8 +60,10 @@ public class HcicloudService {
             config += "tts.cloud.vera";
         } else if(lan.equals("es")) { //西班牙
             config += "tts.cloud.diego";
+        }else if(lan.equals("ru")) {  //俄语
+            config += "tts.cloud.milena";
         }
-        
+
         if (browserName.equals("firefox") || browserName.equals("opera")) {
             audioformat = ",audioformat=pcm8k16bit";
         } else {

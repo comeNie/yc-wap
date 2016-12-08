@@ -120,7 +120,7 @@
                 </select>
                 <span>|</span>
             </p>
-            <p class="test-icon" style="vertical-align: middle" onclick="changeSelect()"><i class="icon iconfont" id="change-lan">&#xe621;</i>
+            <p class="test-icon1" style="vertical-align: middle" onclick="changeSelect()"><i class="icon iconfont" id="change-lan">&#xe621;</i>
             </p>
 
             <p>
@@ -146,7 +146,7 @@
         </section>
         <!--翻译按钮-->
         <section class="translate-btn" id="chick-btn">
-            <a href="javascript:void(0)" onclick="goTranslate()" id="translateAid" class="btn btn-big"><spring:message code="start.fanyi"/></a>
+            <a href="javascript:void(0)" onclick="goTranslate()" id="translateAid" class="submit-btn btn-blue"><spring:message code="start.fanyi"/></a>
             <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="display:none;padding-left: 2.5rem">
         </section>
         <!--翻译结果-->
@@ -154,7 +154,7 @@
             <textarea class="textarea textarea-xlarge" id="result-text" readonly="readonly"></textarea>
 
             <p>
-                <label id="tipLabel" style="font-size: 13px;color: #ff4949;"></label>
+                <label id="tipLabel" ></label>
                 <a href="javascript:void(0)" id="text_audio" onclick="playAudio()">
                     <i class="icon iconfont ash" id="hornid">&#xe61b;</i>
                     <img src="<%=path%>/ui/images/loading_back.gif" id="loading" style="display:none;">
@@ -239,6 +239,7 @@
             $("#loading").hide();
             $("#hornid").show();
             $("#soundGif").hide();
+            $("#text_audio").attr("onclick", "playAudio()");
         },false);
 
         Loading.HideLoading();
@@ -303,10 +304,9 @@
             $('#prompt').slideDown(100);
 
             setTimeout(function(){
-
                 $('#eject-mask').fadeOut(200);
                 $('#prompt').slideUp(200);
-            },5000);
+            },3000);
             return false;
         }else {
             return true;
