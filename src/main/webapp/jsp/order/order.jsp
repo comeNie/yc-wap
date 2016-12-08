@@ -87,6 +87,7 @@
             return;
         }
         if (index == PageCount) {
+            $("#spId").html("没有更多了");
             $("#spinner").css("display", "block");
             return;
         }
@@ -167,10 +168,11 @@
 
             },
             beforeSend: function () {
-                Loading.ShowLoading();
+                $("#spId").html("正在加载");
+                $("#spinner").css("display", "block");
             },
             complete: function () {
-                Loading.HideLoading();
+                $("#spinner").css("display", "none");
             }
         });
     }
