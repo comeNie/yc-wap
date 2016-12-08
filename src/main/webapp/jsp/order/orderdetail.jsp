@@ -374,13 +374,12 @@
         <div class="track-title">
             <ul>
                 <li>
-                    <p>订单号:</p>
+                    <p>订单号：</p>
                     <p class="blue">${Params.OrderId}</p>
                 </li>
                 <li>
-                    <p>订单状态:</p>
-                    <p>已完成</p>
-                    <%--Todo : state update--%>
+                    <p>订单状态：</p>
+                    <p>${Params.displayFlag}</p>
                 </li>
             </ul>
         </div>

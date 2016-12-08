@@ -204,7 +204,7 @@ public class OrderController extends BaseController {
             Timestamp Time = resp.getOrderTime();
             DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-            String OrderPrice = OrderFee.getTotalFee() / 1000 + "";
+            Double OrderPrice = Double.valueOf(OrderFee.getTotalFee()) / 1000;
             DecimalFormat df = new DecimalFormat("######0.00");
 
             String TransLV = prodLevels.getTranslateLevel();
@@ -234,7 +234,7 @@ public class OrderController extends BaseController {
             String translateName = resp.getTranslateName();
             String displayFlag = resp.getDisplayFlag();
 
-            String PriceDisplay = df.format(Double.parseDouble(OrderPrice));
+            String PriceDisplay = df.format(OrderPrice);
             String OrderTime = sdf.format(Time);
             String TransLang = prodExtends.getLangungePairName();
             String useCn = ProdList.getUseCn();
@@ -267,7 +267,6 @@ public class OrderController extends BaseController {
             ParamJson.put("contactName", contactName);
             ParamJson.put("contactTel", contactTel);
             ParamJson.put("contactEmail", contactEmail);
-            ParamJson.put("orderStateChange", orderStateChange);
 
             ParamJson.put("needTranslateInfo", needTranslateInfo);
             ParamJson.put("translateInfo", translateInfo);
@@ -276,6 +275,7 @@ public class OrderController extends BaseController {
             }
 
             log.info("OrderDetailParamJson.." + ParamJson.toString());
+            log.info("OrderStateChange.." + com.alibaba.fastjson.JSONArray.toJSONString(orderStateChange));
 
             request.setAttribute("Params", ParamJson);
             request.setAttribute("orderStateChange", orderStateChange);
