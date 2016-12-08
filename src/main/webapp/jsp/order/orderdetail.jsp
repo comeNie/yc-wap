@@ -390,7 +390,7 @@
             <div class="track-list-title">订单动态</div>
             <div class="track-list-ctn">
                 <c:forEach var="pair" items="${orderStateChange}" varStatus="i">
-                    <c:if test="${i.index==1}">
+                    <c:if test="${i.index==0}">
                         <div class="track-state track-bule">
                             <p>
                                 <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
@@ -402,7 +402,7 @@
                             </ul>
                         </div>
                     </c:if>
-                    <c:if test="${i.index!=1}">
+                    <c:if test="${i.index!=0}">
                         <div class="track-state track-ash">
                             <p>
                                 <span class="circular"><i class="icon iconfont">&#xe630;</i></span>

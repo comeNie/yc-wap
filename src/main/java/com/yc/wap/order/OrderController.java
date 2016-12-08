@@ -20,6 +20,7 @@ import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
+import com.yc.wap.system.utils.ListSortUtil;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -226,9 +227,9 @@ public class OrderController extends BaseController {
 
 
             List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
-//            for(OrderStateChgVo Vo : orderStateChange) {
-//                log.info("Vo: " + Vo.getChgDesc());
-//            }
+            ListSortUtil<OrderStateChgVo> sortList = new ListSortUtil<>();
+            sortList.sort(orderStateChange, "stateChgTime", "desc");
+            // sort
 
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
