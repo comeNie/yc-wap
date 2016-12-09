@@ -18,8 +18,8 @@
     request.setAttribute("show", show);
     request.setAttribute("isLogin", session.getAttribute("isLogin"));
 
-    response.setHeader("Pragma","No-cache");
-    response.setHeader("Cache-Control","no-cache");
+    response.setHeader("Pragma", "No-cache");
+    response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
 %>
 
@@ -31,8 +31,14 @@
 <nav class="wap-second-nav">
     <ul>
         <c:if test="${index==1}">
-            <a href="<%=path%>/"><i class="icon iconfont left">
-                <img style="width:3.13rem;height:1.06rem;" src="<%=path%>/ui/images/logo.png"/></i></a>
+            <c:if test="${isLogin==null || isLogin=='0'}">
+                <a href="javascript:window.location.href='<%=path%>/login/login?to=login'"><i class="icon iconfont left">
+                    <img style="width:3.13rem;height:1.06rem;" src="<%=path%>/ui/images/logo.png"/></i></a>
+            </c:if>
+            <c:if test="${isLogin=='1'}">
+                <a href="<%=path%>/"><i class="icon iconfont left">
+                    <img style="width:3.13rem;height:1.06rem;" src="<%=path%>/ui/images/logo.png"/></i></a>
+            </c:if>
         </c:if>
         <c:if test="${index=='' || index==null}">
             <a href="<%=back%>"><i class="icon iconfont left">&#xe626;</i></a>
@@ -68,7 +74,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#nav-list").bind("click", function () {
-            if($("#pop-nav").attr("opened")=="1"){
+            if ($("#pop-nav").attr("opened") == "1") {
                 $("#pop-nav").css("display", "none");
                 $("#pop-nav").attr("opened", "0");
             } else {
@@ -79,8 +85,7 @@
     });
 
     function onLogout() {
-        window.onload=function()
-        {
+        window.onload = function () {
             window.history.go(1);
         };
 

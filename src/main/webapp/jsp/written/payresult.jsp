@@ -79,7 +79,7 @@
             return;
         }
         var ToUrl = "<%=path%>/order/OrderDetail";
-        window.location.href = ToUrl + "?OrderId=" + OrderId;
+        window.location.href = ToUrl + "?OrderId=" + OrderId + "&FromRes=1";
     }
 
 </script>

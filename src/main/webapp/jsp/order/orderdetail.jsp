@@ -30,11 +30,32 @@
 </head>
 <body>
 <div class="wrapper-big" id="OrderDetail">
-    <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="订单详细"/>
-        <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
-    </jsp:include>
-    <!--加载更多-->
+    <nav class="wap-second-nav">
+        <ul>
+            <c:if test="${FromRes==1}">
+                <a href="javascript:window.location.href='<%=path%>/'"><i class="icon iconfont left">&#xe626;</i></a>
+            </c:if>
+            <c:if test="${FromRes==null || FromRes==''}">
+                <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
+            </c:if>
+            <li>订单详情</li>
+            <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
+        </ul>
+        <div class="pop-nav" id="pop-nav">
+            <ul>
+                <li>
+                    <a href="javascript:window.location.href='<%=path%>/'">
+                        <spring:message code="popnav.public.index"/></a>|
+                    <a href="javascript:window.location.href='<%=path%>/center/center'">
+                        <spring:message code="popnav.public.ucenter"/></a>|
+                    <a href="javascript:window.location.href='<%=path%>/order'">
+                        <spring:message code="popnav.public.order"/></a>|
+                    <a href="javascript:onLogout()">
+                        <spring:message code="popnav.public.exit"/></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <c:if test="${Params.translateType=='0' || Params.translateType=='1'}">
         <!--笔译/文档-->
@@ -70,7 +91,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="click-more" id="click-more"><a href="javascript:void(0)" id="more" flag="closed">点击查看更多</a></div>
+            <div class="click-more" id="click-more"><a href="javascript:void(0)" id="more" flag="closed">点击查看更多</a>
+            </div>
         </section>
         <section class="my-order-content">
             <div class="my-order-list">
@@ -379,7 +401,7 @@
                 </li>
                 <li>
                     <p>订单状态：</p>
-                    <p>${Params.displayFlag}</p>
+                    <p id="OrderStatus">Status</p>
                 </li>
             </ul>
         </div>
@@ -390,7 +412,7 @@
             <div class="track-list-title">订单动态</div>
             <div class="track-list-ctn">
                 <c:forEach var="pair" items="${orderStateChange}" varStatus="i">
-                    <c:if test="${i.index==1}">
+                    <c:if test="${i.index==0}">
                         <div class="track-state track-bule">
                             <p>
                                 <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
@@ -402,7 +424,7 @@
                             </ul>
                         </div>
                     </c:if>
-                    <c:if test="${i.index!=1}">
+                    <c:if test="${i.index!=0}">
                         <div class="track-state track-ash">
                             <p>
                                 <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
@@ -429,6 +451,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var status = GetStateShow('${Params.displayFlag}');
+        $("#OrderStatus").html(status);
+
         $("#click-more").bind("click", function () {
             if ($("#more").attr("flag") == "closed") {
                 $("#cont-hid").css("display", "block");
@@ -440,14 +465,24 @@
         });
 
         $("#nav-list1").bind("click", function () {
-            if($("#pop-nav1").attr("opened")=="1"){
+            if ($("#pop-nav1").attr("opened") == "1") {
                 $("#pop-nav1").css("display", "none");
                 $("#pop-nav1").attr("opened", "0");
             } else {
                 $("#pop-nav1").css("display", "block");
                 $("#pop-nav1").attr("opened", "1");
             }
-        })
+        });
+
+        $("#nav-list").bind("click", function () {
+            if ($("#pop-nav").attr("opened") == "1") {
+                $("#pop-nav").css("display", "none");
+                $("#pop-nav").attr("opened", "0");
+            } else {
+                $("#pop-nav").css("display", "block");
+                $("#pop-nav").attr("opened", "1");
+            }
+        });
     });
 
     $(function () {
@@ -490,6 +525,29 @@
 
             }
         });
+    }
+
+    /**
+     * @return {string}
+     */
+    function GetStateShow(state) {
+        if (state == "11") {
+            return "待支付";
+        } else if (state == "13") {
+            return "待报价";
+        } else if (state == "23") {
+            return "翻译中";
+        } else if (state == "50") {
+            return "待确认";
+        } else if (state == "52") {
+            return "待评价";
+        } else if (state == "90") {
+            return "已完成";
+        } else if (state == "91") {
+            return "已关闭";
+        } else if (state == "92") {
+            return "已退款";
+        }
     }
 
 </script>
