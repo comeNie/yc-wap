@@ -3,6 +3,7 @@ package com.yc.wap.pay;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.paas.ipaas.i18n.ZoneContextHolder;
 import com.ai.slp.balance.api.deduct.interfaces.IDeductSV;
 import com.ai.slp.balance.api.deduct.param.DeductParam;
 import com.ai.slp.balance.api.deduct.param.DeductResponse;
@@ -120,6 +121,9 @@ public class PayController extends BaseController {
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmss");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        TimeZone tz = TimeZone.getTimeZone(ZoneContextHolder.getZone());
+        sdf1.setTimeZone(tz);
+        sdf2.setTimeZone(tz);
         Timestamp ts = Timestamp.valueOf(sdf2.format(sdf1.parse(notifyTime)));
 
         if (payStates.equals("00")) {
