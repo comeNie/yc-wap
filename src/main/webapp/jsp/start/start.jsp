@@ -141,7 +141,7 @@
         </section>
         <!--翻译内容-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" name="chick-int" id="chick-int"></textarea>
+            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" placeholder="请输入要翻译的单词和句子"></textarea>
             <a hrel="javascript:void(0)" ><i class="icon iconfont" id="clear">&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
@@ -285,12 +285,13 @@
             window.location.href = "<%=path%>/written";
         });
 
-        //源语言对事件
+        //对应语言对事件
         $("#target-lan").bind("change",function(){
             goTranslate();
         });
-        //对应语言对事件
+        //源语言对事件
         $("#source-lan").bind("change",function(){
+            languagePair($("#source-lan").val())
             goTranslate();
         });
 
@@ -421,6 +422,7 @@
             transHis(sourceLan,sourceCode,targetCode);
         });
     }
+    //历史记录处理
     function transHis(sourceLan,sourceCode,targetCode){
         $("#chick-int").val(sourceLan);
 
@@ -552,6 +554,7 @@
                 if (data.status == 1) {
                     realLangeuage = data.fintec;
                     chooseLan(realLangeuage,"source-lan");
+
                 }
             }
         });
@@ -563,12 +566,49 @@
             for(var i=0; i<select.options.length; i++){
                 if(select.options[i].value == lan){
                     select.options[i].selected = true;
-                    break;
+                    if (name == "source-lan"){
+                        languagePair($("#"+name).val());
+                    }
+                    return;
                 }
             }
         }
     }
-
+    function languagePair(txt){
+        switch (txt){
+            case "zh":
+                addOption(0);
+                break;
+            case "en":
+                addOption(1);
+                break;
+            case "fr":
+                addOption(2);
+                break;
+            case "ru":
+                addOption(3);
+                break;
+            case "pt":
+                addOption(4);
+                break;
+            default:
+                addOption(5);
+                break;
+        }
+    }
+    function addOption(rmIndex){
+        var select = document.getElementById("target-lan");
+        select.length = 0;
+        var arrLan = new Array("<spring:message code="start.zh"/>","<spring:message code="start.en"/>","<spring:message code="start.fr"/>","<spring:message code="start.ru"/>","<spring:message code="start.pt"/>");
+        var arrLanValue = ["zh","en","fr","ru","pt"];
+        if (rmIndex != 5){
+            arrLan.splice(rmIndex,1);
+            arrLanValue.splice(rmIndex,1);
+        }
+        for (var i = 0;i < arrLan.length; i++) {
+            select.add(new Option(arrLan[i], arrLanValue[i]));
+        }
+    }
     //切换语言对
     function changeSelect(){
         var source = $("#source-lan").val();
@@ -577,11 +617,13 @@
             var selectSource = document.getElementById("source-lan");
             for(var i=0; i<selectSource.options.length; i++){
                 if(selectSource.options[i].value == target){
+
                     selectSource.options[i].selected = true;
                     break;
                 }
             }
             var selectTarget = document.getElementById("target-lan");
+            languagePair(target);
             for(var i=0; i<selectTarget.options.length; i++){
                 if(selectTarget.options[i].value == source){
                     selectTarget.options[i].selected = true;
