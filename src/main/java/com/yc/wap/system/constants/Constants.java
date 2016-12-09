@@ -71,6 +71,12 @@ public class Constants {
         public static final String Professional = "100220";
         // 出版级
         public static final String Publish = "100230";
+        // 陪同翻译
+        public static final String Together = "100110";
+        // 交替翻译
+        public static final String Alter = "100120";
+        // 同声传译
+        public static final String Simulate = "100130";
     }
 
     /**
@@ -307,6 +313,16 @@ public class Constants {
         public static final String PERSON = "10";
         public static final String ENTERPISE = "11";
         public static final String AGENT = "12";
+
+    }
+
+    /**
+     * 性别
+     */
+    public static final class Sex {
+        public static final String MALE = "0";
+        public static final String FEMALE = "1";
+        public static final String ALL = "2";
 
     }
 

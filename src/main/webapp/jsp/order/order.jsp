@@ -59,7 +59,7 @@
     var isEmpty = false;
     var statusFlag = ""; //0正常 1待支付 2待确认 3待报价
     var detailUrl = "<%=path%>/order/OrderDetail?OrderId=";
-    var indexArray = new Array();
+    var indexArray = [];
 
     $(document).ready(function () {
         Loading.HideLoading();
@@ -79,7 +79,7 @@
         var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;
         var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-        return pageHeight - viewportHeight - scrollHeight < 20;
+        return pageHeight - viewportHeight - scrollHeight < 30;
     }
 
     function doSomething() {

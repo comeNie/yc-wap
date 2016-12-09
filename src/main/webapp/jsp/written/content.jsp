@@ -186,7 +186,7 @@
                 $('#prompt').slideDown(100);
                 return;
             }
-            if (ContentLength >= 2000) {
+            if (ContentLength > 2000) {
                 $("#EjectTitle").html("翻译内容超出2000字");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);

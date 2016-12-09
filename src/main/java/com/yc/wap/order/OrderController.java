@@ -16,6 +16,7 @@ import com.ai.yc.order.api.orderquery.param.QueryOrderRsponse;
 import com.ai.yc.order.api.orderstate.interfaces.IOrderStateUpdateSV;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateRequest;
 import com.ai.yc.order.api.orderstate.param.OrderStateUpdateResponse;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -204,6 +205,8 @@ public class OrderController extends BaseController {
             ContactsVo Contacts = resp.getContacts();
 
             Timestamp Time = resp.getOrderTime();
+            Timestamp sTime = ProdList.getStateTime();
+            Timestamp eTime = ProdList.getEndTime();
             DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
             Double OrderPrice = Double.valueOf(OrderFee.getTotalFee()) / 1000;
@@ -217,6 +220,24 @@ public class OrderController extends BaseController {
                 TranslateLevel = "专业级";
             } else if (TransLV.equals(Constants.TranslateLevel.Publish)) {
                 TranslateLevel = "出版级";
+            } else if (TransLV.equals(Constants.TranslateLevel.Together)) {
+                TranslateLevel = "陪同翻译";
+            } else if (TransLV.equals(Constants.TranslateLevel.Simulate)) {
+                TranslateLevel = "同声传译";
+            } else if (TransLV.equals(Constants.TranslateLevel.Alter)) {
+                TranslateLevel = "交替翻译";
+            }
+
+            String interperGen = ProdList.getInterperGen();
+            String Sex = "";
+            if (interperGen != null) {
+                if (interperGen.equals(Constants.Sex.MALE)) {
+                    Sex = "男";
+                } else if (interperGen.equals(Constants.Sex.FEMALE)) {
+                    Sex = "女";
+                } else if (interperGen.equals(Constants.Sex.ALL)) {
+                    Sex = "不限";
+                }
             }
 
             String discountSum = OrderFee.getDiscountSum();
@@ -225,7 +246,6 @@ public class OrderController extends BaseController {
             } else {
                 discountSum = discountSum + "折";
             }
-
 
             List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
             ListSortUtil<OrderStateChgVo> sortList = new ListSortUtil<>();
@@ -251,7 +271,20 @@ public class OrderController extends BaseController {
             String needTranslateInfo = ProdList.getNeedTranslateInfo();
             String translateInfo = ProdList.getTranslateInfo();
 
+            String meetingAddress = ProdList.getMeetingAddress();
+            Long meetingSum = ProdList.getMeetingSum();
+            Long interperSum = ProdList.getInterperSum();
+
             JSONObject ParamJson = new JSONObject();
+            ParamJson.put("interperGen", Sex);
+            ParamJson.put("meetingAddress", meetingAddress);
+            ParamJson.put("meetingSum", meetingSum);
+            ParamJson.put("interperSum", interperSum);
+            if (sTime != null && eTime != null) {
+                ParamJson.put("stateTime", sdf.format(sTime));
+                ParamJson.put("endTime", sdf.format(eTime));
+            }
+
             ParamJson.put("translateType", translateType);
             ParamJson.put("translateName", translateName);
             ParamJson.put("displayFlag", displayFlag);
@@ -272,7 +305,7 @@ public class OrderController extends BaseController {
 
             ParamJson.put("needTranslateInfo", needTranslateInfo);
             ParamJson.put("translateInfo", translateInfo);
-            if (isUrgent.equals("Y")) {
+            if (isUrgent != null && isUrgent.equals("Y")) {
                 ParamJson.put("Urgent", "加急");
             }
 

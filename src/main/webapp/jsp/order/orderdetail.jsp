@@ -106,7 +106,7 @@
                     <li>
                         <p>订单金额:</p>
                     </li>
-                    <li class="right">${Params.PriceDisplay}元</li>
+                    <li class="right">${Params.PriceDisplay}</li>
                 </ul>
                 <ul>
                     <li>
@@ -165,7 +165,7 @@
                     <li>
                         <p>订单总额:</p>
                     </li>
-                    <li class="right">${Params.PriceDisplay}元</li>
+                    <li class="right">${Params.PriceDisplay}</li>
                 </ul>
                 <ul class="zhek">
                     <li>
@@ -189,7 +189,7 @@
                     <li>
                         <p>实付款:</p>
                     </li>
-                    <li class="right blue-word">${Params.PriceDisplay}元</li>
+                    <li class="right blue-word">${Params.PriceDisplay}</li>
                 </ul>
             </div>
         </section>
@@ -235,7 +235,7 @@
                     <li>
                         <p>订单金额:</p>
                     </li>
-                    <li class="right">${Params.PriceDisplay}元</li>
+                    <li class="right">${Params.PriceDisplay}</li>
                 </ul>
                 <ul>
                     <li>
@@ -247,7 +247,7 @@
                     <li>
                         <p>翻译类型:</p>
                     </li>
-                    <li class="right">陪同翻译</li>
+                    <li class="right">${Params.TranslateLevel}</li>
                 </ul>
                 <ul>
                     <li>
@@ -259,43 +259,37 @@
                     <li>
                         <p>会议开始时间:</p>
                     </li>
-                    <li class="right">2014-11-11 11:11:11</li>
+                    <li class="right">${Params.stateTime}</li>
                 </ul>
                 <ul>
                     <li>
                         <p>会议结束时间:</p>
                     </li>
-                    <li class="right">2014-11-11 11:11:11</li>
-                </ul>
-                <ul>
-                    <li>
-                        <p>创建时间:</p>
-                    </li>
-                    <li class="right">2014-11-11 11:11:11</li>
+                    <li class="right">${Params.endTime}</li>
                 </ul>
                 <ul>
                     <li>
                         <p>译员数量:</p>
                     </li>
-                    <li class="right">2</li>
+                    <li class="right">${Params.interperSum}</li>
                 </ul>
                 <ul>
                     <li>
                         <p>会议地点:</p>
                     </li>
-                    <li class="right">北京</li>
+                    <li class="right">${Params.meetingAddress}</li>
                 </ul>
                 <ul>
                     <li>
                         <p>会议场数:</p>
                     </li>
-                    <li class="right">1</li>
+                    <li class="right">${Params.meetingSum}</li>
                 </ul>
                 <ul>
                     <li>
                         <p>译员性别:</p>
                     </li>
-                    <li class="right">不限</li>
+                    <li class="right">${Params.interperGen}</li>
                 </ul>
                 <ul class="ulborder">
                     <li>
@@ -311,7 +305,7 @@
                     <li>
                         <p>订单总额:</p>
                     </li>
-                    <li class="right">${Params.PriceDisplay}元</li>
+                    <li class="right">${Params.PriceDisplay}</li>
                 </ul>
                 <ul class="zhek">
                     <li>
@@ -335,7 +329,7 @@
                     <li>
                         <p>实付款:</p>
                     </li>
-                    <li class="right blue-word">${Params.PriceDisplay}元</li>
+                    <li class="right blue-word">${Params.PriceDisplay}</li>
                 </ul>
             </div>
         </section>
