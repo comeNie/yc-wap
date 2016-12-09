@@ -3,6 +3,7 @@
 <%
     String path = request.getContextPath();
 %>
+<%@ include file="common/timezone.jsp" %>
 <html>
 <head>
 	<title>Home</title>

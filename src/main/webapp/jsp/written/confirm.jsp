@@ -24,6 +24,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
+    <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -71,7 +72,7 @@
         <div class="order-message">
             <ul>
                 <li>给译员留言:</li>
-                <li><textarea id="message" class="textarea tex-int"></textarea></li>
+                <li><textarea id="message" class="textarea textarea-large"></textarea></li>
             </ul>
         </div>
     </section>

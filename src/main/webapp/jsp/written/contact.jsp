@@ -20,6 +20,7 @@
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
+    <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
 

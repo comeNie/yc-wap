@@ -28,6 +28,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
+    <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -88,7 +89,7 @@
         <section class="translation-content">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
                       placeholder="最多可输入2000字"></textarea>
-            <a hrel="#"><i class="icon iconfont">&#xe618;</i></a>
+            <a href="javascript:inputClear()"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">
             <p>您可以任意选择输入内容或者<a href="javascript:" id="upload">上传附件</a></p>
@@ -382,6 +383,10 @@
 
             }
         });
+    }
+
+    function inputClear() {
+        $("#chick-int").val("");
     }
 
 </script>

@@ -5,6 +5,7 @@ import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfo;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.paas.ipaas.i18n.ZoneContextHolder;
 import com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV;
 import com.ai.yc.order.api.orderclose.param.OrderCancelRequest;
 import com.ai.yc.order.api.orderdetails.interfaces.IQueryOrderDetailsSV;
@@ -33,6 +34,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by Nozomi on 11/10/2016.
@@ -207,6 +209,8 @@ public class OrderController extends BaseController {
             Timestamp sTime = ProdList.getStateTime();
             Timestamp eTime = ProdList.getEndTime();
             DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            TimeZone tz= TimeZone.getTimeZone(ZoneContextHolder.getZone());
+            sdf.setTimeZone(tz);
 
             Double OrderPrice = Double.valueOf(OrderFee.getTotalFee()) / 1000;
             DecimalFormat df = new DecimalFormat("######0.00");
