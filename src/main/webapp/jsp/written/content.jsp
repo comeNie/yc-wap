@@ -179,7 +179,7 @@
         $("#submit").bind("click", function () {
             var Content = $("#chick-int").val();
             var ContentLength = count(escape(Content));
-
+            alert(ContentLength);
             if (ContentLength == 0) {
                 $("#EjectTitle").html("请输入翻译内容");
                 $('#eject-mask').fadeIn(100);

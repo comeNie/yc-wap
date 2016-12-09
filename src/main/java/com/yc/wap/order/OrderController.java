@@ -246,6 +246,12 @@ public class OrderController extends BaseController {
                 discountSum = discountSum + "折";
             }
 
+            String displayFlag = resp.getDisplayFlag();
+            String PriceDisplay = "请等待报价";
+            if (!displayFlag.equals("13")) {
+                PriceDisplay = df.format(OrderPrice) + "元";
+            }
+
             List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
             ListSortUtil<OrderStateChgVo> sortList = new ListSortUtil<>();
             sortList.sort(orderStateChange, "stateChgTime", "desc");
@@ -253,9 +259,6 @@ public class OrderController extends BaseController {
 
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
-            String displayFlag = resp.getDisplayFlag();
-
-            String PriceDisplay = df.format(OrderPrice);
             String OrderTime = sdf.format(Time);
             String TransLang = prodExtends.getLangungePairName();
             String useCn = ProdList.getUseCn();
@@ -266,10 +269,8 @@ public class OrderController extends BaseController {
             String contactName = Contacts.getContactName();
             String contactTel = Contacts.getContactTel();
             String contactEmail = Contacts.getContactEmail();
-
             String needTranslateInfo = ProdList.getNeedTranslateInfo();
             String translateInfo = ProdList.getTranslateInfo();
-
             String meetingAddress = ProdList.getMeetingAddress();
             Long meetingSum = ProdList.getMeetingSum();
             Long interperSum = ProdList.getInterperSum();

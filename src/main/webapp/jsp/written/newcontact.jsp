@@ -172,10 +172,16 @@
                 if (data.status == 1) {
                     var OrderId = data.OrderId;
                     window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
+                } else {
+                    $("#EjectTitle").html("下单失败，请重试");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
                 }
             },
             error: function (data) {
-
+                $("#EjectTitle").html("下单失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
             },
             beforeSend: function () {
 
