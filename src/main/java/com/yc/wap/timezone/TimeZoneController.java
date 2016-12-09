@@ -23,7 +23,7 @@ public class TimeZoneController {
     @RequestMapping("/timezone.htm")
     public void timezone(HttpServletRequest request, HttpServletResponse response) {
         String offset = request.getParameter("offset");
-        logger.info("offset=" + offset);
+        logger.error("offset=" + offset);
     }
 
 }

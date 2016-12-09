@@ -209,7 +209,8 @@ public class OrderController extends BaseController {
             Timestamp sTime = ProdList.getStateTime();
             Timestamp eTime = ProdList.getEndTime();
             DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            TimeZone tz= TimeZone.getTimeZone(ZoneContextHolder.getZone());
+            String zone=ZoneContextHolder.getZone();
+            TimeZone tz= TimeZone.getTimeZone(zone);
             sdf.setTimeZone(tz);
 
             Double OrderPrice = Double.valueOf(OrderFee.getTotalFee()) / 1000;
