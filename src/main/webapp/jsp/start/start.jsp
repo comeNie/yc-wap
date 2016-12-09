@@ -247,8 +247,12 @@
     $(document).ready(function () {
 //        监听输入的文本内容
         $("#chick-int").bind("input propertychange", function () {
-            landetec = $("#chick-int").val();
+            var landetec = $("#chick-int").val();
             if (landetec == "" || landetec == null) {
+                return;
+            }
+            if(isEmojiCharacter(landetec)){
+                autoTip("翻译内容不能包含表情符,请重新输入");
                 return;
             }
             contentDetection(landetec);
@@ -295,23 +299,36 @@
             goTranslate();
         });
 
+        //提示框消失
+        $("#prompt-btn").click(function() {
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
+            console.log("timer手动__________"+timer);
+            clearInterval(timer);
+        });
     });
     //检测文本长度
     function checkLength(landetec) {
         if (landetec.length > 2000){
             var t = landetec.length-2000;
-            $("#EjectTitle").html("抱歉，最多支持输入2000个字符，您已超过"+t+"字符。");
-            $('#eject-mask').fadeIn(100);
-            $('#prompt').slideDown(100);
-
-            setTimeout(function(){
-                $('#eject-mask').fadeOut(200);
-                $('#prompt').slideUp(200);
-            },3000);
+            autoTip("抱歉，最多支持输入2000个字符，您已超过"+t+"字符。");
             return false;
         }else {
             return true;
         }
+    }
+    //3秒自動消失提示
+    var timer;
+    function autoTip(txt){
+        $("#EjectTitle").html(txt);
+        $('#eject-mask').fadeIn(100);
+        $('#prompt').slideDown(100);
+        timer = window.setInterval(function(){
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
+            console.log("timer自动++++++++++++"+timer);
+            clearInterval(timer);
+        },3000);
     }
     //播放声音
     function playAudio(){
@@ -436,10 +453,13 @@
     }
 //    翻译按钮的点击事件
     function goTranslate() {
-
         var textStr = $("#chick-int").val();
         if (textStr == "" || textStr == null) {         //判断为空,中断
             $('#results').hide();
+            return;
+        }
+        if(isEmojiCharacter(textStr)){
+            autoTip("翻译内容不能包含表情符,请重新输入");
             return;
         }
         if(!checkLength(textStr)){
@@ -628,6 +648,40 @@
                 if(selectTarget.options[i].value == source){
                     selectTarget.options[i].selected = true;
                     break;
+                }
+            }
+        }
+    }
+    //判断是否是表情符号
+    function isEmojiCharacter(substring) {
+        for (var i = 0; i < substring.length; i++) {
+            var hs = substring.charCodeAt(i);
+            if (0xd800 <= hs && hs <= 0xdbff) {
+                if (substring.length > 1) {
+                    var ls = substring.charCodeAt(i + 1);
+                    var uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
+                    if (0x1d000 <= uc && uc <= 0x1f77f) {
+                        return true;
+                    }
+                }
+            } else if (substring.length > 1) {
+                var ls = substring.charCodeAt(i + 1);
+                if (ls == 0x20e3) {
+                    return true;
+                }
+            } else {
+                if (0x2100 <= hs && hs <= 0x27ff) {
+                    return true;
+                } else if (0x2B05 <= hs && hs <= 0x2b07) {
+                    return true;
+                } else if (0x2934 <= hs && hs <= 0x2935) {
+                    return true;
+                } else if (0x3297 <= hs && hs <= 0x3299) {
+                    return true;
+                } else if (hs == 0xa9 || hs == 0xae || hs == 0x303d || hs == 0x3030
+                        || hs == 0x2b55 || hs == 0x2b1c || hs == 0x2b1b
+                        || hs == 0x2b50) {
+                    return true;
                 }
             }
         }
