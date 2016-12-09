@@ -28,6 +28,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
+    <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -88,7 +89,7 @@
         <section class="translation-content">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
                       placeholder="最多可输入2000字"></textarea>
-            <a hrel="#"><i class="icon iconfont">&#xe618;</i></a>
+            <a href="javascript:inputClear()"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">
             <p>您可以任意选择输入内容或者<a href="javascript:" id="upload">上传附件</a></p>
@@ -179,14 +180,13 @@
         $("#submit").bind("click", function () {
             var Content = $("#chick-int").val();
             var ContentLength = count(escape(Content));
-
             if (ContentLength == 0) {
                 $("#EjectTitle").html("请输入翻译内容");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             }
-            if (ContentLength >= 2000) {
+            if (ContentLength > 2000) {
                 $("#EjectTitle").html("翻译内容超出2000字");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
@@ -383,6 +383,10 @@
 
             }
         });
+    }
+
+    function inputClear() {
+        $("#chick-int").val("");
     }
 
 </script>

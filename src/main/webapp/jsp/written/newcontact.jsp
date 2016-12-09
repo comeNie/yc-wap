@@ -25,6 +25,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <script src="<%=path%>/js/modular/multi-switch.js"></script>
+    <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -89,6 +90,7 @@
             var email = $("#email").val();
             var phoneCheck = /^1\d{10}$/;
             var emailCheck = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            var nameCheck = /['"#$%&\^*]/;
 
             if (phone == "" || phone == null) {
                 $("#EjectTitle").html("请输入手机号");
@@ -110,7 +112,7 @@
                 $('#prompt').slideDown(100);
                 return;
             } else {
-                if (isEmojiCharacter(name) || isSpecificKeyCharacter(name)) {
+                if (isEmojiCharacter(name) || nameCheck.test(name)) {
                     $("#EjectTitle").html("请输入正确的姓名");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
@@ -171,10 +173,16 @@
                 if (data.status == 1) {
                     var OrderId = data.OrderId;
                     window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
+                } else {
+                    $("#EjectTitle").html("下单失败，请重试");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
                 }
             },
             error: function (data) {
-
+                $("#EjectTitle").html("下单失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
             },
             beforeSend: function () {
 
@@ -217,13 +225,6 @@
                 }
             }
         }
-    }
-
-    function isSpecificKeyCharacter(substring) {
-        var specialKey = "[`~!#$^&*()=|{}':;',\\[\\].<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]‘’";
-        var realKey = String.fromCharCode(substring);
-        var flag = false;
-        flag = (specialKey.indexOf(realKey) >= 0);
-        return !flag;
+        return false;
     }
 </script>

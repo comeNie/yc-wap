@@ -59,7 +59,8 @@ dependencies {
     compile "commons-io:commons-io:2.4"
 
     //session
-    compile "com.ai.opt.uni.session:opt-uni-session:2.0-SNAPSHOT"
+    compile 'com.ai.opt.xss.filter:opt-xss-firewall:1.1-SNAPSHOT'
+    compile 'com.ai.opt.uni.session:opt-uni-session:2.0-SNAPSHOT'
 
     //servlet
     compile "javax.servlet:javax.servlet-api:4.0.0-b01"
