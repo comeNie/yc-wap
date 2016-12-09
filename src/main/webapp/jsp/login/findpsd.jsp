@@ -216,8 +216,6 @@
             }
 
             Loading.ShowLoading();
-            $("#leftId").hide();
-            $("#liTitle").html("<spring:message code="login.findpsd.successTitle"/>")
             jump3(psdid);
 
         });
@@ -283,6 +281,7 @@
                     if (data.status == 2){
                         $("#codeLabel1").css("display","block");
                         $("#codeLabel1").html(data.msg);
+                        createCode();
                         return;
                     }
                     $("#codeLabel1").css("display","none");
@@ -350,6 +349,9 @@
             success: function (data) {
                 if (data.status == 1) {
                     index ++;//index = 3
+
+                    $("#leftId").hide();
+                    $("#liTitle").html("<spring:message code="login.findpsd.successTitle"/>")
                     $("#next3").hide();
                     $("#next4").show();
 
