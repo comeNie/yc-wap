@@ -277,7 +277,7 @@
                 location.reload();
             }
             if (IsTranslated == true) {
-                $("#results").hide()
+                $("#results").hide();
                 $("#btn-translate").show();
                 $("#chick-int").focus();
                 IsTranslated = false;
@@ -575,7 +575,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     realLangeuage = data.fintec;
-                    chooseLan(realLangeuage,"source-lan");
+//                    chooseLan(realLangeuage,"source-lan");
 
                 }
             }
