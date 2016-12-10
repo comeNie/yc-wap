@@ -5,11 +5,14 @@ import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.yc.common.api.sysdomain.interfaces.IQuerySysDomainSV;
 import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListRes;
+import com.ai.yc.common.api.sysdomain.param.SysDomainVo;
 import com.ai.yc.common.api.sysduad.interfaces.IQuerySysDuadSV;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListReq;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListRes;
+import com.ai.yc.common.api.sysduad.param.SysDuadVo;
 import com.ai.yc.common.api.syspurpose.interfaces.IQuerySysPurposeSV;
 import com.ai.yc.common.api.syspurpose.param.QuerySysPurposeListRes;
+import com.ai.yc.common.api.syspurpose.param.SysPurposeVo;
 import com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV;
 import com.ai.yc.order.api.autooffer.param.QueryAutoOfferReq;
 import com.ai.yc.order.api.autooffer.param.QueryAutoOfferRes;
@@ -19,6 +22,8 @@ import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
+import com.yc.wap.system.utils.ListSortUtil;
+import com.yc.wap.system.utils.MapSortUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
@@ -50,13 +55,17 @@ public class WrittenController extends BaseController {
     public String content() {
         Locale local = rb.getDefaultLocale();
 
-        List DualList = GetDualList(local.toString(), Constants.OrderType.DOC);
-        List PurposeList = GetPurposeList(local.toString());
-        List DomainList = GetDomainList(local.toString());
+        List<SysDuadVo> DualList = GetDualList(local.toString(), Constants.OrderType.DOC);
+        List<SysPurposeVo> PurposeList = GetPurposeList(local.toString());
+        List<SysDomainVo> DomainList = GetDomainList(local.toString());
 
         log.info("GetDualListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(DualList));
         log.info("GetPurposeListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(PurposeList));
         log.info("GetDomainListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(DomainList));
+
+        ListSortUtil<SysDuadVo> sortList = new ListSortUtil<>();
+        sortList.sort(DualList, "duadId", "asc");
+        log.info("GetDualListReturnSorted: " + com.alibaba.fastjson.JSONArray.toJSONString(DualList));
 
         JSONArray DualArray = JSONArray.fromObject(DualList);
         Map<String, Map<String, String>> DualMap = new HashMap<String, Map<String, String>>();
@@ -74,7 +83,7 @@ public class WrittenController extends BaseController {
                 TargetMap.put(targetCn, Id);
             } else {
                 if (!TargetMap.isEmpty()) {
-                    DualMap.put(SourceFlag, new HashMap<String, String>(TargetMap));
+                    DualMap.put(SourceFlag, MapSortUtil.sortMapByValue(TargetMap));
                     TargetMap.clear();
                 }
 
@@ -88,7 +97,7 @@ public class WrittenController extends BaseController {
                 TargetMap.put(targetCn, Id);
             }
         }
-        DualMap.put(SourceFlag, new HashMap<String, String>(TargetMap));
+        DualMap.put(SourceFlag, MapSortUtil.sortMapByValue(TargetMap));
         JSONObject DualJson = JSONObject.fromObject(DualMap);
         TargetMap.clear();
         SourceFlag = "";
@@ -103,7 +112,7 @@ public class WrittenController extends BaseController {
                 TargetMap.put(targetEn, Id);
             } else {
                 if (!TargetMap.isEmpty()) {
-                    DualMapEn.put(SourceFlag, new HashMap<String, String>(TargetMap));
+                    DualMapEn.put(SourceFlag, MapSortUtil.sortMapByValue(TargetMap));
                     TargetMap.clear();
                 }
 
@@ -117,7 +126,7 @@ public class WrittenController extends BaseController {
                 TargetMap.put(targetEn, Id);
             }
         }
-        DualMapEn.put(SourceFlag, new HashMap<String, String>(TargetMap));
+        DualMapEn.put(SourceFlag, MapSortUtil.sortMapByValue(TargetMap));
         JSONObject DualJsonEn = JSONObject.fromObject(DualMapEn);
 
         log.info("-------DualMap&JSON-------");
@@ -136,7 +145,7 @@ public class WrittenController extends BaseController {
         return "written/content";
     }
 
-    private List GetDualList(String Language, String OrderType) {
+    private List<SysDuadVo> GetDualList(String Language, String OrderType) {
         try {
             QuerySysDuadListReq req = new QuerySysDuadListReq();
 //            req.setLanguage(Language);
@@ -152,7 +161,7 @@ public class WrittenController extends BaseController {
         }
     }
 
-    private List GetPurposeList(String Language) {
+    private List<SysPurposeVo> GetPurposeList(String Language) {
         try {
             QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList();
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
@@ -165,7 +174,7 @@ public class WrittenController extends BaseController {
         }
     }
 
-    private List GetDomainList(String Language) {
+    private List<SysDomainVo> GetDomainList(String Language) {
         try {
             QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList();
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {

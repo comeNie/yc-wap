@@ -172,8 +172,8 @@ public class OrderController extends BaseController {
         String OrderId = request.getParameter("OrderId");
         OrderStateUpdateRequest req = new OrderStateUpdateRequest();
         req.setOrderId(Long.parseLong(OrderId));
-        req.setDisplayFlag(Constants.Order.UNEVALUATE);
-        req.setState(Constants.Order.CONFIRMED);
+        req.setDisplayFlag(Constants.Order.FINISH);
+        req.setState(Constants.Order.FINISH);
 
         try {
             OrderStateUpdateResponse resp = iOrderStateUpdateSV.updateState(req);
@@ -202,12 +202,14 @@ public class OrderController extends BaseController {
             QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(Long.parseLong(OrderId));
             log.info("QueryOrderDetailsReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
 
+            ///// Information Get /////
             ProdVo ProdList = resp.getProd();
             OrderFeeVo OrderFee = resp.getOrderFee();
             ProdExtendVo prodExtends = resp.getProdExtends().get(0);
             ProdLevelVo prodLevels = resp.getProdLevels().get(0);
             ContactsVo Contacts = resp.getContacts();
 
+            ///// Time & TimeZone /////
             Timestamp Time = resp.getOrderTime();
             Timestamp sTime = ProdList.getStateTime();
             Timestamp eTime = ProdList.getEndTime();
@@ -215,9 +217,7 @@ public class OrderController extends BaseController {
             TimeZone tz = TimeZone.getTimeZone(ZoneContextHolder.getZone());
             sdf.setTimeZone(tz);
 
-            Double OrderPrice = Double.valueOf(OrderFee.getTotalFee()) / 1000;
-            DecimalFormat df = new DecimalFormat("######0.00");
-
+            ///// Level & TranslateType /////
             String TransLV = prodLevels.getTranslateLevel();
             String TranslateLevel = "其他";
             if (TransLV.equals(Constants.TranslateLevel.Normal)) {
@@ -234,6 +234,7 @@ public class OrderController extends BaseController {
                 TranslateLevel = "交替翻译";
             }
 
+            ///// Sex /////
             String interperGen = ProdList.getInterperGen();
             String Sex = "";
             if (interperGen != null) {
@@ -246,6 +247,7 @@ public class OrderController extends BaseController {
                 }
             }
 
+            ///// Discount /////
             String discountSum = OrderFee.getDiscountSum();
             if (discountSum == null || discountSum.equals("")) {
                 discountSum = "";
@@ -253,25 +255,29 @@ public class OrderController extends BaseController {
                 discountSum = discountSum + "折";
             }
 
+            ///// OrderPrice /////
+            Double OrderPrice = Double.valueOf(OrderFee.getTotalFee()) / 1000;
+            DecimalFormat df = new DecimalFormat("######0.00");
             String displayFlag = resp.getDisplayFlag();
             String PriceDisplay = "请等待报价";
             if (!displayFlag.equals("13")) {
                 PriceDisplay = df.format(OrderPrice) + "元";
             }
 
-            // sort
+            ///// OrderStateTrack /////
+            // get
             List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
-//            ListSortUtil<OrderStateChgVo> sortList = new ListSortUtil<>();
-//            sortList.sort(orderStateChange, "stateChgTime", "desc");
             // put
-            Map<String, String> OrderTrackCn = new HashMap<String, String>();
+            Map<String, String> _OrderTrackCn = new HashMap<String, String>();
             for (OrderStateChgVo k : orderStateChange) {
                 Timestamp ts = k.getStateChgTime();
                 String ChangeTime = sdf.format(ts);
-                OrderTrackCn.put(ChangeTime, k.getChgDesc());
+                _OrderTrackCn.put(ChangeTime, k.getChgDesc());
             }
-            Map<String, String> OrderTrackCnS = MapSortUtil.sortMapByKey(OrderTrackCn);
+            // sort
+            Map<String, String> OrderTrackCn = MapSortUtil.sortMapByKey(_OrderTrackCn);
 
+            ///// Normal Data /////
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
             String OrderTime = sdf.format(Time);
@@ -290,6 +296,7 @@ public class OrderController extends BaseController {
             Long meetingSum = ProdList.getMeetingSum();
             Long interperSum = ProdList.getInterperSum();
 
+            ///// Params Put /////
             JSONObject ParamJson = new JSONObject();
             ParamJson.put("interperGen", Sex);
             ParamJson.put("meetingAddress", meetingAddress);
@@ -326,10 +333,9 @@ public class OrderController extends BaseController {
 
             log.info("OrderDetailParamJson.." + ParamJson.toString());
             log.info("OrderStateChange.." + OrderTrackCn.toString());
-            log.info("OrderStateChangeSorted.." + OrderTrackCnS.toString());
 
             request.setAttribute("Params", ParamJson);
-            request.setAttribute("OrderTrackCn", OrderTrackCnS);
+            request.setAttribute("OrderTrackCn", OrderTrackCn);
             request.setAttribute("FromRes", FromRes);
         } catch (BusinessException | SystemException | NumberFormatException e) {
             e.printStackTrace();

@@ -177,6 +177,8 @@
 
     $(document).ready(function () {
         Loading.HideLoading();
+        var UserLanguage = '${pageContext.response.locale}';
+        console.log("UserLanguage: " + UserLanguage);
 
         $("#chick-int").blur(function () {
             var Content = $("#chick-int").val();
