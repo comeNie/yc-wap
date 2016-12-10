@@ -147,7 +147,7 @@
         </section>
         <!--翻译按钮-->
         <section class="translate-btn" id="chick-btn">
-            <a href="javascript:void(0)" onclick="goTranslate()" id="translateAid" class="submit-btn btn-blue"><spring:message code="start.fanyi"/></a>
+            <a href="javascript:void(0)" onclick="btnT()" id="translateAid" class="submit-btn btn-blue"><spring:message code="start.fanyi"/></a>
             <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="display:none;padding-left: 2.5rem">
         </section>
         <!--翻译结果-->
@@ -454,6 +454,11 @@
         goTranslate();
     }
 //    翻译按钮的点击事件
+    function btnT(){
+        chooseLan(realLangeuage,"source-lan");
+        goTranslate()
+    }
+    //进行翻译
     function goTranslate() {
         var textStr = $("#chick-int").val();
         if (textStr == "" || textStr == null) {         //判断为空,中断
@@ -575,8 +580,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     realLangeuage = data.fintec;
-//                    chooseLan(realLangeuage,"source-lan");
-
+                    chooseLan(realLangeuage,"source-lan");
                 }
             }
         });
@@ -620,6 +624,7 @@
     }
     function addOption(rmIndex){
         var select = document.getElementById("target-lan");
+        var selectValue = $("#target-lan").val();
         select.length = 0;
         var arrLan = new Array("<spring:message code="start.zh"/>","<spring:message code="start.en"/>","<spring:message code="start.fr"/>","<spring:message code="start.ru"/>","<spring:message code="start.pt"/>");
         var arrLanValue = ["zh","en","fr","ru","pt"];
@@ -627,8 +632,15 @@
             arrLan.splice(rmIndex,1);
             arrLanValue.splice(rmIndex,1);
         }
+
         for (var i = 0;i < arrLan.length; i++) {
             select.add(new Option(arrLan[i], arrLanValue[i]));
+        }
+        for(var j=0; j<select.options.length; j++){
+            if(select.options[j].value == selectValue){
+                select.options[j].selected = true;
+                return;
+            }
         }
     }
     //切换语言对
