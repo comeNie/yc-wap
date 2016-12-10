@@ -140,7 +140,7 @@
                     <p>
                         <select id="translateLv" class="select testing-select-small" onchange="LvChange()">
                             <option transLv="100210">标准级</option>
-                            <option transLv="100220">专业级</option>
+                            <option transLv="100220" selected="selected">专业级</option>
                             <option transLv="100230">出版级</option>
                         </select>
                         <span>|</span>
@@ -177,6 +177,17 @@
 
     $(document).ready(function () {
         Loading.HideLoading();
+
+        $("#chick-int").blur(function () {
+            var Content = $("#chick-int").val();
+            if (Content == "") {
+                return;
+            }
+            var Language = DetectLanguage(Content);
+
+            // Todo Language
+        });
+
         $("#submit").bind("click", function () {
             var Content = $("#chick-int").val();
             var ContentLength = count(escape(Content));
@@ -387,6 +398,34 @@
 
     function inputClear() {
         $("#chick-int").val("");
+    }
+
+    function DetectLanguage(text) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/lanDetection",
+            modal: true,
+            timeout: 30000,
+            data: {
+                text: text
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    console.log("DetectLanguage: " + data.fintec);
+                    return data.fintec;
+                }
+            },
+            error: function (data) {
+
+            },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+
+            }
+        });
     }
 
 </script>

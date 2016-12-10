@@ -19,11 +19,13 @@ public class HttpsUtil {
         public void checkClientTrusted(X509Certificate[] chain, String authType)
                 throws CertificateException {
         }
+
         public void checkServerTrusted(X509Certificate[] chain, String authType)
                 throws CertificateException {
         }
+
         public X509Certificate[] getAcceptedIssuers() {
-            return new X509Certificate[] {};
+            return new X509Certificate[]{};
         }
     }
 
@@ -35,7 +37,7 @@ public class HttpsUtil {
 
     public static String HttpsPost(String url, String content, String charset) throws NoSuchAlgorithmException, KeyManagementException, IOException {
         SSLContext sc = SSLContext.getInstance("SSL");
-        sc.init(null, new TrustManager[] { new TrustAnyTrustManager() }, new java.security.SecureRandom());
+        sc.init(null, new TrustManager[]{new TrustAnyTrustManager()}, new java.security.SecureRandom());
         URL console = new URL(url);
         HttpsURLConnection conn = (HttpsURLConnection) console.openConnection();
         conn.setSSLSocketFactory(sc.getSocketFactory());
@@ -48,11 +50,11 @@ public class HttpsUtil {
         // 刷新、关闭
         out.flush();
         out.close();
-        String responseData="";
+        String responseData = "";
         BufferedReader reader;
-        if(conn.getResponseCode()!=200){
+        if (conn.getResponseCode() != 200) {
             reader = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }else{
+        } else {
             reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
         }
         String line = "";
@@ -66,10 +68,10 @@ public class HttpsUtil {
         return responseData;
     }
 
-    public static Map<String,String> httpsGet(String url,String charset)throws NoSuchAlgorithmException, KeyManagementException, IOException {
-        Map<String,String> map = new HashMap<String,String>();
+    public static Map<String, String> httpsGet(String url, String charset) throws NoSuchAlgorithmException, KeyManagementException, IOException {
+        Map<String, String> map = new HashMap<String, String>();
         SSLContext sc = SSLContext.getInstance("SSL");
-        sc.init(null, new TrustManager[] { new TrustAnyTrustManager() }, new java.security.SecureRandom());
+        sc.init(null, new TrustManager[]{new TrustAnyTrustManager()}, new java.security.SecureRandom());
         URL console = new URL(url);
         HttpsURLConnection conn = (HttpsURLConnection) console.openConnection();
         conn.setSSLSocketFactory(sc.getSocketFactory());
@@ -82,7 +84,7 @@ public class HttpsUtil {
         // 从工厂获得Socket连接
         Socket socket = factory.createSocket(console.getHost(), 443);
 
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),charset));
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), charset));
         BufferedReader in = null;
         out.write("GET " + url + " HTTP/1.0\n\n");
         out.flush();
@@ -90,9 +92,9 @@ public class HttpsUtil {
         int code = conn.getResponseCode();
         map.put("code", String.valueOf(code));
         StringBuffer sb = new StringBuffer();
-        if(code!=200){
+        if (code != 200) {
             in = new BufferedReader(new InputStreamReader(conn.getErrorStream(), charset));
-        }else{
+        } else {
             in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
         }
 
