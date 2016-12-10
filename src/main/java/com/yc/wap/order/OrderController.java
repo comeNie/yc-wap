@@ -33,7 +33,9 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -256,10 +258,17 @@ public class OrderController extends BaseController {
                 PriceDisplay = df.format(OrderPrice) + "元";
             }
 
+            // sort
             List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
             ListSortUtil<OrderStateChgVo> sortList = new ListSortUtil<>();
             sortList.sort(orderStateChange, "stateChgTime", "desc");
-            // sort
+            // put
+            Map<String, String> OrderTrackCn = new HashMap<String, String>();
+            for (OrderStateChgVo k : orderStateChange) {
+                Timestamp ts = k.getStateChgTime();
+                String ChangeTime = sdf.format(ts);
+                OrderTrackCn.put(ChangeTime, k.getChgDesc());
+            }
 
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
@@ -314,10 +323,10 @@ public class OrderController extends BaseController {
             }
 
             log.info("OrderDetailParamJson.." + ParamJson.toString());
-            log.info("OrderStateChange.." + com.alibaba.fastjson.JSONArray.toJSONString(orderStateChange));
+            log.info("OrderStateChange.." + OrderTrackCn.toString());
 
             request.setAttribute("Params", ParamJson);
-            request.setAttribute("orderStateChange", orderStateChange);
+            request.setAttribute("OrderTrackCn", OrderTrackCn);
             request.setAttribute("FromRes", FromRes);
         } catch (BusinessException | SystemException | NumberFormatException e) {
             e.printStackTrace();

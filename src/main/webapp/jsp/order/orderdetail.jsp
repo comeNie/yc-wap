@@ -406,7 +406,7 @@
         <div class="track-list">
             <div class="track-list-title">订单动态</div>
             <div class="track-list-ctn">
-                <c:forEach var="pair" items="${orderStateChange}" varStatus="i">
+                <c:forEach var="pair" items="${OrderTrackCn}" varStatus="i">
                     <c:if test="${i.index==0}">
                         <div class="track-state track-bule">
                             <p>
@@ -414,8 +414,8 @@
                                 <span class="line"></span>
                             </p>
                             <ul>
-                                <li class="word">${pair.chgDesc}</li>
-                                <li><fmt:formatDate type="both" value="${pair.stateChgTime}"/></li>
+                                <li class="word">${pair.value}</li>
+                                <li>${pair.key}</li>
                             </ul>
                         </div>
                     </c:if>
@@ -426,8 +426,8 @@
                                 <span class="line"></span>
                             </p>
                             <ul>
-                                <li class="word">${pair.chgDesc}</li>
-                                <li><fmt:formatDate type="both" value="${pair.stateChgTime}"/></li>
+                                <li class="word">${pair.value}</li>
+                                <li>${pair.key}</li>
                             </ul>
                         </div>
                     </c:if>
@@ -453,10 +453,12 @@
             if ($("#more").attr("flag") == "closed") {
                 $("#cont-hid").css("display", "block");
                 $("#more").attr("flag", "opened");
-            } else if ($("#more").attr("flag") == "opened") {
-                $("#cont-hid").css("display", "none");
-                $("#more").attr("flag", "closed");
+                $("#click-more").css("display", "none");
             }
+//            } else if ($("#more").attr("flag") == "opened") {
+//                $("#cont-hid").css("display", "none");
+//                $("#more").attr("flag", "closed");
+//            }
         });
 
         $("#nav-list1").bind("click", function () {
