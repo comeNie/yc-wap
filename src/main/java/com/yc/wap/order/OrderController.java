@@ -22,6 +22,7 @@ import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
 import com.yc.wap.system.utils.ListSortUtil;
+import com.yc.wap.system.utils.MapSortUtil;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -260,8 +261,8 @@ public class OrderController extends BaseController {
 
             // sort
             List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
-            ListSortUtil<OrderStateChgVo> sortList = new ListSortUtil<>();
-            sortList.sort(orderStateChange, "stateChgTime", "desc");
+//            ListSortUtil<OrderStateChgVo> sortList = new ListSortUtil<>();
+//            sortList.sort(orderStateChange, "stateChgTime", "desc");
             // put
             Map<String, String> OrderTrackCn = new HashMap<String, String>();
             for (OrderStateChgVo k : orderStateChange) {
@@ -269,6 +270,7 @@ public class OrderController extends BaseController {
                 String ChangeTime = sdf.format(ts);
                 OrderTrackCn.put(ChangeTime, k.getChgDesc());
             }
+            Map<String, String> OrderTrackCnS = MapSortUtil.sortMapByKey(OrderTrackCn);
 
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
@@ -324,9 +326,10 @@ public class OrderController extends BaseController {
 
             log.info("OrderDetailParamJson.." + ParamJson.toString());
             log.info("OrderStateChange.." + OrderTrackCn.toString());
+            log.info("OrderStateChangeSorted.." + OrderTrackCnS.toString());
 
             request.setAttribute("Params", ParamJson);
-            request.setAttribute("OrderTrackCn", OrderTrackCn);
+            request.setAttribute("OrderTrackCn", OrderTrackCnS);
             request.setAttribute("FromRes", FromRes);
         } catch (BusinessException | SystemException | NumberFormatException e) {
             e.printStackTrace();
