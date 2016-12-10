@@ -147,7 +147,7 @@
         </section>
         <!--翻译按钮-->
         <section class="translate-btn" id="chick-btn">
-            <a href="javascript:void(0)" onclick="btnT()" id="translateAid" class="submit-btn btn-blue"><spring:message code="start.fanyi"/></a>
+            <a href="javascript:void(0)" onclick="goTranslate()" id="translateAid" class="submit-btn btn-blue"><spring:message code="start.fanyi"/></a>
             <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="display:none;padding-left: 2.5rem">
         </section>
         <!--翻译结果-->
@@ -453,12 +453,7 @@
         $('#wrapper-hide').hide();
         goTranslate();
     }
-//    翻译按钮的点击事件
-    function btnT(){
-        chooseLan(realLangeuage,"source-lan");
-        goTranslate()
-    }
-    //进行翻译
+////    翻译按钮的点击事件
     function goTranslate() {
         var textStr = $("#chick-int").val();
         if (textStr == "" || textStr == null) {         //判断为空,中断
