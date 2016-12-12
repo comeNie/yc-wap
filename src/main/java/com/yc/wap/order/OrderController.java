@@ -196,6 +196,7 @@ public class OrderController extends BaseController {
         String FromRes = request.getParameter("FromRes");
         if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
             log.info("UserNotLogin");
+            request.setAttribute("to", "login");
             return "login/login";
         }
         try {
