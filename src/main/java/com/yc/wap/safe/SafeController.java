@@ -64,6 +64,12 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "safe")
     public String safe() {
         MsgBean result = new MsgBean();
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         String uidStr = (String) session.getAttribute("UID");
         String email1 = (String) session.getAttribute("email");
         String password = (String) session.getAttribute("password");
@@ -86,7 +92,12 @@ public class SafeController extends BaseController {
      */
     @RequestMapping(value = "changepsd")
     public String changepsd() {
-
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         log.info("safe-changepsd invoked");
 
         String uid = request.getParameter("uid");
@@ -100,10 +111,15 @@ public class SafeController extends BaseController {
      */
     @RequestMapping(value = "changephone")
     public String changephone() {
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         log.info("safe-changephone invoked");
         String uidStr = (String) session.getAttribute("UID");
         request.setAttribute("UID",uidStr);
-
         String phoneTitle = request.getParameter("phoneTitle");
         request.setAttribute("phoneTitle",phoneTitle);
         return "safe/changephone";
@@ -115,6 +131,12 @@ public class SafeController extends BaseController {
      */
     @RequestMapping(value = "changemail")
     public String changemail() {
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         log.info("safe-changemail invoked");
         String uidStr = (String) session.getAttribute("UID");
         request.setAttribute("UID",uidStr);
@@ -130,6 +152,12 @@ public class SafeController extends BaseController {
      */
     @RequestMapping(value = "safesuccess")
     public String safesuccess() {
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         MsgBean result = new MsgBean();
         log.info("safe-safesuccess invoked");
         String nameStr = request.getParameter("name");
@@ -143,6 +171,12 @@ public class SafeController extends BaseController {
      */
     @RequestMapping(value = "installpsd")
     public String installpsd() {
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         log.info("safe-installpsd invoked");
         return "safe/installpsd";
     }
@@ -153,6 +187,12 @@ public class SafeController extends BaseController {
      */
     @RequestMapping(value = "checkphone")
     public String checkphone() {
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         log.info("safe-checkphone invoked");
         String uidStr = (String) session.getAttribute("UID");
         request.setAttribute("UID",uidStr);

@@ -21,7 +21,12 @@ public class CenterController extends BaseController {
     @RequestMapping(value = "center")
     public String center() {
         log.info("account-center invoked");
-
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         String uid = (String) session.getAttribute("UID");
         //查询用户信息
         SearchYCUserRequest userRequest = new SearchYCUserRequest();

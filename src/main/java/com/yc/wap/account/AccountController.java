@@ -34,6 +34,12 @@ public class AccountController extends BaseController {
 
     @RequestMapping(value = "recharge")
     public String recharge() {
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         log.info("account-recharge invoked");
         String balance = request.getParameter("balance");
 
@@ -43,6 +49,12 @@ public class AccountController extends BaseController {
 
     @RequestMapping(value = "balance")
     public String balance() {
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
         log.info("account-balance invoked");
 
         return "account/balance";
