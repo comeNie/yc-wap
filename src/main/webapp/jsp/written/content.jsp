@@ -77,7 +77,7 @@
                 </select>
                 <span>|</span>
             </p>
-            <p class="test-icon1"><i class="icon iconfont">&#xe621;</i></p>
+            <p class="test-icon1" id="swap"><i class="icon iconfont">&#xe621;</i></p>
             <p>
                 <select id="dualTarget" class="select testing-select">
 
@@ -153,7 +153,7 @@
                     </p>
                 </li>
                 <li>
-                    <p><input id="isRead" type="checkbox" class="checkbox"></p>
+                    <p><input id="isRead" type="checkbox" class="checkbox" checked="checked"></p>
                     <p id="pIsRead" class="a-link">我已阅读并同意中译语通的<a href="javascript:toLicense()">《翻译协议》</a></p>
                 </li>
             </ul>
@@ -188,6 +188,10 @@
             var Language = DetectLanguage(Content);
 
             // Todo Language
+        });
+
+        $("#swap").bind("click", function () {
+
         });
 
         $("#submit").bind("click", function () {
