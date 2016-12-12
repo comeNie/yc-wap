@@ -209,7 +209,35 @@
             $("#phoneLabel").css("display","none");
         }
         Loading.ShowLoading();
-        getTestCode(phone,selectValue);
+        checkAvailable(phone,selectValue)
+
+    }
+    //检测是否可用
+    function checkAvailable(phone,selectValue){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/checkPhoneOrEmail",
+            modal: true,
+            timeout: 30000,
+            data: {
+                checkType: "phone",
+                checkVal:phone,
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#phoneLabel").css("display", "none");
+                    getTestCode(phone,selectValue);
+                } else {
+                    $("#phoneLabel").html(data.msg);
+                    $("#phoneLabel").css("display", "block");
+                    Loading.HideLoading();
+                }
+            },
+            error: function () {
+                Loading.HideLoading();
+            }
+        });
     }
 //    发送验证码
     function getTestCode(phone,selectValue) {

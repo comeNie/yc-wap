@@ -35,7 +35,7 @@
     <div class="wrapper-big"><!--包含除底部外的所有层-->
         <nav class="wap-second-nav">
             <ul>
-                <a href="javascript:window.history.go(-1)" ><i class="icon iconfont left">&#xe626;</i></a>
+                <a href="javascript:window.history.back(-1)" ><i class="icon iconfont left">&#xe626;</i></a>
                 <li><spring:message code="login.findfail.title"/></li>
             </ul>
         </nav>

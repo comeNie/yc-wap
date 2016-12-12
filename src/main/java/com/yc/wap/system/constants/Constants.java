@@ -108,7 +108,15 @@ public class Constants {
         public static final String ALLModel = "5";
 
     }
-
+    /**
+     * 邮箱手机号
+     */
+    public static class PhoneOrMail {
+        //1：邮箱
+        public static final String Mail = "mail";
+        //2：手机
+        public static final String Phone = "phone";
+    }
     /**
      * 获取用户信息方式
      */
