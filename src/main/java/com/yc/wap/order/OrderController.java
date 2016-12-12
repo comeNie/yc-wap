@@ -124,10 +124,22 @@ public class OrderController extends BaseController {
             QueryOrderRsponse resp = iOrderQuerySV.queryOrder(req);
             PageInfo<OrdOrderVo> order = resp.getPageInfo();
             log.info("GetOrderReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(order));
+
+            DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            TimeZone tz = TimeZone.getTimeZone(ZoneContextHolder.getZone());
+            sdf.setTimeZone(tz);
+
+            List<OrdOrderVo> OrderList = order.getResult();
+            if (OrderList != null) {
+                for (OrdOrderVo k : OrderList) {
+                    k.setOrderTime(Timestamp.valueOf(sdf.format(k.getOrderTime())));
+                }
+            }
+
             int Count = order.getCount();
             int PageCount = order.getPageCount();
             int PageNo = order.getPageNo();
-            List<OrdOrderVo> OrderList = order.getResult();
+
             result.put("Count", Count);
             result.put("PageCount", PageCount);
             result.put("PageNo", PageNo);

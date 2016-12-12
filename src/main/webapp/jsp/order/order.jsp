@@ -150,7 +150,7 @@
                         var StateShow = GetStateShow(data.OrderList[key].displayFlag);
                         var orderId = data.OrderList[key].orderId;
                         var translateName = data.OrderList[key].translateName;
-                        var date = new Date(data.OrderList[key].orderTime).Format("yyyy-MM-dd hh:mm:ss");
+                        var date = new Date(data.OrderList[key].orderTime).Format("yyyy/MM/dd hh:mm:ss");
                         var price = (data.OrderList[key].totalFee / 1000).toFixed(2);
 
                         if (orderId == null || orderId == "") {
