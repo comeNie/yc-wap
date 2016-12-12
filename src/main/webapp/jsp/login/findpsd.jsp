@@ -142,7 +142,7 @@
             }else {
                 $("#nameLabel1").css("display","none");
             }
-            var t = /^1\d{10}$/;
+            var t = /^[0-9]*$/;
             if(!t.test(phone)){
                 $("#nameLabel1").html("<spring:message code="login.register.enterRightphone"/>");
                 $("#nameLabel1").css("display","block");

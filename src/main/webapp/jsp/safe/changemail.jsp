@@ -162,7 +162,35 @@
             $("#mailLabel").css("display","none");
         }
         Loading.ShowLoading();
-        getTestCode(mail);
+        checkAvailable(mail);
+
+    }
+    //检测是否可用
+    function checkAvailable(mail){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/checkPhoneOrEmail",
+            modal: true,
+            timeout: 30000,
+            data: {
+                checkType: "mail",
+                checkVal:mail,
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#mailLabel").css("display", "none");
+                    getTestCode(mail);
+                } else {
+                    $("#mailLabel").html(data.msg);
+                    $("#mailLabel").css("display", "block");
+                    Loading.HideLoading();
+                }
+            },
+            error: function () {
+                Loading.HideLoading();
+            }
+        });
     }
     //    发送验证码
     function getTestCode(mail) {
@@ -191,8 +219,6 @@
                 }
             },
             error: function () {
-                $("#phonetips").html(data.msg);
-                $("#phonetips").css("display", "block");
                 Loading.HideLoading();
             }
         });

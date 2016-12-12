@@ -11,6 +11,8 @@ import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersResponse;
 import com.ai.yc.ucenter.api.members.param.UcMembersVo;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
+import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckEmailRequest;
+import com.ai.yc.ucenter.api.members.param.checke.UcMembersCheckeMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editemail.UcMembersEditEmailRequest;
 import com.ai.yc.ucenter.api.members.param.editmobile.UcMembersEditMobileRequest;
 import com.ai.yc.ucenter.api.members.param.editpass.UcMembersEditPassRequest;
@@ -19,6 +21,7 @@ import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeResponse;
+import com.alibaba.fastjson.JSON;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -343,6 +346,68 @@ public class SafeController extends BaseController {
         }
 
         return  result.returnMsg();
+    }
+
+    /**
+     * 校验邮箱或手机
+     */
+    @RequestMapping("/checkPhoneOrEmail")
+    public @ResponseBody Object checkPhoneOrEmail() {
+        MsgBean result = new MsgBean();
+        try {
+            String checkType = request.getParameter("checkType");
+            String checkVal = request.getParameter("checkVal");
+            Object[] objects = checkPhoneOrEmail(checkType, checkVal);
+            String canUse = (String) objects[0];
+            String msg =  (String) objects[1];
+            result.put("status",canUse);
+            result.put("msg",msg);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return  result.returnMsg();
+    }
+    /***
+     * 校验手机号邮箱是否可用
+     * @param checkType
+     * @param checkVal
+     * @return
+     */
+    private Object[] checkPhoneOrEmail(String checkType, String checkVal) {
+        UcMembersResponse resp = null;
+        String msg = "ok";
+        try {
+            if (Constants.PhoneOrMail.Mail.equals(checkType)) {// 邮箱校验
+                UcMembersCheckEmailRequest emailReq = new UcMembersCheckEmailRequest();
+                emailReq.setEmail(checkVal);
+                emailReq.setTenantId(Constants.TENANTID);
+                resp = iUcMembersSV.ucCheckeEmail(emailReq);
+                msg = "该邮箱已被绑定";
+                log.info("校验邮箱返回：" + JSON.toJSONString(resp));
+            }
+            if (Constants.PhoneOrMail.Phone.equals(checkType)) {// 手机校验
+                UcMembersCheckeMobileRequest phoneReq = new UcMembersCheckeMobileRequest();
+                phoneReq.setTenantId(Constants.TENANTID);
+                phoneReq.setMobilephone(checkVal);
+                msg = "该手机号已被绑定";
+                resp = iUcMembersSV.ucCheckeMobilephone(phoneReq);
+                log.info("校验手机返回：" + JSON.toJSONString(resp));
+            }
+        } catch (Exception e) {
+            log.info(e.getMessage(), e);
+        }
+        ResponseCode responseCode = resp == null ? null : resp.getCode();
+        Integer codeNumber = responseCode == null ? null : responseCode
+                .getCodeNumber();
+        String falg = "0";
+
+        if (codeNumber != null && codeNumber == 1) {
+            falg = "1";
+            msg = "ok";
+        } else {
+            falg = "0";
+        }
+        return new Object[]{falg,msg};
     }
 
     /**
