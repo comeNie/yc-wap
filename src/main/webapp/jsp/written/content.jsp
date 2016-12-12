@@ -191,7 +191,8 @@
         });
 
         $("#swap").bind("click", function () {
-
+            var target = $("#dualTarget").val();
+            console.log(target)
         });
 
         $("#submit").bind("click", function () {

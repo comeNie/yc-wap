@@ -66,6 +66,7 @@
 
     $(document).ready(function () {
         Loading.HideLoading();
+        checkScroll();
     });
 
     Array.prototype.contains = function (obj) {
@@ -82,6 +83,7 @@
         var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;
         var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+//        console.log("pageHeight: " + pageHeight + ", viewportHeight: " + viewportHeight + ", scrollHeight: " + scrollHeight);
         return pageHeight - viewportHeight - scrollHeight < 20;
     }
 
@@ -94,7 +96,7 @@
             return;
         }
         if (indexArray.contains(index + 1)) {
-            return;
+            return pollScroll();
         }
 
         indexArray.push(index + 1);
@@ -106,14 +108,12 @@
         if (!lowEnough()) {
             return pollScroll();
         }
-        setTimeout(doSomething, 100);
+        setTimeout(doSomething, 200);
     }
 
     function pollScroll() {
-        setTimeout(checkScroll, 100);
+        setTimeout(checkScroll, 200);
     }
-
-    checkScroll();
 
     $(function () {
 
