@@ -42,7 +42,8 @@
         </ul>
     </section>
     <div id="wrapper"></div>
-    <div class="loading" id="spinner" style="display: none"><a href="#" id="spId">没有更多了</a></div>
+    <div class="loading" id="spinner"><a href="javascript:doSomething()" id="spId">点击加载更多</a></div>
+    <div><p></p></div>
 </div>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 <form id="ToOrderPay" method="post" action="<%=path%>/pay/OrderPay">
@@ -58,6 +59,7 @@
     var btn1 = "";
     var btn2 = "";
     var isEmpty = false;
+    var noMore = false;
     var statusFlag = ""; //0正常 1待支付 2待确认 3待报价
     var detailUrl = "<%=path%>/order/OrderDetail?OrderId=";
     var indexArray = [];
@@ -80,16 +82,15 @@
         var pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight);
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;
         var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-        return pageHeight - viewportHeight - scrollHeight < 30;
+        return pageHeight - viewportHeight - scrollHeight < 20;
     }
 
     function doSomething() {
         if (isEmpty) {
+            $("#spinner").css("display", "none");
             return;
         }
         if (index == PageCount) {
-            $("#spId").html("没有更多了");
-            $("#spinner").css("display", "block");
             return;
         }
         if (indexArray.contains(index + 1)) {
@@ -138,8 +139,13 @@
                         $("#error").css("display", "block");
                         isEmpty = true;
                     }
+                    if (data.PageCount == data.PageNo) {
+                        noMore = true;
+                    }
+
                     PageCount = data.PageCount;
                     index = data.PageNo;
+
                     for (var key in data.OrderList) {
                         var StateShow = GetStateShow(data.OrderList[key].displayFlag);
                         var orderId = data.OrderList[key].orderId;
@@ -173,7 +179,13 @@
                 $("#spinner").css("display", "block");
             },
             complete: function () {
-                $("#spinner").css("display", "none");
+                if (noMore) {
+                    $("#spId").html("没有更多了");
+                    $("#spinner").css("display", "block");
+                } else {
+                    $("#spId").html("点击加载更多");
+                    $("#spinner").css("display", "block");
+                }
             }
         });
     }
