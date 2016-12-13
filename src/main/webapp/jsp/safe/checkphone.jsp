@@ -14,11 +14,19 @@
 <%
     String path = request.getContextPath();
     String jump = (String) request.getAttribute("jump");
+    response.setHeader("Pragma","No-cache");  //HTTP 1.1
+    response.setHeader("Cache-Control","private, no-cache, no-store, max-age=0, proxy-revalidate, s-maxage=0");//HTTP 1.0
+    response.setDateHeader("Expires",-1); //防止被proxy
+    response.setHeader("Vary","*");
 %>
+<%response.setHeader("cache-control","public"); %>
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <%--<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />--%>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title><spring:message code="safe.checkphone.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
@@ -31,7 +39,7 @@
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
     <%@ include file="../common/timezone.jsp" %>
 </head>
-<body>
+<body onunload="">
     <div class="wrapper-big"><!--包含除底部外的所有层-->
         <nav class="wap-second-nav">
             <ul>
@@ -51,7 +59,7 @@
                 <div class="set-int">
                     <ul>
                         <li>
-                            <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="safe.checkphone.small_input"/>"></p>
+                            <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="safe.checkphone.small_input"/>" autocomplete="off"></p>
                             <p class="yzm"><a id="getnumber" onclick="getnumberonclick()"class="btn bnt-yzm"><spring:message code="safe.checkphone.yzm_input"/></a></p>
                             <label id="phonetips"></label>
                         </li>

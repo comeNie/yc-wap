@@ -46,11 +46,11 @@
                 <div class="set-int">
                     <ul>
                         <li>
-                            <p><input id="mail" type="text" class="input input-large" placeholder=<spring:message code="safe.changemail.navli"/>></p>
+                            <p><input id="mail" type="text" class="input input-large" placeholder="<spring:message code="safe.changemail.navli"/>"></p>
                             <label id="mailLabel"></label>
                         </li>
                         <li>
-                            <p><input id="codeid" type="text" class="input input-small" placeholder=<spring:message code="safe.changemail.small_input"/>></p>
+                            <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="safe.changemail.small_input"/>" autocomplete="off"></p>
 
                             <p class="yzm"><a id="getnumber" onclick="javascript:getnumberonclick()" class="btn bnt-yzm"><spring:message code="safe.changemail.bntyzm_input"/></a></p>
                             <label id="phonetips"></label>

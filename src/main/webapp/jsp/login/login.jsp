@@ -139,7 +139,7 @@
                                 <label id="psdLabel"></label>
                             </li>
                             <li class="int-border">
-                                <p><input id="codeInput" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>"></p>
+                                <p><input id="codeInput" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>" autocomplete="off"></p>
                                 <img id="checkCodeId" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
                                 <p style="float:right" class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh"></i></a></p>
                                 <label id="codeLabel"></label>
@@ -198,7 +198,7 @@
                                 <label id="phoneLabel1"></label>
                             </li>
                             <li>
-                                <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>"></p>
+                                <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>"  autocomplete="off"></p>
                                 <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm" onclick="getnumberonclick()"><spring:message code="login.register.getcode"/></a></p>
                                 <label id="codeLabel1"></label>
                             </li>
