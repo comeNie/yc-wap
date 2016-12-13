@@ -214,10 +214,7 @@ public class Constants {
 
     }
 
-    public static final class Register {
-        private Register() {
-        }
-
+    public static final class Verify {
         /** 验证码ccs配置路径 */
 //        public static final String VERIFICATION_CCS_NAMESPACE = "/com/ai/opt/verification-code-config";
         /** 缓存命名空间 */
@@ -225,11 +222,11 @@ public class Constants {
         /**
          * 注册邮件中文模版
          */
-        public static final String REGISTER_EMAIL_ZH_CN_TEMPLATE = "email/template/yc-register_zh_cn-mail.xml";
+        public static final String VERIFY_EMAIL_ZH_CN_TEMPLATE = "email/template/yc-verification_zh_cn-mail.xml";
         /**
          * 注册邮件英文模版
          */
-        public static final String REGISTER_EMAIL_EN_US_TEMPLATE = "email/template/yc-register_en_us-mail.xml";
+        public static final String VERIFY_EMAIL_EN_US_TEMPLATE = "email/template/yc-verification_en_us-mail.xml";
         /** 邮箱校验 */
 //        public static final String CHECK_TYPE_EMAIL = "email";
         /** 手机校验 */
@@ -238,10 +235,8 @@ public class Constants {
 //        public static final String CHECK_TYPE_SUCCESS = "1";
         /** 注册国家缓存key */
 //        public static final String REGISTER_COUNTRY_LIST_KEY = "register_country_list_key";
-        /**
-         * 注册国家缓存超时时间
-         */
-        public static final String REGISTER_COUNTRY_LIST_KEY_OVERTIME = "300";
+        /** 动态码邮件中文模版主题 */
+        public static final String EMAIL_VERIFY_ZH_CN_SUBJECT = "邮箱验证码邮件";
 
     }
 

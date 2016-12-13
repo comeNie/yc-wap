@@ -1,47 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xml-body>
+
 <html>
 <head>
+
 </head>
 <body style='color:#6a6c6f; background:#fff;font-size:14px;margin:0 auto;font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing:grayscale; box-sizing: border-box; border:0; padding:0; margin:0;'>	
 	<div class="mail-conter" style="width:760px;margin:0 auto;">
-		<div class="mail-logo" style="width:100%;float:left;margin-top:22px;"><img src="{3}" /></div>
+		<div class="mail-logo" style="width:100%;float:left;margin-top:22px;"><img id="img1" src="{3}" /></div>
 		<div class="mail-title" style="width:100%;float:left;text-align: center;margin-top:35px;font-size:22px;color:#2c3e50;font-weight:bold;">
 		{0}
 		</div>
 		<div class="mail-main" style="width:1080px;height: auto;border:1px solid #dbdfe5;border-top:3px solid #0a67f0;float:left;margin-top:40px;padding:35px 35px;">
 			<div class="word-title" style="width:100%;display:inline-block;">
-				<p class="word" style="font-size:16px;color:#2c3e50">Hi<span>{1}</span>：</p>
+				<p class="word" style="font-size:16px;color:#2c3e50">尊敬的<span>{1}</span>：</p>
 			</div>
 			<div class="word-list" style="width:100%;float:left;margin-top:20px;">
 				<div class="word-list-title" style="height:30px;background:#f0f3fa;border-top:1px solid #0a67f0;line-height:30px; padding-left:20px;font-size:14px;color:#2c3e50;font-weight: bold;"></div>
 				<div class="word-list-text" style="width:100%;float:left;padding:30px 0px;">
 					<ul style="float:left;margin-left:-20px;list-style: none;">
 						<li style="list-style: none;line-height:25px;color:#6a6c6f">
-						Please verify your e-mail, only one step is left for you to finish registration in YeeCloud!
-						Thank you for supporting YeeCloud, please click on the following link to verify your e-mail.
+						您好，您在译云平台获取的邮箱验证码是<span>{2}</span>（30分钟有效），译云伴您步入语言沟通无障碍的世界
 						</li>
-						<li style="list-style: none;line-height:25px;color:#6a6c6f">
-						<a href="{2}" target="_bank">Please click here to finish registration</a>
-						
-						</li>
-						<li style="list-style: none;line-height:25px;color:#6a6c6f">
-						If you fail to open the link above, please copy and paste the link below into the address bar in your browser：
-						</li>
-						<li style="list-style: none;line-height:25px;color:#6a6c6f">
-						{2}
-						</li>
-						
-						<li style="list-style: none;line-height:25px;color:#6a6c6f">
-						To verify your e-mail can further safeguard your account If you receive this e-mail by chance, please ignore it. 
-						</li>
-						
 					</ul>
 				</div>
 			</div>
 			
 			<div class="word-foot" style="width:100%;float:left">
-				<p style="margin:20px 0;">This is sent by YeeCloud system automatically and the system cannot receive any reply, please do not reply directly.</p>
+				<p style="margin:20px 0;">此信是译云网系统发出，系统不接收回信，请勿直接回复。</p>
 				<p class="right"  style="margin:20px 0;float:right">
 					<span><img src="{4}" /></span>
 					<span style="color:#2965e6;font-size:18px;">400-119-8080</span>
@@ -54,12 +40,11 @@
 			<ul style="width:100%;float:left;list-style: none;">
 				<li class="left" style="list-style: none;float:left">
 					<p style="float:left;"><img src="{5}"/></p>
-					<p class="word" style="float:left;color:#fff;margin:22px 0 0 18px;font-size:12px;line-height:25px;">
-					Scan QR code on the left to follow our WeChat official account for information about special offers and translation messages.
-					</p>
+					<p class="word" style="float:left;color:#fff;margin:22px 0 0 18px;font-size:12px;line-height:25px;">扫描左侧二维码，关注译云平台官方微信，<br></br>
+获得优惠活动和翻译资讯信息。</p>
 				</li>
 				<li class="right" style="list-style: none;float:right;font-size:12px;text-align: right;color:#3f76aa;margin-top:20px;">
-					<p>Global Tone Communication Technology (Beijing) Co., Ltd.  All rights reserved.</p>
+					<p>中译语通科技（北京）有限公司  版权所有</p>
 					<p>Copyright © 2014 www.yeecloud.com All rights reserved.
 </p>
 				</li>
@@ -69,5 +54,4 @@
 	
 </body>
 </html>
-
 </xml-body>
