@@ -39,11 +39,19 @@
     String path = request.getContextPath();
     String userAgent = request.getHeader("USER-AGENT").toLowerCase();
     String AppUrl = "http://m.yeecloud.com";
+    String Classes = request.getParameter("class");
     System.out.println("userAgent: " + userAgent);
+
     if (Android(userAgent)) {
         AppUrl = "http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt";
     } else if (IOS(userAgent)) {
         AppUrl = "https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8";
+    }
+
+    if (Classes != null && !Classes.equals("")) {
+        request.setAttribute("Classes", Classes);
+    } else {
+        request.setAttribute("Classes", "footer-big");
     }
     request.setAttribute("AppUrl", AppUrl);
     request.setAttribute("WapUrl", "http://m.yeecloud.com");
@@ -53,7 +61,7 @@
 <head>
 </head>
 <body>
-<section id="_bottom" class="footer-big">
+<section id="_bottom" class="${Classes}">
     <section class="terminal">
         <ul>
             <li class="none">

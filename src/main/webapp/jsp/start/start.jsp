@@ -204,7 +204,9 @@
 </div>
 
 <!--底部-->
-<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+<jsp:include page="/jsp/common/bottom.jsp" flush="true">
+    <jsp:param name="class" value="index-footer-big"/>
+</jsp:include>
 
 
 </body>
