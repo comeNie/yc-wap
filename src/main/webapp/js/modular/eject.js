@@ -41,4 +41,15 @@ jQuery(document).ready(function($) {
 	$('#eject-mask').fadeOut(200);
 	$('#no-password').slideUp(200);
 	})
+})
+//无密码弹出框 
+jQuery(document).ready(function($) {
+	$('#beyond-btn').click(function(){
+	$('#eject-mask').fadeIn(100);
+	$('#beyond').slideDown(100);
+	})
+	$('#set-passbtn').click(function(){
+	$('#eject-mask').fadeOut(200);
+	$('#beyond').slideUp(200);
+	})
 })	

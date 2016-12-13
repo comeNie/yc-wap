@@ -221,8 +221,8 @@ public class OrderController extends BaseController {
             ///// Information Get /////
             ProdVo ProdList = resp.getProd();
             OrderFeeVo OrderFee = resp.getOrderFee();
-            ProdExtendVo prodExtends = resp.getProdExtends().get(0);
-            ProdLevelVo prodLevels = resp.getProdLevels().get(0);
+            List<ProdExtendVo> prodExtends = resp.getProdExtends();
+            List<ProdLevelVo> prodLevels = resp.getProdLevels();
             ContactsVo Contacts = resp.getContacts();
 
             ///// Time & TimeZone /////
@@ -234,20 +234,23 @@ public class OrderController extends BaseController {
             sdf.setTimeZone(tz);
 
             ///// Level & TranslateType /////
-            String TransLV = prodLevels.getTranslateLevel();
-            String TranslateLevel = "其他";
-            if (TransLV.equals(Constants.TranslateLevel.Normal)) {
-                TranslateLevel = "标准级";
-            } else if (TransLV.equals(Constants.TranslateLevel.Professional)) {
-                TranslateLevel = "专业级";
-            } else if (TransLV.equals(Constants.TranslateLevel.Publish)) {
-                TranslateLevel = "出版级";
-            } else if (TransLV.equals(Constants.TranslateLevel.Together)) {
-                TranslateLevel = "陪同翻译";
-            } else if (TransLV.equals(Constants.TranslateLevel.Simulate)) {
-                TranslateLevel = "同声传译";
-            } else if (TransLV.equals(Constants.TranslateLevel.Alter)) {
-                TranslateLevel = "交替翻译";
+            for (ProdLevelVo k : prodLevels) {
+                String TransLV = k.getTranslateLevel();
+                String TranslateLevel = "其他";
+                if (TransLV.equals(Constants.TranslateLevel.Normal)) {
+                    TranslateLevel = "标准级";
+                } else if (TransLV.equals(Constants.TranslateLevel.Professional)) {
+                    TranslateLevel = "专业级";
+                } else if (TransLV.equals(Constants.TranslateLevel.Publish)) {
+                    TranslateLevel = "出版级";
+                } else if (TransLV.equals(Constants.TranslateLevel.Together)) {
+                    TranslateLevel = "陪同翻译";
+                } else if (TransLV.equals(Constants.TranslateLevel.Simulate)) {
+                    TranslateLevel = "同声传译";
+                } else if (TransLV.equals(Constants.TranslateLevel.Alter)) {
+                    TranslateLevel = "交替翻译";
+                }
+                k.setTranslateLevel(TranslateLevel);
             }
 
             ///// Sex /////
@@ -297,7 +300,6 @@ public class OrderController extends BaseController {
             String translateType = resp.getTranslateType();
             String translateName = resp.getTranslateName();
             String OrderTime = sdf.format(Time);
-            String TransLang = prodExtends.getLangungePairName();
             String useCn = ProdList.getUseCn();
             String fieldCn = ProdList.getFieldCn();
             String takeTime = ProdList.getTakeTime();
@@ -330,8 +332,8 @@ public class OrderController extends BaseController {
             ParamJson.put("OrderId", OrderId);
             ParamJson.put("PriceDisplay", PriceDisplay);
             ParamJson.put("OrderTime", OrderTime);
-            ParamJson.put("TransLang", TransLang);
-            ParamJson.put("TranslateLevel", TranslateLevel);
+            ParamJson.put("TransLang", prodExtends);
+            ParamJson.put("TranslateLevel", prodLevels);
             ParamJson.put("useCn", useCn);
             ParamJson.put("fieldCn", fieldCn);
             ParamJson.put("takeTime", takeTime);

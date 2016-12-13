@@ -111,7 +111,7 @@
                 </li>
                 <li>
                     <p class="word">增值服务:</p>
-                    <p>4
+                    <p>
                         <select id="otherServ" class="select testing-select-small" onchange="ServerChange()">
                             <option otherServId="N">无排版</option>
                             <%--<option otherServId="Y">需排版</option>--%>

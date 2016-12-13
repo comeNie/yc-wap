@@ -119,13 +119,13 @@
                     <li>
                         <p>翻译语言:</p>
                     </li>
-                    <li class="right">${Params.TransLang}</li>
+                    <li class="right">${Params.TransLang[0].langungePairName}</li>
                 </ul>
                 <ul>
                     <li>
                         <p>翻译级别:</p>
                     </li>
-                    <li class="right">${Params.TranslateLevel}</li>
+                    <li class="right">${Params.TranslateLevel[0].translateLevel}</li>
                 </ul>
                 <ul>
                     <li>
@@ -244,18 +244,38 @@
                     </li>
                     <li class="right">${Params.OrderTime}</li>
                 </ul>
-                <ul>
+                <ul class="big-word">
                     <li>
                         <p>翻译类型:</p>
                     </li>
-                    <li class="right">${Params.TranslateLevel}</li>
+                    <li class="right">
+                        <c:forEach var="pair" items="${Params.TranslateLevel}">
+                            <p>${pair.translateLevel}</p>
+                        </c:forEach>
+                    </li>
                 </ul>
-                <ul>
+                <ul class="big-word">
                     <li>
                         <p>翻译语言:</p>
                     </li>
-                    <li class="right">${Params.TransLang}</li>
+                    <li class="right">
+                        <c:forEach var="pair" items="${Params.TransLang}">
+                            <p>${pair.langungePairName}</p>
+                        </c:forEach>
+                    </li>
                 </ul>
+                <%--<ul>--%>
+                    <%--<li>--%>
+                        <%--<p>翻译类型:</p>--%>
+                    <%--</li>--%>
+                    <%--<li class="right">${Params.TranslateLevel}</li>--%>
+                <%--</ul>--%>
+                <%--<ul>--%>
+                    <%--<li>--%>
+                        <%--<p>翻译语言:</p>--%>
+                    <%--</li>--%>
+                    <%--<li class="right">${Params.TransLang}</li>--%>
+                <%--</ul>--%>
                 <ul>
                     <li>
                         <p>会议开始时间:</p>
