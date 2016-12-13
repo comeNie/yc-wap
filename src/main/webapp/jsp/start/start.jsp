@@ -112,8 +112,6 @@
                     <option value="zh"><spring:message code="start.zh"/></option>
                     <%--英语--%>
                     <option value="en"><spring:message code="start.en"/></option>
-                    <%--法语--%>
-                    <option value="fr"><spring:message code="start.fr"/></option>
                     <%--俄语--%>
                     <option value="ru"><spring:message code="start.ru"/></option>
                     <%--葡萄牙语--%>
@@ -130,8 +128,6 @@
                     <option value="zh"><spring:message code="start.zh"/></option>
                     <%--英语--%>
                     <option value="en" selected><spring:message code="start.en"/></option>
-                    <%--法语--%>
-                    <option value="fr"><spring:message code="start.fr"/></option>
                     <%--俄语--%>
                     <option value="ru"><spring:message code="start.ru"/></option>
                     <%--葡萄牙语--%>
@@ -478,9 +474,6 @@
                 case "en":
                     $("#tipLabel").html("<spring:message code="start.testEN"/>");
                     break;
-                case "fr":
-                    $("#tipLabel").html("<spring:message code="start.testFR"/>");
-                    break;
                 case "ru":
                     $("#tipLabel").html("<spring:message code="start.testRU"/>");
                     break;
@@ -603,17 +596,14 @@
             case "en":
                 addOption(1);
                 break;
-            case "fr":
+            case "ru":
                 addOption(2);
                 break;
-            case "ru":
+            case "pt":
                 addOption(3);
                 break;
-            case "pt":
-                addOption(4);
-                break;
             default:
-                addOption(5);
+                addOption(4);
                 break;
         }
     }
@@ -621,8 +611,8 @@
         var select = document.getElementById("target-lan");
         var selectValue = $("#target-lan").val();
         select.length = 0;
-        var arrLan = new Array("<spring:message code="start.zh"/>","<spring:message code="start.en"/>","<spring:message code="start.fr"/>","<spring:message code="start.ru"/>","<spring:message code="start.pt"/>");
-        var arrLanValue = ["zh","en","fr","ru","pt"];
+        var arrLan = new Array("<spring:message code="start.zh"/>","<spring:message code="start.en"/>","<spring:message code="start.ru"/>","<spring:message code="start.pt"/>");
+        var arrLanValue = ["zh","en","ru","pt"];
         if (rmIndex != 5){
             arrLan.splice(rmIndex,1);
             arrLanValue.splice(rmIndex,1);
