@@ -246,7 +246,8 @@
         $("#dualSource").children('option').each(function () {
             var temp_value = $(this).val();
             if (temp_value == setLanguageCn || temp_value == setLanguageEn) {
-                $(this).attr("selected", "selected");
+//                $(this).attr("selected", "selected");
+                $(this)[0].selected = true;
             }
         });
 

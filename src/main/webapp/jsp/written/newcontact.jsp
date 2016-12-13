@@ -53,15 +53,15 @@
     <section class="order-content new-cont">
         <div class="order-list">
             <ul>
-                <li>手机:</li>
+                <li>手机：</li>
                 <li><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码"></li>
             </ul>
             <ul>
-                <li>姓名:</li>
+                <li>姓名：</li>
                 <li><input type="text" class="input input-medium" id="name" placeholder="请输入姓名"></li>
             </ul>
             <ul>
-                <li>邮箱:</li>
+                <li>邮箱：</li>
                 <li><input type="text" class="input input-medium" id="email" placeholder="请输入接收译文的邮箱"></li>
             </ul>
 

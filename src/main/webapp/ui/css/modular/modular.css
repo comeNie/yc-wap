@@ -131,7 +131,7 @@
 .order-submit-kou .green a{color:#fff;font-size:0.64rem;}
 
 .new-cont{margin-top:0;}
-.input-medium{width:11.5rem;height:1.92rem;border:none;background:none;padding-left:0.34rem;color:#666;font-size:0.55rem;line-height:1.92rem;}
+.input-medium{width:11.5rem;height:1.92rem;border:none;background:none;float:right;padding-left:0.34rem;color:#666;font-size:0.55rem;line-height:1.92rem;}
 .add-btn{width:100%;margin:-1.7rem auto 0;padding:0 0.64rem 0.34rem;}
 /**提交成功**/
 .tij-cg{width:100%;float:left;margin:2.45rem 0 0 0;padding:0 1.28rem;}

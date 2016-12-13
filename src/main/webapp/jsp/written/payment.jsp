@@ -87,19 +87,20 @@
         </ul>
 
         <%--<ul>--%>
-            <%--<li><input type="radio" name="choose" class="radio" value="1"/>翻译后付费</li>--%>
+        <%--<li><input type="radio" name="choose" class="radio"/>翻译后付费</li>--%>
         <%--</ul>--%>
 
         <ul>
-            <li class="zhifb"><input type="radio" id="alipay" name="choose" class="radio" value="2" checked/>
-                <img src="<%=path%>/ui/images/zhifb.png" id="imgAliPay"/></li>
-            <li class="unionpay"><input type="radio" id="unipay" name="choose" class="radio" value="3"/>
-                <img src="<%=path%>/ui/images/unionpay.png" id="imgUniPay"/></li>
+            <li class="zhifb" id="imgAliPay"><img src="<%=path%>/ui/images/radio.jpg" id="alipay" class="radio-img"/>
+                <img src="<%=path%>/ui/images/zhifb.png"/></li>
+
+            <li class="unionpay" id="imgUniPay"><img src="<%=path%>/ui/images/radio1.jpg" id="unipay" class="radio-img"/>
+                <img src="<%=path%>/ui/images/unionpay.png"/></li>
         </ul>
 
         <ul id="balance" style="display: none">
             <li id="imgCash" class="word-ash">
-                <input type="radio" id="cash" name="choose" class="radio" value="4"/>
+                <img src="<%=path%>/ui/images/radio1.jpg" id="cash" class="radio-img"/>
                 <a id="balanceNumber">账户余额支付（余额：0元）</a>
             </li>
             <li class="right" id="buzu" style="display: none">
@@ -139,45 +140,52 @@
 </html>
 
 <script type="text/javascript">
+    var CheckedImg = "<%=path%>/ui/images/radio.jpg";
+    var UnCheckedImg = "<%=path%>/ui/images/radio1.jpg";
     var balance = "0.00";
     var balanceBuzu = false;
+    var Channel = "1";
     $(document).ready(function () {
         GetBalance();
 
         $("#submit").bind("click", function () {
-            var a = $("input[name='choose']:checked").val();
-            if (a == null || a == "" || a == 0) {
-                return;
-            } else {
-                if (a == "2") {
-                    $("#payType").val("ZFB");
-                    $("#toPayForm").submit();
-                } else if (a == "3") {
-                    $("#payType").val("YL");
-                    $("#toPayForm").submit();
-                } else if (a == "4") {
-                    if (!balanceBuzu) {
-                        $("#toBalancePay").submit();
-                    } else {
-                        $("#EjectTitle").html("余额不足，请选用其他支付方式");
-                        $('#eject-mask').fadeIn(100);
-                        $('#prompt').slideDown(100);
-                    }
+            if (Channel == "1") {
+                $("#payType").val("ZFB");
+                $("#toPayForm").submit();
+            } else if (Channel == "2") {
+                $("#payType").val("YL");
+                $("#toPayForm").submit();
+            } else if (Channel == "3") {
+                if (!balanceBuzu) {
+                    $("#toBalancePay").submit();
+                } else {
+                    $("#EjectTitle").html("余额不足，请选用其他支付方式");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
                 }
             }
         });
 
         $("#imgAliPay").bind("click", function () {
-            document.getElementById("alipay").checked = true;
-        })
+            Channel = "1";
+            document.getElementById("alipay").src = CheckedImg;
+            document.getElementById("unipay").src = UnCheckedImg;
+            document.getElementById("cash").src = UnCheckedImg;
+        });
 
         $("#imgUniPay").bind("click", function () {
-            document.getElementById("unipay").checked = true;
-        })
+            Channel = "2";
+            document.getElementById("alipay").src = UnCheckedImg;
+            document.getElementById("unipay").src = CheckedImg;
+            document.getElementById("cash").src = UnCheckedImg;
+        });
 
         $("#imgCash").bind("click", function () {
-            document.getElementById("cash").checked = true;
-        })
+            Channel = "3";
+            document.getElementById("alipay").src = UnCheckedImg;
+            document.getElementById("unipay").src = UnCheckedImg;
+            document.getElementById("cash").src = CheckedImg;
+        });
     });
 
     $(function () {
