@@ -111,8 +111,8 @@
                 </li>
                 <li>
                     <p class="word">增值服务:</p>
-                    <p>
-                        <select id="otherServ" class="select testing-select-small" onchange="ServChange()">
+                    <p>4
+                        <select id="otherServ" class="select testing-select-small" onchange="ServerChange()">
                             <option otherServId="N">无排版</option>
                             <%--<option otherServId="Y">需排版</option>--%>
                         </select>
@@ -137,7 +137,7 @@
                         <span>|</span>
                     </p>
                 </li>
-                <li class="word-checkbox">
+                <li class="word-checkbox mb-0">
                     <p id="TranslateSpeed">预计翻译速度: N/A小时/千字</p>
                     <p class="p-mr1"><input type="checkbox" id="quick" class="checkbox" onchange="LvChange()">加急<b
                             id="pQuick">(加急订单，更快获得译文)</b>
