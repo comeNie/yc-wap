@@ -58,7 +58,7 @@
                             <label id="phoneLabel"></label>
                         </li>
                         <li>
-                            <p><input type="text" id="codeid" class="input input-small" placeholder="<spring:message code="safe.changephone.small_input"/>"></p>
+                            <p><input type="text" id="codeid" class="input input-small" placeholder="<spring:message code="safe.changephone.small_input"/>" autocomplete="off"></p>
                             <p class="yzm"><a id="getnumber" onclick="javascript:getnumberonclick()" class="btn bnt-yzm"><spring:message code="safe.changephone.bntyzm_input"/></a></p>
                             <label id="phonetips"></label>
                         </li>

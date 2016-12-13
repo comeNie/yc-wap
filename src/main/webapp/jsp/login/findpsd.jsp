@@ -50,7 +50,7 @@
                                 <label id="nameLabel1"></label>
                             </li>
                             <li class="int-border">
-                                <p><input id="codeid1" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>"></p>
+                                <p><input id="codeid1" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>" autocomplete="off"></p>
                                 <img id="checkCodeImg" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
                                 <p style="float:right" class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
                                 <label id="codeLabel1"></label>
@@ -70,7 +70,7 @@
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="codeid2" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>"></p>
+                                <p><input id="codeid2" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>" autocomplete="off"></p>
                                 <p class="yzm"><a id="getnumber" onclick="getTestCode()" href="javascript:void(0)"  class="btn bnt-yzm"><spring:message code="login.register.getcode"/></a></p>
                                 <label id="codeLabel2"></label>
                             </li>
@@ -85,11 +85,11 @@
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="psdid3" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input1"/>"></p>
+                                <p><input id="psdid3" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input1"/>" autocomplete="off"></p>
                                 <label id="psdLabel3"></label>
                             </li>
                             <li>
-                                <p><input id="confirmid3" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input2"/>"></p>
+                                <p><input id="confirmid3" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input2"/>" autocomplete="off"></p>
                                 <label id="confirmLabel3"></label>
                             </li>
                             <li><a href="javascript:void(0)" id="next-btn3" class="submit-btn btn-blue"><spring:message code="login.findpsd.next"/></a></li>
