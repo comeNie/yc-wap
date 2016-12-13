@@ -53,11 +53,9 @@ public class WrittenController extends BaseController {
 
     @RequestMapping(value = "")
     public String content() {
-        Locale local = rb.getDefaultLocale();
-
-        List<SysDuadVo> DualList = GetDualList(local.toString(), Constants.OrderType.DOC);
-        List<SysPurposeVo> PurposeList = GetPurposeList(local.toString());
-        List<SysDomainVo> DomainList = GetDomainList(local.toString());
+        List<SysDuadVo> DualList = GetDualList(Constants.OrderType.DOC);
+        List<SysPurposeVo> PurposeList = GetPurposeList();
+        List<SysDomainVo> DomainList = GetDomainList();
 
         log.info("GetDualListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(DualList));
         log.info("GetPurposeListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(PurposeList));
@@ -145,7 +143,7 @@ public class WrittenController extends BaseController {
         return "written/content";
     }
 
-    private List<SysDuadVo> GetDualList(String Language, String OrderType) {
+    private List<SysDuadVo> GetDualList(String OrderType) {
         try {
             QuerySysDuadListReq req = new QuerySysDuadListReq();
 //            req.setLanguage(Language);
@@ -161,7 +159,7 @@ public class WrittenController extends BaseController {
         }
     }
 
-    private List<SysPurposeVo> GetPurposeList(String Language) {
+    private List<SysPurposeVo> GetPurposeList() {
         try {
             QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList();
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
@@ -174,7 +172,7 @@ public class WrittenController extends BaseController {
         }
     }
 
-    private List<SysDomainVo> GetDomainList(String Language) {
+    private List<SysDomainVo> GetDomainList() {
         try {
             QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList();
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {

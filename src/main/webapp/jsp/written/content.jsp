@@ -60,15 +60,6 @@
         </div>
         <!--转换语言-->
         <section class="testing">
-            <%--<p>--%>
-            <%--<select id="dual" class="select testing-select-big">--%>
-            <%--<c:forEach items="${DualList}" var="pair">--%>
-            <%--<option dualId="${pair.duadId}" DualValEn="${pair.sourceEn} → ${pair.targetEn}">${pair.sourceCn} → ${pair.targetCn}</option>--%>
-            <%--</c:forEach>--%>
-            <%--</select>--%>
-            <%--<span>|</span>--%>
-            <%--</p>--%>
-
             <p>
                 <select id="dualSource" class="select testing-select" onchange="DualChange()">
                     <c:forEach items="${DualMap}" var="pair">
@@ -171,7 +162,7 @@
 <script type="text/javascript">
     $(function () {
         LvChange();
-        ServChange();
+        ServerChange();
         DualChange();
     });
 
@@ -179,6 +170,11 @@
         Loading.HideLoading();
         var UserLanguage = '${pageContext.response.locale}';
         console.log("UserLanguage: " + UserLanguage);
+        SetDual(UserLanguage);
+
+        $("#swap").bind("click", function () {
+            SwapDual();
+        });
 
         $("#chick-int").blur(function () {
             var Content = $("#chick-int").val();
@@ -186,13 +182,9 @@
                 return;
             }
             var Language = DetectLanguage(Content);
+            console.log("DetectLanguage: " + Language);
 
             // Todo Language
-        });
-
-        $("#swap").bind("click", function () {
-            var target = $("#dualTarget").val();
-            console.log(target)
         });
 
         $("#submit").bind("click", function () {
@@ -240,6 +232,32 @@
         });
     });
 
+    function SetDual(Language) {
+        var setLanguageCn = "";
+        var setLanguageEn = "";
+        if (Language == "zh_CN") {
+            setLanguageCn = "简体中文";
+            setLanguageEn = "Chinese";
+        } else {
+            setLanguageCn = "英语";
+            setLanguageEn = "English";
+        }
+
+        $("#dualSource").children('option').each(function () {
+            var temp_value = $(this).val();
+            if (temp_value == setLanguageCn || temp_value == setLanguageEn) {
+                $(this).attr("selected", "selected");
+            }
+        });
+
+        DualChange();
+    }
+
+    function SwapDual() {
+        var target = $("#dualTarget").val();
+        console.log(target)
+    }
+
     function LvChange() {
         var Lv = $("#translateLv").find("option:selected").attr("transLv");
         if (Lv == "100210") {
@@ -263,7 +281,7 @@
         }
     }
 
-    function ServChange() {
+    function ServerChange() {
         var IsService = $("#otherServ").find("option:selected").attr("otherServId");
         if (IsService == "Y") {
             $("#otherService").css("display", "block");
@@ -419,7 +437,6 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    console.log("DetectLanguage: " + data.fintec);
                     return data.fintec;
                 }
             },
