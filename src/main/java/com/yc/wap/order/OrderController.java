@@ -125,16 +125,18 @@ public class OrderController extends BaseController {
             PageInfo<OrdOrderVo> order = resp.getPageInfo();
             log.info("GetOrderReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(order));
 
-            DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            TimeZone tz = TimeZone.getTimeZone(ZoneContextHolder.getZone());
-            sdf.setTimeZone(tz);
-
             List<OrdOrderVo> OrderList = order.getResult();
-            if (OrderList != null) {
-                for (OrdOrderVo k : OrderList) {
-                    k.setOrderTime(Timestamp.valueOf(sdf.format(k.getOrderTime())));
-                }
-            }
+//            DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            TimeZone tz = TimeZone.getTimeZone(ZoneContextHolder.getZone());
+//            sdf.setTimeZone(tz);
+//            if (OrderList != null) {
+//                for (OrdOrderVo k : OrderList) {
+//                    Timestamp OrderTime = k.getOrderTime();
+//                    String Time = sdf.format(OrderTime);
+//                    log.info(Time);
+//                    k.setOrderTime(Timestamp.valueOf(Time));
+//                }
+//            }
 
             int Count = order.getCount();
             int PageCount = order.getPageCount();
