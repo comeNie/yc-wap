@@ -24,6 +24,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
     <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
@@ -95,6 +96,14 @@
     $(document).ready(function () {
         $("#submit").bind("click", function () {
             onSubmit();
+        });
+
+        $("#message").on("input propertychange", function () {
+            var $this = $(this);
+            var _val = $this.val();
+            if (_val.length > 50) {
+                $this.val(_val.substring(0, 50));
+            }
         });
     });
 

@@ -25,6 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -98,7 +99,8 @@ public class PayController extends BaseController {
     }
 
     @RequestMapping(value = "payResult")
-    public void payResult(String uid) throws ParseException {
+    @ResponseBody
+    public String payResult(String uid) throws ParseException {
         log.info("PayResult-NOTIFY_URL-Callback");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
@@ -134,6 +136,7 @@ public class PayController extends BaseController {
                 OrderPayFinished(orderId, payOrgCode, _Amount.longValue(), outOrderId, ts, uid);
             }
         }
+        return "payResult";
     }
 
     @RequestMapping(value = "payResultView")
