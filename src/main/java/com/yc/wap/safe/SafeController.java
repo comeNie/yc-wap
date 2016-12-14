@@ -501,7 +501,19 @@ public class SafeController extends BaseController {
 
         String info = request.getParameter("info");
         String lastInfo = (String) session.getAttribute("lastInfo");
-        if (lastInfo != "" && lastInfo != null){
+        if (lastInfo == "" || lastInfo == null){
+            //判断请求时间间隔是否小于60s
+            String oldTime = (String) session.getAttribute("isSpace");
+            long newTime = new Date().getTime();
+            if (oldTime != "" && oldTime != null){
+                long time = Long.parseLong(oldTime);
+                if (newTime < time+60*1000){
+                    result.put("status","0");
+                    result.put("msg","您发送验证码过于频繁，请稍后重试");
+                    return result.returnMsg();
+                }
+            }
+        }else {
             if (info.equals(lastInfo)){
                 //判断请求时间间隔是否小于60s
                 String oldTime = (String) session.getAttribute("isSpace");
@@ -514,10 +526,9 @@ public class SafeController extends BaseController {
                         return result.returnMsg();
                     }
                 }
-            }else {
-                session.setAttribute("lastInfo",info);
             }
         }
+        session.setAttribute("lastInfo",info);
 
         String type = request.getParameter("type");
         String uid = request.getParameter("uid");
