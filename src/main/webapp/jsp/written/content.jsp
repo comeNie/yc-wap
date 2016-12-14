@@ -263,6 +263,13 @@
         });
 
         DualChange();
+
+        $("#dualTarget").children('option').each(function () {
+            var temp_value = $(this).html();
+            if (temp_value == sourceCn || temp_value == sourceEn) {
+                $(this)[0].selected = true;
+            }
+        });
     }
 
     function SwapDual() {

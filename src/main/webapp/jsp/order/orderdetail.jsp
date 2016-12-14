@@ -465,6 +465,7 @@
 </html>
 
 <script type="text/javascript">
+    var ShowAmount = "0";
     $(document).ready(function () {
         var status = GetStateShow('${Params.displayFlag}');
         $("#OrderStatus").html(status);
