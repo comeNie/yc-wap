@@ -40,7 +40,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -532,30 +531,37 @@ public class SafeController extends BaseController {
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info(vo);
                 log.info("验证码是:" +vo.getOperationcode());
-                SafeController ctrl = new SafeController();
                 if (type.equals("4") || type.equals("5")){
-                    String time = Constants.Register.REGISTER_COUNTRY_LIST_KEY_OVERTIME;
                     SendEmailRequest emailRequest = new SendEmailRequest();
                     emailRequest.setTomails(new String[] { info });
-                    int index = info.indexOf("@");
-                    String name = info.substring(0,index);
-                    emailRequest.setData(new String[] { name, vo.getOperationcode() ,time});
+
+                    String subject = Constants.Verify.EMAIL_VERIFY_ZH_CN_SUBJECT;
+                    String userName = (String) session.getAttribute("username");
+                    if (userName == "" || userName == null){
+                        userName = "用户";
+                    }
+                    String baseUrl = request.getContextPath();
+//                    String baseUrl = System.getProperty("user.dir");
+                    String logoUrl = baseUrl+"/webapp/ui/images/logo.jpg";
+                    String phoneUrl = baseUrl+"/webapp/ui/images/phone.jpg";
+                    String ermaUrl = baseUrl+"/webapp/ui/images/erma.jpg";
+                    emailRequest.setData(new String[] {subject,userName,vo.getOperationcode(),logoUrl,phoneUrl,ermaUrl});
                     Locale locale = rb.getDefaultLocale();
                     String _template = "";
-                    String _subject = "";
                     if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
-                        _template = Constants.Register.REGISTER_EMAIL_ZH_CN_TEMPLATE;
-                        _subject = "中文主题";
+                        _template = Constants.Verify.VERIFY_EMAIL_ZH_CN_TEMPLATE;
                     } else if (Locale.US.toString().equals(locale.toString())) {
-                        _template = Constants.Register.REGISTER_EMAIL_EN_US_TEMPLATE;
-                        _subject = "英文主题";
+                        _template = Constants.Verify.VERIFY_EMAIL_ZH_CN_TEMPLATE;
                     }
+
                     emailRequest.setTemplateURL(_template);
-                    emailRequest.setSubject(_subject);
+                    emailRequest.setSubject(subject);
+
                     if(!SmsSenderUtil.sendEmail(emailRequest)){
                         result.put("status","0");
                         result.put("msg","验证码发送失败");
                     }
+
                 }else {
 
                     if(!SmsSenderUtil.sendMessage("+"+domainvalue+info,"验证码是:"+vo.getOperationcode())){

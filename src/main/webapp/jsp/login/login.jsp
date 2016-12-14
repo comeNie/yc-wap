@@ -321,6 +321,7 @@
 
     }
     function forgetpsd() {
+        clearText();
         var tourl = "<%=path%>/login/findpsd";
         window.location.href = tourl;
     }
@@ -612,6 +613,7 @@
         }
     }
     function look() {
+        clearText();
         var u = window.location.pathname;
         var href = "<%=path%>/common/agreement?Flag="+u;
         window.location.href = href;
