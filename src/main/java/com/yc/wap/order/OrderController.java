@@ -310,7 +310,10 @@ public class OrderController extends BaseController {
             if (resp.getTranslateType().equals(Constants.OrderType.DOC)) {
                 List<ProdFileVo> ProdFiles = resp.getProdFiles();
                 translateName = ProdFiles.get(0).getFileName();
-                needTranslateFiles.addAll(ProdFiles.stream().map(ProdFileVo::getFileName).collect(Collectors.toList()));
+//                needTranslateFiles.addAll(ProdFiles.stream().map(ProdFileVo::getFileName).collect(Collectors.toList()));
+                for (ProdFileVo k : ProdFiles) {
+                    needTranslateFiles.add(k.getFileName());
+                }
             }
 
             ///// Normal Data /////
