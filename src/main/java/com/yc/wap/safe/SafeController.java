@@ -41,6 +41,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -494,6 +496,16 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "sendTestCode")
     public @ResponseBody Object sendTestCode() {
         MsgBean result = new MsgBean();
+        //判断请求时间间隔是否小于60s
+        long oldTime = (long) session.getAttribute("isSpace");
+        long newTime = new Date().getTime();
+        if (oldTime > 0){
+            if (newTime < oldTime+60*1000){
+                result.put("status","0");
+                result.put("msg","您发送验证码过于频繁，请稍后重试");
+                return result.returnMsg();
+            }
+        }
         String type = request.getParameter("type");
         String info = request.getParameter("info");
         String uid = request.getParameter("uid");
@@ -529,29 +541,29 @@ public class SafeController extends BaseController {
                 Map m = resp.getDate();
                 result.put("uid",m.get("uid")+"");
                 UcMembersVo vo = new UcMembersVo(m);
-                log.info(vo);
+                log.info("uid:-----"+m.get("uid"));
                 log.info("验证码是:" +vo.getOperationcode());
                 if (type.equals("4") || type.equals("5")){
                     SendEmailRequest emailRequest = new SendEmailRequest();
                     emailRequest.setTomails(new String[] { info });
 
-                    String subject = Constants.Verify.EMAIL_VERIFY_ZH_CN_SUBJECT;
+                    String subject = Constants.MailVerify.EMAIL_VERIFY_ZH_CN_SUBJECT;
                     String userName = (String) session.getAttribute("username");
                     if (userName == "" || userName == null){
                         userName = "用户";
                     }
                     String baseUrl = request.getContextPath();
 //                    String baseUrl = System.getProperty("user.dir");
-                    String logoUrl = baseUrl+"/webapp/ui/images/logo.jpg";
-                    String phoneUrl = baseUrl+"/webapp/ui/images/phone.jpg";
-                    String ermaUrl = baseUrl+"/webapp/ui/images/erma.jpg";
+                    String logoUrl = baseUrl+"/logo.jpg";
+                    String phoneUrl = baseUrl+"/phone.jpg";
+                    String ermaUrl = baseUrl+"/erma.jpg";
                     emailRequest.setData(new String[] {subject,userName,vo.getOperationcode(),logoUrl,phoneUrl,ermaUrl});
                     Locale locale = rb.getDefaultLocale();
                     String _template = "";
                     if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
-                        _template = Constants.Verify.VERIFY_EMAIL_ZH_CN_TEMPLATE;
+                        _template = Constants.MailVerify.VERIFY_EMAIL_ZH_CN_TEMPLATE;
                     } else if (Locale.US.toString().equals(locale.toString())) {
-                        _template = Constants.Verify.VERIFY_EMAIL_ZH_CN_TEMPLATE;
+                        _template = Constants.MailVerify.VERIFY_EMAIL_EN_US_TEMPLATE;
                     }
 
                     emailRequest.setTemplateURL(_template);
@@ -560,13 +572,25 @@ public class SafeController extends BaseController {
                     if(!SmsSenderUtil.sendEmail(emailRequest)){
                         result.put("status","0");
                         result.put("msg","验证码发送失败");
+                    }else {
+                        session.setAttribute("isSpace",new Date().getTime());
                     }
 
                 }else {
-
-                    if(!SmsSenderUtil.sendMessage("+"+domainvalue+info,"验证码是:"+vo.getOperationcode())){
+                    //默认中文模版
+                    String _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+                    Locale locale = rb.getDefaultLocale();
+                    if (Locale.US.toString().equals(locale.toString())) {
+                        _template =  Constants.PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+                    }
+                    String content = MessageFormat.format(_template,vo.getOperationcode());
+                    if(!SmsSenderUtil.sendMessage("+"+domainvalue+info,content)){
                         result.put("status","0");
                         result.put("msg","验证码发送失败");
+                    }else {
+                        session.setAttribute("isSpace",new Date().getTime());
+                        long isSpace = (long) session.getAttribute("isSpace");
+                        System.out.print("----------isSpace:"+isSpace);
                     }
                 }
             }else{
@@ -581,6 +605,7 @@ public class SafeController extends BaseController {
 
         return  result.returnMsg();
     }
+
     /**
      * 校验验证码接口
      */

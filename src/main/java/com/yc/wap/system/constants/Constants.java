@@ -214,11 +214,7 @@ public class Constants {
 
     }
 
-    public static final class Verify {
-        /** 验证码ccs配置路径 */
-//        public static final String VERIFICATION_CCS_NAMESPACE = "/com/ai/opt/verification-code-config";
-        /** 缓存命名空间 */
-//        public static final String CACHE_NAMESPACE = "com.ai.yc.protal.web.register.cache";
+    public static final class MailVerify {
         /**
          * 注册邮件中文模版
          */
@@ -227,16 +223,14 @@ public class Constants {
          * 注册邮件英文模版
          */
         public static final String VERIFY_EMAIL_EN_US_TEMPLATE = "email/template/yc-verification_en_us-mail.xml";
-        /** 邮箱校验 */
-//        public static final String CHECK_TYPE_EMAIL = "email";
-        /** 手机校验 */
-//        public static final String CHECK_TYPE_PHONE = "phone";
-        /** 校验通过 */
-//        public static final String CHECK_TYPE_SUCCESS = "1";
-        /** 注册国家缓存key */
-//        public static final String REGISTER_COUNTRY_LIST_KEY = "register_country_list_key";
         /** 动态码邮件中文模版主题 */
         public static final String EMAIL_VERIFY_ZH_CN_SUBJECT = "邮箱验证码邮件";
+    }
+    public  static final  class PhoneVerify {
+        /** 手机验证码英文短信模版 */
+        public static final String SMS_CODE_TEMPLATE_EN_US ="[GTCOM] The verification code sent by YeeCloud is: {0}, to secure your account, please don't reveal the code to others, thank you.";
+        /** 手机验证码中文短信模版 */
+        public static final String SMS_CODE_TEMPLATE_ZH_CN ="[中译语通]您在译云获取的手机验证码为：{0}，为保证账户安全，请勿向他们泄露，谢谢！";
 
     }
 

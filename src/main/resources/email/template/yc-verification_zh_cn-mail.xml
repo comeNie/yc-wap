@@ -7,7 +7,7 @@
 </head>
 <body style='color:#6a6c6f; background:#fff;font-size:14px;margin:0 auto;font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing:grayscale; box-sizing: border-box; border:0; padding:0; margin:0;'>	
 	<div class="mail-conter" style="width:760px;margin:0 auto;">
-		<div class="mail-logo" style="width:100%;float:left;margin-top:22px;"><img id="img1" src="{3}" /></div>
+		<div class="mail-logo" style="width:100%;float:left;margin-top:22px;"><img src="{3}" /></div>
 		<div class="mail-title" style="width:100%;float:left;text-align: center;margin-top:35px;font-size:22px;color:#2c3e50;font-weight:bold;">
 		{0}
 		</div>

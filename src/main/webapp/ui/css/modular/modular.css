@@ -217,7 +217,7 @@
 .set-int ul li p span{position:absolute;top:0.35rem;right:1.42rem;color:#c4c4c4;font-size:0.62rem}
 .testing-select-big{width:14.8rem;height:1.7rem;border:1px solid #c4c4c4;font-size:0.42rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.46rem 0.12rem;border-radius:0.21rem;font-size:0.51rem;color:#666}
-.set-int ul .int-border{width:14.8rem;height:1.7rem;border:1px solid #c4c4c4;background:#fff;border-radius:5px;padding:0 0.42rem;margin-bottom:0.9rem;line-height:1.7rem;}
+.set-int ul .int-border{width:14.8rem;height:1.7rem;border:1px solid #c4c4c4;background:#fff;border-radius:5px;padding:0 0.42rem;margin-bottom:0.9rem;}
 .set-int ul .int-border:hover{border:1px solid #1780e3}
 .set-int ul li img{width:2.81rem;height:1.55rem;}
 .set-int ul li i{font-size:0.85rem;color:#c7c7c7;margin-top:0.4rem;float:right;}
