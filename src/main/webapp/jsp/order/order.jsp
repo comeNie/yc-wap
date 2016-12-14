@@ -30,6 +30,21 @@
 </head>
 <body>
 <div class="wrapper-big">
+    <div class="eject-big">
+        <div class="prompt" id="prompt">
+            <div class="prompt-title">请选择</div>
+            <div class="prompt-confirm">
+                <ul>
+                    <li>是否确认取消订单？</li>
+                </ul>
+            </div>
+            <div class="prompt-confirm-btn">
+                <a class="btn btn-white-50" id="prompt-btn">确 认</a>
+                <a class="btn btn-white-50" id="prompt-btn-close">取 消</a>
+            </div>
+        </div>
+        <div class="mask" id="eject-mask"></div>
+    </div>
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="我的订单"/>
@@ -63,11 +78,29 @@
     var statusFlag = ""; //0正常 1待支付 2待确认 3待报价
     var detailUrl = "<%=path%>/order/OrderDetail?OrderId=";
     var indexArray = [];
+    var orderCancelId = "";
 
     $(document).ready(function () {
         Loading.HideLoading();
         checkScroll();
+
+        $("#prompt-btn").bind("click", function () {
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
+            OnConfirm(orderCancelId);
+        });
+
+        $("#prompt-btn-close").bind("click", function () {
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
+            OnCancel();
+        });
     });
+
+    function EjectConfirm() {
+        $('#eject-mask').fadeIn(100);
+        $('#prompt').slideDown(100);
+    }
 
     Array.prototype.contains = function (obj) {
         var i = this.length;
@@ -209,6 +242,11 @@
     };
 
     function CancelOrder(OrderId) {
+        orderCancelId = OrderId;
+        EjectConfirm();
+    }
+
+    function OnConfirm(OrderId) {
         $.ajax({
             async: true,
             type: "POST",
@@ -236,6 +274,9 @@
 
             }
         });
+    }
+
+    function OnCancel() {
     }
 
     function ConfirmOrder(OrderId) {

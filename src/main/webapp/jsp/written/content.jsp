@@ -160,7 +160,6 @@
 </html>
 
 <script type="text/javascript">
-    var isSupport = true;
     $(function () {
         LvChange();
         ServerChange();
@@ -303,7 +302,7 @@
 
     function AutoChangeDual(SourceCn, SourceEn) {
         if (SourceCn == "" || SourceEn == "") {
-            $("#EjectTitle").html("检测语言系统暂不支持，请确认");
+            $("#EjectTitle").html("检测输入语言系统暂不支持，请确认");
             $('#eject-mask').fadeIn(100);
             $('#prompt').slideDown(100);
             return;
