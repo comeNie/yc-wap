@@ -204,7 +204,7 @@
         <div class="prompt" id="prompt">
             <div class="prompt-confirm beyond-confirm">
                 <ul>
-                    <li id="EjectTitle">抱歉你已输入2000个字符，您已超过1000个字符</li>
+                    <li id="EjectTitle"></li>
                 </ul>
             </div>
         </div>
@@ -328,7 +328,6 @@
         timer = window.setInterval(function(){
             $("#eject-mask").fadeOut(200);
             $("#prompt").slideUp(200);
-            console.log("timer自动++++++++++++"+timer);
             clearInterval(timer);
         },1000);
     }

@@ -215,6 +215,9 @@ public class Constants {
     }
 
     public static final class MailVerify {
+
+        /** 发送邮件根路径配置路径 */
+        public static final String MailVerifyBase_URL = "/com/ai/opt/base_url";
         /**
          * 注册邮件中文模版
          */

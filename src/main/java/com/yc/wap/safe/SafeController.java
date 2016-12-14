@@ -1,6 +1,8 @@
 package com.yc.wap.safe;
 
+import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
 import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
 import com.ai.yc.common.api.country.param.CountryRequest;
@@ -553,11 +555,14 @@ public class SafeController extends BaseController {
                     if (userName == "" || userName == null){
                         userName = "用户";
                     }
-                    String baseUrl = request.getContextPath();
-//                    String baseUrl = System.getProperty("user.dir");
-                    String logoUrl = baseUrl+"/logo.jpg";
-                    String phoneUrl = baseUrl+"/phone.jpg";
-                    String ermaUrl = baseUrl+"/erma.jpg";
+                    IConfigClient defaultConfigClient = CCSClientFactory
+                            .getDefaultConfigClient();
+                    String baseUrl = defaultConfigClient
+                            .get(Constants.MailVerify.MailVerifyBase_URL);
+                    log.info("邮件根路径:"+baseUrl);
+                    String logoUrl = baseUrl+"/ui/images/logo.jpg";
+                    String phoneUrl = baseUrl+"/ui/images/phone.jpg";
+                    String ermaUrl = baseUrl+"/ui/images/erma.jpg";
                     emailRequest.setData(new String[] {subject,userName,vo.getOperationcode(),logoUrl,phoneUrl,ermaUrl});
                     Locale locale = rb.getDefaultLocale();
                     String _template = "";
