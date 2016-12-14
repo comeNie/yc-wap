@@ -165,6 +165,7 @@
         });
         $("#next-btn2").click(function(){
             var code = $("#codeid2").val();
+            var phone = $("#nameid1").val();
             if (code == "" || code == null) {
                 $("#codeLabel2").html("<spring:message code="login.register.entercode"/>");
                 $("#codeLabel2").css("display","block");
@@ -177,7 +178,7 @@
             $("#psdid3").val("");
             $("#confirmid3").val("");
             Loading.ShowLoading();
-            jump2(code);
+            jump2(code,phone);
 
         });
         $("#next-btn3").click(function(){
@@ -297,7 +298,7 @@
             }
         });
     }
-    function jump2(code) {
+    function jump2(code,phone) {
         $.ajax({
             async: true,
             type: "POST",
@@ -308,6 +309,7 @@
                 type: 6,    //密码操作码
                 code:code,
                 uid:getuids,
+                userinfo:phone
             },
             success: function (data) {
                 if (data.status == 1) {

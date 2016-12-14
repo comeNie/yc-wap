@@ -126,10 +126,10 @@
             type = 2
         }
         Loading.ShowLoading();
-        checkCode(code,type);
+        checkCode(code,type,"${phone}");
 
     }
-    function checkCode(code,type){
+    function checkCode(code,type,userinfo){
         $.ajax({
             async: true,
             type: "POST",
@@ -140,6 +140,7 @@
                 type: type,    //密码操作码
                 code:code,
                 uid:${UID},
+                userinfo:userinfo
             },
             success: function (data) {
                 if (data.status == 1) {
