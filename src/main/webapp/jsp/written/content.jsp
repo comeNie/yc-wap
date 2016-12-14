@@ -160,6 +160,7 @@
 </html>
 
 <script type="text/javascript">
+    var isSupport = true;
     $(function () {
         LvChange();
         ServerChange();
@@ -181,10 +182,7 @@
             if (Content == "") {
                 return;
             }
-            var Language = DetectLanguage(Content);
-            console.log("DetectLanguage: " + Language);
-
-            // Todo Language
+            DetectLanguage(Content);
         });
 
         $("#submit").bind("click", function () {
@@ -246,7 +244,6 @@
         $("#dualSource").children('option').each(function () {
             var temp_value = $(this).val();
             if (temp_value == setLanguageCn || temp_value == setLanguageEn) {
-//                $(this).attr("selected", "selected");
                 $(this)[0].selected = true;
             }
         });
@@ -302,6 +299,23 @@
                 $(this)[0].selected = true;
             }
         });
+    }
+
+    function AutoChangeDual(SourceCn, SourceEn) {
+        if (SourceCn == "" || SourceEn == "") {
+            $("#EjectTitle").html("检测语言系统暂不支持，请确认");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+            return;
+        }
+
+        $("#dualSource").children('option').each(function () {
+            var temp_value = $(this).val();
+            if (temp_value == SourceCn || temp_value == SourceEn) {
+                $(this)[0].selected = true;
+            }
+        });
+        DualChange();
     }
 
     function LvChange() {
@@ -483,7 +497,32 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    return data.fintec;
+                    var Language = data.fintec;
+                    console.log("DetectLanguage: " + Language);
+                    var SourceCn = "";
+                    var SourceEn = "";
+                    switch (Language) {
+                        case "en":
+                            SourceCn = "英语";
+                            SourceEn = "English";
+                            break;
+                        case "zh":
+                            SourceCn = "简体中文";
+                            SourceEn = "Chinese";
+                            break;
+                        case "fr":
+                            SourceCn = "法语";
+                            SourceEn = "France";
+                            break;
+                        case "pt":
+                            SourceCn = "葡萄牙语";
+                            SourceEn = "Portuguese";
+                            break;
+                        default:
+                            SourceCn = ""
+                            SourceEn = ""
+                    }
+                    AutoChangeDual(SourceCn, SourceEn);
                 }
             },
             error: function (data) {
