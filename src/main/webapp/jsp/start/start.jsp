@@ -184,22 +184,32 @@
 
     </section>
     <!--上传提示弹出框-->
+    <%--<div class="eject-big">--%>
+        <%--<div class="prompt" id="prompt">--%>
+            <%--<div class="prompt-title">请选择</div>--%>
+            <%--<div class="prompt-confirm">--%>
+                <%--<ul>--%>
+                    <%--<li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+            <%--<div class="prompt-confirm-btn">--%>
+                <%--<a class="btn btn-white" id="prompt-btn">确认</a>--%>
+            <%--</div>--%>
+
+        <%--</div>--%>
+        <%--<div class="mask" id="eject-mask"></div>--%>
+    <%--</div>--%>
+
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title">请选择</div>
-            <div class="prompt-confirm">
+            <div class="prompt-confirm beyond-confirm">
                 <ul>
-                    <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+                    <li id="EjectTitle">抱歉你已输入2000个字符，您已超过1000个字符</li>
                 </ul>
             </div>
-            <div class="prompt-confirm-btn">
-                <a class="btn btn-white" id="prompt-btn">确认</a>
-            </div>
-
         </div>
         <div class="mask" id="eject-mask"></div>
     </div>
-
     <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </div>
 
@@ -298,14 +308,6 @@
             languagePair($("#source-lan").val())
             goTranslate();
         });
-
-        //提示框消失
-        $("#prompt-btn").click(function() {
-            $('#eject-mask').fadeOut(200);
-            $('#prompt').slideUp(200);
-            console.log("timer手动__________"+timer);
-            clearInterval(timer);
-        });
     });
     //检测文本长度
     function checkLength(landetec) {
@@ -322,13 +324,13 @@
     function autoTip(txt){
         $("#EjectTitle").html(txt);
         $('#eject-mask').fadeIn(100);
-        $('#prompt').slideDown(100);
+        $("#prompt").slideDown(100);
         timer = window.setInterval(function(){
-            $('#eject-mask').fadeOut(200);
-            $('#prompt').slideUp(200);
+            $("#eject-mask").fadeOut(200);
+            $("#prompt").slideUp(200);
             console.log("timer自动++++++++++++"+timer);
             clearInterval(timer);
-        },3000);
+        },1000);
     }
     //播放声音
     function playAudio(){
@@ -483,9 +485,7 @@
                     $("#tipLabel").html("<spring:message code="start.testPT"/>");
                     break;
                 default:
-                    $("#EjectTitle").html("系统不支持该语言");
-                    $('#eject-mask').fadeIn(100);
-                    $('#prompt').slideDown(100);
+                    autoTip("系统不支持该语言");
                     return;
             }
             source = realLangeuage;

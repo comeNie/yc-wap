@@ -224,6 +224,7 @@
 .set-int ul .left a{font-size:0.46rem;color:#1780e3;}
 .set-int ul .left{font-size:0.46rem;}
 .set-int ul .int-border .right{float:right}
+
 /**登录注册**/
 .login-tab{width:16rem;float:left;height:1.92rem;background:#fff;}
 .login-tab ul{width:16rem;float:left;border-bottom:1px solid #eee;height:1.92rem;}
@@ -393,3 +394,4 @@
 .coupon-right span{font-size:0.85rem}
 
 .choice-list .imgcheckbox{width:0.6rem;height:0.6rem;margin-right:0.4rem;}
+.set-int .imgcheckbox{width:0.6rem;height:0.6rem;margin-right:0.4rem;}
