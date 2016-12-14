@@ -247,12 +247,18 @@
     function SetDual(Language) {
         var setLanguageCn = "";
         var setLanguageEn = "";
+        var TargetLanguageCn = "";
+        var TargetLanguageEn = "";
         if (Language == "zh_CN") {
             setLanguageCn = "简体中文";
             setLanguageEn = "Chinese";
+            TargetLanguageCn = "英语";
+            TargetLanguageEn = "English";
         } else {
             setLanguageCn = "英语";
             setLanguageEn = "English";
+            TargetLanguageCn = "简体中文";
+            TargetLanguageEn = "Chinese";
         }
 
         $("#dualSource").children('option').each(function () {
@@ -266,7 +272,7 @@
 
         $("#dualTarget").children('option').each(function () {
             var temp_value = $(this).html();
-            if (temp_value == sourceCn || temp_value == sourceEn) {
+            if (temp_value == TargetLanguageCn || temp_value == TargetLanguageEn) {
                 $(this)[0].selected = true;
             }
         });
@@ -337,6 +343,15 @@
             }
         });
         DualChange();
+
+        if (SourceEn == "Chinese") {
+            $("#dualTarget").children('option').each(function () {
+                var temp_value = $(this).html();
+                if (temp_value == "英语" || temp_value == "English") {
+                    $(this)[0].selected = true;
+                }
+            });
+        }
     }
 
     function LvChange() {
