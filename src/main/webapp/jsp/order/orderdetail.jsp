@@ -68,13 +68,6 @@
                         <p class="sm-word">${Params.translateName}</p>
                     </li>
                 </ul>
-                    <%--<ul>--%>
-                    <%--<li>--%>
-                    <%--<p>译文:<span>(修改中)</span></p>--%>
-                    <%--<p class="sm-word">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aen euismod bibendum--%>
-                    <%--laotreet. Proin ……</p>--%>
-                    <%--</li>--%>
-                    <%--</ul>--%>
             </div>
             <div id="cont-hid" style="display: none"><!--加载显示-->
                 <div class="original-cont">
@@ -84,7 +77,7 @@
                             <p class="sm-word">${Params.needTranslateInfo}</p>
                         </li>
                     </ul>
-                    <ul>
+                    <ul id="Translated">
                         <li>
                             <p>译文:</p>
                             <p class="sm-word">${Params.translateInfo}</p>
@@ -186,7 +179,7 @@
                     <%--</li>--%>
                     <%--<li class="right">232元</li>--%>
                     <%--</ul>--%>
-                <ul class="top-ulborder ulborder">
+                <ul class="top-ulborder ulborder" id="PaidFee1">
                     <li>
                         <p>实付款:</p>
                     </li>
@@ -264,18 +257,18 @@
                         </c:forEach>
                     </li>
                 </ul>
-                <%--<ul>--%>
+                    <%--<ul>--%>
                     <%--<li>--%>
-                        <%--<p>翻译类型:</p>--%>
+                    <%--<p>翻译类型:</p>--%>
                     <%--</li>--%>
                     <%--<li class="right">${Params.TranslateLevel}</li>--%>
-                <%--</ul>--%>
-                <%--<ul>--%>
+                    <%--</ul>--%>
+                    <%--<ul>--%>
                     <%--<li>--%>
-                        <%--<p>翻译语言:</p>--%>
+                    <%--<p>翻译语言:</p>--%>
                     <%--</li>--%>
                     <%--<li class="right">${Params.TransLang}</li>--%>
-                <%--</ul>--%>
+                    <%--</ul>--%>
                 <ul>
                     <li>
                         <p>会议开始时间:</p>
@@ -346,7 +339,7 @@
                     <%--</li>--%>
                     <%--<li class="right">232元</li>--%>
                     <%--</ul>--%>
-                <ul class="top-ulborder ulborder">
+                <ul class="top-ulborder ulborder" id="PaidFee2">
                     <li>
                         <p>实付款:</p>
                     </li>
@@ -458,17 +451,45 @@
 </div>
 
 <section class="order-submit-kou" id="bottom_button">
-    <p class="cent blue"><a href="javascript:void(0)">评价订单</a></p>
-    <p class="cent green"><a href="javascript:GoTrack()">订单跟踪</a></p>
+    <p class="cent blue" id="ButtonLeftP"><a href="javascript:void(0)" id="ButtonLeft">评价订单</a></p>
+    <p class="cent green" id="ButtonRightP"><a href="javascript:GoTrack()">订单跟踪</a></p>
 </section>
+
+<form id="ToOrderPay" method="post" action="<%=path%>/pay/OrderPay">
+    <input type="hidden" id="OrderId" name="OrderId" value="">
+    <input type="hidden" id="OrderAmount" name="OrderAmount" value="">
+</form>
 </body>
 </html>
 
 <script type="text/javascript">
     var ShowAmount = "0";
+    var ButtonLeft = "";
+    var OrderStatus = "";
     $(document).ready(function () {
-        var status = GetStateShow('${Params.displayFlag}');
-        $("#OrderStatus").html(status);
+        GetStateShow('${Params.displayFlag}');
+
+        if (ShowAmount == "0") {
+            $("#PaidFee1").css("display", "none");
+            $("#PaidFee2").css("display", "none");
+            $("#Translated").css("display", "none");
+        }
+
+        if (ButtonLeft != "") {
+            $("#ButtonLeft").html(ButtonLeft);
+            $("#ButtonLeft").bind("click", function () {
+                if (ButtonLeft == "支付订单") {
+                    ToOrderPay('${Params.OrderId}', '${Params.OrderPrice}');
+                } else if (ButtonLeft == "确认订单") {
+                    ConfirmOrder('${Params.OrderId}');
+                }
+            });
+        } else {
+            $("#ButtonLeftP").css("display", "none");
+            $("#ButtonRightP").attr("class", "cent2 green");
+        }
+
+        $("#OrderStatus").html(OrderStatus);
 
         $("#click-more").bind("click", function () {
             if ($("#more").attr("flag") == "closed") {
@@ -519,6 +540,42 @@
         $("#bottom_button").css("display", "none");
     }
 
+    function ConfirmOrder(OrderId) {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/order/OrderConfirm",
+            modal: true,
+            timeout: 30000,
+            data: {
+                OrderId: OrderId
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    setTimeout(function () {
+                        Loading.ShowLoading();
+                        window.location.reload(true);
+                    }, 800);
+                }
+            },
+            error: function (data) {
+                Loading.ShowLoading();
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+
+            }
+        });
+    }
+
+    function ToOrderPay(OrderId, Amount) {
+        $("#OrderId").val(OrderId);
+        $("#OrderAmount").val(Amount);
+        $("#ToOrderPay").submit();
+    }
+
     function onLogout() {
         $.ajax({
             async: true,
@@ -550,21 +607,37 @@
      */
     function GetStateShow(state) {
         if (state == "11") {
-            return "待支付";
+            ShowAmount = "0";
+            ButtonLeft = "支付订单";
+            OrderStatus = "待支付";
         } else if (state == "13") {
-            return "待报价";
+            ShowAmount = "0";
+            ButtonLeft = "";
+            OrderStatus = "待报价";
         } else if (state == "23") {
-            return "翻译中";
+            ShowAmount = "1";
+            ButtonLeft = "";
+            OrderStatus = "翻译中";
         } else if (state == "50") {
-            return "待确认";
+            ShowAmount = "1";
+            ButtonLeft = "确认订单";
+            OrderStatus = "待确认";
         } else if (state == "52") {
-            return "待评价";
+            ShowAmount = "1";
+            ButtonLeft = "评价订单";
+            OrderStatus = "待评价";
         } else if (state == "90") {
-            return "已完成";
+            ShowAmount = "1";
+            ButtonLeft = "";
+            OrderStatus = "已完成";
         } else if (state == "91") {
-            return "已关闭";
+            ShowAmount = "0";
+            ButtonLeft = "";
+            OrderStatus = "已关闭";
         } else if (state == "92") {
-            return "已退款";
+            ShowAmount = "1";
+            ButtonLeft = "";
+            OrderStatus = "已退款";
         }
     }
 

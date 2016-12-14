@@ -331,6 +331,7 @@ public class OrderController extends BaseController {
 
             ParamJson.put("OrderId", OrderId);
             ParamJson.put("PriceDisplay", PriceDisplay);
+            ParamJson.put("OrderPrice", OrderPrice);
             ParamJson.put("OrderTime", OrderTime);
             ParamJson.put("TransLang", prodExtends);
             ParamJson.put("TranslateLevel", prodLevels);
