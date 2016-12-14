@@ -144,6 +144,7 @@ public class PayController extends BaseController {
         log.info("PayResult-RETURN_URL-Callback");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
+        String orderAmount = request.getParameter("orderAmount");
 
         log.info("-----PayResult-----");
         log.info("orderId: " + orderId + ", payStates: " + payStates + ", uid: " + uid);
@@ -154,7 +155,16 @@ public class PayController extends BaseController {
         } else if (payStates.equals("01")) {
             request.setAttribute("result", "fail");
         }
+
+        String orderIndex = orderId.substring(0, 3);
+        if (orderIndex.equals("901")) {
+            request.setAttribute("type", "recharge");
+        } else {
+            request.setAttribute("type", "pay");
+        }
+
         request.setAttribute("OrderId", orderId);
+        request.setAttribute("OrderAmount", orderAmount);
         return "written/payresult";
     }
 
