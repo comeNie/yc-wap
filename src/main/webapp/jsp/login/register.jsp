@@ -298,7 +298,7 @@
                 }
             },
             error: function () {
-                $("#phoneLabel1").html(data.msg);
+                $("#phoneLabel1").html("网络请求失败,请重试");
 //                $("#phone").removeAttrs("disabled");
                 $("#phoneLabel1").css("display", "block");
                 Loading.HideLoading();
