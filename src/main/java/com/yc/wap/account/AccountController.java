@@ -13,6 +13,7 @@ import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
+import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -40,9 +41,7 @@ public class AccountController extends BaseController {
             request.setAttribute("to", "login");
             return "login/login";
         }
-        log.info("account-recharge invoked");
         String balance = request.getParameter("balance");
-
         request.setAttribute("balance", balance);
         return "account/recharge";
     }
@@ -55,8 +54,9 @@ public class AccountController extends BaseController {
             request.setAttribute("to", "login");
             return "login/login";
         }
-        log.info("account-balance invoked");
-
+        JSONObject json = JSONObject.fromObject(GetBalance());
+        String Balance = json.getString("balance");
+        request.setAttribute("Balance", Balance);
         return "account/balance";
     }
 
