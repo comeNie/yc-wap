@@ -497,10 +497,11 @@ public class SafeController extends BaseController {
     public @ResponseBody Object sendTestCode() {
         MsgBean result = new MsgBean();
         //判断请求时间间隔是否小于60s
-        long oldTime = (long) session.getAttribute("isSpace");
+        String oldTime = (String) session.getAttribute("isSpace");
         long newTime = new Date().getTime();
-        if (oldTime > 0){
-            if (newTime < oldTime+60*1000){
+        if (oldTime != "" && oldTime != null){
+            long time = Long.parseLong(oldTime);
+            if (newTime < time+60*1000){
                 result.put("status","0");
                 result.put("msg","您发送验证码过于频繁，请稍后重试");
                 return result.returnMsg();
@@ -573,7 +574,8 @@ public class SafeController extends BaseController {
                         result.put("status","0");
                         result.put("msg","验证码发送失败");
                     }else {
-                        session.setAttribute("isSpace",new Date().getTime());
+                        long t = new Date().getTime();
+                        session.setAttribute("isSpace",Long.toString(t));
                     }
 
                 }else {
@@ -588,9 +590,8 @@ public class SafeController extends BaseController {
                         result.put("status","0");
                         result.put("msg","验证码发送失败");
                     }else {
-                        session.setAttribute("isSpace",new Date().getTime());
-                        long isSpace = (long) session.getAttribute("isSpace");
-                        System.out.print("----------isSpace:"+isSpace);
+                        long t = new Date().getTime();
+                        session.setAttribute("isSpace",Long.toString(t));
                     }
                 }
             }else{

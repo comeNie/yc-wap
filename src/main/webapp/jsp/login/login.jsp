@@ -212,7 +212,7 @@
                             </li>
                             <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()"><spring:message code="login.register.lijizhuce"/></a></li>
                             <li class="left">
-                                <p><input id="checkid" type="checkbox" class="checkbox" checked></p><spring:message code="login.register.agree"/><a href="javascript:void(0)" onclick="look()"><spring:message code="login.register.look"/></a>
+                                <p><img src="<%=path%>/ui/images/checkbox1.png" class="imgcheckbox" onclick="checkImgAction()" id="checkImg"></p><spring:message code="login.register.agree"/><a href="javascript:void(0)" onclick="look()"><spring:message code="login.register.look"/></a>
                                 <label id="agreeLabel"></label>
                             </li>
 
@@ -229,7 +229,7 @@
 </body>
 </html>
 <script>
-
+    var isAgree = 1;
     $(function(){
         clearText();
         $("#phone").attr("disabled",false);
@@ -416,6 +416,16 @@
         clearText();
         wait = 0;
     }
+    //同意协议
+    function checkImgAction(){
+        if (isAgree == 1){
+            isAgree = 0;
+            $("#checkImg").attr("src","<%=path%>/ui/images/checkbox.png")
+        }else {
+            isAgree = 1;
+            $("#checkImg").attr("src","<%=path%>/ui/images/checkbox1.png");
+        }
+    }
     function confirmAction() {
         var phone = $("#phone").val();
         var codeid = $("#codeid").val();
@@ -482,7 +492,7 @@
         }
 
 
-        if (!$("#checkid").prop("checked")){
+        if (!isAgree){
             $("#agreeLabel").html("<spring:message code="login.register.lookTip"/>");
             $("#agreeLabel").css("display","block");
             return;
