@@ -93,7 +93,7 @@
 
 .choice-list ul li .p-mr{margin-left:0.2rem;}
 .choice-list ul li .p-mr1{margin-left:0.2rem;}
-.choice-list ul .word-checkbox p{font-size:0.55rem;color:#666}
+.choice-list ul .word-checkbox p{font-size:0.51rem;color:#666}
 .choice-list ul .word-checkbox p b{font-size:0.42rem;color:#999;font-weight:normal;}
 .choice-list ul li .a-link a{color:#1780e3;font-size:0.55rem}
 .choice-list ul li .a-link{color:#999}
@@ -217,14 +217,13 @@
 .set-int ul li p span{position:absolute;top:0.35rem;right:1.42rem;color:#c4c4c4;font-size:0.62rem}
 .testing-select-big{width:14.8rem;height:1.7rem;border:1px solid #c4c4c4;font-size:0.42rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.46rem 0.12rem;border-radius:0.21rem;font-size:0.51rem;color:#666}
-.set-int ul .int-border{width:14.8rem;height:1.7rem;border:1px solid #c4c4c4;background:#fff;border-radius:5px;padding:0 0.42rem;margin-bottom:0.9rem;}
+.set-int ul .int-border{width:14.8rem;height:1.7rem;border:1px solid #c4c4c4;background:#fff;border-radius:5px;padding:0 0.42rem;margin-bottom:0.9rem;line-height:1.7rem;}
 .set-int ul .int-border:hover{border:1px solid #1780e3}
 .set-int ul li img{width:2.81rem;height:1.55rem;}
 .set-int ul li i{font-size:0.85rem;color:#c7c7c7;margin-top:0.4rem;float:right;}
 .set-int ul .left a{font-size:0.46rem;color:#1780e3;}
 .set-int ul .left{font-size:0.46rem;}
 .set-int ul .int-border .right{float:right}
-
 /**登录注册**/
 .login-tab{width:16rem;float:left;height:1.92rem;background:#fff;}
 .login-tab ul{width:16rem;float:left;border-bottom:1px solid #eee;height:1.92rem;}
@@ -392,6 +391,6 @@
 .coupon-left ul .word{font-size:0.64rem;font-weight:bold;}
 .coupon-right{width:4.8rem;float:left;text-align: center;line-height:3.79rem;font-size:1.28rem;color:#fff}
 .coupon-right span{font-size:0.85rem}
-
-.choice-list .imgcheckbox{width:0.6rem;height:0.6rem;margin-right:0.4rem;}
-.set-int .imgcheckbox{width:0.6rem;height:0.6rem;margin-right:0.4rem;}
+.choice-list .imgcheckbox{width:0.5rem;height:0.5rem;margin-right:0.4rem;}
+.prompt-confirm-btn .btn-white-50{width:50%;float:left;}
+.set-int .imgcheckbox{width:0.5rem;height:0.5rem;margin-right:0.4rem;}

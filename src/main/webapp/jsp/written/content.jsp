@@ -139,13 +139,13 @@
                 </li>
                 <li class="word-checkbox mb-0">
                     <p id="TranslateSpeed">预计翻译速度: N/A小时/千字</p>
-                    <p class="p-mr1"><input type="checkbox" id="quick" class="checkbox" onchange="LvChange()">加急<b
-                            id="pQuick">(加急订单，更快获得译文)</b>
+                    <p class="p-mr1" id="pQuick">
+                        <img id="quick" src="<%=path%>/ui/images/checkbox.png" class="imgcheckbox" value="0">加急<b>（加急订单，更快获得译文）</b>
                     </p>
                 </li>
-                <li>
-                    <p><input id="isRead" type="checkbox" class="checkbox" checked="checked"></p>
-                    <p id="pIsRead" class="a-link">我已阅读并同意中译语通的<a href="javascript:toLicense()">《翻译协议》</a></p>
+                <li id="pIsRead">
+                    <p><img id="isRead" src="<%=path%>/ui/images/checkbox1.png" class="imgcheckbox" value="1"></p>
+                    <p class="a-link">我已阅读并同意中译语通的<a href="javascript:toLicense()">《翻译协议》</a></p>
                 </li>
             </ul>
         </div>
@@ -160,6 +160,9 @@
 </html>
 
 <script type="text/javascript">
+    var CheckedImg = "<%=path%>/ui/images/checkbox1.png";
+    var UnCheckedImg = "<%=path%>/ui/images/checkbox.png";
+
     $(function () {
         LvChange();
         ServerChange();
@@ -199,7 +202,7 @@
                 $('#prompt').slideDown(100);
                 return;
             }
-            if (!$("#isRead").prop("checked")) {
+            if (!($("#isRead").attr("value")=="1")) {
                 $("#EjectTitle").html("请阅读翻译协议");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
@@ -218,14 +221,26 @@
 //        })
 
         $("#pQuick").click(function () {
-            var checked = document.getElementById("quick").checked;
-            document.getElementById("quick").checked = !checked;
+            var checked = $("#quick").attr("value");
+            if (checked == "1") {
+                document.getElementById("quick").src = UnCheckedImg;
+                $("#quick").attr("value", "0");
+            } else {
+                document.getElementById("quick").src = CheckedImg;
+                $("#quick").attr("value", "1");
+            }
             LvChange();
         });
 
         $("#pIsRead").click(function () {
-            var checked = document.getElementById("isRead").checked;
-            document.getElementById("isRead").checked = !checked;
+            var checked = $("#isRead").attr("value");
+            if (checked == "1") {
+                document.getElementById("isRead").src = UnCheckedImg;
+                $("#isRead").attr("value", "0");
+            } else {
+                document.getElementById("isRead").src = CheckedImg;
+                $("#isRead").attr("value", "1");
+            }
         });
     });
 
@@ -320,19 +335,19 @@
     function LvChange() {
         var Lv = $("#translateLv").find("option:selected").attr("transLv");
         if (Lv == "100210") {
-            if ($("#quick").prop("checked")) {
+            if ($("#quick").attr("value")=="0") {
                 $("#TranslateSpeed").html("预计翻译速度: 1小时/千字");
             } else {
                 $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
             }
         } else if (Lv == "100220") {
-            if ($("#quick").prop("checked")) {
+            if ($("#quick").attr("value")=="0") {
                 $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
             } else {
                 $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
             }
         } else if (Lv == "100230") {
-            if ($("#quick").prop("checked")) {
+            if ($("#quick").attr("value")=="0") {
                 $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
             } else {
                 $("#TranslateSpeed").html("预计翻译速度: 4小时/千字");
