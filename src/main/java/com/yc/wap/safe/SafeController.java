@@ -498,19 +498,28 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "sendTestCode")
     public @ResponseBody Object sendTestCode() {
         MsgBean result = new MsgBean();
-        //判断请求时间间隔是否小于60s
-        String oldTime = (String) session.getAttribute("isSpace");
-        long newTime = new Date().getTime();
-        if (oldTime != "" && oldTime != null){
-            long time = Long.parseLong(oldTime);
-            if (newTime < time+60*1000){
-                result.put("status","0");
-                result.put("msg","您发送验证码过于频繁，请稍后重试");
-                return result.returnMsg();
+
+        String info = request.getParameter("info");
+        String lastInfo = (String) session.getAttribute("lastInfo");
+        if (lastInfo != "" && lastInfo != null){
+            if (info.equals(lastInfo)){
+                //判断请求时间间隔是否小于60s
+                String oldTime = (String) session.getAttribute("isSpace");
+                long newTime = new Date().getTime();
+                if (oldTime != "" && oldTime != null){
+                    long time = Long.parseLong(oldTime);
+                    if (newTime < time+60*1000){
+                        result.put("status","0");
+                        result.put("msg","您发送验证码过于频繁，请稍后重试");
+                        return result.returnMsg();
+                    }
+                }
+            }else {
+                session.setAttribute("lastInfo",info);
             }
         }
+
         String type = request.getParameter("type");
-        String info = request.getParameter("info");
         String uid = request.getParameter("uid");
         String domainName = request.getParameter("domain");
         UcMembersGetOperationcodeRequest res = new UcMembersGetOperationcodeRequest();
@@ -622,10 +631,12 @@ public class SafeController extends BaseController {
         Integer u = Integer.parseInt(uid);
         String type = request.getParameter("type");
         String code = request.getParameter("code");
+        String userinfo = request.getParameter("userinfo");
         UcMembersActiveRequest res = new UcMembersActiveRequest();
         res.setTenantId(Constants.TENANTID);
         res.setOperationtype(type);
         res.setOperationcode(code);
+        res.setUserinfo(userinfo);
         res.setUid(u);
         log.info("uid:"+u);
         try {

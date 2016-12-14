@@ -532,7 +532,7 @@
                 }
             },
             error: function () {
-                $("#confimPsd").html(data.msg);
+                $("#confimPsd").html("网络请求失败,请重试");
                 $("#confimPsd").css("display", "block");
                 $("#phone").attr("disabled",false);
                 Loading.HideLoading();
