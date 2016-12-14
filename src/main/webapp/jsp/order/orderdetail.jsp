@@ -69,22 +69,44 @@
                     </li>
                 </ul>
             </div>
-            <div id="cont-hid" style="display: none"><!--加载显示-->
-                <div class="original-cont">
-                    <ul>
-                        <li>
-                            <p>原文:</p>
-                            <p class="sm-word">${Params.needTranslateInfo}</p>
-                        </li>
-                    </ul>
-                    <ul id="Translated">
-                        <li>
-                            <p>译文:</p>
-                            <p class="sm-word">${Params.translateInfo}</p>
-                        </li>
-                    </ul>
+            <c:if test="${Params.translateType=='0'}">
+                <div id="cont-hid" style="display: none"><!--加载显示-->
+                    <div class="original-cont">
+                        <ul>
+                            <li>
+                                <p>原文:</p>
+                                <p class="sm-word">${Params.needTranslateInfo}</p>
+                            </li>
+                        </ul>
+                        <ul id="Translated">
+                            <li>
+                                <p>译文:</p>
+                                <p class="sm-word">${Params.translateInfo}</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </c:if>
+            <c:if test="${Params.translateType=='1'}">
+                <div id="cont-hid" style="display: none"><!--加载显示-->
+                    <div class="original-cont">
+                        <ul>
+                            <li>
+                                <p>原文:</p>
+                                <c:forEach items="${Params.needTranslateFiles}" var="pair">
+                                    <p class="sm-word">${pair}</p>
+                                </c:forEach>
+                            </li>
+                        </ul>
+                        <%--<ul id="Translated">--%>
+                            <%--<li>--%>
+                                <%--<p>译文:</p>--%>
+                                <%--<p class="sm-word">${Params.translateInfo}</p>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                    </div>
+                </div>
+            </c:if>
             <div class="click-more" id="click-more"><a href="javascript:void(0)" id="more" flag="closed">点击查看更多</a>
             </div>
         </section>

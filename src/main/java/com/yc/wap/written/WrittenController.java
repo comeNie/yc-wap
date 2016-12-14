@@ -53,7 +53,7 @@ public class WrittenController extends BaseController {
 
     @RequestMapping(value = "")
     public String content() {
-        List<SysDuadVo> DualList = GetDualList(Constants.OrderType.DOC);
+        List<SysDuadVo> DualList = GetDualList(Constants.OrderType.QUICK);
         List<SysPurposeVo> PurposeList = GetPurposeList();
         List<SysDomainVo> DomainList = GetDomainList();
 

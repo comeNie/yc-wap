@@ -56,7 +56,7 @@
 </body>
 </html>
 <script>
-    var b;
+    var b = '${Balance}';
     function toRecharge() {
         var tourl = "<%=path%>/account/recharge?balance=" + b;
         window.location.href = tourl;
