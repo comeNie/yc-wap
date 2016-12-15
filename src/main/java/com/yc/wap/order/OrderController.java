@@ -209,9 +209,12 @@ public class OrderController extends BaseController {
             request.setAttribute("to", "login");
             return "login/login";
         }
+        QueryOrderDetailsRequest req = new QueryOrderDetailsRequest();
+        req.setChgStateFlag("0");
+        req.setOrderId(Long.parseLong(OrderId));
         try {
             log.info("QueryOrderDetailsOrderId: " + OrderId);
-            QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(Long.parseLong(OrderId));
+            QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(req);
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 log.info("QueryOrderDetailsFailed: " + com.alibaba.fastjson.JSONArray.toJSONString(resp.getResponseHeader().getResultMessage()));
                 throw new BusinessException("QueryOrderDetailsFailed");
@@ -289,13 +292,16 @@ public class OrderController extends BaseController {
             List<OrderStateChgVo> orderStateChange = resp.getOrderStateChgs();
             // put
             Map<String, String> _OrderTrackCn = new HashMap<String, String>();
+            Map<String, String> _OrderTrackEn = new HashMap<String, String>();
             for (OrderStateChgVo k : orderStateChange) {
                 Timestamp ts = k.getStateChgTime();
                 String ChangeTime = sdf.format(ts);
-                _OrderTrackCn.put(ChangeTime, k.getChgDesc());
+                _OrderTrackCn.put(ChangeTime, k.getChgDescD());
+                _OrderTrackEn.put(ChangeTime, k.getChgDescUEn());
             }
             // sort
             Map<String, String> OrderTrackCn = MapSortUtil.sortMapByKey(_OrderTrackCn);
+            Map<String, String> OrderTrackEn = MapSortUtil.sortMapByKey(_OrderTrackEn);
 
             ///// Files /////
             String translateName = resp.getTranslateName();
@@ -364,10 +370,16 @@ public class OrderController extends BaseController {
             }
 
             log.info("OrderDetailParamJson.." + ParamJson.toString());
-            log.info("OrderStateChange.." + OrderTrackCn.toString());
+            if (OrderTrackCn != null && OrderTrackEn != null) {
+                log.info("OrderStateChangeCn.." + OrderTrackCn.toString());
+                log.info("OrderStateChangeEn.." + OrderTrackEn.toString());
+            } else {
+                log.info("OrderStateChangeIsNull");
+            }
 
             request.setAttribute("Params", ParamJson);
             request.setAttribute("OrderTrackCn", OrderTrackCn);
+            request.setAttribute("OrderTrackEn", OrderTrackEn);
             request.setAttribute("FromRes", FromRes);
         } catch (BusinessException | SystemException | NumberFormatException e) {
             e.printStackTrace();
