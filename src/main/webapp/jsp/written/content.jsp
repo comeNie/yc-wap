@@ -358,21 +358,21 @@
         var Lv = $("#translateLv").find("option:selected").attr("transLv");
         if (Lv == "100210") {
             if ($("#quick").attr("value")=="0") {
-                $("#TranslateSpeed").html("预计翻译速度: 1小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度: 1千字/小时");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度: 2千字/小时");
             }
         } else if (Lv == "100220") {
             if ($("#quick").attr("value")=="0") {
-                $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度: 2千字/小时");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度: 3千字/小时");
             }
         } else if (Lv == "100230") {
             if ($("#quick").attr("value")=="0") {
-                $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度: 3千字/小时");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 4小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度: 4千字/小时");
             }
         }
     }
