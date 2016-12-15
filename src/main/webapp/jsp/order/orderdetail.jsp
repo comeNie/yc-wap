@@ -12,6 +12,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
+    String to = request.getParameter("to");
+    if (to != null && to.equals("text")) {
+        request.setAttribute("text", "text");
+    }
 %>
 <html>
 <head>
@@ -98,12 +102,12 @@
                                 </c:forEach>
                             </li>
                         </ul>
-                        <%--<ul id="Translated">--%>
+                            <%--<ul id="Translated">--%>
                             <%--<li>--%>
-                                <%--<p>译文:</p>--%>
-                                <%--<p class="sm-word">${Params.translateInfo}</p>--%>
+                            <%--<p>译文:</p>--%>
+                            <%--<p class="sm-word">${Params.translateInfo}</p>--%>
                             <%--</li>--%>
-                        <%--</ul>--%>
+                            <%--</ul>--%>
                     </div>
                 </div>
             </c:if>
@@ -472,6 +476,44 @@
     </section>
 </div>
 
+<div class="wrapper-big" id="OrderText" style="display: none">
+    <nav class="wap-second-nav">
+        <ul>
+            <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
+            <li>订单详情</li>
+            <a href="javascript:" id="nav-list2"><i class="icon iconfont right">&#xe629;</i></a>
+        </ul>
+        <div class="pop-nav" id="pop-nav2">
+            <ul>
+                <li>
+                    <a href="javascript:window.location.href='<%=path%>/'">
+                        <spring:message code="popnav.public.index"/></a>|
+                    <a href="javascript:window.location.href='<%=path%>/center/center'">
+                        <spring:message code="popnav.public.ucenter"/></a>|
+                    <a href="javascript:window.location.href='<%=path%>/order'">
+                        <spring:message code="popnav.public.order"/></a>|
+                    <a href="javascript:onLogout()">
+                        <spring:message code="popnav.public.exit"/></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--译文-->
+    <div class="tran-big">
+        <ul>
+            <li>原文:</li>
+            <li>${Params.needTranslateInfo}</li>
+        </ul>
+    </div>
+    <div class="tran-big m-top" id="TranslatedText">
+        <ul>
+            <li>译文:</li>
+            <li>${Params.translateInfo}</li>
+        </ul>
+    </div>
+    <%--<div class="tran-jiaz"><a href="#"><i class="icon-double-angle-up"></i></a></div>--%>
+</div>
+
 <section class="order-submit-kou" id="bottom_button">
     <p class="cent blue" id="ButtonLeftP"><a href="javascript:void(0)" id="ButtonLeft">评价订单</a></p>
     <p class="cent green" id="ButtonRightP"><a href="javascript:GoTrack()">订单跟踪</a></p>
@@ -495,6 +537,7 @@
             $("#PaidFee1").css("display", "none");
             $("#PaidFee2").css("display", "none");
             $("#Translated").css("display", "none");
+            $("#TranslatedText").css("display", "none");
         }
 
         if (ButtonLeft != "") {
@@ -525,6 +568,16 @@
 //            }
         });
 
+        $("#nav-list2").bind("click", function () {
+            if ($("#pop-nav2").attr("opened") == "1") {
+                $("#pop-nav2").css("display", "none");
+                $("#pop-nav2").attr("opened", "0");
+            } else {
+                $("#pop-nav2").css("display", "block");
+                $("#pop-nav2").attr("opened", "1");
+            }
+        });
+
         $("#nav-list1").bind("click", function () {
             if ($("#pop-nav1").attr("opened") == "1") {
                 $("#pop-nav1").css("display", "none");
@@ -544,22 +597,38 @@
                 $("#pop-nav").attr("opened", "1");
             }
         });
+
+        if (${text=="text"}) {
+            if (${Params.translateType=='1' || Params.translateType=="2"}) {
+                return;
+            }
+            ShowText();
+        }
     });
 
     $(function () {
 
     });
 
+    function ShowText() {
+        $("#OrderText").css("display", "block");
+        $("#OrderDetail").css("display", "none");
+        $("#OrderTrack").css("display", "none");
+        $("#bottom_button").css("display", "block");
+    }
+
     function GoDetail() {
         $("#OrderDetail").css("display", "block");
         $("#OrderTrack").css("display", "none");
         $("#bottom_button").css("display", "block");
+        $("#OrderText").css("display", "none");
     }
 
     function GoTrack() {
         $("#OrderDetail").css("display", "none");
         $("#OrderTrack").css("display", "block");
         $("#bottom_button").css("display", "none");
+        $("#OrderText").css("display", "none");
     }
 
     function ConfirmOrder(OrderId) {
