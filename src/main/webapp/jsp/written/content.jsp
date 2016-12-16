@@ -190,10 +190,12 @@
 
     $(document).ready(function () {
         Loading.HideLoading();
+
+        GetLanguageShow();
+
         var UserLanguage = '${pageContext.response.locale}';
         console.log("UserLanguage: " + UserLanguage);
         SetDual(UserLanguage);
-        GetLanguageShow();
 
         $("#swap").bind("click", function () {
             SwapDual();
