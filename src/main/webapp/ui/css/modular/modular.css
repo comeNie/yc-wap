@@ -25,7 +25,7 @@
 .prompt-payment-btn .none-border{border-right:none;}
 /**提示弹出框**/
 .prompt{width:8.64rem;min-height:5rem; background:#fff;position:fixed;top:50%;left:50%;margin-top:-2.66rem;margin-left:-4.32rem;z-index:999;border-radius:5px;display:none;}
-.prompt-title{ width:100%; float:left;height:1.28rem;color:#999;font-size:0.42rem;text-align:center;line-height:1.28rem;border-bottom:1px solid #c4c4c4;}
+.prompt-title{ width:100%; float:left;height:1.28rem;color:#999;font-size:0.64rem;text-align:center;line-height:1.28rem;border-bottom:1px solid #c4c4c4;}
 .prompt-confirm{ width:100%;float:left;padding:0.67rem 0;}
 .prompt-confirm ul{ width:100%;float:left;padding:0 0.8rem; }
 .prompt-confirm ul li{text-align:center;font-size:0.42rem;color:#666;margin-bottom:0.3rem;}
