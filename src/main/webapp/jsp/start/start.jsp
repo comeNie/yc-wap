@@ -202,6 +202,7 @@
 
     <div class="eject-big">
         <div class="prompt" id="prompt">
+            <div class="prompt-title">提示</div>
             <div class="prompt-confirm beyond-confirm">
                 <ul>
                     <li id="EjectTitle"></li>
