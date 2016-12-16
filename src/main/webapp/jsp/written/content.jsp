@@ -162,6 +162,10 @@
 <script type="text/javascript">
     var CheckedImg = "<%=path%>/ui/images/checkbox1.png";
     var UnCheckedImg = "<%=path%>/ui/images/checkbox.png";
+    var ChineseEn = "";
+    var ChineseCn = "";
+    var EnglishEn = "";
+    var EnglishCn = "";
 
     $(function () {
         LvChange();
@@ -169,11 +173,27 @@
         DualChange();
     });
 
+    function GetLanguageShow() {
+        var DualList = ${DualList};
+        for (var k in DualList) {
+            var Code = DualList[k].sourceCode;
+            if ("zh" == Code) {
+                ChineseCn = DualList[k].sourceCn;
+                ChineseEn = DualList[k].sourceEn;
+            } else if ("en" == Code) {
+                EnglishCn = DualList[k].sourceCn;
+                EnglishEn = DualList[k].sourceEn;
+            }
+        }
+        console.log("GetLanguageShow: " + ChineseCn + ChineseEn + EnglishCn + EnglishEn);
+    }
+
     $(document).ready(function () {
         Loading.HideLoading();
         var UserLanguage = '${pageContext.response.locale}';
         console.log("UserLanguage: " + UserLanguage);
         SetDual(UserLanguage);
+        GetLanguageShow();
 
         $("#swap").bind("click", function () {
             SwapDual();
@@ -202,7 +222,7 @@
                 $('#prompt').slideDown(100);
                 return;
             }
-            if (!($("#isRead").attr("value")=="1")) {
+            if (!($("#isRead").attr("value") == "1")) {
                 $("#EjectTitle").html("请阅读翻译协议");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
@@ -250,15 +270,15 @@
         var TargetLanguageCn = "";
         var TargetLanguageEn = "";
         if (Language == "zh_CN") {
-            setLanguageCn = "简体中文";
-            setLanguageEn = "Chinese";
-            TargetLanguageCn = "英语";
-            TargetLanguageEn = "English";
+            setLanguageCn = ChineseCn;
+            setLanguageEn = ChineseEn;
+            TargetLanguageCn = EnglishCn;
+            TargetLanguageEn = EnglishEn;
         } else {
-            setLanguageCn = "英语";
-            setLanguageEn = "English";
-            TargetLanguageCn = "简体中文";
-            TargetLanguageEn = "Chinese";
+            setLanguageCn = EnglishCn;
+            setLanguageEn = EnglishEn;
+            TargetLanguageCn = ChineseCn;
+            TargetLanguageEn = ChineseEn;
         }
 
         $("#dualSource").children('option').each(function () {
@@ -342,12 +362,13 @@
                 $(this)[0].selected = true;
             }
         });
+
         DualChange();
 
-        if (SourceEn == "Chinese") {
+        if (SourceEn == ChineseEn || SourceCn == ChineseCn) {
             $("#dualTarget").children('option').each(function () {
                 var temp_value = $(this).html();
-                if (temp_value == "英语" || temp_value == "English") {
+                if (temp_value == EnglishEn || temp_value == EnglishCn) {
                     $(this)[0].selected = true;
                 }
             });
@@ -357,19 +378,19 @@
     function LvChange() {
         var Lv = $("#translateLv").find("option:selected").attr("transLv");
         if (Lv == "100210") {
-            if ($("#quick").attr("value")=="0") {
+            if ($("#quick").attr("value") == "0") {
                 $("#TranslateSpeed").html("预计翻译速度: 1千字/小时");
             } else {
                 $("#TranslateSpeed").html("预计翻译速度: 2千字/小时");
             }
         } else if (Lv == "100220") {
-            if ($("#quick").attr("value")=="0") {
+            if ($("#quick").attr("value") == "0") {
                 $("#TranslateSpeed").html("预计翻译速度: 2千字/小时");
             } else {
                 $("#TranslateSpeed").html("预计翻译速度: 3千字/小时");
             }
         } else if (Lv == "100230") {
-            if ($("#quick").attr("value")=="0") {
+            if ($("#quick").attr("value") == "0") {
                 $("#TranslateSpeed").html("预计翻译速度: 3千字/小时");
             } else {
                 $("#TranslateSpeed").html("预计翻译速度: 4千字/小时");
@@ -537,26 +558,14 @@
                     console.log("DetectLanguage: " + Language);
                     var SourceCn = "";
                     var SourceEn = "";
-                    switch (Language) {
-                        case "en":
-                            SourceCn = "英语";
-                            SourceEn = "English";
-                            break;
-                        case "zh":
-                            SourceCn = "简体中文";
-                            SourceEn = "Chinese";
-                            break;
-                        case "fr":
-                            SourceCn = "法语";
-                            SourceEn = "France";
-                            break;
-                        case "pt":
-                            SourceCn = "葡萄牙语";
-                            SourceEn = "Portuguese";
-                            break;
-                        default:
-                            SourceCn = ""
-                            SourceEn = ""
+
+                    var DualList = ${DualList};
+                    for (var k in DualList) {
+                        var Code = DualList[k].sourceCode;
+                        if (Language == Code) {
+                            SourceCn = DualList[k].sourceCn;
+                            SourceEn = DualList[k].sourceEn;
+                        }
                     }
                     AutoChangeDual(SourceCn, SourceEn);
                 }

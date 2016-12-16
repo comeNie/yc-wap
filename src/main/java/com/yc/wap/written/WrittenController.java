@@ -53,6 +53,8 @@ public class WrittenController extends BaseController {
 
     @RequestMapping(value = "")
     public String content() {
+        String Language = "zh_CN";
+
         List<SysDuadVo> DualList = GetDualList(Constants.OrderType.DOC);
         List<SysPurposeVo> PurposeList = GetPurposeList();
         List<SysDomainVo> DomainList = GetDomainList();
@@ -136,7 +138,7 @@ public class WrittenController extends BaseController {
         request.setAttribute("DualJson", DualJson);
         request.setAttribute("DualMapEn", DualMapEn);
         request.setAttribute("DualJsonEn", DualJsonEn);
-        request.setAttribute("DualList", DualList);
+        request.setAttribute("DualList", com.alibaba.fastjson.JSONArray.toJSONString(DualList));
         request.setAttribute("PurposeList", PurposeList);
         request.setAttribute("DomainList", DomainList);
 
