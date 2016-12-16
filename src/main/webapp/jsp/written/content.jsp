@@ -466,7 +466,7 @@
         var TransLvVal = $("#translateLv").val();
         //是否加急
         var Express = "N";
-        if ($("#quick").prop("checked")) {
+        if ($("#quick").attr("value") == "1") {
             Express = "Y";
         }
         var Detail = Content.substring(0, 15) + "...";
