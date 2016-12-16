@@ -397,6 +397,10 @@ public class OrderController extends BaseController {
         return "order/ordertrack";
     }
 
+    @RequestMapping(value = "OrderText")
+    public String OrderText() {
+        return "order/ordertext";
+    }
 //    /**
 //     * 文档订单详细页面 下载文件
 //     * @param fileId
