@@ -144,7 +144,7 @@
         <!--翻译按钮-->
         <section class="translate-btn" id="chick-btn">
             <a href="javascript:void(0)" onclick="goTranslate()" id="translateAid" class="submit-btn btn-blue"><spring:message code="start.fanyi"/></a>
-            <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="display:none;padding-left: 2.5rem">
+            <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="width: 5.29rem;height: 1.13rem; display:block;margin:0 auto">
         </section>
         <!--翻译结果-->
         <section class="translation-content-english" id="results">
@@ -235,6 +235,7 @@
         //初始化数据库
         initDatabase();
         showAllTheData();
+        $("#translateGif").hide();
         var audio = document.getElementById("audioPlay");
         audio.addEventListener("ended",function () {
             $("#hornid").show();
