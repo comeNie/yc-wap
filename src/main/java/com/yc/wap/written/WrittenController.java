@@ -4,6 +4,7 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.yc.common.api.sysdomain.interfaces.IQuerySysDomainSV;
+import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListReq;
 import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListRes;
 import com.ai.yc.common.api.sysdomain.param.SysDomainVo;
 import com.ai.yc.common.api.sysduad.interfaces.IQuerySysDuadSV;
@@ -11,6 +12,7 @@ import com.ai.yc.common.api.sysduad.param.QuerySysDuadListReq;
 import com.ai.yc.common.api.sysduad.param.QuerySysDuadListRes;
 import com.ai.yc.common.api.sysduad.param.SysDuadVo;
 import com.ai.yc.common.api.syspurpose.interfaces.IQuerySysPurposeSV;
+import com.ai.yc.common.api.syspurpose.param.QuerySysPurposeListReq;
 import com.ai.yc.common.api.syspurpose.param.QuerySysPurposeListRes;
 import com.ai.yc.common.api.syspurpose.param.SysPurposeVo;
 import com.ai.yc.order.api.autooffer.interfaces.IQueryAutoOfferSV;
@@ -56,8 +58,8 @@ public class WrittenController extends BaseController {
         String Language = "zh_CN";
 
         List<SysDuadVo> DualList = GetDualList(Constants.OrderType.DOC);
-        List<SysPurposeVo> PurposeList = GetPurposeList();
-        List<SysDomainVo> DomainList = GetDomainList();
+        List<SysPurposeVo> PurposeList = GetPurposeList(Language);
+        List<SysDomainVo> DomainList = GetDomainList(Language);
 
         log.info("GetDualListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(DualList));
         log.info("GetPurposeListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(PurposeList));
@@ -161,9 +163,11 @@ public class WrittenController extends BaseController {
         }
     }
 
-    private List<SysPurposeVo> GetPurposeList() {
+    private List<SysPurposeVo> GetPurposeList(String Language) {
         try {
-            QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList();
+            QuerySysPurposeListReq req = new QuerySysPurposeListReq();
+            req.setLanguage(Language);
+            QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList(req);
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 throw new RuntimeException("GetPurposeListFailed");
             }
@@ -174,9 +178,11 @@ public class WrittenController extends BaseController {
         }
     }
 
-    private List<SysDomainVo> GetDomainList() {
+    private List<SysDomainVo> GetDomainList(String Language) {
         try {
-            QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList();
+            QuerySysDomainListReq req = new QuerySysDomainListReq();
+            req.setLanguage(Language);
+            QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList(req);
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 throw new RuntimeException("GetDomainListFailed");
             }

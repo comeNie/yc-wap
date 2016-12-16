@@ -321,7 +321,7 @@ public class OrderController extends BaseController {
             String useCn = ProdList.getUseCn();
             String fieldCn = ProdList.getFieldCn();
             String takeTime = ProdList.getTakeTime();
-            String Remark = resp.getRemark();
+            String Remark = Contacts.getRemark();
             String isUrgent = ProdList.getIsUrgent();
             String contactName = Contacts.getContactName();
             String contactTel = Contacts.getContactTel();
