@@ -30,8 +30,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -60,18 +61,23 @@ public class PayController extends BaseController {
     public void gotoPayByOrg(String orderId, String orderAmount, String currencyUnit, String merchantUrl, String payOrgCode,
                              HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+
+        String notifyUrl = ConfigUtil.getProperty("NOTIFY_URL") + "?uid=" + session.getAttribute("UID");
+//        String returnUrl = ConfigUtil.getProperty("RETURN_URL") + "?uid=" + session.getAttribute("UID");
+        String returnUrl = ConfigUtil.getProperty("RETURN_URL");
+        String urls = "";
+
+        log.info("-----Sessions-----");
         HttpSession session = request.getSession();
         Enumeration<?> enumeration = session.getAttributeNames();
-        log.info("-----Sessions-----");
         while (enumeration.hasMoreElements()) {
             String name = enumeration.nextElement().toString();
             Object value = session.getAttribute(name);
             log.info("SessionName: " + name + ", SessionValue: " + value);
+            urls += "&" + name + "=" + URLEncoder.encode(value.toString(), "UTF-8");
         }
         log.info("-----Sessions-----");
-
-        String notifyUrl = ConfigUtil.getProperty("NOTIFY_URL") + "?uid=" + session.getAttribute("UID");
-        String returnUrl = ConfigUtil.getProperty("RETURN_URL") + "?uid=" + session.getAttribute("UID");
+        returnUrl += "?" + urls.substring(1);
 
         String infoStr = orderId + VerifyUtil.SEPARATOR + orderAmount + VerifyUtil.SEPARATOR + notifyUrl + VerifyUtil.SEPARATOR + TENANTID;
         String infoMd5 = VerifyUtil.encodeParam(infoStr, ConfigUtil.getProperty("REQUEST_KEY"));
@@ -85,7 +91,7 @@ public class PayController extends BaseController {
         map.put("requestSource", "2");
         map.put("orderAmount", orderAmount);
         map.put("currencyUnit", currencyUnit);
-        map.put("subject", orderId); //订单名字
+        map.put("subject", orderId);
         map.put("payOrgCode", payOrgCode);
         map.put("infoMd5", infoMd5);
 
@@ -100,7 +106,7 @@ public class PayController extends BaseController {
 
     @RequestMapping(value = "payResult")
     @ResponseBody
-    public String payResult(String uid) throws ParseException {
+    public String payResult(String uid) throws Exception {
         log.info("PayResult-NOTIFY_URL-Callback");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
@@ -140,15 +146,36 @@ public class PayController extends BaseController {
     }
 
     @RequestMapping(value = "payResultView")
-    public String payResultView(String uid) {
+    public String payResultView() throws Exception {
         log.info("PayResult-RETURN_URL-Callback");
         String orderId = request.getParameter("orderId");
         String payStates = request.getParameter("payStates");
         String orderAmount = request.getParameter("orderAmount");
 
+        /////
+        session.setAttribute("isLogin", URLDecoder.decode(request.getParameter("isLogin"), "UTF-8"));
+        session.setAttribute("UID", URLDecoder.decode(request.getParameter("UID"), "UTF-8"));
+        session.setAttribute("password", URLDecoder.decode(request.getParameter("password"), "UTF-8"));
+        session.setAttribute("mobilePhone", URLDecoder.decode(request.getParameter("mobilePhone"), "UTF-8"));
+        session.setAttribute("certCode", URLDecoder.decode(request.getParameter("certCode"), "UTF-8"));
+        session.setAttribute("domainname", URLDecoder.decode(request.getParameter("domainname"), "UTF-8"));
+        session.setAttribute("email", URLDecoder.decode(request.getParameter("email"), "UTF-8"));
+        session.setAttribute("username", URLDecoder.decode(request.getParameter("username"), "UTF-8"));
+        /////
+
         log.info("-----PayResult-----");
-        log.info("orderId: " + orderId + ", payStates: " + payStates + ", uid: " + uid);
+        log.info("orderId: " + orderId + ", payStates: " + payStates);
         log.info("-----PayResult-----");
+
+        log.info("-----SessionsAfterPay-----");
+        HttpSession session = request.getSession();
+        Enumeration<?> enumeration = session.getAttributeNames();
+        while (enumeration.hasMoreElements()) {
+            String name = enumeration.nextElement().toString();
+            Object value = session.getAttribute(name);
+            log.info("SessionName: " + name + ", SessionValue: " + value);
+        }
+        log.info("-----SessionsAfterPay-----");
 
         if (payStates.equals("00")) {
             request.setAttribute("result", "success");
