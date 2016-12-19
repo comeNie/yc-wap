@@ -1,7 +1,6 @@
 package com.yc.wap.login;
 
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.RandomUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersVo;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
@@ -14,7 +13,6 @@ import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.utils.MD5Util;
-import com.yc.wap.system.utils.RegexUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -76,7 +73,7 @@ public class LoginController extends BaseController {
         String sessionCode = (String) session.getAttribute("certCode");
         if (!checkCode.toUpperCase().equals(sessionCode.toUpperCase())){
             result.put("status","2");
-            result.put("msg","验证码错误");
+            result.put("msg",rb.getMessage("loginCtrl.checkCode"));
             return result.returnMsg();
         }
         String username = request.getParameter("username");
@@ -113,7 +110,7 @@ public class LoginController extends BaseController {
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.put("status","0");
-            result.put("msg","登录失败");
+            result.put("msg",rb.getMessage("loginCtrl.loginFail"));
         }
         return result.returnMsg();
     }
@@ -129,23 +126,17 @@ public class LoginController extends BaseController {
         String password = request.getParameter("newpw");
         String personUid = request.getParameter("uid");
         String code = request.getParameter("code");
-
         password = MD5Util.md5(password);
-//        Date date = new Date();
-//        String createTime = date.toString();
 
         InsertYCUserRequest res = new InsertYCUserRequest();
 //        res.setTenantId(Constants.TenantID);
         res.setPassword(password);
         res.setRegip("0");
-//        domainname
         res.setMobilePhone(phone);
         res.setOperationcode(code);
         res.setLoginway(Constants.RegisterModel.PhonePsdModel);
         res.setUserId(personUid);
         res.setOperationcode(code);
-//        res.setUserName("yiyun" + RandomUtil.randomNum(10));
-//        res.setNickname("译粉_" + RandomUtil.randomNum(8));
         try {
             YCInsertUserResponse resp = iycUserServiceSV.insertYCUser(res);
             String  message = resp.getResponseHeader().getResultMessage();  //通过code进行捕获
@@ -158,7 +149,7 @@ public class LoginController extends BaseController {
             /*code:失败，未找到该用户信息-1 code:成功1    */
         } catch (Exception e) {
             result.put("status","0");
-            result.put("msg","注册失败");
+            result.put("msg",rb.getMessage("loginCtrl.registerFail"));
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
         }
         return result.returnMsg();

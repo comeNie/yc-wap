@@ -83,8 +83,6 @@ public class SafeController extends BaseController {
         request.setAttribute("mobilePhone",mobilePhone);
         log.info("safe-safe invoked");
         log.info("----------密码"+password);
-
-        System.out.println("测试");
         return "safe/safe";
     }
 
@@ -220,7 +218,7 @@ public class SafeController extends BaseController {
             String sessionCode = (String) session.getAttribute("certCode");
             if (!checkCode.toUpperCase().equals(sessionCode.toUpperCase())){
                 result.put("status","2");
-                result.put("msg","验证码错误");
+                result.put("msg",rb.getMessage("loginCtrl.checkCode"));
                 return result.returnMsg();
             }
         }
@@ -275,7 +273,7 @@ public class SafeController extends BaseController {
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.setFailure(e.getMessage());
             result.put("status","0");
-            result.put("msg","获取用户信息失败");
+            result.put("msg",rb.getMessage("safeCtrl.getUserInfoError"));
             return result;
         }
 
@@ -342,7 +340,7 @@ public class SafeController extends BaseController {
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.put("status","0");
-            result.put("msg","修改失败");
+            result.put("msg",rb.getMessage("safeCtrl.changeFail"));
         }
         return  result.returnMsg();
     }
@@ -385,7 +383,7 @@ public class SafeController extends BaseController {
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.put("status","0");
-            result.put("msg","绑定/修改手机失败");
+            result.put("msg",rb.getMessage("safeCtrl.bindPhoneFail"));
         }
 
         return  result.returnMsg();
@@ -425,14 +423,14 @@ public class SafeController extends BaseController {
                 emailReq.setEmail(checkVal);
                 emailReq.setTenantId(Constants.TENANTID);
                 resp = iUcMembersSV.ucCheckeEmail(emailReq);
-                msg = "该邮箱已被绑定";
+                msg = rb.getMessage("safeCtrl.mailHadBind");
                 log.info("校验邮箱返回：" + JSON.toJSONString(resp));
             }
             if (Constants.PhoneOrMail.Phone.equals(checkType)) {// 手机校验
                 UcMembersCheckeMobileRequest phoneReq = new UcMembersCheckeMobileRequest();
                 phoneReq.setTenantId(Constants.TENANTID);
                 phoneReq.setMobilephone(checkVal);
-                msg = "该手机号已被绑定";
+                msg = rb.getMessage("safeCtrl.phoneHadBin");
                 resp = iUcMembersSV.ucCheckeMobilephone(phoneReq);
                 log.info("校验手机返回：" + JSON.toJSONString(resp));
             }
@@ -485,7 +483,7 @@ public class SafeController extends BaseController {
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.put("status","0");
-            result.put("msg","绑定/修改邮箱失败");
+            result.put("msg",rb.getMessage("safeCtrl.bindMailFail"));
         }
 
         return  result.returnMsg();
@@ -509,7 +507,7 @@ public class SafeController extends BaseController {
                 long time = Long.parseLong(oldTime);
                 if (newTime < time+60*1000){
                     result.put("status","0");
-                    result.put("msg","您发送验证码过于频繁，请稍后重试");
+                    result.put("msg",rb.getMessage("safeCtrl.codeHadSoMuch"));
                     return result.returnMsg();
                 }
             }
@@ -522,7 +520,7 @@ public class SafeController extends BaseController {
                     long time = Long.parseLong(oldTime);
                     if (newTime < time+60*1000){
                         result.put("status","0");
-                        result.put("msg","您发送验证码过于频繁，请稍后重试");
+                        result.put("msg",rb.getMessage("safeCtrl.codeHadSoMuch"));
                         return result.returnMsg();
                     }
                 }
@@ -597,7 +595,7 @@ public class SafeController extends BaseController {
 
                     if(!SmsSenderUtil.sendEmail(emailRequest)){
                         result.put("status","0");
-                        result.put("msg","验证码发送失败");
+                        result.put("msg",rb.getMessage("safeCtrl.codeSendFail"));
                     }else {
                         long t = new Date().getTime();
                         session.setAttribute("isSpace",Long.toString(t));
@@ -613,7 +611,7 @@ public class SafeController extends BaseController {
                     String content = MessageFormat.format(_template,vo.getOperationcode());
                     if(!SmsSenderUtil.sendMessage("+"+domainvalue+info,content)){
                         result.put("status","0");
-                        result.put("msg","验证码发送失败");
+                        result.put("msg",rb.getMessage("safeCtrl.codeSendFail"));
                     }else {
                         long t = new Date().getTime();
                         session.setAttribute("isSpace",Long.toString(t));
@@ -626,7 +624,7 @@ public class SafeController extends BaseController {
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.put("status","0");
-            result.put("msg","获取验证码失败");
+            result.put("msg",rb.getMessage("safeCtrl.codeSendFail"));
         }
 
         return  result.returnMsg();
@@ -668,7 +666,7 @@ public class SafeController extends BaseController {
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
             result.put("status","0");
-            result.put("msg","验证码错误");
+            result.put("msg",rb.getMessage("loginCtrl.checkCode"));
         }
 
         return  result.returnMsg();
