@@ -62,14 +62,14 @@
     }
 
 
-    var wait = 5;
+    var wait = 4;
     var timer = setInterval(function(){
-        wait--;
-        $("#spanTime").html(wait+"s");
         if(wait==0){
             wait = 5;
             goLogin();
-
+            return;
         }
+        $("#spanTime").html(wait+"s");
+        wait--;
     },1000);
 </script>

@@ -119,7 +119,7 @@
                 </select>
                 <span>|</span>
             </p>
-            <p class="test-icon1" style="vertical-align: middle" onclick="changeSelect()"><i class="icon iconfont" id="change-lan">&#xe621;</i>
+            <p class="test-icon1" onclick="changeSelect()"><i class="icon iconfont" id="change-lan">&#xe621;</i>
             </p>
 
             <p>
@@ -138,7 +138,7 @@
         </section>
         <!--翻译内容-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" placeholder="请输入要翻译的单词和句子"></textarea>
+            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" placeholder="<spring:message code="start.fanyiPlaceholder"/>"></textarea>
             <a hrel="javascript:void(0)" ><i class="icon iconfont" id="clear">&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
@@ -202,7 +202,7 @@
 
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title">提示</div>
+            <div class="prompt-title"><spring:message code="start.tishi"/></div>
             <div class="prompt-confirm beyond-confirm">
                 <ul>
                     <li id="EjectTitle"></li>
@@ -264,7 +264,7 @@
                 return;
             }
             if(isEmojiCharacter(landetec)){
-                autoTip("翻译内容不能包含表情符,请重新输入");
+                autoTip("<spring:message code="start.tipBiaoqing"/>");
                 return;
             }
             contentDetection(landetec);
@@ -315,7 +315,7 @@
     function checkLength(landetec) {
         if (landetec.length > 2000){
             var t = landetec.length-2000;
-            autoTip("抱歉，最多支持输入2000个字符，您已超过"+t+"字符。");
+            autoTip("<spring:message code="start.surpassWord"/>"+t+"<spring:message code="start.word"/>");
             return false;
         }else {
             return true;
@@ -462,7 +462,7 @@
             return;
         }
         if(isEmojiCharacter(textStr)){
-            autoTip("翻译内容不能包含表情符,请重新输入");
+            autoTip("<spring:message code="start.tipBiaoqing"/>");
             return;
         }
         if(!checkLength(textStr)){
@@ -486,7 +486,7 @@
                     $("#tipLabel").html("<spring:message code="start.testPT"/>");
                     break;
                 default:
-                    autoTip("系统不支持该语言");
+                    autoTip("<spring:message code="start.buzhichiyuyan"/>");
                     return;
             }
             source = realLangeuage;

@@ -532,7 +532,7 @@
                 }
             },
             error: function () {
-                $("#confimPsd").html("网络请求失败,请重试");
+                $("#confimPsd").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#confimPsd").css("display", "block");
                 $("#phone").attr("disabled",false);
                 Loading.HideLoading();
@@ -594,7 +594,7 @@
                 }
             },
             error: function () {
-                $("#phoneLabel1").html("网络请求失败,请重试");
+                $("#phoneLabel1").html("<spring:message code="safe.safesuccess.failNet"/>");
 //                $("#phone").removeAttrs("disabled");
                 $("#phoneLabel1").css("display", "block");
                 Loading.HideLoading();

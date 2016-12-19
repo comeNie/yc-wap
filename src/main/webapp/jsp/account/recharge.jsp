@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>充值</title>
+    <title><spring:message code="account.recharge.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -34,8 +34,9 @@
 <body>
 <div class="wrapper-big"><!--包含除底部外的所有层-->
     <%--头部--%>
+    <spring:message code="account.recharge.title" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="充值"/>
+        <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:retLeft()"/>
     </jsp:include>
 
@@ -44,17 +45,17 @@
             <div class="choice-list">
                 <ul>
                     <li>
-                        <p class="word">账户余额:</p>
-                        <p>${balance}元</p>
+                        <p class="word"><spring:message code="account.balance.yuer"/></p>
+                        <p>${balance}<spring:message code="account.recharge.yuan"/></p>
                     </li>
                     <li>
-                        <p class="word">充值金额:</p>
+                        <p class="word"><spring:message code="account.recharge.recharjiner"/></p>
                         <p><input id="price" type="text" class="input int-rech" placeholder="10~500" autocomplete="off"></p>
-                        <p>元</p>
+                        <p><spring:message code="account.recharge.yuan"/></p>
                         <label id="pricetip"></label>
                     </li>
                     <li>
-                        <p class="word">充值方式:</p>
+                        <p class="word"><spring:message code="account.recharge.recharType"/></p>
                         <p id="zfbP" onclick="zfbAction()">
                             <%--<input type="radio" class="radio" name="way" value="1" checked>--%>
                             <img id="zfbImg" src="<%=path%>/ui/images/radio.jpg" class="radio-img" >
@@ -69,7 +70,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="wap-btn"><a href="javascript:void(0)" class="btn submit-btn btn-blue" onclick="confirm()">提交</a>
+            <div class="wap-btn"><a href="javascript:void(0)" class="btn submit-btn btn-blue" onclick="confirm()"><spring:message code="account.recharge.tijiao"/></a>
             </div>
         </div>
     </section>
@@ -112,19 +113,19 @@
     function confirm() {
         var price = $("#price").val();
         if (price == null || price == "" || price == 0) {
-            $("#pricetip").html("请输入充值金额");
+            $("#pricetip").html("<spring:message code="account.recharge.enterRechargeMoney"/>");
             $("#pricetip").css("display", "block");
             return;
         } else {
             $("#pricetip").css("display", "none");
         }
         if (!(/^([1-9]\d{0,9}|0)([.]?|(\.\d{1,2})?)$/.test(price))) {
-            $("#pricetip").html("请输入正确的充值金额");
+            $("#pricetip").html("<spring:message code="account.recharge.enterRechargeRight"/>");
             $("#pricetip").css("display", "block");
             return;
         } else {
             if (parseInt(price) < 10 || parseInt(price) > 500){
-                $("#pricetip").html("充值金额10~500之间");
+                $("#pricetip").html("<spring:message code="account.recharge.enterRechargeRange"/>");
                 $("#pricetip").css("display", "block");
                 return;
             }else{

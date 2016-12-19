@@ -246,7 +246,7 @@
             $("#next4").hide();
             index --;
             clearInterval(timer);
-            fiveWait = 5;
+            fiveWait = 4;
             $("#spanTime").html("5s");
         }
 
@@ -358,14 +358,15 @@
                     $("#next3").hide();
                     $("#next4").show();
 
-                    var fiveWait = 5;
+                    var fiveWait = 4;
                     timer = setInterval(function(){
-                        fiveWait--;
-                        $("#spanTime").html(fiveWait+"s");
                         if(fiveWait==0){
                             fiveWait = 5;
                             goLogin();
+                            return;
                         }
+                        $("#spanTime").html(fiveWait+"s");
+                        fiveWait--;
                     },1000);
                     Loading.HideLoading();
                 } else {

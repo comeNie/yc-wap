@@ -21,7 +21,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>个人中心</title>
+    <title><spring:message code="center.center"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -36,8 +36,9 @@
 <body>
     <div class="wrapper-big"><!--包含除底部外的所有层-->
         <%--头部--%>
+        <spring:message code="center.title" var="title"/>
         <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-            <jsp:param name="Title" value="我的译云"/>
+            <jsp:param name="Title" value="${title}"/>
             <jsp:param name="BackTo" value="javascript:retLeft()"/>
         </jsp:include>
 
@@ -61,13 +62,13 @@
                 <a href="javascript:window.location.href='<%=path%>/order/?UnPaid=1'">
                     <li>
                         <p id="stayPay">0</p>
-                        <p>待付款</p>
+                        <p><spring:message code="center.stayPay"/></p>
                     </li>
                 </a>
                 <a href="javascript:javascript:window.location.href='<%=path%>/order/?UnConfirm=1'">
                     <li class="none-border">
                         <p id="stayConfig">0</p>
-                        <p>待确认</p>
+                        <p><spring:message code="center.stayConfig"/></p>
                     </li>
                 </a>
             </ul>
@@ -77,25 +78,25 @@
                 <a href="javascript:window.location.href='<%=path%>/order'">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-9.jpg" /></p>
-                        <p>我的订单</p>
+                        <p><spring:message code="center.myOrder"/></p>
                     </li>
                 </a>
                 <a href="javascript:window.location.href='<%=path%>/account/balance'">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-10.jpg" /></p>
-                        <p>我的账户</p>
+                        <p><spring:message code="center.myBalance"/></p>
                     </li>
                 </a>
                 <a href="javascript:window.location.href='<%=path%>/safe/safe'">
                     <li>
                         <p><img src="<%=path%>/ui/images/icon-11.jpg" /></p>
-                        <p>安全设置</p>
+                        <p><spring:message code="center.mySafe"/></p>
                     </li>
                 </a>
                 <%--<a href="javascript:void(0)">--%>
                     <%--<li>--%>
                         <%--<p><img src="<%=path%>/ui/images/icon-12.jpg" /></p>--%>
-                        <%--<p>我的积分</p>--%>
+                        <%--<p><spring:message code="center.myIntegral"/></p>--%>
                     <%--</li>--%>
                 <%--</a>--%>
             </ul>

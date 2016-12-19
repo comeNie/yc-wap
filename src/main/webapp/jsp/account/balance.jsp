@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>账户余额</title>
+    <title><spring:message code="account.balance.title"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -34,18 +34,19 @@
 <body>
 <div class="wrapper-big"><!--包含除底部外的所有层-->
     <%--头部--%>
+    <spring:message code="account.balance.title" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="账户余额"/>
+        <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:retLeft()"/>
     </jsp:include>
 
     <section class="form-big">
         <div class="balance">
-            账户余额:<span id="balanceSpan">${Balance}</span>
+            <spring:message code="account.balance.yuer"/><span id="balanceSpan">${Balance}</span>
         </div>
-        <div class="wap-btn"><a href="javascript:void(0)" onclick="toRecharge()" class="btn submit-btn btn-blue">充值</a>
+        <div class="wap-btn"><a href="javascript:void(0)" onclick="toRecharge()" class="btn submit-btn btn-blue"><spring:message code="account.balance.chongzhi"/></a>
         </div>
-        <div class="balance-word">账户余额是在译云账户中的款项，下单时可以直接用于支付订单。</div>
+        <div class="balance-word"><spring:message code="account.balance.balancezhuyi"/></div>
     </section>
 </div>
 
@@ -69,31 +70,4 @@
     $(document).ready(function () {
         Loading.HideLoading();
     });
-
-    <%--$(function() {--%>
-    <%--loadBalance()--%>
-    <%--})--%>
-    <%--function loadBalance(){--%>
-    <%--$.ajax({--%>
-    <%--async: true,--%>
-    <%--type: "POST",--%>
-    <%--url: "<%=path%>/account/GetBalance",--%>
-    <%--modal: true,--%>
-    <%--timeout: 30000,--%>
-    <%--data: {--%>
-    <%--},--%>
-    <%--success: function (data) {--%>
-    <%--if (data.status == 1) {--%>
-    <%--Loading.HideLoading();--%>
-    <%--b = data.balance;--%>
-    <%--$("#balanceSpan").html(data.balance+"元");--%>
-    <%--}else {--%>
-    <%--Loading.HideLoading();--%>
-    <%--}--%>
-    <%--},--%>
-    <%--error: function () {--%>
-    <%--Loading.HideLoading();--%>
-    <%--}--%>
-    <%--});--%>
-    <%--}--%>
 </script>

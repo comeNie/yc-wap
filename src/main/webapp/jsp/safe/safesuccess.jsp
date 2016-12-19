@@ -59,27 +59,20 @@
 </body>
 </html>
 <script>
-    $(document).ready(function() {
-//        $("#leftRe").click(function() {
-//            window.history.go(-1);
-//        });
-    });
 
-    $(function() {
-        countDown();
-    })
     function goLogin() {
         var tourl = "<%=path%>/safe/safe";
         window.location.href=tourl;
     }
-    var wait = 5;
-    function countDown() {
-        if (wait == 0) {
+
+    var wait = 4;
+    var timer = setInterval(function(){
+        if(wait==0){
+            wait = 5;
             goLogin();
-        }else {
-            wait --;
-            $("#spanTime").html(wait+"s");
-            setTimeout(function(){countDown();},1000);
+            return;
         }
-    }
+        $("#spanTime").html(wait+"s");
+        wait--;
+    },1000);
 </script>

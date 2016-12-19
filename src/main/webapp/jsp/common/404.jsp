@@ -36,13 +36,13 @@
         <nav class="wap-second-nav">
             <ul>
                 <a href="<%=path%>/"><i class="icon iconfont left">&#xe626;</i></a>
-                <li>访问错误</li>
+                <li><spring:message code="notfind.fangwenError"/></li>
             </ul>
         </nav>
         <section class="tij-cg">
             <ul>
                 <li><img src="<%=path%>/ui/images/404.png" /></li>
-                <li>抱歉！您所要访问的页面不存在<br><span>5s</span>内自动回到<a href="<%=path%>/">首页</a></li>
+                <li><spring:message code="notfind.bucunzai"/><br><span>5s</span><spring:message code="notfind.huidao"/><a href="<%=path%>/"><spring:message code="start.title"/></a></li>
             </ul>
         </section>
     </div>
