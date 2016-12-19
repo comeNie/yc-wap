@@ -4,7 +4,9 @@ import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.base.vo.PageInfo;
+import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.paas.ipaas.i18n.ZoneContextHolder;
 import com.ai.yc.order.api.orderclose.interfaces.IOrderCancelSV;
 import com.ai.yc.order.api.orderclose.param.OrderCancelRequest;
@@ -29,6 +31,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -401,37 +405,29 @@ public class OrderController extends BaseController {
     public String OrderText() {
         return "order/ordertext";
     }
-//    /**
-//     * 文档订单详细页面 下载文件
-//     * @param fileId
-//     * @param request
-//     * @param response
-//     * @author mimw
-//     */
-//    @RequestMapping("/download")
-//    public void download(String fileId, String fileName, HttpServletRequest request,
-//                         HttpServletResponse response) {
-//        IDSSClient client = DSSClientFactory.getDSSClient("order-file-dss");
-//        byte[] b = client.read(fileId);
-//
-//        try {
-//
-//            String agent = request.getHeader("User-Agent");
-//            //不是ie
-//            if (agent.indexOf("MSIE") == -1 && agent.indexOf("like Gecko")== -1) {
-//                String newFileName = java.net.URLDecoder.decode(fileName,"utf-8");
-//                fileName = new String(newFileName.getBytes("utf-8"), "ISO-8859-1");
-//            }
-//
-//            OutputStream os = response.getOutputStream();
-////            response.setCharacterEncoding("utf-8");
-//            response.setContentType("multipart/form-data");
-//            response.setHeader("Content-Disposition", "attachment;fileName="+fileName);
-//            response.setHeader("Content-Length", b.length+"");
-//            os.write(b);
-//            os.close();
-//        } catch (Exception e) {
-//            log.info("下载文件异常：", e);
-//        }
-//    }
+
+    /**
+     * 下载文件
+     *
+     * @param fileId
+     * @param fileName
+     * @param response
+     * @author mimw
+     */
+    @RequestMapping("/download")
+    public void download(String fileId, String fileName, HttpServletResponse response) {
+        IDSSClient client = DSSClientFactory.getDSSClient("order-file-dss");
+        byte[] b = client.read(fileId);
+        try {
+            OutputStream os = response.getOutputStream();
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            response.setHeader("Content-Length", b.length + "");
+            os.write(b);
+            os.close();
+        } catch (Exception e) {
+            log.info("下载文件异常：", e);
+        }
+    }
 }
