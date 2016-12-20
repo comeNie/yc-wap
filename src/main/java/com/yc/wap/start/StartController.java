@@ -2,17 +2,15 @@ package com.yc.wap.start;
 
 
 import com.ai.opt.base.exception.BusinessException;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.utils.ConfigUtil;
 import com.yc.wap.system.utils.HttpUtil;
-import com.yc.wap.system.utils.HttpsUtil;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,11 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -56,7 +50,7 @@ public class StartController extends BaseController {
         String tgtl = request.getParameter("tgtl");
         log.info("tgtl:" + tgtl);
         String text = request.getParameter("text");
-        Map<String, Object> jsonObject = new HashMap();
+        Map<String, Object> jsonObject = new HashMap<String, Object>();
         jsonObject.put("from", srcl);
         jsonObject.put("to", tgtl);
         jsonObject.put("app_kid", ConfigUtil.getProperty("yeekit.translate.appkid"));// 授权APP ID
@@ -67,24 +61,25 @@ public class StartController extends BaseController {
 //        jsonObject.put("align", true);
 
         log.info("jsonObject.toString`````<>" + jsonObject.toString());
+        String resp = "";
         try {
 
 //            resp = HttpsUtil.HttpsPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject.toString(), "UTF-8");
-            String resp = HttpUtil.doPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject);
+            resp = HttpUtil.doPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject);
             log.info("返回翻译结果"+resp);
-            JSONObject json = JSONObject.fromObject(resp);
+            JSONObject json = JSON.parseObject(resp);
             log.info("json------------"+json);
             JSONObject json2 = (JSONObject) json.getJSONArray("translation").get(0);
             log.info("translation------------"+json2);
             JSONArray arrayList = json2.getJSONArray("translated");
             String target = "";
             for (Object obj : arrayList) {
-                JSONObject j = JSONObject.fromObject(obj);
+                JSONObject j = (JSONObject)obj;
                 target += j.get("text");
             }
             log.info("target=--------" + target);
             result.put("target", target);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -104,9 +99,9 @@ public class StartController extends BaseController {
         params.put("text", URLEncoder.encode(finalLan, "UTF-8"));
         String detecUrl = ConfigUtil.getProperty("yee.detection.url");
         String resultStr = HttpUtil.doGet(detecUrl, params);
-        JSONObject translated = JSONObject.fromObject(resultStr);
+        JSONObject translated = JSONObject.parseObject(resultStr);
         //返回失败信息
-        if (translated.getInt("errorCode") != 0) {
+        if (translated.getInteger("errorCode") != 0) {
             log.error("detection text is error:" + resultStr);
             throw new BusinessException("The detection is fail.");
         }

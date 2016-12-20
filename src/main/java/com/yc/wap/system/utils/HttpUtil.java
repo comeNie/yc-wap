@@ -103,6 +103,7 @@ public class HttpUtil {
             log.debug("Http responst entiey:"+httpStr);
         } catch (IOException e) {
             log.error("Http post io exception",e);
+
             throw e;
         } finally {
             if (response != null) {
@@ -115,7 +116,7 @@ public class HttpUtil {
             }
         }
         long endTime = System.currentTimeMillis();
-        log.info("结束HttpUtil.post ,当前时间戳:"+endTime+",用时:"+(endTime-startTime));
+        log.info("结束HttpUtil.post ,当前时间戳:"+endTime+",用时:"+(endTime-startTime)+httpStr);
         return httpStr;
     }
 
