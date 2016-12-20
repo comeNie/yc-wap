@@ -377,18 +377,27 @@
             },
             success: function (data) {
                 if (data.status == 1) {
+                    $("#selectLabel").css("display","none");
                     var list = data.list;
                     $.each(list,function(index ,value){
-                        $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameCn+"+"+value.countryCode + "</option>");
+                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN"){
+                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameCn+"+"+value.countryCode + "</option>");
+                        }else {
+                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameEn+"+"+value.countryCode + "</option>");
+                        }
                         localStorage.setItem(value.countryValue,value.regularExpression);
                         localStorage.setItem(value.countryValue+"1",value.countryCode);
                     })
                     Loading.HideLoading();
+
                 } else {
+                    $("#selectLabel").html("<spring:message code="login.register.countryCode"/>");
+                    $("#selectLabel").css("display","block");
                     Loading.HideLoading();
                 }
             },
             error: function () {
+                $("#selectLabel").css("display","none");
                 var tourl ="<%=path%>/jsp/common/404.jsp";
                 window.location.href=tourl;
                 Loading.HideLoading();
