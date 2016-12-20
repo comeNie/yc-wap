@@ -73,6 +73,7 @@ public class StartController extends BaseController {
             String resp = HttpUtil.doPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject);
             log.info("返回翻译结果"+resp);
             JSONObject json = JSONObject.fromObject(resp);
+            log.info("json------------"+json);
             JSONObject json2 = (JSONObject) json.getJSONArray("translation").get(0);
             log.info("translation------------"+json2);
             JSONArray arrayList = json2.getJSONArray("translated");
