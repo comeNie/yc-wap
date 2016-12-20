@@ -22,6 +22,7 @@ sed -i "s%dubbo.registry.address=.*%dubbo.registry.address=${REST_REGISTRY_ADDR}
 
 #email-conf.properties
 sed -i "s%email.hostname=.*%email.hostname=${EMAIL_HOSTNAME}%g" ${RESOURCES_HOME}/email/email-conf.properties
+sed -i "s%email.smtpport=.*%email.smtpport=${EMAIL_SMTPPORT}%g" ${RESOURCES_HOME}/email/email-conf.properties
 sed -i "s%email.from.mail=.*%email.from.mail=${EMAIL_FROM_MAIL}%g" ${RESOURCES_HOME}/email/email-conf.properties
 sed -i "s%email.from.name=.*%email.from.name=${EMAIL_FROM_NAME}%g" ${RESOURCES_HOME}/email/email-conf.properties
 sed -i "s%email.from.user=.*%email.from.user=${EMAIL_FROM_USER}%g" ${RESOURCES_HOME}/email/email-conf.properties
