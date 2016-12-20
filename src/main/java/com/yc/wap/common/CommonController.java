@@ -1,6 +1,5 @@
 package com.yc.wap.common;
 
-import com.yc.wap.order.OrderController;
 import com.yc.wap.system.base.BaseController;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
