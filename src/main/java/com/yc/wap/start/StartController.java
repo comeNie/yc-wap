@@ -72,6 +72,7 @@ public class StartController extends BaseController {
             result.put("target", target);
         } catch (Exception e) {
             e.printStackTrace();
+            result.put("status","0");
         }
 
         return result.returnMsg();

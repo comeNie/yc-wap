@@ -539,6 +539,7 @@
 
                 } else {
                     IsTranslated = false;
+                    autoTip("抱歉，该翻译失败，请选择人工翻译");
                     $("#results").hide();
                     $("#chick-btn").show();
 
@@ -548,6 +549,7 @@
             },
             error: function (data) {
                 IsTranslated = false;
+                autoTip("抱歉，该翻译失败，请选择人工翻译");
                 $("#results").hide();
                 $("#chick-btn").show();
 
