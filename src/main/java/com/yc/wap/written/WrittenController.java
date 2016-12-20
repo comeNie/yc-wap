@@ -154,6 +154,7 @@ public class WrittenController extends BaseController {
             req.setOrderType(OrderType);
             QuerySysDuadListRes resp = iQuerySysDuadSV.querySysDuadList(req);
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                log.info("GetDualListFailed: " + resp.getResponseHeader().getResultMessage());
                 throw new RuntimeException("GetDualListFailed");
             }
             return resp.getDuads();
@@ -169,6 +170,7 @@ public class WrittenController extends BaseController {
             req.setLanguage(Language);
             QuerySysPurposeListRes resp = iQuerySysPurposeSV.querySysPurposeList(req);
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                log.info("GetPurposeListFailed: " + resp.getResponseHeader().getResultMessage());
                 throw new RuntimeException("GetPurposeListFailed");
             }
             return resp.getPurposes();
@@ -184,6 +186,7 @@ public class WrittenController extends BaseController {
             req.setLanguage(Language);
             QuerySysDomainListRes resp = iQuerySysDomainSV.querySysDomainList(req);
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                log.info("GetDomainListFailed: " + resp.getResponseHeader().getResultMessage());
                 throw new RuntimeException("GetDomainListFailed");
             }
             return resp.getDomainVos();
