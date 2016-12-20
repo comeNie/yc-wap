@@ -30,25 +30,19 @@ import java.util.Map;
  */
 @Controller
 public class StartController extends BaseController {
-//    public static String TRANSREQ = "https://translateport.yeekit.com/translate";
-
     private Log log = LogFactory.getLog(StartController.class);
+
     @RequestMapping(value = "index")
     public String start(HttpServletRequest request) {
-        log.info("StartController-index invoked");
-
         return "start/start";
     }
 
     @RequestMapping(value = "translate")
-    public
     @ResponseBody
-    Object translate() {
+    public Object translate() {
         MsgBean result = new MsgBean();
         String srcl = request.getParameter("srcl");
-        log.info("srcl: " + srcl);
         String tgtl = request.getParameter("tgtl");
-        log.info("tgtl:" + tgtl);
         String text = request.getParameter("text");
         Map<String, Object> jsonObject = new HashMap<String, Object>();
         jsonObject.put("from", srcl);
@@ -60,39 +54,32 @@ public class StartController extends BaseController {
 //        jsonObject.put("detoken", true);
 //        jsonObject.put("align", true);
 
-        log.info("jsonObject.toString`````<>" + jsonObject.toString());
+        log.info("TranslateParams: " + jsonObject.toString());
         String resp = "";
         try {
-
 //            resp = HttpsUtil.HttpsPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject.toString(), "UTF-8");
             resp = HttpUtil.doPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject);
-            log.info("返回翻译结果"+resp);
+            log.info("TranslateResult: " + resp);
             JSONObject json = JSON.parseObject(resp);
-            log.info("json------------"+json);
             JSONObject json2 = (JSONObject) json.getJSONArray("translation").get(0);
-            log.info("translation------------"+json2);
             JSONArray arrayList = json2.getJSONArray("translated");
             String target = "";
             for (Object obj : arrayList) {
-                JSONObject j = (JSONObject)obj;
+                JSONObject j = (JSONObject) obj;
                 target += j.get("text");
             }
-            log.info("target=--------" + target);
+            log.info("TranslateResultTarget: " + target);
             result.put("target", target);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-
         return result.returnMsg();
-
     }
 
     @RequestMapping(value = "/lanDetection")
-    public
     @ResponseBody
-    Object lanDetection() throws UnsupportedEncodingException {
+    public Object lanDetection() throws UnsupportedEncodingException {
         MsgBean result = new MsgBean();
         String finalLan = request.getParameter("text");
         Map<String, Object> params = new HashMap<String, Object>();

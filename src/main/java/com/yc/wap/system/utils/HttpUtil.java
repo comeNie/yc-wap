@@ -27,6 +27,7 @@ import java.util.Map;
  */
 public class HttpUtil {
     private static Log log = LogFactory.getLog(HttpUtil.class);
+
     /**
      * 发送 GET 请求（HTTP），K-V形式
      *
@@ -67,6 +68,7 @@ public class HttpUtil {
 
     /**
      * 发送 POST 请求（HTTP），K-V形式
+     *
      * @param apiUrl API接口URL
      * @param params 参数map
      * @return
@@ -74,7 +76,7 @@ public class HttpUtil {
     public static String doPost(String apiUrl, Map<String, Object> params)
             throws IOException {
         long startTime = System.currentTimeMillis();
-        log.info("开始HttpUtil.post ,当前时间戳:"+startTime);
+        log.info("开始HttpUtil.post, 当前时间戳: " + startTime);
         String httpStr = null;
         HttpPost httpPost = new HttpPost(apiUrl);
         CloseableHttpResponse response = null;
@@ -88,35 +90,29 @@ public class HttpUtil {
                 pairList.add(pair);
             }
             httpPost.setEntity(new UrlEncodedFormEntity(pairList, Charset.forName("UTF-8")));
-            long httpStart = System.currentTimeMillis();
-            log.info("开始httpClient,当前时间戳:"+httpStart);
             CloseableHttpClient httpClient = HttpClients.createDefault();
             response = httpClient.execute(httpPost);
-            long httpEnd = System.currentTimeMillis();
-            log.info("结束httpClient,当前时间戳:"+httpEnd+",用时:"+(httpEnd-httpStart));
             int statusCode = response.getStatusLine().getStatusCode();
-            log.info("http status:"+statusCode+",\r\nHttp responst:"+response.toString());
-            if (statusCode!=200)
-                throw new IOException("the http status code:"+statusCode);
+            log.info("http status: " + statusCode + ", Http responst: " + response.toString());
+            if (statusCode != 200)
+                throw new IOException("the http status code: " + statusCode);
             HttpEntity entity = response.getEntity();
             httpStr = EntityUtils.toString(entity, "UTF-8");
-            log.debug("Http responst entiey:"+httpStr);
         } catch (IOException e) {
-            log.error("Http post io exception",e);
-
+            log.error("Http post io exception", e);
             throw e;
         } finally {
             if (response != null) {
                 try {
                     EntityUtils.consume(response.getEntity());
                 } catch (IOException e) {
-                    log.error("Http post io exception",e);
+                    log.error("Http post io exception", e);
                     throw e;
                 }
             }
         }
         long endTime = System.currentTimeMillis();
-        log.info("结束HttpUtil.post ,当前时间戳:"+endTime+",用时:"+(endTime-startTime)+httpStr);
+        log.info("结束HttpUtil.post, 当前时间戳: " + endTime + ", 用时: " + (endTime - startTime) + httpStr);
         return httpStr;
     }
 
