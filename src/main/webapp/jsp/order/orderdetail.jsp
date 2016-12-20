@@ -172,10 +172,12 @@
                     <li class="right">${Params.Urgent}</li>
                 </ul>
                 <ul class="ulborder">
-                    <li>
+                    <li class="lin-hei">
                         <p>需求备注:</p>
                     </li>
-                    <li class="right">${Params.Remark}</li>
+                </ul>
+                <ul class="ulborder">
+                    <li class="lin-hei">${Params.Remark}</li>
                 </ul>
             </div>
         </section>
@@ -332,10 +334,12 @@
                     <li class="right">${Params.interperGen}</li>
                 </ul>
                 <ul class="ulborder">
-                    <li>
+                    <li class="lin-hei">
                         <p>需求备注:</p>
                     </li>
-                    <li class="right">${Params.Remark}</li>
+                </ul>
+                <ul class="ulborder">
+                    <li class="lin-hei">${Params.Remark}</li>
                 </ul>
             </div>
         </section>
