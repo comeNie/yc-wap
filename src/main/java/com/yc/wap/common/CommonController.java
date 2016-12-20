@@ -1,6 +1,9 @@
 package com.yc.wap.common;
 
+import com.yc.wap.order.OrderController;
 import com.yc.wap.system.base.BaseController;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "common")
 public class CommonController extends BaseController {
+    private Log log = LogFactory.getLog(CommonController.class);
 
     @RequestMapping(value = "aboutus")
     public String aboutus() {
@@ -24,5 +28,11 @@ public class CommonController extends BaseController {
     @RequestMapping(value = "agreement")
     public String agreement() {
         return "common/agreement";
+    }
+
+    @RequestMapping(value = "error")
+    public String error() {
+        log.info("------404------");
+        return "common/404";
     }
 }

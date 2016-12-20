@@ -57,7 +57,7 @@ public class WrittenController extends BaseController {
     public String content() {
         String Language = "zh_CN";
 
-        List<SysDuadVo> DualList = GetDualList(Constants.OrderType.DOC);
+        List<SysDuadVo> DualList = GetDualList(Constants.OrderType.DOC, Language);
         List<SysPurposeVo> PurposeList = GetPurposeList(Language);
         List<SysDomainVo> DomainList = GetDomainList(Language);
 
@@ -147,7 +147,7 @@ public class WrittenController extends BaseController {
         return "written/content";
     }
 
-    private List<SysDuadVo> GetDualList(String OrderType) {
+    private List<SysDuadVo> GetDualList(String OrderType, String Language) {
         try {
             QuerySysDuadListReq req = new QuerySysDuadListReq();
 //            req.setLanguage(Language);

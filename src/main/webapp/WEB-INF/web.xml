@@ -120,6 +120,6 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/jsp/common/404.jsp</location>
+        <location>/common/error</location>
     </error-page>
 </web-app>
