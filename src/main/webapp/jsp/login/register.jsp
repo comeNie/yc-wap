@@ -127,7 +127,7 @@
                 }
             },
             error: function () {
-                var tourl ="<%=path%>/jsp/common/404.jsp";
+                var tourl ="<%=path%>/common/error";
                 window.location.href=tourl;
                 Loading.HideLoading();
             }
