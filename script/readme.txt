@@ -21,6 +21,7 @@ docker run -d --name yc-wap-v1.0  -p 14115:8080  \
 -e "PAAS_CCS_PWD=123456" \
 -e "REST_REGISTRY_ADDR=10.19.13.23:29181"  \
 -e "EMAIL_HOSTNAME=mail.asiainfo.com" \
+-e "EMAIL_SMTPPORT=25" \
 -e "EMAIL_FROM_MAIL=opt-common@asiainfo.com" \
 -e "EMAIL_FROM_NAME=译云" \
 -e "EMAIL_FROM_USER=opt-common@asiainfo.com" \
