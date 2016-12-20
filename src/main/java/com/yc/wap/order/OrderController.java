@@ -172,6 +172,7 @@ public class OrderController extends BaseController {
                 log.info("OrderCancelSuccess");
                 return result.returnMsg();
             } else {
+                log.info("OrderCancelFailed: " + resp.getResponseHeader().getResultMessage());
                 throw new RuntimeException("OrderCancelFailed");
             }
         } catch (BusinessException | SystemException e) {
@@ -195,7 +196,8 @@ public class OrderController extends BaseController {
             if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 return result.returnMsg();
             } else {
-                throw new RuntimeException("OrderConfirmFailed: " + resp.getResponseHeader().getResultMessage());
+                log.info("OrderConfirmFailed: " + resp.getResponseHeader().getResultMessage());
+                throw new RuntimeException("OrderConfirmFailed");
             }
         } catch (BusinessException | SystemException e) {
             e.printStackTrace();
@@ -220,11 +222,10 @@ public class OrderController extends BaseController {
             log.info("QueryOrderDetailsOrderId: " + OrderId);
             QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(req);
             if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
-                log.info("QueryOrderDetailsFailed: " + com.alibaba.fastjson.JSONArray.toJSONString(resp.getResponseHeader().getResultMessage()));
+                log.info("QueryOrderDetailsFailed: " + resp.getResponseHeader().getResultMessage());
                 throw new BusinessException("QueryOrderDetailsFailed");
             }
             log.info("QueryOrderDetailsReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
-
 
             ///// Information Get /////
             ProdVo ProdList = resp.getProd();

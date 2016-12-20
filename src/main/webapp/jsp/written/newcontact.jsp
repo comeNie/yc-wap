@@ -58,7 +58,7 @@
             </ul>
             <ul>
                 <li>姓名：</li>
-                <li><input type="text" class="input input-medium" id="name" placeholder="请输入姓名"></li>
+                <li><input type="text" class="input input-medium" id="name" placeholder="请输入姓名" maxlength="20"></li>
             </ul>
             <ul>
                 <li>邮箱：</li>
