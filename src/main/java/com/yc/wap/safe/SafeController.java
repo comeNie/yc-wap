@@ -265,7 +265,7 @@ public class SafeController extends BaseController {
                 log.info(vo.getUid());
             }else {
                 result.put("status","0");
-                result.put("msg",code.getCodeMessage());
+                result.put("msg",rb.getMessage("safeCtrl.userisExit"));
             }
             /*code:失败，未找到该用户信息-1 code:成功1    */
 
@@ -292,10 +292,14 @@ public class SafeController extends BaseController {
         try {
             CountryResponse resp = iGnCountrySV.queryCountry(res);
             List<CountryVo> lists = resp.getResult();
-
-            result.put("list",lists);
+            if (lists == null){
+                result.put("status","0");
+            }else {
+                result.put("list",lists);
+            }
         }catch (Exception e) {
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            result.put("status","0");
             result.setFailure(e.getMessage());
         }
 
@@ -619,7 +623,7 @@ public class SafeController extends BaseController {
                 }
             }else{
                 result.put("status","0");
-                result.put("msg",responseCode.getCodeMessage());
+                result.put("msg",rb.getMessage("safeCtrl.codeSendFail"));
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
@@ -659,7 +663,11 @@ public class SafeController extends BaseController {
                 log.info(vo);
             }else{
                 result.put("status","0");
-                result.put("msg",responseCode.getCodeMessage());
+                if (responseCode.getCodeNumber() == -1 || responseCode.getCodeNumber() == -14){
+                    result.put("msg",rb.getMessage("loginCtrl.checkCode"));
+                }else if (responseCode.getCodeNumber() == -13){
+                    result.put("msg",rb.getMessage("safeCtrl.chaoshicode"));
+                }
             }
 
 
