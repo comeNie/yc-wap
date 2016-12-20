@@ -42,7 +42,7 @@
         <section class="tij-cg">
             <ul>
                 <li><img src="<%=path%>/ui/images/404.png" /></li>
-                <li><spring:message code="notfind.bucunzai"/><br><span>5s</span><spring:message code="notfind.huidao"/><a href="<%=path%>/"><spring:message code="start.title"/></a></li>
+                <li><spring:message code="notfind.bucunzai"/><br><span id="spanTime">5s</span><spring:message code="notfind.huidao"/><a href="<%=path%>/"><spring:message code="start.title"/></a></li>
             </ul>
         </section>
     </div>
@@ -51,3 +51,16 @@
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>
 </html>
+<script>
+    var wait = 4;
+    var timer = setInterval(function(){
+        if(wait==0){
+            wait = 5;
+            var tourl = "<%=path%>/";
+            window.location.href=tourl;
+            return;
+        }
+        $("#spanTime").html(wait+"s");
+        wait--;
+    },1000);
+</script>
