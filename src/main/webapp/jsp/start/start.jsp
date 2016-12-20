@@ -257,6 +257,9 @@
         Loading.HideLoading();
     });
     $(document).ready(function () {
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        document.cookie = "dualChoose=1" + ';expires=' + date + ";path=/";
 //        监听输入的文本内容
         $("#chick-int").bind("input propertychange", function () {
             var landetec = $("#chick-int").val();

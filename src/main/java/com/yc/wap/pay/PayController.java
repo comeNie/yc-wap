@@ -309,6 +309,7 @@ public class PayController extends BaseController {
             throw new RuntimeException("BalancePaymentFail");
         }
         request.setAttribute("OrderId", OrderId);
+        request.setAttribute("type", "pay");
         return "written/payresult";
     }
 

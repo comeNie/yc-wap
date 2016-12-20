@@ -189,6 +189,21 @@
         console.log("GetLanguageShow: " + ChineseCn + ChineseEn + EnglishCn + EnglishEn);
     }
 
+    function getCookie(c_name) {
+        var c_start;
+        var c_end;
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=");
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start, c_end));
+            }
+        }
+        return "";
+    }
+
     $(document).ready(function () {
         Loading.HideLoading();
 
@@ -196,7 +211,14 @@
 
         var UserLanguage = '${pageContext.response.locale}';
         console.log("UserLanguage: " + UserLanguage);
-        SetDual(UserLanguage);
+
+        var isChoose = getCookie("dualChoose");
+        console.log(isChoose);
+        if (isChoose == "" || isChoose == "0") {
+            SetDual(UserLanguage);
+        } else {
+            ResetDual(isChoose);
+        }
 
         $("#swap").bind("click", function () {
             SwapDual();
@@ -297,6 +319,25 @@
         $("#dualTarget").children('option').each(function () {
             var temp_value = $(this).html();
             if (temp_value == TargetLanguageCn || temp_value == TargetLanguageEn) {
+                $(this)[0].selected = true;
+            }
+        });
+    }
+
+    function ResetDual(DualId) {
+        var targetCn = "";
+        var DualJson = ${DualJson};
+        for (var k in DualJson) {
+            for (var v in DualJson[k]) {
+                if (DualId == DualJson[k][v]) {
+                    targetCn = v;
+                }
+            }
+        }
+
+        $("#dualTarget").children('option').each(function () {
+            var temp_value = $(this).html();
+            if (temp_value == targetCn) {
                 $(this)[0].selected = true;
             }
         });
@@ -495,6 +536,11 @@
             },
             success: function (data) {
                 if (data.status == 1) {
+                    var date = new Date();
+                    date.setDate(date.getDate() - 1);
+                    document.cookie = "dualChoose=1" + ';expires=' + date + ";path=/";
+                    document.cookie = "dualChoose=" + DualId + ";path=/"
+                    ;
                     if (${isLogin==null || isLogin=='0'}) {
                         SaveToUrl("/written/onContentSubmit");
                         return;
