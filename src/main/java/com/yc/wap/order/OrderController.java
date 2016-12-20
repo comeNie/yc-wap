@@ -309,18 +309,16 @@ public class OrderController extends BaseController {
             Map<String, String> OrderTrackEn = MapSortUtil.sortMapByKey(_OrderTrackEn);
 
             ///// Files /////
-            String translateName = resp.getTranslateName();
-            List<String> needTranslateFiles = new ArrayList<String>();
+            Map<String, String> needTranslateFiles = new HashMap<String, String>();
             if (resp.getTranslateType().equals(Constants.OrderType.DOC)) {
                 List<ProdFileVo> ProdFiles = resp.getProdFiles();
-                translateName = ProdFiles.get(0).getFileName();
-//                needTranslateFiles.addAll(ProdFiles.stream().map(ProdFileVo::getFileName).collect(Collectors.toList()));
                 for (ProdFileVo k : ProdFiles) {
-                    needTranslateFiles.add(k.getFileName());
+                    needTranslateFiles.put(k.getFileName(), k.getFileSaveId());
                 }
             }
 
             ///// Normal Data /////
+            String translateName = resp.getTranslateName();
             String translateType = resp.getTranslateType();
             String OrderTime = sdf.format(Time);
             String useCn = ProdList.getUseCn();
@@ -421,7 +419,7 @@ public class OrderController extends BaseController {
         byte[] b = client.read(fileId);
         try {
             OutputStream os = response.getOutputStream();
-            response.setCharacterEncoding("utf-8");
+            response.setCharacterEncoding("GBK");
             response.setContentType("multipart/form-data");
             response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
             response.setHeader("Content-Length", b.length + "");

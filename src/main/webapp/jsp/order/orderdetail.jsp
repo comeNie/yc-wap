@@ -63,17 +63,17 @@
     </nav>
 
     <c:if test="${Params.translateType=='0' || Params.translateType=='1'}">
-        <!--笔译/文档-->
-        <section class="original-big">
-            <div class="original-cont" id="cont-name">
-                <ul>
-                    <li>
-                        <p>翻译主题:</p>
-                        <p class="sm-word">${Params.translateName}</p>
-                    </li>
-                </ul>
-            </div>
-            <c:if test="${Params.translateType=='0'}">
+        <!--笔译-->
+        <c:if test="${Params.translateType=='0'}">
+            <section class="original-big">
+                <div class="original-cont" id="cont-name">
+                    <ul>
+                        <li>
+                            <p>翻译主题:</p>
+                            <p class="sm-word">${Params.translateName}</p>
+                        </li>
+                    </ul>
+                </div>
                 <div id="cont-hid" style="display: none"><!--加载显示-->
                     <div class="original-cont">
                         <ul>
@@ -90,30 +90,29 @@
                         </ul>
                     </div>
                 </div>
-            </c:if>
-            <c:if test="${Params.translateType=='1'}">
-                <div id="cont-hid" style="display: none"><!--加载显示-->
-                    <div class="original-cont">
+                <div class="click-more" id="click-more"><a href="javascript:void(0)" id="more" flag="closed">点击查看更多</a>
+                </div>
+            </section>
+        </c:if>
+        <%--文档--%>
+        <c:if test="${Params.translateType=='1'}">
+            <section class="original-big">
+                <div class="original-enclosure">
+                    <c:forEach items="${Params.needTranslateFiles}" var="pair">
                         <ul>
                             <li>
                                 <p>原文:</p>
-                                <c:forEach items="${Params.needTranslateFiles}" var="pair">
-                                    <p class="sm-word">${pair}</p>
-                                </c:forEach>
+                            </li>
+                            <li>
+                                <p>${pair.key}</p>
+                                <p class="right"><a href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
                             </li>
                         </ul>
-                            <%--<ul id="Translated">--%>
-                            <%--<li>--%>
-                            <%--<p>译文:</p>--%>
-                            <%--<p class="sm-word">${Params.translateInfo}</p>--%>
-                            <%--</li>--%>
-                            <%--</ul>--%>
-                    </div>
+                    </c:forEach>
                 </div>
-            </c:if>
-            <div class="click-more" id="click-more"><a href="javascript:void(0)" id="more" flag="closed">点击查看更多</a>
-            </div>
-        </section>
+            </section>
+        </c:if>
+
         <section class="my-order-content">
             <div class="my-order-list">
                 <ul>
@@ -243,8 +242,8 @@
         </section>
     </c:if>
 
+    <!--口译订单-->
     <c:if test="${Params.translateType=='2'}">
-        <!--口译订单-->
         <section class="my-order-content">
             <div class="my-order-list">
                 <ul>
@@ -285,18 +284,6 @@
                         </c:forEach>
                     </li>
                 </ul>
-                    <%--<ul>--%>
-                    <%--<li>--%>
-                    <%--<p>翻译类型:</p>--%>
-                    <%--</li>--%>
-                    <%--<li class="right">${Params.TranslateLevel}</li>--%>
-                    <%--</ul>--%>
-                    <%--<ul>--%>
-                    <%--<li>--%>
-                    <%--<p>翻译语言:</p>--%>
-                    <%--</li>--%>
-                    <%--<li class="right">${Params.TransLang}</li>--%>
-                    <%--</ul>--%>
                 <ul>
                     <li>
                         <p>会议开始时间:</p>
@@ -405,7 +392,6 @@
         </section>
     </c:if>
 </div>
-
 
 <div class="wrapper-big" id="OrderTrack" style="display: none">
     <nav class="wap-second-nav">
@@ -695,6 +681,12 @@
 
             }
         });
+    }
+
+    function DownloadFile(fileId, fileName) {
+        var req = "?fileId=" + fileId + "&fileName=" + fileName;
+        var url = "<%=path%>/order/download";
+        window.location.href = url + req;
     }
 
     /**
