@@ -415,6 +415,7 @@ public class OrderController extends BaseController {
      */
     @RequestMapping("/download")
     public void download(String fileId, String fileName, HttpServletResponse response) {
+        log.info("DownloadFileName: " + fileName + ", DownloadFileId: " + fileId);
         IDSSClient client = DSSClientFactory.getDSSClient("order-file-dss");
         byte[] b = client.read(fileId);
         try {
