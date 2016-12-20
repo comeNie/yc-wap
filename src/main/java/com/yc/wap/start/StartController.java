@@ -56,7 +56,7 @@ public class StartController extends BaseController {
         String tgtl = request.getParameter("tgtl");
         log.info("tgtl:" + tgtl);
         String text = request.getParameter("text");
-        JSONObject jsonObject = new JSONObject();
+        Map<String, Object> jsonObject = new HashMap();
         jsonObject.put("from", srcl);
         jsonObject.put("to", tgtl);
         jsonObject.put("app_kid", ConfigUtil.getProperty("yeekit.translate.appkid"));// 授权APP ID
