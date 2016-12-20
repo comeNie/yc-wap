@@ -11,6 +11,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,7 +39,6 @@ public class StartController extends BaseController {
 //    public static String TRANSREQ = "https://translateport.yeekit.com/translate";
 
     private Log log = LogFactory.getLog(StartController.class);
-
     @RequestMapping(value = "index")
     public String start(HttpServletRequest request) {
         log.info("StartController-index invoked");
@@ -56,19 +57,22 @@ public class StartController extends BaseController {
         log.info("tgtl:" + tgtl);
         String text = request.getParameter("text");
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("srcl", srcl);
-        jsonObject.put("tgtl", tgtl);
+        jsonObject.put("from", srcl);
+        jsonObject.put("to", tgtl);
+        jsonObject.put("app_kid", ConfigUtil.getProperty("yeekit.translate.appkid"));// 授权APP ID
+        jsonObject.put("app_key", ConfigUtil.getProperty("yeekit.translate.appkey"));// 授权APP KEY
         jsonObject.put("text", text);
 
-        jsonObject.put("detoken", true);
-        jsonObject.put("align", true);
+//        jsonObject.put("detoken", true);
+//        jsonObject.put("align", true);
 
         log.info("jsonObject.toString`````<>" + jsonObject.toString());
         String resp = null;
         try {
 
-            resp = HttpsUtil.HttpsPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject.toString(), "UTF-8");
-        } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
+//            resp = HttpsUtil.HttpsPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject.toString(), "UTF-8");
+            resp = HttpUtil.doPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject);
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

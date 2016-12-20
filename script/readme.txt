@@ -38,7 +38,7 @@ docker run -d --name yc-wap-v1.0  -p 14115:8080  \
 -e "YEEKIT_TRANSLATE_URL=https://translateport.yeekit.com/translate" \
 -e "YEEKIT_TRANSLATE_APPKID=58105e00cabc3" \
 -e "YEEKIT_TRANSLATE_APPKEY=53eeb0bb6c1b613ab361a4f8057b2bd9" \
--e "YEE_DETECTION_URL=http://translateport.yeekit.com:9006/detection" \
+-e "YEE_DETECTION_URL=http://api.yeekit.com/dotranslate.php" \
 -e "SoaServerIpAddressA=10.19.13.29" \
 -e "SoaServerIpPortA=8082" \
 -e "HttpServerIpAddressA=10.19.13.29" \
