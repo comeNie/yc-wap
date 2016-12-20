@@ -67,25 +67,27 @@ public class StartController extends BaseController {
 //        jsonObject.put("align", true);
 
         log.info("jsonObject.toString`````<>" + jsonObject.toString());
-        String resp = null;
         try {
 
 //            resp = HttpsUtil.HttpsPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject.toString(), "UTF-8");
-            resp = HttpUtil.doPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject);
+            String resp = HttpUtil.doPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject);
+            log.info("返回翻译结果"+resp);
+            JSONObject json = JSONObject.fromObject(resp);
+            JSONObject json2 = (JSONObject) json.getJSONArray("translation").get(0);
+            log.info("translation------------"+json2);
+            JSONArray arrayList = json2.getJSONArray("translated");
+            String target = "";
+            for (Object obj : arrayList) {
+                JSONObject j = JSONObject.fromObject(obj);
+                target += j.get("text");
+            }
+            log.info("target=--------" + target);
+            result.put("target", target);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        JSONObject json = JSONObject.fromObject(resp);
-        JSONObject json2 = (JSONObject) json.getJSONArray("translation").get(0);
-        JSONArray arrayList = json2.getJSONArray("translated");
-        String target = "";
-        for (Object obj : arrayList) {
-            JSONObject j = JSONObject.fromObject(obj);
-            target += j.get("text");
-        }
-        log.info("target=--------" + target);
-        result.put("target", target);
+
 
         return result.returnMsg();
 
