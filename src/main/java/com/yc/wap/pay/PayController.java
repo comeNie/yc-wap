@@ -229,9 +229,9 @@ public class PayController extends BaseController {
         param.setSystemId(Constants.SystemId);
 
         if (payOrgCode.equals("ZFB")) {
-            param.setPayStyle(Constants.PayType.ZFB);
+            param.setPayStyle(Constants.PayType.ZFB1);
         } else if (payOrgCode.equals("YL")) {
-            param.setPayStyle(Constants.PayType.YL);
+            param.setPayStyle(Constants.PayType.YL1);
         }
 
         log.info("BalanceRechargeParam: " + com.alibaba.fastjson.JSONArray.toJSONString(param));

@@ -51,7 +51,7 @@
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="翻译下单"/>
-        <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
+        <jsp:param name="BackTo" value="javascript:Back()"/>
     </jsp:include>
 
     <section class="index-wrapper">
@@ -211,14 +211,14 @@
 
         var UserLanguage = '${pageContext.response.locale}';
         console.log("UserLanguage: " + UserLanguage);
+        SetDual(UserLanguage);
 
-        var isChoose = getCookie("dualChoose");
-        console.log(isChoose);
-        if (isChoose == "" || isChoose == "0") {
-            SetDual(UserLanguage);
-        } else {
-            ResetDual(isChoose);
-        }
+//        var isChoose = getCookie("dualChoose");
+//        if (isChoose == "" || isChoose == "0") {
+//            SetDual(UserLanguage);
+//        } else {
+//            ResetDual(isChoose);
+//        }
 
         $("#swap").bind("click", function () {
             SwapDual();
@@ -325,19 +325,42 @@
     }
 
     function ResetDual(DualId) {
-        var targetCn = "";
         var DualJson = ${DualJson};
+        var DualJsonEn = ${DualJsonEn};
+        var targetCn = "";
+        var targetEn = "";
+        var sourceCn = "";
+        var sourceEn = "";
         for (var k in DualJson) {
             for (var v in DualJson[k]) {
                 if (DualId == DualJson[k][v]) {
+                    sourceCn = k;
                     targetCn = v;
                 }
             }
         }
 
+        for (var o in DualJsonEn) {
+            for (var p in DualJsonEn[o]) {
+                if (DualId == DualJsonEn[o][p]) {
+                    sourceEn = o;
+                    targetEn = p;
+                }
+            }
+        }
+
+        $("#dualSource").children('option').each(function () {
+            var temp_value = $(this).val();
+            if (temp_value == sourceCn || temp_value == sourceEn) {
+                $(this)[0].selected = true;
+            }
+        });
+
+        DualChange();
+
         $("#dualTarget").children('option').each(function () {
             var temp_value = $(this).html();
-            if (temp_value == targetCn) {
+            if (temp_value == targetCn || temp_value == targetEn) {
                 $(this)[0].selected = true;
             }
         });
@@ -424,21 +447,21 @@
         var Lv = $("#translateLv").find("option:selected").attr("transLv");
         if (Lv == "100210") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度: 1千字/小时");
+                $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 2千字/小时");
+                $("#TranslateSpeed").html("预计翻译速度: 1小时/千字");
             }
         } else if (Lv == "100220") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度: 2千字/小时");
+                $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 3千字/小时");
+                $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
             }
         } else if (Lv == "100230") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度: 3千字/小时");
+                $("#TranslateSpeed").html("预计翻译速度: 4小时/千字");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 4千字/小时");
+                $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
             }
         }
     }
@@ -469,6 +492,10 @@
 
     function toLicense() {
         window.location.href = "<%=path%>/common/agreement"
+    }
+
+    function Back() {
+        window.location.href = "<%=path%>/";
     }
 
     function saveContent(Content, ContentLength) {
@@ -538,7 +565,7 @@
                 if (data.status == 1) {
                     var date = new Date();
                     date.setDate(date.getDate() - 1);
-                    document.cookie = "dualChoose=1" + ';expires=' + date + ";path=/";
+                    document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
                     document.cookie = "dualChoose=" + DualId + ";path=/"
                     ;
                     if (${isLogin==null || isLogin=='0'}) {

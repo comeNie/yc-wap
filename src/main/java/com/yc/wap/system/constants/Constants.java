@@ -300,7 +300,9 @@ public class Constants {
         // 对应serial表中的CHANNEL字段
         public static final String YUE = "0";
         public static final String ZFB = "1";
+        public static final String ZFB1 = "支付宝";
         public static final String YL = "2";
+        public static final String YL1 = "银联";
         public static final String PP = "3";
 
     }

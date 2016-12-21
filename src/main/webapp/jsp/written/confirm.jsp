@@ -32,7 +32,7 @@
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="确认下单"/>
-        <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
+        <jsp:param name="BackTo" value="javascript:ToContent()"/>
     </jsp:include>
     <!--新增联系方式-->
     <section class="add-contact" style="display: none">
@@ -106,6 +106,12 @@
             }
         });
     });
+    
+    function ToContent() {
+        var href = "<%=path%>/written";
+        window.location.href = href;
+        location.replace("<%=path%>/written");
+    }
 
 
     function onSubmit() {
