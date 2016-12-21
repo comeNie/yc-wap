@@ -51,7 +51,7 @@
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="翻译下单"/>
-        <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
+        <jsp:param name="BackTo" value="javascript:Back()"/>
     </jsp:include>
 
     <section class="index-wrapper">
@@ -211,13 +211,14 @@
 
         var UserLanguage = '${pageContext.response.locale}';
         console.log("UserLanguage: " + UserLanguage);
+        SetDual(UserLanguage);
 
-        var isChoose = getCookie("dualChoose");
-        if (isChoose == "" || isChoose == "0") {
-            SetDual(UserLanguage);
-        } else {
-            ResetDual(isChoose);
-        }
+//        var isChoose = getCookie("dualChoose");
+//        if (isChoose == "" || isChoose == "0") {
+//            SetDual(UserLanguage);
+//        } else {
+//            ResetDual(isChoose);
+//        }
 
         $("#swap").bind("click", function () {
             SwapDual();
@@ -350,7 +351,7 @@
 
         $("#dualSource").children('option').each(function () {
             var temp_value = $(this).val();
-            if (temp_value == targetCn || temp_value == targetEn) {
+            if (temp_value == sourceCn || temp_value == sourceEn) {
                 $(this)[0].selected = true;
             }
         });
@@ -359,7 +360,7 @@
 
         $("#dualTarget").children('option').each(function () {
             var temp_value = $(this).html();
-            if (temp_value == sourceCn || temp_value == sourceEn) {
+            if (temp_value == targetCn || temp_value == targetEn) {
                 $(this)[0].selected = true;
             }
         });
@@ -491,6 +492,10 @@
 
     function toLicense() {
         window.location.href = "<%=path%>/common/agreement"
+    }
+
+    function Back() {
+        window.location.href = "<%=path%>/";
     }
 
     function saveContent(Content, ContentLength) {

@@ -300,10 +300,10 @@
 
 //        跳转到笔译下单
         $("#banner1").bind("click", function () {
-            var date = new Date();
-            date.setDate(date.getDate() - 1);
-            document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
-            document.cookie = "dualChoose=0" + ";path=/";
+//            var date = new Date();
+//            date.setDate(date.getDate() - 1);
+//            document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
+//            document.cookie = "dualChoose=0" + ";path=/";
 
             window.location.href = "<%=path%>/written";
         });
