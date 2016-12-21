@@ -257,10 +257,7 @@
         Loading.HideLoading();
     });
     $(document).ready(function () {
-        var date = new Date();
-        date.setDate(date.getDate() - 1);
-        document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
-        document.cookie = "dualChoose=0" + ";path=/";
+
 
 //        监听输入的文本内容
         $("#chick-int").bind("input propertychange", function () {
@@ -303,6 +300,11 @@
 
 //        跳转到笔译下单
         $("#banner1").bind("click", function () {
+            var date = new Date();
+            date.setDate(date.getDate() - 1);
+            document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
+            document.cookie = "dualChoose=0" + ";path=/";
+
             window.location.href = "<%=path%>/written";
         });
 

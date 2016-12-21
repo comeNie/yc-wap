@@ -324,19 +324,42 @@
     }
 
     function ResetDual(DualId) {
-        var targetCn = "";
         var DualJson = ${DualJson};
+        var DualJsonEn = ${DualJsonEn};
+        var targetCn = "";
+        var targetEn = "";
+        var sourceCn = "";
+        var sourceEn = "";
         for (var k in DualJson) {
             for (var v in DualJson[k]) {
                 if (DualId == DualJson[k][v]) {
+                    sourceCn = k;
                     targetCn = v;
                 }
             }
         }
 
+        for (var o in DualJsonEn) {
+            for (var p in DualJsonEn[o]) {
+                if (DualId == DualJsonEn[o][p]) {
+                    sourceEn = o;
+                    targetEn = p;
+                }
+            }
+        }
+
+        $("#dualSource").children('option').each(function () {
+            var temp_value = $(this).val();
+            if (temp_value == targetCn || temp_value == targetEn) {
+                $(this)[0].selected = true;
+            }
+        });
+
+        DualChange();
+
         $("#dualTarget").children('option').each(function () {
             var temp_value = $(this).html();
-            if (temp_value == targetCn) {
+            if (temp_value == sourceCn || temp_value == sourceEn) {
                 $(this)[0].selected = true;
             }
         });
