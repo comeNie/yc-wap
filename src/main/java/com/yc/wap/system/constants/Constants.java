@@ -328,6 +328,15 @@ public class Constants {
 
     }
 
+    /**
+     * 币种（充值）
+     */
+    public static final class Currency {
+        public static final String RMB = "1";
+        public static final String USD = "2";
+
+    }
+
     public static final String COMPANY = "中译语通科技有限公司";
     public static final String SystemId = "Cloud-UAC_WEB";
 
