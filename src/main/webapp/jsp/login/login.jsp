@@ -135,7 +135,7 @@
                                 <label id="phoneLabel"></label>
                             </li>
                             <li>
-                                <p><input id="psdid" type="password" class="input input-large" placeholder="<spring:message code="login.login.mima"/>"></p>
+                                <p><input id="psdid" type="password" class="input input-large" placeholder="<spring:message code="login.login.mima"/>" autocomplete="off"></p>
                                 <label id="psdLabel"></label>
                             </li>
                             <li class="int-border">
@@ -203,11 +203,11 @@
                                 <label id="codeLabel1"></label>
                             </li>
                             <li>
-                                <p><input id="psdids" type="password" class="input input-large" placeholder="<spring:message code="login.login.enterpsd"/>"></p>
+                                <p><input id="psdids" type="password" class="input input-large" placeholder="<spring:message code="login.login.enterpsd"/>" autocomplete="off"></p>
                                 <label id="psdLabel1"></label>
                             </li>
                             <li>
-                                <p><input id="confimid" type="password" class="input input-large" placeholder="<spring:message code="login.register.enterpsdagain"/>"></p>
+                                <p><input id="confimid" type="password" class="input input-large" placeholder="<spring:message code="login.register.enterpsdagain"/>" autocomplete="off"></p>
                                 <label id="confimPsd"></label>
                             </li>
                             <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()"><spring:message code="login.register.lijizhuce"/></a></li>
