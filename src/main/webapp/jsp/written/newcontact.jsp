@@ -173,7 +173,7 @@
                 if (data.status == 1) {
                     var date = new Date();
                     date.setDate(date.getDate() - 1);
-                    document.cookie = "dualChoose=1" + ';expires=' + date + ";path=/";
+                    document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
                     document.cookie = "dualChoose=0" + ";path=/";
 
                     var OrderId = data.OrderId;

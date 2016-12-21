@@ -213,7 +213,6 @@
         console.log("UserLanguage: " + UserLanguage);
 
         var isChoose = getCookie("dualChoose");
-        console.log(isChoose);
         if (isChoose == "" || isChoose == "0") {
             SetDual(UserLanguage);
         } else {
@@ -538,7 +537,7 @@
                 if (data.status == 1) {
                     var date = new Date();
                     date.setDate(date.getDate() - 1);
-                    document.cookie = "dualChoose=1" + ';expires=' + date + ";path=/";
+                    document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
                     document.cookie = "dualChoose=" + DualId + ";path=/"
                     ;
                     if (${isLogin==null || isLogin=='0'}) {
