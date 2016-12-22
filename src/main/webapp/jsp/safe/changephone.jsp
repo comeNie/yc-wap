@@ -116,8 +116,6 @@
                 }
             },
             error: function () {
-                var tourl ="<%=path%>/common/error";
-                window.location.href=tourl;
                 Loading.HideLoading();
             }
         });
@@ -182,7 +180,7 @@
                 }
             },
             error: function () {
-                $("#phonetips").html(data.msg);
+                $("#phonetips").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#phonetips").css("display", "block");
                 $("#phone").attr("disabled",false);
                 Loading.HideLoading();
@@ -268,7 +266,7 @@
                 }
             },
             error: function () {
-                $("#phonetips").html(data.msg);
+                $("#phonetips").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#phonetips").css("display", "block");
 
                 Loading.HideLoading();

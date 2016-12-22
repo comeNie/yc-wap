@@ -313,7 +313,7 @@
             },
             error: function () {
                 createCode();
-                $("#codeLabel").html(data.msg);
+                $("#codeLabel").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#codeLabel").css("display", "block");
                 Loading.HideLoading();
             }
@@ -397,9 +397,8 @@
                 }
             },
             error: function () {
-                $("#selectLabel").css("display","none");
-                var tourl ="<%=path%>/common/error";
-                window.location.href=tourl;
+                $("#selectLabel").html("<spring:message code="login.register.countryCode"/>");
+                $("#selectLabel").css("display","block");
                 Loading.HideLoading();
             }
         });

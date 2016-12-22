@@ -153,7 +153,7 @@
                 }
             },
             error: function () {
-                $("#confirmLable").html(data.msg);
+                $("#confirmLable").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#confirmLable").css("display", "block");
                 Loading.HideLoading();
             }
