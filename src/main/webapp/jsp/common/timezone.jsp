@@ -9,6 +9,10 @@
     String _base = request.getContextPath();
     request.setAttribute("_base", _base);
 %>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
 <script>
     Date.prototype.stdTimezoneOffset = function () {
         var jan = new Date(this.getFullYear(), 0, 1);

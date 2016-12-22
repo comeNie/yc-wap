@@ -22,7 +22,7 @@
 <%response.setHeader("cache-control","public"); %>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <%--<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />--%>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
