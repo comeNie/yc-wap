@@ -228,7 +228,6 @@
 //        $("#nameid1").val("");
         $("#codeid1").val("");
         $("#codeid2").val("");
-
         if (index == 0){
             window.history.back(-1);
         }else if (index == 1){
@@ -276,7 +275,6 @@
                     index ++;//index = 1
                     $("#next1").hide();
                     $("#next2").show();
-
                     Loading.HideLoading();
                 } else {
                     Loading.HideLoading();
@@ -377,7 +375,7 @@
                 }
             },
             error: function () {
-                $("#confirmLabel3").html(data.msg);
+                $("#confirmLabel3").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#confirmLabel3").css("display", "block");
 
                 Loading.HideLoading();
@@ -406,7 +404,7 @@
 
                     Loading.HideLoading();
                 } else {
-                    $("#codeLabel2").html(data.msg);
+                    $("#codeLabel2").html("<spring:message code="safe.safesuccess.failNet"/>");
                     $("#codeLabel2").css("display", "block");
 
                     Loading.HideLoading();
@@ -426,6 +424,7 @@
             $("#getnumber").removeAttr("disabled");
             $("#getnumber").attr("onclick", "getTestCode()");
             $("#getnumber").html("<spring:message code="login.register.getcode"/>");//改变按钮中value的值
+            $("#getnumber").attr("class","btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
@@ -433,6 +432,7 @@
             $("#getnumber").html(txtStr);
             // 按钮里面的内容呈现倒计时状态
             $("#getnumber").attr("disabled", "block");
+            $("#getnumber").attr("class","btn bnt-yzm-gray");
             $("#getnumber").attr("onclick", "javascript:void(0)");
             wait --;
             setTimeout(function(){countDown();},1000);

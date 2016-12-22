@@ -33,6 +33,7 @@ img{vertical-align:middle}
 .input-small{width:9.04rem;height:1.7rem;border:1px solid #c4c4c4;background:#fff;border-radius:5px;padding:0 0.42rem;color:#666;font-size:0.51rem;line-height:1.7rem;}
 .input-small:hover{border:1px solid #1780e3}
 .bnt-yzm{width:5.16rem;height:1.7rem;background:#15a329;border-radius:5px;text-align:center;color:#fff;font-size:0.51rem;float:left;line-height:1.7rem;}
+.bnt-yzm-gray{width:5.16rem;height:1.7rem;background:#c4c4c4;border-radius:5px;text-align:center;color:#fff;font-size:0.51rem;float:left;line-height:1.7rem;}
 .input-large{width:14.8rem;height:1.7rem;border:1px solid #c4c4c4;background:#fff;border-radius:5px;padding:0 0.42rem;color:#666;font-size:0.51rem}
 .input-large:hover{border:1px solid #1780e3}
 .input-yzm{width:10rem;height:1.6rem;background:#fff;color:#666;font-size:0.51rem;padding:0 0.42rem 0 0;line-height:1.7rem;}

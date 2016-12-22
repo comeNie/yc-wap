@@ -88,6 +88,7 @@
         $("#codeid").val("");
         var mobilePhone = "${phone}";
         $("#getnumber").removeAttr("disabled");
+        $("#getnumber").attr("class","btn bnt-yzm");
         $("#getnumber").attr("onclick", "getnumberonclick()");
         $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
 
@@ -145,7 +146,6 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#phonetips").css("display", "none");
-
                     //跳转
                     var s = "${jump}";
                     if (s=="psd"){
@@ -221,11 +221,13 @@
             $("#getnumber").removeAttr("disabled");
             $("#getnumber").attr("onclick", "getnumberonclick()");
             $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
+            $("#getnumber").attr("class","btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
             var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';
             $("#getnumber").html(txtStr);
+            $("#getnumber").attr("class","btn bnt-yzm-gray");
             // 按钮里面的内容呈现倒计时状态
             $("#getnumber").attr("disabled", "block");
             $("#getnumber").attr("onclick", "javascript:void(0)");
