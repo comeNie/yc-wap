@@ -647,7 +647,6 @@
             var selectSource = document.getElementById("source-lan");
             for(var i=0; i<selectSource.options.length; i++){
                 if(selectSource.options[i].value == target){
-
                     selectSource.options[i].selected = true;
                     break;
                 }
@@ -660,6 +659,8 @@
                     break;
                 }
             }
+            //翻译
+            goTranslate();
         }
     }
     //判断是否是表情符号
