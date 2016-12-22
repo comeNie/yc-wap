@@ -107,6 +107,13 @@
         }else {
             $("#newLable").css("display","none");
         }
+        if (oldpsd == newpsd){
+            $("#newLable").html("<spring:message code="safe.changepsd.cannot_same"/>");
+            $("#newLable").css("display","block");
+            return;
+        }else {
+            $("#newLable").css("display","none");
+        }
 //        确认密码
         if(confirmpsd == null || confirmpsd == "") {
             $("#confirmLable").html("<spring:message code="safe.changepsd.alert_newPsd"/>");
