@@ -62,7 +62,7 @@
             </ul>
             <ul>
                 <li>邮箱：</li>
-                <li><input type="text" class="input input-medium" id="email" placeholder="请输入接收译文的邮箱"></li>
+                <li><input type="text" class="input input-medium" id="email" placeholder="请输入接收译文的邮箱" maxlength="35"></li>
             </ul>
 
             <ul class="none-border" style="display: none">
