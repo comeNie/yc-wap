@@ -623,7 +623,14 @@ public class SafeController extends BaseController {
                 }
             }else{
                 result.put("status","0");
-                result.put("msg",rb.getMessage("safeCtrl.codeSendFail"));
+                if (responseCode.getCodeNumber() == -11){
+                    result.put("msg",rb.getMessage("safeCtrl.hadPhone"));
+                }else if (responseCode.getCodeNumber() == -10){
+                    result.put("msg",rb.getMessage("safeCtrl.phoneError"));
+                }else {
+                    result.put("msg",rb.getMessage("safeCtrl.codeSendFail"));
+
+                }
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());

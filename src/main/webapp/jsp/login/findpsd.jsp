@@ -327,8 +327,8 @@
             },
             error: function () {
                 Loading.HideLoading();
-                var tourl ="<%=path%>/common/error";
-                window.location.href=tourl;
+                $("#codeLabel2").html("<spring:message code="safe.safesuccess.failNet"/>");
+                $("#codeLabel2").css("display", "block");
             }
         });
     }
@@ -404,14 +404,14 @@
 
                     Loading.HideLoading();
                 } else {
-                    $("#codeLabel2").html("<spring:message code="safe.safesuccess.failNet"/>");
+                    $("#codeLabel2").html(data.msg);
                     $("#codeLabel2").css("display", "block");
 
                     Loading.HideLoading();
                 }
             },
             error: function () {
-                $("#codeLabel2").html(data.msg);
+                $("#codeLabel2").html(<spring:message code="safe.safesuccess.failNet"/>);
                 $("#codeLabel2").css("display", "block");
                 Loading.HideLoading();
             }
@@ -440,7 +440,7 @@
     }
 
     function goLogin() {
-        var tourl = "<%=path%>/login/login?to=login";
+        var tourl = "<%=path%>/login/login?to=login&success=success";
         window.location.href=tourl;
     }
 

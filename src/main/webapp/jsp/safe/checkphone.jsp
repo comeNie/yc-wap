@@ -166,7 +166,7 @@
                 }
             },
             error: function () {
-                $("#phonetips").html(data.msg);
+                $("#phonetips").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#phonetips").css("display", "block");
                 Loading.HideLoading();
             }
@@ -209,7 +209,7 @@
                 }
             },
             error: function () {
-                $("#phonetips").html(data.msg);
+                $("#phonetips").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#phonetips").css("display", "block");
                 Loading.HideLoading();
             }

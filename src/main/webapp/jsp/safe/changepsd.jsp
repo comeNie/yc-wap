@@ -107,6 +107,13 @@
         }else {
             $("#newLable").css("display","none");
         }
+        if (oldpsd == newpsd){
+            $("#newLable").html("<spring:message code="safe.changepsd.cannot_same"/>");
+            $("#newLable").css("display","block");
+            return;
+        }else {
+            $("#newLable").css("display","none");
+        }
 //        确认密码
         if(confirmpsd == null || confirmpsd == "") {
             $("#confirmLable").html("<spring:message code="safe.changepsd.alert_newPsd"/>");
@@ -153,7 +160,7 @@
                 }
             },
             error: function () {
-                $("#confirmLable").html(data.msg);
+                $("#confirmLable").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#confirmLable").css("display", "block");
                 Loading.HideLoading();
             }
