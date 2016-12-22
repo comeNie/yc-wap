@@ -94,7 +94,8 @@
             <li class="zhifb" id="imgAliPay"><img src="<%=path%>/ui/images/radio.jpg" id="alipay" class="radio-img"/>
                 <img src="<%=path%>/ui/images/zhifb.png"/></li>
 
-            <li class="unionpay" id="imgUniPay"><img src="<%=path%>/ui/images/radio1.jpg" id="unipay" class="radio-img"/>
+            <li class="unionpay" id="imgUniPay"><img src="<%=path%>/ui/images/radio1.jpg" id="unipay"
+                                                     class="radio-img"/>
                 <img src="<%=path%>/ui/images/unionpay.png"/></li>
         </ul>
 
@@ -145,10 +146,18 @@
     var balance = "0.00";
     var balanceBuzu = false;
     var Channel = "1";
+    var orderState = "";
     $(document).ready(function () {
         GetBalance();
-
+        CheckState();
         $("#submit").bind("click", function () {
+            if (orderState == "20") {
+                $("#EjectTitle").html("订单已经支付，请勿重复支付");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
+            }
+
             if (Channel == "1") {
                 $("#payType").val("ZFB");
                 $("#toPayForm").submit();
@@ -191,6 +200,34 @@
     $(function () {
 
     });
+
+    function CheckState() {
+        var orderId = "${OrderId}";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/order/GetOrderState",
+            modal: true,
+            timeout: 30000,
+            data: {
+                orderId: orderId
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    orderState = data.orderState;
+                }
+            },
+            error: function (data) {
+
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
+    }
 
     function GetBalance() {
         $.ajax({

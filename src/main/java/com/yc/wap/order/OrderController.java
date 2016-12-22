@@ -390,6 +390,31 @@ public class OrderController extends BaseController {
         return "order/orderdetail";
     }
 
+    @RequestMapping(value = "GetOrderState")
+    @ResponseBody
+    public Object GetOrderState() {
+        MsgBean result = new MsgBean();
+        String orderId = request.getParameter("orderId");
+        QueryOrderDetailsRequest req = new QueryOrderDetailsRequest();
+        req.setOrderId(Long.parseLong(orderId));
+        try {
+            log.info("GetOrderStateOrderId: " + orderId);
+            QueryOrderDetailsResponse resp = iQueryOrderDetailsSV.queryOrderDetails(req);
+            if (!resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                log.info("QueryOrderDetailsFailed: " + resp.getResponseHeader().getResultMessage());
+                throw new RuntimeException("GetOrderStateFailed");
+            }
+            String state = resp.getState();
+            log.info("GetOrderStateReturn: " + state);
+            result.put("orderState", state);
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
+            throw new RuntimeException("GetOrderStateFailed");
+        }
+
+        return result.returnMsg();
+    }
+
     @RequestMapping(value = "OrderError")
     public String OrderError() {
         return "order/ordererror";
