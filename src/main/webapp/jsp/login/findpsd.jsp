@@ -440,7 +440,7 @@
     }
 
     function goLogin() {
-        var tourl = "<%=path%>/login/login?to=login";
+        var tourl = "<%=path%>/login/login?to=login&success=success";
         window.location.href=tourl;
     }
 
