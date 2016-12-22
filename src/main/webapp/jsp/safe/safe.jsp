@@ -80,7 +80,7 @@
             var password = "${password}";
             var mobilePhone = "${mobilePhone}";
             if(email == "" || email == null){
-                $("#emalRight").html("<spring:message code="safe.safe.mailTip"/>");
+                $("#emalRight").html("<spring:message code="safe.safe.mailTip"/>"+"<i class='icon iconfont'>&#xe62c;</i>");
                 $("#mail").html("<spring:message code="safe.safe.bangdingmail"/>");
                 isEmail = 0;
             }else {
@@ -88,7 +88,7 @@
                 var email1 = email.slice(0,index-1);
                 var email2 = email.slice(index+2,email.length);
                 var hideMail = email1+"***"+email2;
-                $("#emalRight").html(hideMail);
+                $("#emalRight").html(hideMail+"<i class='icon iconfont'>&#xe62c;</i>");
                 $("#mail").html("<spring:message code="safe.safe.xiugaimail"/>");
                 isEmail = 1;
             }
@@ -100,14 +100,14 @@
                 isPassword = 1;
             }
             if(mobilePhone == "" || mobilePhone == null){
-                $("#phoneRight").html("<spring:message code="safe.safe.phoneTip"/>");
+                $("#phoneRight").html("<spring:message code="safe.safe.phoneTip"/>"+"<i class='icon iconfont'>&#xe62c;</i>");
                 $("#phone").html("<spring:message code="safe.safe.bangdingphone"/>");
                 isPhone = 0;
             }else {
                 var myphone1=mobilePhone.substr(0,3);
                 var myphone2=mobilePhone.substr(7,4);
                 var hidePhone=myphone1+"****"+myphone2;
-                $("#phoneRight").html(hidePhone);
+                $("#phoneRight").html(hidePhone+"<i class='icon iconfont'>&#xe62c;</i>");
                 $("#phone").html("<spring:message code="safe.safe.xiugaiphone"/>");
                 isPhone = 1;
             }
