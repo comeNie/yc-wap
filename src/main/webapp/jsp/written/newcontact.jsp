@@ -54,7 +54,7 @@
         <div class="order-list">
             <ul>
                 <li>手机：</li>
-                <li><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码"></li>
+                <li><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码（必填）"></li>
             </ul>
             <ul>
                 <li>姓名：</li>

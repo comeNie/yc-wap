@@ -43,7 +43,7 @@
             <c:if test="${FromRes==null || FromRes==''}">
                 <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
             </c:if>
-            <li>订单详情</li>
+            <li>订单详细</li>
             <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
         </ul>
         <div class="pop-nav" id="pop-nav">
@@ -470,7 +470,7 @@
     <nav class="wap-second-nav">
         <ul>
             <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>订单详情</li>
+            <li>订单详细</li>
             <a href="javascript:" id="nav-list2"><i class="icon iconfont right">&#xe629;</i></a>
         </ul>
         <div class="pop-nav" id="pop-nav2">
