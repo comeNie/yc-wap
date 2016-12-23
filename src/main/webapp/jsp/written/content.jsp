@@ -168,44 +168,20 @@
     var EnglishCn = "";
     var oldContent = "";
 
-    function getCookie(c_name) {
-        var c_start;
-        var c_end;
-        if (document.cookie.length > 0) {
-            c_start = document.cookie.indexOf(c_name + "=");
-            if (c_start != -1) {
-                c_start = c_start + c_name.length + 1;
-                c_end = document.cookie.indexOf(";", c_start);
-                if (c_end == -1) c_end = document.cookie.length;
-                return unescape(document.cookie.substring(c_start, c_end));
-            }
-        }
-        return "";
-    }
-
     $(function () {
 
     });
 
     $(document).ready(function () {
         Loading.HideLoading();
-        GetLanguageShow();
-
         var UserLanguage = '${pageContext.response.locale}';
         console.log("UserLanguage: " + UserLanguage);
+
+        GetLanguageShow();
         SetDual(UserLanguage);
-
-//        var isChoose = getCookie("dualChoose");
-//        if (isChoose == "" || isChoose == "0") {
-//            SetDual(UserLanguage);
-//        } else {
-//            ResetDual(isChoose);
-//        }
-
         ResetInfo();
         LvChange();
         ServerChange();
-
 
         $("#swap").bind("click", function () {
             SwapDual();
@@ -218,6 +194,29 @@
             }
             oldContent = Content;
             DetectLanguage(Content);
+        });
+
+        $("#pQuick").click(function () {
+            var checked = $("#quick").attr("value");
+            if (checked == "1") {
+                document.getElementById("quick").src = UnCheckedImg;
+                $("#quick").attr("value", "0");
+            } else {
+                document.getElementById("quick").src = CheckedImg;
+                $("#quick").attr("value", "1");
+            }
+            LvChange();
+        });
+
+        $("#pIsRead").click(function () {
+            var checked = $("#isRead").attr("value");
+            if (checked == "1") {
+                document.getElementById("isRead").src = UnCheckedImg;
+                $("#isRead").attr("value", "0");
+            } else {
+                document.getElementById("isRead").src = CheckedImg;
+                $("#isRead").attr("value", "1");
+            }
         });
 
         $("#submit").bind("click", function () {
@@ -242,38 +241,6 @@
                 return;
             }
             saveContent(Content, ContentLength);
-        });
-
-        $('#upload').click(function () {
-
-        });
-
-//        $('#prompt-btn').click(function () {
-//            $('#eject-mask').fadeOut(200);
-//            $('#prompt').slideUp(200);
-//        })
-
-        $("#pQuick").click(function () {
-            var checked = $("#quick").attr("value");
-            if (checked == "1") {
-                document.getElementById("quick").src = UnCheckedImg;
-                $("#quick").attr("value", "0");
-            } else {
-                document.getElementById("quick").src = CheckedImg;
-                $("#quick").attr("value", "1");
-            }
-            LvChange();
-        });
-
-        $("#pIsRead").click(function () {
-            var checked = $("#isRead").attr("value");
-            if (checked == "1") {
-                document.getElementById("isRead").src = UnCheckedImg;
-                $("#isRead").attr("value", "0");
-            } else {
-                document.getElementById("isRead").src = CheckedImg;
-                $("#isRead").attr("value", "1");
-            }
         });
     });
 
