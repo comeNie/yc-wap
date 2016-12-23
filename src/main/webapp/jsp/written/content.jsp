@@ -168,27 +168,6 @@
     var EnglishCn = "";
     var oldContent = "";
 
-    $(function () {
-        LvChange();
-        ServerChange();
-        DualChange();
-    });
-
-    function GetLanguageShow() {
-        var DualList = ${DualList};
-        for (var k in DualList) {
-            var Code = DualList[k].sourceCode;
-            if ("zh" == Code) {
-                ChineseCn = DualList[k].sourceCn;
-                ChineseEn = DualList[k].sourceEn;
-            } else if ("en" == Code) {
-                EnglishCn = DualList[k].sourceCn;
-                EnglishEn = DualList[k].sourceEn;
-            }
-        }
-        console.log("GetLanguageShow: " + ChineseCn + ChineseEn + EnglishCn + EnglishEn);
-    }
-
     function getCookie(c_name) {
         var c_start;
         var c_end;
@@ -204,9 +183,12 @@
         return "";
     }
 
+    $(function () {
+
+    });
+
     $(document).ready(function () {
         Loading.HideLoading();
-
         GetLanguageShow();
 
         var UserLanguage = '${pageContext.response.locale}';
@@ -219,6 +201,11 @@
 //        } else {
 //            ResetDual(isChoose);
 //        }
+
+        ResetInfo();
+        LvChange();
+        ServerChange();
+
 
         $("#swap").bind("click", function () {
             SwapDual();
@@ -290,6 +277,21 @@
         });
     });
 
+    function GetLanguageShow() {
+        var DualList = ${DualList};
+        for (var k in DualList) {
+            var Code = DualList[k].sourceCode;
+            if ("zh" == Code) {
+                ChineseCn = DualList[k].sourceCn;
+                ChineseEn = DualList[k].sourceEn;
+            } else if ("en" == Code) {
+                EnglishCn = DualList[k].sourceCn;
+                EnglishEn = DualList[k].sourceEn;
+            }
+        }
+        console.log("GetLanguageShow: " + ChineseCn + ChineseEn + EnglishCn + EnglishEn);
+    }
+
     function SetDual(Language) {
         var setLanguageCn = "";
         var setLanguageEn = "";
@@ -322,6 +324,49 @@
                 $(this)[0].selected = true;
             }
         });
+    }
+
+    function ResetInfo() {
+        var json = ${contentJson};
+        if (json != null) {
+            var content = json.Content;
+            var dualId = json.DualId;
+            var PurposeId = json.PurposeId;
+            var DomainId = json.DomainId;
+            var TransLvId = json.TransLvId;
+            var Express = json.Express;
+
+            ResetDual(dualId);
+            $("#chick-int").val(content);
+
+            //用途
+            $("#purpose").children('option').each(function () {
+                var temp_value = $(this).attr("purposeId");
+                if (temp_value == PurposeId) {
+                    $(this)[0].selected = true;
+                }
+            });
+            //领域
+            $("#domain").children('option').each(function () {
+                var temp_value = $(this).attr("domainId");
+                if (temp_value == DomainId) {
+                    $(this)[0].selected = true;
+                }
+            });
+            //翻译级别
+            $("#translateLv").children('option').each(function () {
+                var temp_value = $(this).attr("transLv");
+                if (temp_value == TransLvId) {
+                    $(this)[0].selected = true;
+                }
+            });
+
+            if (Express == "Y") {
+                document.getElementById("quick").src = CheckedImg;
+                $("#quick").attr("value", "1");
+            }
+            LvChange();
+        }
     }
 
     function ResetDual(DualId) {

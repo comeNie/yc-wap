@@ -136,6 +136,9 @@ public class WrittenController extends BaseController {
         log.info(DualJsonEn);
         log.info("-------DualMap&JSON-------");
 
+        JSONObject contentJson = JSONObject.fromObject(session.getAttribute("WrittenContextJSON"));
+        log.info("savedContentJson: " + contentJson.toString());
+
         request.setAttribute("DualMap", DualMap);
         request.setAttribute("DualJson", DualJson);
         request.setAttribute("DualMapEn", DualMapEn);
@@ -143,6 +146,8 @@ public class WrittenController extends BaseController {
         request.setAttribute("DualList", com.alibaba.fastjson.JSONArray.toJSONString(DualList));
         request.setAttribute("PurposeList", PurposeList);
         request.setAttribute("DomainList", DomainList);
+
+        request.setAttribute("contentJson", contentJson);
 
         return "written/content";
     }
