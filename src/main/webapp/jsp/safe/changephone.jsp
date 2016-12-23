@@ -106,7 +106,11 @@
                 if (data.status == 1) {
                     var list = data.list;
                     $.each(list,function(index ,value){
-                        $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameCn+"+"+value.countryCode + "</option>");
+                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN"){
+                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameCn+" +"+value.countryCode + "</option>");
+                        }else {
+                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameEn+" +"+value.countryCode + "</option>");
+                        }
                         localStorage.setItem(value.countryValue,value.regularExpression);
                         localStorage.setItem(value.countryValue+"1",value.countryCode);
                     })

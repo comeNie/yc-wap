@@ -42,7 +42,7 @@
 
     <section class="form-big">
         <div class="balance">
-            <spring:message code="account.balance.yuer"/><span id="balanceSpan">${Balance}</span>
+            <spring:message code="account.balance.yuer"/><span id="balanceSpan">${Balance}元</span>
         </div>
         <div class="wap-btn"><a href="javascript:void(0)" onclick="toRecharge()" class="btn submit-btn btn-blue"><spring:message code="account.balance.chongzhi"/></a>
         </div>

@@ -138,7 +138,7 @@
         <!--翻译内容-->
         <section class="translation-content">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int" placeholder="<spring:message code="start.fanyiPlaceholder"/>"></textarea>
-            <a hrel="javascript:void(0)" ><i class="icon iconfont" id="clear">&#xe618;</i></a>
+            <a hrel="javascript:void(0)"><i class="icon iconfont" id="clear" hidden>&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
         <section class="translate-btn" id="chick-btn">
@@ -262,7 +262,10 @@
         $("#chick-int").bind("input propertychange", function () {
             var landetec = $("#chick-int").val();
             if (landetec == "" || landetec == null) {
+                $("#clear").hide();
                 return;
+            }else {
+                $("#clear").show();
             }
             if(isEmojiCharacter(landetec)){
                 autoTip("<spring:message code="start.tipBiaoqing"/>");
@@ -545,7 +548,7 @@
 
                 } else {
                     IsTranslated = false;
-                    autoTip("抱歉，该翻译失败，请选择人工翻译");
+                    autoTip("服务出问题了，请稍候再试。");
                     $("#results").hide();
                     $("#chick-btn").show();
 
@@ -555,7 +558,7 @@
             },
             error: function (data) {
                 IsTranslated = false;
-                autoTip("抱歉，该翻译失败，请选择人工翻译");
+                autoTip("服务出问题了，请稍候再试。");
                 $("#results").hide();
                 $("#chick-btn").show();
 

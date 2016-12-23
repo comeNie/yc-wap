@@ -53,13 +53,13 @@
             </ul>
             <ul>
                 <a href="javascript:void(0)" onclick="changePhone()">
-                    <li id="phone"></li>
+                    <li id="phone"><spring:message code="safe.safe.bangdingphone"/></li>
                     <li class="right" id="phoneRight"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
             <ul class="none-border" onclick="changeMail()">
                 <a href="javascript:void(0)">
-                    <li id="mail"></li>
+                    <li id="mail"><spring:message code="safe.safe.bangdingmail"/></li>
                     <li class="right" id="emalRight"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
@@ -81,7 +81,7 @@
             var mobilePhone = "${mobilePhone}";
             if(email == "" || email == null){
                 $("#emalRight").html("<spring:message code="safe.safe.mailTip"/>"+"<i class='icon iconfont'>&#xe62c;</i>");
-                $("#mail").html("<spring:message code="safe.safe.bangdingmail"/>");
+                <%--$("#mail").html("<spring:message code="safe.safe.bangdingmail"/>");--%>
                 isEmail = 0;
             }else {
                 var index = email.indexOf("@");
@@ -89,7 +89,7 @@
                 var email2 = email.slice(index+2,email.length);
                 var hideMail = email1+"***"+email2;
                 $("#emalRight").html(hideMail+"<i class='icon iconfont'>&#xe62c;</i>");
-                $("#mail").html("<spring:message code="safe.safe.xiugaimail"/>");
+                <%--$("#mail").html("<spring:message code="safe.safe.xiugaimail"/>");--%>
                 isEmail = 1;
             }
             if(password != "true"){
@@ -101,14 +101,14 @@
             }
             if(mobilePhone == "" || mobilePhone == null){
                 $("#phoneRight").html("<spring:message code="safe.safe.phoneTip"/>"+"<i class='icon iconfont'>&#xe62c;</i>");
-                $("#phone").html("<spring:message code="safe.safe.bangdingphone"/>");
+                <%--$("#phone").html("<spring:message code="safe.safe.bangdingphone"/>");--%>
                 isPhone = 0;
             }else {
                 var myphone1=mobilePhone.substr(0,3);
                 var myphone2=mobilePhone.substr(7,4);
                 var hidePhone=myphone1+"****"+myphone2;
                 $("#phoneRight").html(hidePhone+"<i class='icon iconfont'>&#xe62c;</i>");
-                $("#phone").html("<spring:message code="safe.safe.xiugaiphone"/>");
+                <%--$("#phone").html("<spring:message code="safe.safe.xiugaiphone"/>");--%>
                 isPhone = 1;
             }
         }

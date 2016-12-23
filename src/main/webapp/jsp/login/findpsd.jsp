@@ -291,8 +291,8 @@
             },
             error: function () {
                 Loading.HideLoading();
-                var tourl ="<%=path%>/common/error";
-                window.location.href=tourl;
+                $("#codeLabel1").html("<spring:message code="safe.safesuccess.failNet"/>");
+                $("#codeLabel1").css("display", "block");
             }
         });
     }

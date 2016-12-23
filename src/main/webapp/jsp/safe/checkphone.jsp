@@ -63,7 +63,7 @@
                             <p class="yzm"><a id="getnumber" onclick="getnumberonclick()"class="btn bnt-yzm"><spring:message code="safe.checkphone.yzm_input"/></a></p>
                             <label id="phonetips"></label>
                         </li>
-                        <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
+                        <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.changephone.nextbtn"/></a></li>
                     </ul>
                 </div>
             </div>

@@ -144,7 +144,8 @@
                                 <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh"></i></a></p>
                                 <label id="codeLabel"></label>
                             </li>
-                            <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()"><spring:message code="login.login.lijidenglu"/></a></li>
+                            <li id="loginBtn"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()"><spring:message code="login.login.lijidenglu"/></a></li>
+                            <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="width: 5.29rem;height: 1.13rem; display:block;margin:0 auto">
                             <li class="right"><a href="javascript:void(0)" onclick="forgetpsd()"><spring:message code="login.login.wangjimima"/></a></li>
                         </ul>
                     </div>
@@ -231,6 +232,7 @@
 <script>
     var isAgree = 1;
     $(function(){
+        $("#translateGif").hide();
         clearText();
         $("#phone").attr("disabled",false);
         if("${to}"=="login"){
@@ -279,7 +281,9 @@
         } else {
             $("#codeLabel").css("display", "none");
         }
-        Loading.ShowLoading();
+//        Loading.ShowLoading();
+        $("#translateGif").show();
+        $("#loginBtn").hide();
         toJump(phone, psd,code);
     }
     function toJump(phone, psd,code) {
@@ -295,15 +299,17 @@
                 code:code
             },
             success: function (data) {
+                $("#translateGif").hide();
+                $("#loginBtn").show();
                 if (data.status == 1) {
                     if (${ToUrl==null || ToUrl==""}) {
                         window.location.href = "<%=path%>" + "/";
                     } else {
                         window.location.href = "<%=path%>" + "<%=ToUrl%>";
                     }
-                    Loading.HideLoading();
+//                    Loading.HideLoading();
                 } else{
-                    Loading.HideLoading();
+//                    Loading.HideLoading();
                     createCode();
                     $("#codeLabel").html(data.msg);
                     $("#codeLabel").css("display", "block");
@@ -312,10 +318,12 @@
 
             },
             error: function () {
+                $("#translateGif").hide();
+                $("#loginBtn").show();
                 createCode();
                 $("#codeLabel").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#codeLabel").css("display", "block");
-                Loading.HideLoading();
+//                Loading.HideLoading();
             }
         });
 
@@ -381,15 +389,14 @@
                     var list = data.list;
                     $.each(list,function(index ,value){
                         if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN"){
-                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameCn+"+"+value.countryCode + "</option>");
+                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameCn+" +"+value.countryCode + "</option>");
                         }else {
-                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameEn+"+"+value.countryCode + "</option>");
+                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameEn+" +"+value.countryCode + "</option>");
                         }
                         localStorage.setItem(value.countryValue,value.regularExpression);
                         localStorage.setItem(value.countryValue+"1",value.countryCode);
                     })
                     Loading.HideLoading();
-
                 } else {
                     $("#selectLabel").html("<spring:message code="login.register.countryCode"/>");
                     $("#selectLabel").css("display","block");
@@ -593,7 +600,7 @@
                     $("#phoneLabel1").css("display", "none");
                     $("#phone").attr("disabled","true");
                     personUid = data.uid;
-                    countDown(60);
+                    countDown();
                     Loading.HideLoading();
                 } else {
                     $("#phoneLabel1").html(data.msg);
@@ -610,7 +617,7 @@
         });
     }
     //    倒计时
-    var wait = 60;
+    var wait = 120;
     function countDown() {
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
@@ -619,7 +626,7 @@
 
             $("#getnumber").attr("class","btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
-            wait = 60;
+            wait = 120;
         }else {
             var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';
             $("#getnumber").html(txtStr);

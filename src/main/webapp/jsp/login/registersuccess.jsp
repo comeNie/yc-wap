@@ -43,7 +43,8 @@
             <ul>
                 <li><i class="icon iconfont">&#xe612;</i></li>
                 <li class="word"><spring:message code="login.registersuccess.gongxi"/></li>
-                <li><span id="spanTime">5s</span><spring:message code="login.registersuccess.huidao"/><a href="javascript:void(0)" onclick="goLogin()"><spring:message code="login.registersuccess.jiemian"/></a><spring:message code="login.registersuccess.message"/></li>
+                <li style="margin-top: 1rem"><span id="spanTime">5s</span><spring:message code="login.registersuccess.huidao"/><a href="javascript:void(0)" onclick="goLogin()"><spring:message code="login.registersuccess.jiemian"/></a></li>
+                <li><spring:message code="login.registersuccess.message"/></li>
             </ul>
         </section>
     </div>
