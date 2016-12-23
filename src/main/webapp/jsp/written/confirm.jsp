@@ -14,7 +14,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>联系方式</title>
+    <title>确认订单</title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -31,7 +31,7 @@
 <div class="wrapper-big" id="body">
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="确认下单"/>
+        <jsp:param name="Title" value="确认订单"/>
         <jsp:param name="BackTo" value="javascript:ToContent()"/>
     </jsp:include>
     <!--新增联系方式-->
@@ -73,7 +73,7 @@
         <div class="order-message">
             <ul>
                 <li>给译员留言:</li>
-                <li><textarea id="message" class="textarea textarea-large"></textarea></li>
+                <li><textarea id="message" class="textarea textarea-large" placeholder="有问题请随时联系"></textarea></li>
             </ul>
         </div>
     </section>

@@ -62,7 +62,7 @@
                 </p>
             </li>
         </ul>
-        <ul>
+        <ul style="display: none">
             <li class="word">使用优惠劵:</li>
             <li>
                 <p>
@@ -74,7 +74,7 @@
                 </p>
             </li>
         </ul>
-        <ul>
+        <ul style="display: none">
             <li class="word">输入优惠码:</li>
             <li>
                 <p>
