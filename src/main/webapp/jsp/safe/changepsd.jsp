@@ -150,7 +150,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#confirmLable").css("display", "none");
-                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.change_jump"/>";
+                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.title"/>";
                     window.location.href=tourl;
                     Loading.HideLoading();
                 } else {

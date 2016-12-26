@@ -352,7 +352,7 @@
                     index ++;//index = 3
 
                     $("#leftId").hide();
-                    $("#liTitle").html("<spring:message code="login.findpsd.successTitle"/>")
+                    <%--$("#liTitle").html("<spring:message code="login.findpsd.successTitle"/>")--%>
                     $("#next3").hide();
                     $("#next4").show();
 
@@ -428,7 +428,8 @@
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
-            var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';
+            <%--var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';--%>
+            var txtStr = wait+ '<spring:message code="safe.changemail.chongxinhuoqu"/>';
             $("#getnumber").html(txtStr);
             // 按钮里面的内容呈现倒计时状态
             $("#getnumber").attr("disabled", "block");
