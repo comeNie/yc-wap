@@ -169,56 +169,19 @@
     var oldContent = "";
 
     $(function () {
-        LvChange();
-        ServerChange();
-        DualChange();
+
     });
-
-    function GetLanguageShow() {
-        var DualList = ${DualList};
-        for (var k in DualList) {
-            var Code = DualList[k].sourceCode;
-            if ("zh" == Code) {
-                ChineseCn = DualList[k].sourceCn;
-                ChineseEn = DualList[k].sourceEn;
-            } else if ("en" == Code) {
-                EnglishCn = DualList[k].sourceCn;
-                EnglishEn = DualList[k].sourceEn;
-            }
-        }
-        console.log("GetLanguageShow: " + ChineseCn + ChineseEn + EnglishCn + EnglishEn);
-    }
-
-    function getCookie(c_name) {
-        var c_start;
-        var c_end;
-        if (document.cookie.length > 0) {
-            c_start = document.cookie.indexOf(c_name + "=");
-            if (c_start != -1) {
-                c_start = c_start + c_name.length + 1;
-                c_end = document.cookie.indexOf(";", c_start);
-                if (c_end == -1) c_end = document.cookie.length;
-                return unescape(document.cookie.substring(c_start, c_end));
-            }
-        }
-        return "";
-    }
 
     $(document).ready(function () {
         Loading.HideLoading();
-
-        GetLanguageShow();
-
         var UserLanguage = '${pageContext.response.locale}';
         console.log("UserLanguage: " + UserLanguage);
-        SetDual(UserLanguage);
 
-//        var isChoose = getCookie("dualChoose");
-//        if (isChoose == "" || isChoose == "0") {
-//            SetDual(UserLanguage);
-//        } else {
-//            ResetDual(isChoose);
-//        }
+        GetLanguageShow();
+        SetDual(UserLanguage);
+        ResetInfo();
+        LvChange();
+        ServerChange();
 
         $("#swap").bind("click", function () {
             SwapDual();
@@ -231,6 +194,29 @@
             }
             oldContent = Content;
             DetectLanguage(Content);
+        });
+
+        $("#pQuick").click(function () {
+            var checked = $("#quick").attr("value");
+            if (checked == "1") {
+                document.getElementById("quick").src = UnCheckedImg;
+                $("#quick").attr("value", "0");
+            } else {
+                document.getElementById("quick").src = CheckedImg;
+                $("#quick").attr("value", "1");
+            }
+            LvChange();
+        });
+
+        $("#pIsRead").click(function () {
+            var checked = $("#isRead").attr("value");
+            if (checked == "1") {
+                document.getElementById("isRead").src = UnCheckedImg;
+                $("#isRead").attr("value", "0");
+            } else {
+                document.getElementById("isRead").src = CheckedImg;
+                $("#isRead").attr("value", "1");
+            }
         });
 
         $("#submit").bind("click", function () {
@@ -256,39 +242,22 @@
             }
             saveContent(Content, ContentLength);
         });
-
-        $('#upload').click(function () {
-
-        });
-
-//        $('#prompt-btn').click(function () {
-//            $('#eject-mask').fadeOut(200);
-//            $('#prompt').slideUp(200);
-//        })
-
-        $("#pQuick").click(function () {
-            var checked = $("#quick").attr("value");
-            if (checked == "1") {
-                document.getElementById("quick").src = UnCheckedImg;
-                $("#quick").attr("value", "0");
-            } else {
-                document.getElementById("quick").src = CheckedImg;
-                $("#quick").attr("value", "1");
-            }
-            LvChange();
-        });
-
-        $("#pIsRead").click(function () {
-            var checked = $("#isRead").attr("value");
-            if (checked == "1") {
-                document.getElementById("isRead").src = UnCheckedImg;
-                $("#isRead").attr("value", "0");
-            } else {
-                document.getElementById("isRead").src = CheckedImg;
-                $("#isRead").attr("value", "1");
-            }
-        });
     });
+
+    function GetLanguageShow() {
+        var DualList = ${DualList};
+        for (var k in DualList) {
+            var Code = DualList[k].sourceCode;
+            if ("zh" == Code) {
+                ChineseCn = DualList[k].sourceCn;
+                ChineseEn = DualList[k].sourceEn;
+            } else if ("en" == Code) {
+                EnglishCn = DualList[k].sourceCn;
+                EnglishEn = DualList[k].sourceEn;
+            }
+        }
+        console.log("GetLanguageShow: " + ChineseCn + ChineseEn + EnglishCn + EnglishEn);
+    }
 
     function SetDual(Language) {
         var setLanguageCn = "";
@@ -322,6 +291,49 @@
                 $(this)[0].selected = true;
             }
         });
+    }
+
+    function ResetInfo() {
+        var json = ${contentJson};
+        if (json != null) {
+            var content = json.Content;
+            var dualId = json.DualId;
+            var PurposeId = json.PurposeId;
+            var DomainId = json.DomainId;
+            var TransLvId = json.TransLvId;
+            var Express = json.Express;
+
+            ResetDual(dualId);
+            $("#chick-int").val(content);
+
+            //用途
+            $("#purpose").children('option').each(function () {
+                var temp_value = $(this).attr("purposeId");
+                if (temp_value == PurposeId) {
+                    $(this)[0].selected = true;
+                }
+            });
+            //领域
+            $("#domain").children('option').each(function () {
+                var temp_value = $(this).attr("domainId");
+                if (temp_value == DomainId) {
+                    $(this)[0].selected = true;
+                }
+            });
+            //翻译级别
+            $("#translateLv").children('option').each(function () {
+                var temp_value = $(this).attr("transLv");
+                if (temp_value == TransLvId) {
+                    $(this)[0].selected = true;
+                }
+            });
+
+            if (Express == "Y") {
+                document.getElementById("quick").src = CheckedImg;
+                $("#quick").attr("value", "1");
+            }
+            LvChange();
+        }
     }
 
     function ResetDual(DualId) {

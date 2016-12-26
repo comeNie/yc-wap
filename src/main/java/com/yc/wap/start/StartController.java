@@ -34,6 +34,8 @@ public class StartController extends BaseController {
 
     @RequestMapping(value = "index")
     public String start(HttpServletRequest request) {
+        session.removeAttribute("WrittenShowJSON");
+        session.removeAttribute("WrittenContextJSON");
         return "start/start";
     }
 

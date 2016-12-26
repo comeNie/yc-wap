@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="loading-bj" id="_loading">
-    <section class="loading-wrapper" >
+    <section class="loading-wrapper">
         <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>
         <p class="img2">
         <div id="foo" style="margin-top:1rem;"></div>
@@ -40,7 +40,7 @@
 <script type="text/javascript" src="<%=path%>/js/modular/loading.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-//        $("#_loading").css("display", "block");
+
     });
 
     $(function () {
