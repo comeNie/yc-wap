@@ -18,7 +18,7 @@ html,body {height:100%;position:relative;}
 img{vertical-align:middle}
 
 
-.select,.btn,.input,.textarea,.p{outline:none;resize:none;-webkit-tap-highlight-color:rgba(0,0,0,0);font-size:0.51rem;}
+.select,.btn,.input,.textarea,.p{outline:none;resize:none;-webkit-tap-highlight-color:rgba(0,0,0,0);font-size:0.64rem;}
 .checkbox{width:0.5rem;height:0.5rem;margin-right:0.2rem;}
 /**按钮**/
 .btn{cursor: pointer;}

@@ -40,9 +40,9 @@
 .wap-second-nav ul .left{position:absolute;top:0.35rem;left:0.55rem;}
 .wap-second-nav ul .right{position:absolute;top:0.35rem;right:0.55rem;}
 .wap-second-nav ul .right1{position:absolute;top:0;right:0;}
-.pop-nav{width:100%;position:absolute;top:1.87rem;left:0;height:1.6rem;background:#000;opacity:0.8;display:none;z-index:99;}
+.pop-nav{width:100%;position:absolute;top:1.87rem;left:0;height:2rem;background:#000;opacity:0.8;display:none;z-index:99;}
 .pop-nav ul{width:100%;float:left}
-.pop-nav ul li{text-align:center;line-height:1.6rem;}
+.pop-nav ul li{text-align:center;line-height:2rem;}
 .pop-nav ul li a{padding:0 0.64rem;color:#fff;font-size:0.5rem}
 
 @media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone4/4s */
