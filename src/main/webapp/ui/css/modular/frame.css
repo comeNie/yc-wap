@@ -53,10 +53,13 @@
 @media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone5 */
 .login-btn{width:1.57rem;height:1rem;}
 .testing p span{position:absolute;top:0.4rem;right:1.42rem;color:#c4c4c4;font-size:0.52rem}
+.testing .test-icon1{margin:0.3rem 0.6rem;color:#666;font-size:0.58rem;}
 }
 @media (device-height:667px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone6 */
 .testing p span{position:absolute;top:0.5rem;right:1.42rem;color:#c4c4c4;font-size:0.52rem}
+.testing .test-icon1{margin:0.3rem 0.6rem;color:#666;font-size:0.58rem;}
 }
 @media (device-height:736px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone6 Plus */
 .testing p span{position:absolute;top:0.4rem;right:1.42rem;color:#c4c4c4;font-size:0.52rem}
+.testing .test-icon1{margin:0.3rem 0.6rem;color:#666;font-size:0.58rem;}
 }
