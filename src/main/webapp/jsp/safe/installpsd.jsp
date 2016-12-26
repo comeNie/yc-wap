@@ -110,7 +110,7 @@
         }
 
 //        跳转
-        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.installpsd.change_jump"/>";
+        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.safe.shezhemima"/>";
         window.location.href=tourl;
     }
 </script>

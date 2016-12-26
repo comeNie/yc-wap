@@ -19,7 +19,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title><spring:message code="safe.safesuccess.title"/></title>
+    <title>${name}</title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -36,12 +36,11 @@
         <nav class="wap-second-nav">
             <ul>
                 <%--<a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>--%>
-                <li><spring:message code="safe.safesuccess.title"/></li>
+                <li>${name}</li>
             </ul>
 
         </nav>
 
-        <!--订单内容-->
         <section class="index-wrapper ">
             <section class="tij-cg">
                 <ul>

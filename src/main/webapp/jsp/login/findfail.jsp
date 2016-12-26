@@ -43,6 +43,7 @@
             <ul>
                 <li><i class="icon iconfont red">&#xe628;</i></li>
                 <li><spring:message code="login.findfail.message"/></li>
+                <li style="margin-top: -0.2rem"><spring:message code="login.findfail.message1"/></li>
             </ul>
         </section>
     </div>
