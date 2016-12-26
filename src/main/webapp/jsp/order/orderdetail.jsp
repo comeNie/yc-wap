@@ -44,7 +44,7 @@
                 <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
             </c:if>
             <li>订单详细</li>
-            <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
+            <a href="javascript:" id="nav-list"><i class="icon iconfont right" id="rightIcon">&#xe629;</i></a>
         </ul>
         <div class="pop-nav" id="pop-nav">
             <ul>
@@ -398,7 +398,7 @@
         <ul>
             <a href="javascript:GoDetail()"><i class="icon iconfont left">&#xe626;</i></a>
             <li>订单跟踪</li>
-            <a href="javascript:" id="nav-list1"><i class="icon iconfont right">&#xe629;</i></a>
+            <a href="javascript:" id="nav-list1"><i class="icon iconfont right" id="rightIcon1">&#xe629;</i></a>
         </ul>
         <div class="pop-nav" id="pop-nav1">
             <ul>
@@ -471,7 +471,7 @@
         <ul>
             <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
             <li>订单详细</li>
-            <a href="javascript:" id="nav-list2"><i class="icon iconfont right">&#xe629;</i></a>
+            <a href="javascript:" id="nav-list2"><i class="icon iconfont right" id="rightIcon2">&#xe629;</i></a>
         </ul>
         <div class="pop-nav" id="pop-nav2">
             <ul>
@@ -562,9 +562,11 @@
             if ($("#pop-nav2").attr("opened") == "1") {
                 $("#pop-nav2").css("display", "none");
                 $("#pop-nav2").attr("opened", "0");
+                $("#rightIcon2").html("&#xe629;");
             } else {
                 $("#pop-nav2").css("display", "block");
                 $("#pop-nav2").attr("opened", "1");
+                $("#rightIcon2").html("&#xe618;");
             }
         });
 
@@ -572,9 +574,11 @@
             if ($("#pop-nav1").attr("opened") == "1") {
                 $("#pop-nav1").css("display", "none");
                 $("#pop-nav1").attr("opened", "0");
+                $("#rightIcon1").html("&#xe629;");
             } else {
                 $("#pop-nav1").css("display", "block");
                 $("#pop-nav1").attr("opened", "1");
+                $("#rightIcon1").html("&#xe618;");
             }
         });
 
@@ -582,9 +586,11 @@
             if ($("#pop-nav").attr("opened") == "1") {
                 $("#pop-nav").css("display", "none");
                 $("#pop-nav").attr("opened", "0");
+                $("#rightIcon").html("&#xe629;");
             } else {
                 $("#pop-nav").css("display", "block");
                 $("#pop-nav").attr("opened", "1");
+                $("#rightIcon").html("&#xe618;");
             }
         });
 

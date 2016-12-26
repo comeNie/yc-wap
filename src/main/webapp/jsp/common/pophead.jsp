@@ -50,7 +50,7 @@
                 <a href="javascript:window.location.href='<%=path%>/login/login?to=login'" class="btn login-btn right1">登录</a>
             </c:if>
             <c:if test="${isLogin=='1'}">
-                <a href="javascript:" id="nav-list"><i class="icon iconfont right">&#xe629;</i></a>
+                <a href="javascript:" id="nav-list"><i class="icon iconfont right" id="rightIcon">&#xe629;</i></a>
             </c:if>
         </c:if>
     </ul>
@@ -77,9 +77,11 @@
             if ($("#pop-nav").attr("opened") == "1") {
                 $("#pop-nav").css("display", "none");
                 $("#pop-nav").attr("opened", "0");
+                $("#rightIcon").html("&#xe629;");
             } else {
                 $("#pop-nav").css("display", "block");
                 $("#pop-nav").attr("opened", "1");
+                $("#rightIcon").html("&#xe618;");
             }
         })
     });
