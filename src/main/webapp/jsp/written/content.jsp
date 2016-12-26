@@ -68,7 +68,7 @@
                 </select>
                 <span>|</span>
             </p>
-            <p class="test-icon1" id="swap"><i class="icon iconfont">&#xe621;</i></p>
+            <p class="test-icon1" id="swap"><i class="icon iconfont">&#xe66d;</i></p>
             <p>
                 <select id="dualTarget" class="select testing-select">
 

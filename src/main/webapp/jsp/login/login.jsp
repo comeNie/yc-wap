@@ -141,7 +141,7 @@
                             <li class="int-border">
                                 <p><input id="codeInput" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>" autocomplete="off"></p>
                                 <img id="checkCodeId" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
-                                <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh"></i></a></p>
+                                <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon iconfont">&#xe66c;</i></a></p>
                                 <label id="codeLabel"></label>
                             </li>
                             <li id="loginBtn"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()"><spring:message code="login.login.lijidenglu"/></a></li>

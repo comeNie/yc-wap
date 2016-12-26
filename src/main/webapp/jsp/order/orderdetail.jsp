@@ -105,7 +105,8 @@
                             </li>
                             <li>
                                 <p>${pair.key}</p>
-                                <p class="right"><a href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
+                                <p class="right"><a
+                                        href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
                             </li>
                         </ul>
                     </c:forEach>
@@ -440,7 +441,9 @@
                         <div class="track-state track-bule">
                             <p>
                                 <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                                <span class="line"></span>
+                                <c:if test="${i.last==false}">
+                                    <span class="line"></span>
+                                </c:if>
                             </p>
                             <ul>
                                 <li class="word">${pair.value}</li>
@@ -452,7 +455,9 @@
                         <div class="track-state track-ash">
                             <p>
                                 <span class="circular"><i class="icon iconfont">&#xe630;</i></span>
-                                <span class="line"></span>
+                                <c:if test="${i.last==false}">
+                                    <span class="line"></span>
+                                </c:if>
                             </p>
                             <ul>
                                 <li class="word">${pair.value}</li>

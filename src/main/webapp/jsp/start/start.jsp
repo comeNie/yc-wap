@@ -118,7 +118,7 @@
                 </select>
                 <span>|</span>
             </p>
-            <p class="test-icon1" onclick="changeSelect()"><i class="icon iconfont" id="change-lan">&#xe621;</i>
+            <p class="test-icon1" onclick="changeSelect()"><i class="icon iconfont" id="change-lan">&#xe66d;</i>
             </p>
 
             <p>

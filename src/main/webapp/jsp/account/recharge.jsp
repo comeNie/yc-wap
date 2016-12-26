@@ -51,7 +51,7 @@
                     <li>
                         <p class="word"><spring:message code="account.recharge.recharjiner"/></p>
                         <p><input id="price" type="text" class="input int-rech" placeholder="10~500" autocomplete="off"></p>
-                        <p><spring:message code="account.recharge.yuan"/></p>
+                        <p class="element"><spring:message code="account.recharge.yuan"/></p>
                         <label id="pricetip"></label>
                     </li>
                     <li>
