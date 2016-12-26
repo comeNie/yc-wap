@@ -231,6 +231,7 @@ public class WrittenController extends BaseController {
             req.setTranslateLevel(TransLvId);
             req.setUrgent(isExpress);
             req.setLanguage(QueryAutoOfferReq.LANGUAGE_ZH_CN);
+            log.info("AutoOfferPriceParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
             QueryAutoOfferRes resp = iQueryAutoOfferSV.queryAutoOffer(req);
             if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
                 String Price = resp.getPrice().toString();
