@@ -555,12 +555,13 @@
             if ($("#more").attr("flag") == "closed") {
                 $("#cont-hid").css("display", "block");
                 $("#more").attr("flag", "opened");
-                $("#click-more").css("display", "none");
+                $("#more").html("点击隐藏");
+//                $("#click-more").css("display", "none");
+            } else if ($("#more").attr("flag") == "opened") {
+                $("#cont-hid").css("display", "none");
+                $("#more").attr("flag", "closed");
+                $("#more").html("点击查看更多");
             }
-//            } else if ($("#more").attr("flag") == "opened") {
-//                $("#cont-hid").css("display", "none");
-//                $("#more").attr("flag", "closed");
-//            }
         });
 
         $("#nav-list2").bind("click", function () {

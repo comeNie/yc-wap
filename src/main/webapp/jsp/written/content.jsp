@@ -79,7 +79,7 @@
         <!--文字翻译-->
         <section class="translation-content">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
-                      placeholder="最多可输入2000字"></textarea>
+                      placeholder="还可以输入2000字"></textarea>
             <a href="javascript:inputClear()"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">

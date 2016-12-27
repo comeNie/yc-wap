@@ -34,119 +34,140 @@
     <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
-    <div class="wrapper-big">
-        <%--登录界面--%>
-        <div id="loginDiv"><!--包含除底部外的所有层-->
-            <!--登录-->
-            <nav class="wap-second-nav">
-             <ul>
-                 <a href="javascript:void(0)" onclick="leftBtn()"><i class="icon iconfont left">&#xe626;</i></a>
-                 <li><spring:message code="login.login.title"/></li>
-                 <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()"><spring:message code="login.login.zhuce"/></a>
-             </ul>
-            </nav>
-            <%--<!--tab-->
-            <section class="login-tab">
-             <ul>
-                 <li><a href="javascript:void(0)" class="current">快速登录</a></li>
-                 <li><a href="javascript:void(0)">普通登录</a></li>
-             </ul>
-            </section>
-            <!--tab1-->
-            <section id="tab1">
-                <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
-                <section class="form-big">
-                    <div class="set-password">
-                        <div class="set-int">
-                            <ul>
-                                <li>
-                                    <p>
-                                        <select class="select testing-select-big" id="selectid">
-                                        </select>
-                                        <span>|</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p><input type="text" class="input input-large" placeholder="手机号"></p>
-                                    <label id="phoneLabel"></label>
-                                </li>
-                                <li>
-                                    <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-                                    <p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>
-                                    <label id="phonetips"></label>
-                                </li>
-                                <li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>
-                                <li class="right"><a href="javascript:void(0)">忘记密码 </a></li>
-                            </ul>
-                        </div>
-        <div class="wrapper-big"><!--包含除底部外的所有层-->
-            <!--登录-->
-            <nav class="wap-second-nav">
-                <ul>
-                    <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
-                    <li>登录</li>
-                    <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()">注册</a>
-                </ul>
-            </nav>
-            <%--<!--tab-->
-            <section class="login-tab">
-             <ul>
-                 <li><a href="javascript:void(0)" class="current">快速登录</a></li>
-                 <li><a href="javascript:void(0)">普通登录</a></li>
-             </ul>
-            </section>
-            <!--tab1-->
-            <section id="tab1">
-                <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
-                <section class="form-big">
-                    <div class="set-password">
-                        <div class="set-int">
-                            <ul>
-                                <li>
-                                    <p>
-                                        <select class="select testing-select-big" id="selectid">
-                                        </select>
-                                        <span>|</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p><input type="text" class="input input-large" placeholder="手机号"></p>
-                                    <label id="phoneLabel"></label>
-                                </li>
-                                <li>
-                                    <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-                                    <p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>
-                                    <label id="phonetips"></label>
-                                </li>
-                                <li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>
-                                <li class="right"><a href="javascript:void(0)">忘记密码 </a></li>
-                            </ul>
-                        </div>
+<div class="loading-bj" id="_loading" style="opacity: 0">
+    <section class="loading-wrapper">
+        <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>
+        <p class="img2">
+        <div id="foo" style="margin-top:1rem;"></div>
+        <p class="img3"><spring:message code="loading.loadingtitle"/></p>
+    </section>
+</div>
+
+<div class="wrapper-big">
+    <%--登录界面--%>
+    <div id="loginDiv"><!--包含除底部外的所有层-->
+        <!--登录-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:void(0)" onclick="leftBtn()"><i class="icon iconfont left">&#xe626;</i></a>
+                <li><spring:message code="login.login.title"/></li>
+                <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()"><spring:message
+                        code="login.login.zhuce"/></a>
+            </ul>
+        </nav>
+        <%--<!--tab-->
+        <section class="login-tab">
+         <ul>
+             <li><a href="javascript:void(0)" class="current">快速登录</a></li>
+             <li><a href="javascript:void(0)">普通登录</a></li>
+         </ul>
+        </section>
+        <!--tab1-->
+        <section id="tab1">
+            <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
+            <section class="form-big">
+                <div class="set-password">
+                    <div class="set-int">
+                        <ul>
+                            <li>
+                                <p>
+                                    <select class="select testing-select-big" id="selectid">
+                                    </select>
+                                    <span>|</span>
+                                </p>
+                            </li>
+                            <li>
+                                <p><input type="text" class="input input-large" placeholder="手机号"></p>
+                                <label id="phoneLabel"></label>
+                            </li>
+                            <li>
+                                <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
+                                <p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>
+                                <label id="phonetips"></label>
+                            </li>
+                            <li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>
+                            <li class="right"><a href="javascript:void(0)">忘记密码 </a></li>
+                        </ul>
                     </div>
-                </section>
-            <!--tab1-->--%>
+    <div class="wrapper-big"><!--包含除底部外的所有层-->
+        <!--登录-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
+                <li>登录</li>
+                <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()">注册</a>
+            </ul>
+        </nav>
+        <%--<!--tab-->
+        <section class="login-tab">
+         <ul>
+             <li><a href="javascript:void(0)" class="current">快速登录</a></li>
+             <li><a href="javascript:void(0)">普通登录</a></li>
+         </ul>
+        </section>
+        <!--tab1-->
+        <section id="tab1">
+            <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
+            <section class="form-big">
+                <div class="set-password">
+                    <div class="set-int">
+                        <ul>
+                            <li>
+                                <p>
+                                    <select class="select testing-select-big" id="selectid">
+                                    </select>
+                                    <span>|</span>
+                                </p>
+                            </li>
+                            <li>
+                                <p><input type="text" class="input input-large" placeholder="手机号"></p>
+                                <label id="phoneLabel"></label>
+                            </li>
+                            <li>
+                                <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
+                                <p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>
+                                <label id="phonetips"></label>
+                            </li>
+                            <li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>
+                            <li class="right"><a href="javascript:void(0)">忘记密码 </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        <!--tab1-->--%>
         <section id="tab2" style="display:block;">
             <section class="form-big">
                 <div class="set-password">
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="phoneid" type="text" class="input input-large" placeholder="<spring:message code="login.login.phonepliceholder"/>"></p>
+                                <p><input id="phoneid" type="text" class="input input-large"
+                                          placeholder="<spring:message code="login.login.phonepliceholder"/>"></p>
                                 <label id="phoneLabel"></label>
                             </li>
                             <li>
-                                <p><input id="psdid" type="password" class="input input-large" placeholder="<spring:message code="login.login.mima"/>" autocomplete="off"></p>
+                                <p><input id="psdid" type="password" class="input input-large"
+                                          placeholder="<spring:message code="login.login.mima"/>" autocomplete="off">
+                                </p>
                                 <label id="psdLabel"></label>
                             </li>
                             <li class="int-border">
-                                <p><input id="codeInput" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>" autocomplete="off"></p>
+                                <p><input id="codeInput" type="text" class="input input-yzm"
+                                          placeholder="<spring:message code="login.login.yanzhengma"/>"
+                                          autocomplete="off"></p>
                                 <img id="checkCodeId" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
-                                <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon iconfont">&#xe66c;</i></a></p>
+                                <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i
+                                        class="icon iconfont">&#xe66c;</i></a></p>
                                 <label id="codeLabel"></label>
                             </li>
-                            <li class="small-height" id="loginBtn"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()"><spring:message code="login.login.lijidenglu"/></a></li>
-                            <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="width: 5.29rem;height: 1.13rem; display:block;margin:0 auto">
-                            <li class="right"><a href="javascript:void(0)" onclick="forgetpsd()"><spring:message code="login.login.wangjimima"/></a></li>
+                            <li class="small-height" id="loginBtn"><a href="javascript:void(0)"
+                                                                      class="submit-btn btn-blue"
+                                                                      onclick="login()"><spring:message
+                                    code="login.login.lijidenglu"/></a></li>
+                            <img src="<%=path%>/ui/images/载入中.gif" id="translateGif"
+                                 style="width: 5.29rem;height: 1.13rem; display:block;margin:0 auto">
+                            <li class="right"><a href="javascript:void(0)" onclick="forgetpsd()"><spring:message
+                                    code="login.login.wangjimima"/></a></li>
                         </ul>
                     </div>
                 </div>
@@ -169,81 +190,119 @@
                 </ul>
             </div>
         </section>--%>
-        </div>
-
-        <%--注册界面--%>
-        <div id="registerDiv" hidden><!--包含除底部外的所有层-->
-            <!--注册-->
-            <nav class="wap-second-nav" >
-                <ul>
-                    <a href="javascript:" onclick="leftA()"><i class="icon iconfont left">&#xe626;</i></a>
-                    <li><spring:message code="login.login.zhuce"/></li>
-                    <a href="javascript:void(0)" class="btn login-btn right1" onclick="jumpLogin()"><spring:message code="login.login.title"/></a>
-                </ul>
-            </nav>
-
-            <section class="form-big">
-                <div class="set-password">
-                    <div class="set-int">
-                        <ul>
-                            <li>
-                                <p>
-                                    <select class="select testing-select-big" id="selectid">
-                                    </select>
-                                    <span>|</span>
-                                </p>
-                                <label id="selectLabel"></label>
-                            </li>
-                            <li>
-                                <p><input id="phone" type="text" class="input input-large int-color" placeholder="<spring:message code="login.register.enterphone"/>"></p>
-                                <label id="phoneLabel1"></label>
-                            </li>
-                            <li>
-                                <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>"  autocomplete="off"></p>
-                                <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm" onclick="getnumberonclick()"><spring:message code="login.register.getcode"/></a></p>
-                                <label id="codeLabel1"></label>
-                            </li>
-                            <li class="pass-smint">
-                                <p><input id="psdids" type="password" class="input input-large" placeholder="<spring:message code="login.login.enterpsd"/>" autocomplete="off"></p>
-                                <label id="psdLabel1"></label>
-                            </li>
-                            <li>
-                                <p><input id="confimid" type="password" class="input input-large" placeholder="<spring:message code="login.register.enterpsdagain"/>" autocomplete="off"></p>
-                                <label id="confimPsd"></label>
-                            </li>
-                            <li class="left">
-                                <p><img src="<%=path%>/ui/images/checkbox1.png" class="imgcheckbox" onclick="checkImgAction()" id="checkImg"></p><spring:message code="login.register.agree"/><a href="javascript:void(0)" onclick="look()"><spring:message code="login.register.look"/></a>
-                                <label id="agreeLabel"></label>
-                            </li>
-                            <li  class="small-height"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()"><spring:message code="login.register.lijizhuce"/></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        </div>
     </div>
-    <%--底部視圖--%>
-    <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
-    <%--loading--%>
-    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
+
+    <%--注册界面--%>
+    <div id="registerDiv" hidden><!--包含除底部外的所有层-->
+        <!--注册-->
+        <nav class="wap-second-nav">
+            <ul>
+                <a href="javascript:" onclick="leftA()"><i class="icon iconfont left">&#xe626;</i></a>
+                <li><spring:message code="login.login.zhuce"/></li>
+                <a href="javascript:void(0)" class="btn login-btn right1" onclick="jumpLogin()"><spring:message
+                        code="login.login.title"/></a>
+            </ul>
+        </nav>
+
+        <section class="form-big">
+            <div class="set-password">
+                <div class="set-int">
+                    <ul>
+                        <li>
+                            <p>
+                                <select class="select testing-select-big" id="selectid">
+                                </select>
+                                <span>|</span>
+                            </p>
+                            <label id="selectLabel"></label>
+                        </li>
+                        <li>
+                            <p><input id="phone" type="text" class="input input-large int-color"
+                                      placeholder="<spring:message code="login.register.enterphone"/>"></p>
+                            <label id="phoneLabel1"></label>
+                        </li>
+                        <li>
+                            <p><input id="codeid" type="text" class="input input-small"
+                                      placeholder="<spring:message code="login.register.entercode"/>"
+                                      autocomplete="off"></p>
+                            <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm"
+                                              onclick="getnumberonclick()"><spring:message
+                                    code="login.register.getcode"/></a></p>
+                            <label id="codeLabel1"></label>
+                        </li>
+                        <li class="pass-smint">
+                            <p><input id="psdids" type="password" class="input input-large"
+                                      placeholder="<spring:message code="login.login.enterpsd"/>" autocomplete="off">
+                            </p>
+                            <label id="psdLabel1"></label>
+                        </li>
+                        <li>
+                            <p><input id="confimid" type="password" class="input input-large"
+                                      placeholder="<spring:message code="login.register.enterpsdagain"/>"
+                                      autocomplete="off"></p>
+                            <label id="confimPsd"></label>
+                        </li>
+                        <li class="left">
+                            <p><img src="<%=path%>/ui/images/checkbox1.png" class="imgcheckbox"
+                                    onclick="checkImgAction()" id="checkImg"></p><spring:message
+                                code="login.register.agree"/><a href="javascript:void(0)"
+                                                                onclick="look()"><spring:message
+                                code="login.register.look"/></a>
+                            <label id="agreeLabel"></label>
+                        </li>
+                        <li class="small-height"><a href="javascript:void(0)" class="submit-btn btn-blue"
+                                                    onclick="confirmAction()"><spring:message
+                                code="login.register.lijizhuce"/></a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<%--底部視圖--%>
+<jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>
 </html>
 <script>
     var isAgree = 1;
-    $(function(){
+    var isLoaded = false;
+    $(function () {
+        Loading.HideLoading();
+
         $("#translateGif").hide();
-        clearText();
-        $("#phone").attr("disabled",false);
-        if("${to}"=="login"){
+        $("#phone").attr("disabled", false);
+
+        if ("${to}" == "login") {
             $("#loginDiv").show();
             $("#registerDiv").hide();
-        }else {
+        } else {
             $("#loginDiv").hide();
             $("#registerDiv").show();
         }
-        loadCountry();
-    })
-//——————————————————————登录——————————————————————
+//        loadCountry();
+    });
+
+    $(document).ready(function () {
+        clearText();
+        Loading.SetNoneOpacity();
+    });
+
+    var Loading = {
+        ShowLoading: function () {
+            $("#_loading").css("display", "block");
+        },
+        HideLoading: function () {
+            $("#_loading").css("display", "none");
+        },
+        SetOpacity: function () {
+            $("#_loading").css("opacity", 0);
+        },
+        SetNoneOpacity: function () {
+            $("#_loading").css("opacity", 1);
+        }
+    };
+
+    //——————————————————————登录——————————————————————
     function login() {
         var phone = $("#phoneid").val();
         var psd = $("#psdid").val();
@@ -280,12 +339,11 @@
         } else {
             $("#codeLabel").css("display", "none");
         }
-//        Loading.ShowLoading();
         $("#translateGif").show();
         $("#loginBtn").hide();
-        toJump(phone, psd,code);
+        toJump(phone, psd, code);
     }
-    function toJump(phone, psd,code) {
+    function toJump(phone, psd, code) {
         $.ajax({
             async: true,
             type: "POST",
@@ -295,7 +353,7 @@
             data: {
                 username: phone,
                 password: psd,
-                code:code
+                code: code
             },
             success: function (data) {
                 $("#translateGif").hide();
@@ -307,7 +365,7 @@
                         window.location.href = "<%=path%>" + "<%=ToUrl%>";
                     }
 //                    Loading.HideLoading();
-                } else{
+                } else {
 //                    Loading.HideLoading();
                     createCode();
                     $("#codeLabel").html(data.msg);
@@ -335,17 +393,20 @@
     function registJump() {
         $("#loginDiv").hide();
         $("#registerDiv").show();
+        if (!isLoaded) {
+            loadCountry();
+        }
         clearText();
     }
-    function leftBtn(){
-        if ("${success}" == "success"){
+    function leftBtn() {
+        if ("${success}" == "success") {
             window.history.go(-3);
-        }else {
+        } else {
             window.history.go(-1);
         }
 
     }
-    function clearText(){
+    function clearText() {
         $("#phoneid").val("");
         $("#psdid").val("");
         $("#codeInput").val("");
@@ -355,21 +416,21 @@
         $("#confimid").val("");
         $("#phoneLabel").css("display", "none");
         $("#phoneLabel1").css("display", "none");
-        $("#codeLabel1").css("display","none");
-        $("#psdLabel1").css("display","none");
-        $("#confimPsd").css("display","none");
+        $("#codeLabel1").css("display", "none");
+        $("#psdLabel1").css("display", "none");
+        $("#confimPsd").css("display", "none");
         $("#agreeLabel").css("display", "none");
         $("#psdLabel").css("display", "none");
         $("#codeLabel").css("display", "none");
-        $("#phone").attr("disabled",false);
+        $("#phone").attr("disabled", false);
     }
     //验证码代码
     function createCode() {
-        var d =  new Date();
-        $("#checkCodeId").attr("src","<%=path%>/safe/getpiccode?time="+ d.getTime());
+        var d = new Date();
+        $("#checkCodeId").attr("src", "<%=path%>/safe/getpiccode?time=" + d.getTime());
     }
 
-//------------------------------注册界面-------------------------
+    //------------------------------注册界面-------------------------
     //加载国家的数据
     var personUid;
     function loadCountry() {
@@ -380,37 +441,40 @@
             modal: true,
             showBusi: false,
             timeout: 30000,
-            data: {
-            },
+            data: {},
             success: function (data) {
                 if (data.status == 1) {
-                    $("#selectLabel").css("display","none");
+                    isLoaded = true;
+                    $("#selectLabel").css("display", "none");
                     var list = data.list;
-                    $.each(list,function(index ,value){
-                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN"){
-                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameCn+" +"+value.countryCode + "</option>");
-                        }else {
-                            $('#selectid').append("<option value='"+value.countryValue+"'>" + value.countryNameEn+" +"+value.countryCode + "</option>");
+                    $.each(list, function (index, value) {
+                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN") {
+                            $('#selectid').append("<option value='" + value.countryValue + "'>" + value.countryNameCn + " +" + value.countryCode + "</option>");
+                        } else {
+                            $('#selectid').append("<option value='" + value.countryValue + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
                         }
-                        localStorage.setItem(value.countryValue,value.regularExpression);
-                        localStorage.setItem(value.countryValue+"1",value.countryCode);
+                        localStorage.setItem(value.countryValue, value.regularExpression);
+                        localStorage.setItem(value.countryValue + "1", value.countryCode);
                     })
-                    Loading.HideLoading();
                 } else {
                     $("#selectLabel").html("<spring:message code="login.register.countryCode"/>");
-                    $("#selectLabel").css("display","block");
-                    Loading.HideLoading();
+                    $("#selectLabel").css("display", "block");
                 }
             },
             error: function () {
                 $("#selectLabel").html("<spring:message code="login.register.countryCode"/>");
-                $("#selectLabel").css("display","block");
+                $("#selectLabel").css("display", "block");
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
                 Loading.HideLoading();
             }
         });
     }
-    function leftA(){
-        if("${to}"=="login"){
+    function leftA() {
+        if ("${to}" == "login") {
             $("#loginDiv").show();
             $("#registerDiv").hide();
             clearText();
@@ -431,13 +495,13 @@
         wait = 0;
     }
     //同意协议
-    function checkImgAction(){
-        if (isAgree == 1){
+    function checkImgAction() {
+        if (isAgree == 1) {
             isAgree = 0;
-            $("#checkImg").attr("src","<%=path%>/ui/images/checkbox.png")
-        }else {
+            $("#checkImg").attr("src", "<%=path%>/ui/images/checkbox.png")
+        } else {
             isAgree = 1;
-            $("#checkImg").attr("src","<%=path%>/ui/images/checkbox1.png");
+            $("#checkImg").attr("src", "<%=path%>/ui/images/checkbox1.png");
         }
     }
     function confirmAction() {
@@ -445,81 +509,79 @@
         var codeid = $("#codeid").val();
         var psdid = $("#psdids").val();
         var confimid = $("#confimid").val();
-        if (phone == "" || phone == null){
+        if (phone == "" || phone == null) {
             $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
-            $("#phoneLabel1").css("display","block");
+            $("#phoneLabel1").css("display", "block");
             return;
-        }else {
-            $("#phoneLabel1").css("display","none");
+        } else {
+            $("#phoneLabel1").css("display", "none");
         }
         var selectValue = $('#selectid').val();
-        var code = localStorage.getItem(selectValue+"1");
+        var code = localStorage.getItem(selectValue + "1");
         var reg = localStorage.getItem(selectValue);
         var t = new RegExp(reg);
-        if(!t.test(code+phone)){
+        if (!t.test(code + phone)) {
             $("#phoneLabel1").html("<spring:message code="login.register.enterRightphone"/>");
-            $("#phoneLabel1").css("display","block");
+            $("#phoneLabel1").css("display", "block");
             return;
-        }else {
-            $("#phoneLabel1").css("display","none");
+        } else {
+            $("#phoneLabel1").css("display", "none");
         }
 
-        if (codeid == "" || codeid == null){
+        if (codeid == "" || codeid == null) {
             $("#codeLabel1").html("<spring:message code="login.login.entercode"/>");
-            $("#codeLabel1").css("display","block");
+            $("#codeLabel1").css("display", "block");
             return;
-        }else {
-            $("#codeLabel1").css("display","none");
+        } else {
+            $("#codeLabel1").css("display", "none");
         }
 
-        if (psdid == "" || psdid == null){
+        if (psdid == "" || psdid == null) {
             $("#psdLabel1").html("<spring:message code="login.login.enterpsd"/>");
-            $("#psdLabel1").css("display","block");
+            $("#psdLabel1").css("display", "block");
             return;
-        }else {
-            $("#psdLabel1").css("display","none");
+        } else {
+            $("#psdLabel1").css("display", "none");
         }
 //        var t = /^[0-9a-zA-Z]{6,16}$/;
         var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
-        if (!t.test(psdid)){
+        if (!t.test(psdid)) {
             $("#psdLabel1").html("<spring:message code="safe.changepsd.alert_newLength"/>");
-            $("#psdLabel1").css("display","block");
+            $("#psdLabel1").css("display", "block");
             return;
-        }else {
-            $("#psdLabel1").css("display","none");
+        } else {
+            $("#psdLabel1").css("display", "none");
         }
 
-        if (confimid == "" || confimid == null){
+        if (confimid == "" || confimid == null) {
             $("#confimPsd").html("<spring:message code="login.login.enterpsd"/>");
-            $("#confimPsd").css("display","block");
+            $("#confimPsd").css("display", "block");
             return;
-        }else {
-            $("#confimPsd").css("display","none");
+        } else {
+            $("#confimPsd").css("display", "none");
         }
 //        判断新密码是否相同
         if (psdid != confimid) {
             $("#confimPsd").html("<spring:message code="safe.changepsd.tip_lable"/>");
-            $("#confimPsd").css("display","block");
+            $("#confimPsd").css("display", "block");
             return;
-        }else {
-            $("#confimPsd").css("display","none");
+        } else {
+            $("#confimPsd").css("display", "none");
         }
 
 
-        if (!isAgree){
+        if (!isAgree) {
             $("#agreeLabel").html("<spring:message code="login.register.lookTip"/>");
-            $("#agreeLabel").css("display","block");
+            $("#agreeLabel").css("display", "block");
             return;
-        }else {
+        } else {
             $("#agreeLabel").css("display", "none");
         }
-
-        Loading.ShowLoading();
 //        登录验证
-        checkPhoneWithJump(phone,codeid,psdid);
+        checkPhoneWithJump(phone, codeid, psdid);
 
     }
-    function checkPhoneWithJump(phone,codeid,psdid) {
+    function checkPhoneWithJump(phone, codeid, psdid) {
         $.ajax({
             async: true,
             type: "POST",
@@ -527,28 +589,31 @@
             modal: true,
             timeout: 30000,
             data: {
-                uid:personUid,
-                phone:phone,
+                uid: personUid,
+                phone: phone,
                 newpw: psdid,
-                code:codeid,
+                code: codeid,
             },
             success: function (data) {
                 if (data.status == 1) {
                     $("#agreeLabel").css("display", "none");
                     var tourl = "<%=path%>/login/registersuccess";
-                    window.location.href=tourl;
-                    Loading.HideLoading();
+                    window.location.href = tourl;
                 } else {
                     $("#agreeLabel").html(data.msg);
                     $("#agreeLabel").css("display", "block");
-                    $("#phone").attr("disabled",false);
-                    Loading.HideLoading();
+                    $("#phone").attr("disabled", false);
                 }
             },
             error: function () {
                 $("#agreeLabel").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#agreeLabel").css("display", "block");
-                $("#phone").attr("disabled",false);
+                $("#phone").attr("disabled", false);
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
                 Loading.HideLoading();
             }
         });
@@ -556,32 +621,31 @@
     }
 
 
-    function getnumberonclick(){
+    function getnumberonclick() {
         var phone = $("#phone").val();
-        if (phone == "" || phone == null){
+        if (phone == "" || phone == null) {
             $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
-            $("#phoneLabel1").css("display","block");
+            $("#phoneLabel1").css("display", "block");
             return;
-        }else {
-            $("#phoneLabel1").css("display","none");
+        } else {
+            $("#phoneLabel1").css("display", "none");
         }
         var selectValue = $('#selectid').val();
-        var code = localStorage.getItem(selectValue+"1");
+        var code = localStorage.getItem(selectValue + "1");
         var reg = localStorage.getItem(selectValue);
         var t = new RegExp(reg);
-        if(!t.test(code+phone)){
+        if (!t.test(code + phone)) {
             $("#phoneLabel1").html("<spring:message code="login.register.enterRightphone"/>");
-            $("#phoneLabel1").css("display","block");
+            $("#phoneLabel1").css("display", "block");
             return;
-        }else {
-            $("#phoneLabel1").css("display","none");
+        } else {
+            $("#phoneLabel1").css("display", "none");
         }
 
-        Loading.ShowLoading();
-        getTestCode(phone,selectValue);
+        getTestCode(phone, selectValue);
     }
     //    发送验证码
-    function getTestCode(phone,selectValue) {
+    function getTestCode(phone, selectValue) {
 
         $.ajax({
             async: true,
@@ -591,26 +655,29 @@
             timeout: 30000,
             data: {
                 type: 1,
-                info:phone,
-                domain:selectValue,
+                info: phone,
+                domain: selectValue,
             },
             success: function (data) {
                 if (data.status == 1) {
                     $("#phoneLabel1").css("display", "none");
-                    $("#phone").attr("disabled","true");
+                    $("#phone").attr("disabled", "true");
                     personUid = data.uid;
                     countDown();
-                    Loading.HideLoading();
                 } else {
                     $("#phoneLabel1").html(data.msg);
                     $("#phoneLabel1").css("display", "block");
-                    Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#phoneLabel1").html("<spring:message code="safe.safesuccess.failNet"/>");
 //                $("#phone").removeAttrs("disabled");
                 $("#phoneLabel1").css("display", "block");
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
                 Loading.HideLoading();
             }
         });
@@ -623,24 +690,26 @@
             $("#getnumber").attr("onclick", "getnumberonclick()");
             $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
 
-            $("#getnumber").attr("class","btn bnt-yzm");
+            $("#getnumber").attr("class", "btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 120;
-        }else {
-            var txtStr = wait+ '<spring:message code="safe.changemail.chongxinhuoqu"/>';
+        } else {
+            var txtStr = wait + '<spring:message code="safe.changemail.chongxinhuoqu"/>';
             $("#getnumber").html(txtStr);
-            $("#getnumber").attr("class","btn bnt-yzm-gray");
+            $("#getnumber").attr("class", "btn bnt-yzm-gray");
             // 按钮里面的内容呈现倒计时状态
             $("#getnumber").attr("disabled", "block");
             $("#getnumber").attr("onclick", "javascript:void(0)");
-            wait --;
-            setTimeout(function(){countDown();},1000);
+            wait--;
+            setTimeout(function () {
+                countDown();
+            }, 1000);
         }
     }
     function look() {
         clearText();
         var u = window.location.pathname;
-        var href = "<%=path%>/common/agreement?Flag="+u;
+        var href = "<%=path%>/common/agreement?Flag=" + u;
         window.location.href = href;
     }
 </script>
