@@ -118,6 +118,9 @@
         }else {
             Loading.HideLoading();
         }
+        $("#nameLi").click(function(){
+            window.location.reload();
+        });
     })
     function retLeft(){
         window.history.go(-1);
