@@ -459,6 +459,7 @@
         $("#results").hide();
         $('#chick-btn').show();
         $('#wrapper-hide').hide();
+        $("#clear").show();
         goTranslate();
     }
 ////    翻译按钮的点击事件
