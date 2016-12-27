@@ -42,7 +42,7 @@
 
     <section class="form-big">
         <div class="balance">
-            <spring:message code="account.balance.yuer"/><span id="balanceSpan">${Balance}<b>元</b></span>
+            <spring:message code="account.balance.yuer"/><span id="BigSpan"><b id="littleB"></b></span>
         </div>
         <div class="wap-btn"><a href="javascript:void(0)" onclick="toRecharge()" class="btn submit-btn btn-blue"><spring:message code="account.balance.chongzhi"/></a>
         </div>
@@ -57,9 +57,9 @@
 </body>
 </html>
 <script>
-    var b = '${Balance}';
+    var money = '${Balance}';
     function toRecharge() {
-        var tourl = "<%=path%>/account/recharge?balance=" + b;
+        var tourl = "<%=path%>/account/recharge?balance=" + money;
         window.location.href = tourl;
     }
     function retLeft() {
@@ -67,7 +67,12 @@
         window.location.href = tourl;
 
     }
+    $(function() {
+        var arrMoney = money.split('.');
+        $("#BigSpan").html(arrMoney[0]+"<b>."+arrMoney[1]+"元</b>");
+    });
     $(document).ready(function () {
         Loading.HideLoading();
+
     });
 </script>

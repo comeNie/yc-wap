@@ -534,20 +534,20 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    $("#confimPsd").css("display", "none");
+                    $("#agreeLabel").css("display", "none");
                     var tourl = "<%=path%>/login/registersuccess";
                     window.location.href=tourl;
                     Loading.HideLoading();
                 } else {
-                    $("#confimPsd").html(data.msg);
-                    $("#confimPsd").css("display", "block");
+                    $("#agreeLabel").html(data.msg);
+                    $("#agreeLabel").css("display", "block");
                     $("#phone").attr("disabled",false);
                     Loading.HideLoading();
                 }
             },
             error: function () {
-                $("#confimPsd").html("<spring:message code="safe.safesuccess.failNet"/>");
-                $("#confimPsd").css("display", "block");
+                $("#agreeLabel").html("<spring:message code="safe.safesuccess.failNet"/>");
+                $("#agreeLabel").css("display", "block");
                 $("#phone").attr("disabled",false);
                 Loading.HideLoading();
             }

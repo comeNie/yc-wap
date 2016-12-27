@@ -226,7 +226,7 @@
 .set-int ul li i{font-size:0.85rem;color:#c7c7c7;margin-top:0.4rem;float:right;}
 .set-int ul .left a{font-size:0.46rem;color:#1780e3;}
 .set-int ul .left{font-size:0.46rem;height:auto;min-height:1.2rem;}
-.set-int ul .pass-smint{height:auto;min-height:2rem;}
+.set-int ul .pass-smint{height:2.4rem;}
 .set-int ul .int-border .right{float:right}
 .set-int ul .small-height{height:2rem;}
 .int-color::-webkit-input-placeholder { /* WebKit browsers */  
