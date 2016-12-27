@@ -19,7 +19,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title><spring:message code="account.balance.title"/></title>
+    <title><spring:message code="center.myBalance"/></title>
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
@@ -34,7 +34,7 @@
 <body>
 <div class="wrapper-big"><!--包含除底部外的所有层-->
     <%--头部--%>
-    <spring:message code="account.balance.title" var="title"/>
+    <spring:message code="center.myBalance" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:retLeft()"/>
@@ -42,7 +42,7 @@
 
     <section class="form-big">
         <div class="balance">
-            <spring:message code="account.balance.yuer"/><span id="balanceSpan">${Balance}元</span>
+            <spring:message code="account.balance.yuer"/><span id="balanceSpan">${Balance}<b>元</b></span>
         </div>
         <div class="wap-btn"><a href="javascript:void(0)" onclick="toRecharge()" class="btn submit-btn btn-blue"><spring:message code="account.balance.chongzhi"/></a>
         </div>

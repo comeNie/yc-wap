@@ -144,7 +144,7 @@
                                 <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon iconfont">&#xe66c;</i></a></p>
                                 <label id="codeLabel"></label>
                             </li>
-                            <li id="loginBtn"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()"><spring:message code="login.login.lijidenglu"/></a></li>
+                            <li class="small-height" id="loginBtn"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()"><spring:message code="login.login.lijidenglu"/></a></li>
                             <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="width: 5.29rem;height: 1.13rem; display:block;margin:0 auto">
                             <li class="right"><a href="javascript:void(0)" onclick="forgetpsd()"><spring:message code="login.login.wangjimima"/></a></li>
                         </ul>
@@ -195,7 +195,7 @@
                                 <label id="selectLabel"></label>
                             </li>
                             <li>
-                                <p><input id="phone" type="text" class="input input-large" placeholder="<spring:message code="login.register.enterphone"/>"></p>
+                                <p><input id="phone" type="text" class="input input-large int-color" placeholder="<spring:message code="login.register.enterphone"/>"></p>
                                 <label id="phoneLabel1"></label>
                             </li>
                             <li>
@@ -203,7 +203,7 @@
                                 <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm" onclick="getnumberonclick()"><spring:message code="login.register.getcode"/></a></p>
                                 <label id="codeLabel1"></label>
                             </li>
-                            <li>
+                            <li class="pass-smint">
                                 <p><input id="psdids" type="password" class="input input-large" placeholder="<spring:message code="login.login.enterpsd"/>" autocomplete="off"></p>
                                 <label id="psdLabel1"></label>
                             </li>
@@ -211,12 +211,11 @@
                                 <p><input id="confimid" type="password" class="input input-large" placeholder="<spring:message code="login.register.enterpsdagain"/>" autocomplete="off"></p>
                                 <label id="confimPsd"></label>
                             </li>
-                            <li><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()"><spring:message code="login.register.lijizhuce"/></a></li>
                             <li class="left">
                                 <p><img src="<%=path%>/ui/images/checkbox1.png" class="imgcheckbox" onclick="checkImgAction()" id="checkImg"></p><spring:message code="login.register.agree"/><a href="javascript:void(0)" onclick="look()"><spring:message code="login.register.look"/></a>
                                 <label id="agreeLabel"></label>
                             </li>
-
+                            <li  class="small-height"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()"><spring:message code="login.register.lijizhuce"/></a></li>
                         </ul>
                     </div>
                 </div>

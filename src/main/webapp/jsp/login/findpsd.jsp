@@ -52,7 +52,7 @@
                             <li class="int-border">
                                 <p><input id="codeid1" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>" autocomplete="off"></p>
                                 <img id="checkCodeImg" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
-                                <p style="float:right" class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon-refresh" ></i></a></p>
+                                <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon iconfont">&#xe66c;</i></a></p>
                                 <label id="codeLabel1"></label>
                             </li>
                             <li><a href="javascript:void(0)" id="next-btn1" class="submit-btn btn-blue"><spring:message code="login.findpsd.next"/></a></li>

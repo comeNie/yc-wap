@@ -50,7 +50,7 @@
                 <a href="javascript:window.location.href='<%=path%>/login/login?to=login'" class="btn login-btn right1">登录</a>
             </c:if>
             <c:if test="${isLogin=='1'}">
-                <a href="javascript:" id="nav-list"><i class="icon iconfont right" id="rightIcon">&#xe629;</i></a>
+                <a href="javascript:" id="nav-list"><i class="icon iconfont right" id="rightIcon">&#xe670;</i></a>
             </c:if>
         </c:if>
     </ul>

@@ -10,7 +10,7 @@
 .wap-nav ul .logo{margin:0.42rem 0 0 0.64rem;}
 .wap-nav ul .right{float:right;}
 .wap-nav ul .right .login-btn{width:2rem;height:1.1rem;border:1px solid #fff;border-radius:5px; background:none;color:#fff;font-size:0.46rem;margin:0.4rem 0.64rem 0 0;cursor:pointer;text-align: center;float:left;line-height:1rem;}
-.login-btn{width:2rem;height:1.1rem;border:1px solid #fff;border-radius:5px;line-height:0.85rem; background:none;color:#fff;font-size:0.46rem;margin:0.4rem 0.64rem 0 0;cursor:pointer;text-align: center;line-height:1rem;}
+.login-btn{width:1.9rem;height:1rem;border:1px solid #fff;border-radius:5px;line-height:0.85rem; background:none;color:#fff;font-size:0.46rem;margin:0.4rem 0.64rem 0 0;cursor:pointer;text-align: center;line-height:0.95rem;}
 /**底部**/
 .footer-big{height:5.12rem;margin:-5rem auto 0;}
 .index-footer-big{height:5.12rem;margin:-2rem auto 0;}
@@ -35,10 +35,10 @@
 /**二级导航**/
 .wap-second-nav{width:100%;float:left;height:1.87rem;background:#1780e3;position:relative;}
 .wap-second-nav ul{width:100%;float:left;}
-.wap-second-nav ul li{width:100%;text-align: center;line-height:1.87rem;font-size:0.64rem;color:#fff}
+.wap-second-nav ul li{width:100%;text-align: center;line-height:1.87rem;font-size:0.70rem;color:#fff}
 .wap-second-nav ul i{font-size:0.85rem;color:#fff;cursor:pointer;}
 .wap-second-nav ul .left{position:absolute;top:0.35rem;left:0.55rem;}
-.wap-second-nav ul .right{position:absolute;top:0.35rem;right:0.55rem;}
+.wap-second-nav ul .right{position:absolute;top:0.45rem;right:0.55rem;}
 .wap-second-nav ul .right1{position:absolute;top:0;right:0;}
 .pop-nav{width:100%;position:absolute;top:1.87rem;left:0;height:2rem;background:#000;opacity:0.8;display:none;z-index:99;}
 .pop-nav ul{width:100%;float:left}
