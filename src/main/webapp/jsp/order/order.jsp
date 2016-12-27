@@ -197,7 +197,7 @@
                         } else if (statusFlag == "2") {
                             var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn ash'><a href='javascript:ConfirmOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         } else if (statusFlag == "3") {
-                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + "</p></li></ul></div></section>";
+                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + "</p></li><li class='right'><p class='bord-btn ash'><a href='javascript:CancelOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         }
 
                         $('#wrapper').append(htmlStr);
@@ -327,7 +327,7 @@
             return "待支付";
         } else if (state == "13") {
             btn1 = "";
-            btn2 = "";
+            btn2 = "取消";
             tips = "请等待报价";
             statusFlag = "3";
             return "待报价";
