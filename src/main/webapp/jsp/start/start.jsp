@@ -210,7 +210,6 @@
         </div>
         <div class="mask" id="eject-mask"></div>
     </div>
-    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </div>
 
 <!--底部-->
@@ -253,7 +252,6 @@
             $("#text_audio").attr("onclick", "playAudio()");
         },false);
 
-        Loading.HideLoading();
     });
     $(document).ready(function () {
 

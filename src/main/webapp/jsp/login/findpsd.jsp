@@ -64,7 +64,7 @@
             <div id="next2">
                 <div class="set-password">
                     <div class="set-phone">
-                        <p><spring:message code="safe.checkphone.hadcheckPhone"/></p>
+                        <p id="checkP"><spring:message code="safe.checkphone.hadcheckPhone"/></p>
                         <p class="word" id="phone2"></p>
                     </div>
                     <div class="set-int">
@@ -235,6 +235,8 @@
             $("#next2").hide();
             index --;
             createCode();
+            wait = 0;
+            $("#checkP").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
         }else if (index == 2){
 
             $("#next2").show();
@@ -400,19 +402,22 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#codeLabel2").css("display", "none");
+                    $("#checkP").html("已发送动态码短信到");
+                    wait = 60;
                     countDown(60);
 
                     Loading.HideLoading();
                 } else {
                     $("#codeLabel2").html(data.msg);
                     $("#codeLabel2").css("display", "block");
-
+                    $("#checkP").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
                     Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#codeLabel2").html(<spring:message code="safe.safesuccess.failNet"/>);
                 $("#codeLabel2").css("display", "block");
+                $("#checkP").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
                 Loading.HideLoading();
             }
         });
