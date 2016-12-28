@@ -553,7 +553,7 @@
         }
         var Detail = "";
         if (Content.length > 10) {
-            Detail = Content.substring(0, 10) + "...";
+            Detail = Content.substring(0, 15) + "...";
         } else {
             Detail = Content;
         }
