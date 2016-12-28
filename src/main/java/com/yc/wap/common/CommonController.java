@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by Nozomi on 11/12/2016.
  */
 @Controller
-@RequestMapping(value = "common")
+@RequestMapping(value = "/")
 public class CommonController extends BaseController {
     private Log log = LogFactory.getLog(CommonController.class);
 
@@ -19,9 +19,9 @@ public class CommonController extends BaseController {
         return "common/aboutus";
     }
 
-    @RequestMapping(value = "recruit")
-    public String recruit() {
-        return "common/recruit";
+    @RequestMapping(value = "tident")
+    public String tident() {
+        return "common/tident";
     }
 
     @RequestMapping(value = "agreement")

@@ -327,7 +327,7 @@
         }
     }
     function look() {
-        var href = "<%=path%>/common/agreement";
+        var href = "<%=path%>/agreement";
         window.location.href = href;
     }
 

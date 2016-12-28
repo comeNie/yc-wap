@@ -77,7 +77,7 @@
             if ($("#pop-nav").attr("opened") == "1") {
                 $("#pop-nav").css("display", "none");
                 $("#pop-nav").attr("opened", "0");
-                $("#rightIcon").html("&#xe629;");
+                $("#rightIcon").html("&#xe670;");
             } else {
                 $("#pop-nav").css("display", "block");
                 $("#pop-nav").attr("opened", "1");
