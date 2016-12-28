@@ -138,6 +138,7 @@
     <input type="hidden" name="orderId" value="${OrderId}">
     <input type="hidden" name="orderAmount" value="${PriceDisplay}">
     <input type="hidden" name="password" id="passInput" value="">
+    <input type="hidden" name="payCheck" id="isPayCheck" value="">
 </form>
 
 <!--底部-->
@@ -327,6 +328,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     payCheck = data.needPayCheck;
+                    $("#isPayCheck").val(payCheck);
                 } else {
                     $("#EjectTitle").html("获取信息失败，请重试");
                     $('#eject-mask').fadeIn(100);
@@ -353,9 +355,10 @@
 
     function BalancePay() {
         if (payCheck == "0") {
-            $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单。");
-            $('#eject-mask').fadeIn(100);
-            $('#prompt').slideDown(100);
+//            $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单。");
+//            $('#eject-mask').fadeIn(100);
+//            $('#prompt').slideDown(100);
+            $("#toBalancePay").submit();
         } else {
             $('#eject-mask').fadeIn(100);
             $('#password').slideDown(100);
