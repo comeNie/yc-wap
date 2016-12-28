@@ -504,9 +504,42 @@ public class SafeController extends BaseController {
     @RequestMapping(value = "sendTestCode")
     public @ResponseBody Object sendTestCode() {
         MsgBean result = new MsgBean();
-
         String info = request.getParameter("info");
+
+        String lastInfo = (String) session.getAttribute("lastInfo");
+        if (lastInfo == "" || lastInfo == null){
+            //判断请求时间间隔是否小于60s
+            String oldTime = (String) session.getAttribute("isSpace");
+            long newTime = new Date().getTime();
+            if (oldTime != "" && oldTime != null){
+                long time = Long.parseLong(oldTime);
+                if (newTime < time+60*1000){
+                    result.put("status","0");
+                    result.put("msg",rb.getMessage("safeCtrl.codeHadSoMuch"));
+                    return result.returnMsg();
+                }
+            }
+        }else {
+            if (info.equals(lastInfo)){
+                //判断请求时间间隔是否小于60s
+                String oldTime = (String) session.getAttribute("isSpace");
+                long newTime = new Date().getTime();
+                if (oldTime != "" && oldTime != null){
+                    long time = Long.parseLong(oldTime);
+                    if (newTime < time+60*1000){
+                        result.put("status","0");
+                        result.put("msg",rb.getMessage("safeCtrl.codeHadSoMuch"));
+                        return result.returnMsg();
+                    }
+                }
+            }
+        }
+        session.setAttribute("lastInfo",info);
+
         String type = request.getParameter("type");
+
+
+
         SmsRequest smsRequest = new SmsRequest();
         smsRequest.setPhone(info);
         /** 手机验证码key **/
@@ -548,41 +581,10 @@ public class SafeController extends BaseController {
             nowCount = Integer.parseInt(sendCount);
             log.info(info+"发送验证码的次数:"+nowCount);
         }
-        if (nowCount > maxCount) {
+        if (nowCount >= maxCount) {
             result.put("msg","验证码发送次数达到当天限制");
             return result.returnMsg();
         }
-        /*
-        String lastInfo = (String) session.getAttribute("lastInfo");
-        if (lastInfo == "" || lastInfo == null){
-            //判断请求时间间隔是否小于60s
-            String oldTime = (String) session.getAttribute("isSpace");
-            long newTime = new Date().getTime();
-            if (oldTime != "" && oldTime != null){
-                long time = Long.parseLong(oldTime);
-                if (newTime < time+60*1000){
-                    result.put("status","0");
-                    result.put("msg",rb.getMessage("safeCtrl.codeHadSoMuch"));
-                    return result.returnMsg();
-                }
-            }
-        }else {
-            if (info.equals(lastInfo)){
-                //判断请求时间间隔是否小于60s
-                String oldTime = (String) session.getAttribute("isSpace");
-                long newTime = new Date().getTime();
-                if (oldTime != "" && oldTime != null){
-                    long time = Long.parseLong(oldTime);
-                    if (newTime < time+60*1000){
-                        result.put("status","0");
-                        result.put("msg",rb.getMessage("safeCtrl.codeHadSoMuch"));
-                        return result.returnMsg();
-                    }
-                }
-            }
-        }
-        session.setAttribute("lastInfo",info);
-        */
 
         String uid = request.getParameter("uid");
         String domainName = request.getParameter("domain");
@@ -677,8 +679,8 @@ public class SafeController extends BaseController {
                         // 手机验证码超时时间
                         int overTime = config.getIntValue(smsRequest.getCodeOverTimeKey());
                         iCacheClient.setex(smsRequest.getCodeKey(), overTime, vo.getOperationcode());
-//                        long t = new Date().getTime();
-//                        session.setAttribute("isSpace",Long.toString(t));
+                        long t = new Date().getTime();
+                        session.setAttribute("isSpace",Long.toString(t));
                     }
                 }
             }else{
