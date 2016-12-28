@@ -276,6 +276,7 @@
             $("#loginDiv").show();
             $("#registerDiv").hide();
         } else {
+            loadCountry();
             $("#loginDiv").hide();
             $("#registerDiv").show();
         }
