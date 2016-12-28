@@ -91,7 +91,8 @@
                     </div>
                 </div>
                 <div class="click-more" id="click-more"><a href="javascript:void(0)">点击查看更多</a></div>
-                <div class="tran-jiaz" id="click-close" style="display: none"><a href="javascript:void(0)"><i class="icon-double-angle-up"></i></a></div>
+                <div class="tran-jiaz" id="click-close" style="display: none"><a href="javascript:void(0)"><i
+                        class="icon-double-angle-up"></i></a></div>
             </section>
         </c:if>
         <%--文档--%>
@@ -560,8 +561,8 @@
 
         $("#click-close").bind("click", function () {
             $("#cont-hid").css("display", "none");
-            $("#click-more").css("display", "block");
             $("#click-close").css("display", "none");
+            $("#click-more").css("display", "block");
         });
 
         $("#nav-list2").bind("click", function () {
