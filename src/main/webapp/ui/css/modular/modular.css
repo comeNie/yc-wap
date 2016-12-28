@@ -121,7 +121,7 @@
 .order-message ul{width:100%;padding:0 0.64rem;}
 .order-message ul li{width:100%;float:left;font-size:0.55rem;margin-top:0.55rem;color:#666}
 .order-submit{width:100%;margin:-1.92rem auto 0 ;}
-.order-submit-kou{width:100%;height:1.92rem;margin:-1.92rem auto 0 ;}
+.order-submit-kou{width:100%;height:1.92rem;position:fixed;bottom:0;margin:0 0 0 0;}
 .order-submit .left{width:9.98rem;height:1.92rem;background:#4a4a4a;float:left;line-height:1.92rem;padding-left:0.72rem;color:#fff;font-size:0.64rem}
 .order-submit .right{width:6rem;height:1.92rem;}
 .order-submit .right a{width:6rem;height:1.92rem;background:#1780e3;float:left;text-align:center;line-height:1.92rem;color:#fff;font-size:0.64rem}
@@ -131,10 +131,11 @@
 .order-submit-kou .blue a{color:#fff;font-size:0.64rem;}
 .order-submit-kou .green{background:#5bd18b;}
 .order-submit-kou .green a{color:#fff;font-size:0.64rem;}
+.zanw{width:100%;height:1.92rem;float:left;}
 
 .new-cont{margin-top:0;}
 .input-medium{width:11.5rem;height:1.92rem;border:none;background:none;padding-left:0.34rem;color:#666;font-size:0.55rem;line-height:1.92rem;float:right}
-.add-btn{width:100%;margin:-1.7rem auto 0;padding:0 0.64rem 0.34rem;}
+.add-btn{width:100%;margin:-1.7rem auto 0rem;padding:0 0.64rem 0.34rem;float:left}
 /**提交成功**/
 .tij-cg{width:100%;float:left;margin:2.45rem 0 0 0;padding:0 1.2rem;}
 .tij-cg ul{width:100%;float:left;margin-top:2rem;}
@@ -226,7 +227,7 @@
 .set-int ul li i{font-size:0.85rem;color:#c7c7c7;margin-top:0.4rem;float:right;}
 .set-int ul .left a{font-size:0.46rem;color:#1780e3;}
 .set-int ul .left{font-size:0.46rem;height:auto;min-height:1.2rem;}
-.set-int ul .pass-smint{height:2.4rem;}
+.set-int ul .pass-smint{height:auto;min-height:2rem;}
 .set-int ul .int-border .right{float:right}
 .set-int ul .small-height{height:2rem;}
 .int-color::-webkit-input-placeholder { /* WebKit browsers */  
@@ -417,4 +418,4 @@
 .coupon-right span{font-size:0.85rem}
 .choice-list .imgcheckbox{width:0.5rem;height:0.5rem;margin:0 0.2rem;}
 .prompt-confirm-btn .btn-white-50{width:50%;float:left;}
-.set-int .imgcheckbox{width:0.5rem;height:0.5rem;margin:0 0.2rem;}
+.set-int .imgcheckbox{width:0.5rem;height:0.5rem;margin:0.1rem 0.2rem;}
