@@ -51,8 +51,7 @@
             <ul>
                 <a href="javascript:void(0)" onclick="leftBtn()"><i class="icon iconfont left">&#xe626;</i></a>
                 <li><spring:message code="login.login.title"/></li>
-                <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()"><spring:message
-                        code="login.login.zhuce"/></a>
+                <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()"><spring:message code="login.login.zhuce"/></a>
             </ul>
         </nav>
         <%--<!--tab-->
@@ -141,33 +140,27 @@
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="phoneid" type="text" class="input input-large"
-                                          placeholder="<spring:message code="login.login.phonepliceholder"/>"></p>
+                                <p><input id="phoneid" type="text" class="input input-large" placeholder="<spring:message code="login.login.phonepliceholder"/>"></p>
                                 <label id="phoneLabel"></label>
                             </li>
                             <li>
-                                <p><input id="psdid" type="password" class="input input-large"
-                                          placeholder="<spring:message code="login.login.mima"/>" autocomplete="off">
+                                <p><input id="psdid" type="password" class="input input-large" placeholder="<spring:message code="login.login.mima"/>" autocomplete="off">
                                 </p>
                                 <label id="psdLabel"></label>
                             </li>
-                            <li class="int-border">
-                                <p><input id="codeInput" type="text" class="input input-yzm"
-                                          placeholder="<spring:message code="login.login.yanzhengma"/>"
-                                          autocomplete="off"></p>
+                            <li class="int-border" id="checkCodeIsHiden" hidden>
+                                <p><input id="codeInput" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>" autocomplete="off"></p>
                                 <img id="checkCodeId" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
-                                <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i
-                                        class="icon iconfont">&#xe66c;</i></a></p>
+                                <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon iconfont">&#xe66c;</i></a></p>
                                 <label id="codeLabel"></label>
                             </li>
-                            <li class="small-height" id="loginBtn"><a href="javascript:void(0)"
-                                                                      class="submit-btn btn-blue"
-                                                                      onclick="login()"><spring:message
-                                    code="login.login.lijidenglu"/></a></li>
-                            <img src="<%=path%>/ui/images/载入中.gif" id="translateGif"
-                                 style="width: 5.29rem;height: 1.13rem; display:block;margin:0 auto">
-                            <li class="right"><a href="javascript:void(0)" onclick="forgetpsd()"><spring:message
-                                    code="login.login.wangjimima"/></a></li>
+                            <li class="small-height" id="loginBtn"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="login()"><spring:message code="login.login.lijidenglu"/></a></li>
+                            <img src="<%=path%>/ui/images/载入中.gif" id="translateGif" style="width: 5.29rem;height: 1.13rem; display:block;margin:0 auto">
+                            <li class="right">
+                                <a href="javascript:void(0)" onclick="forgetpsd()">
+                                    <spring:message code="login.login.wangjimima"/>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -199,8 +192,7 @@
             <ul>
                 <a href="javascript:" onclick="leftA()"><i class="icon iconfont left">&#xe626;</i></a>
                 <li><spring:message code="login.login.zhuce"/></li>
-                <a href="javascript:void(0)" class="btn login-btn right1" onclick="jumpLogin()"><spring:message
-                        code="login.login.title"/></a>
+                <a href="javascript:void(0)" class="btn login-btn right1" onclick="jumpLogin()"><spring:message code="login.login.title"/></a>
             </ul>
         </nav>
 
@@ -217,42 +209,32 @@
                             <label id="selectLabel"></label>
                         </li>
                         <li>
-                            <p><input id="phone" type="text" class="input input-large int-color"
-                                      placeholder="<spring:message code="login.register.enterphone"/>"></p>
+                            <p><input id="phone" type="text" class="input input-large int-color" placeholder="<spring:message code="login.register.enterphone"/>"></p>
                             <label id="phoneLabel1"></label>
                         </li>
                         <li>
-                            <p><input id="codeid" type="text" class="input input-small"
-                                      placeholder="<spring:message code="login.register.entercode"/>"
-                                      autocomplete="off"></p>
-                            <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm"
-                                              onclick="getnumberonclick()"><spring:message
-                                    code="login.register.getcode"/></a></p>
+                            <p><input id="codeid" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>" autocomplete="off"></p>
+                            <p class="yzm"><a id="getnumber" href="javascript:void(0)" class="btn bnt-yzm" onclick="getnumberonclick()"><spring:message code="login.register.getcode"/></a></p>
                             <label id="codeLabel1"></label>
                         </li>
-                        <li class="pass-smint">
-                            <p><input id="psdids" type="password" class="input input-large"
-                                      placeholder="<spring:message code="login.login.enterpsd"/>" autocomplete="off">
+                        <li>
+                            <p><input id="psdids" type="password" class="input input-large" placeholder="<spring:message code="login.login.enterpsd"/>" autocomplete="off">
                             </p>
                             <label id="psdLabel1"></label>
                         </li>
-                        <li>
-                            <p><input id="confimid" type="password" class="input input-large"
-                                      placeholder="<spring:message code="login.register.enterpsdagain"/>"
-                                      autocomplete="off"></p>
+                        <li class="pass-smint">
+                            <p ><input id="confimid" type="password" class="input input-large" placeholder="<spring:message code="login.register.enterpsdagain"/>" autocomplete="off"></p>
                             <label id="confimPsd"></label>
                         </li>
                         <li class="left">
-                            <p><img src="<%=path%>/ui/images/checkbox1.png" class="imgcheckbox"
-                                    onclick="checkImgAction()" id="checkImg"></p><spring:message
-                                code="login.register.agree"/><a href="javascript:void(0)"
-                                                                onclick="look()"><spring:message
-                                code="login.register.look"/></a>
+                            <p>
+                                <img src="<%=path%>/ui/images/checkbox1.png" class="imgcheckbox" onclick="checkImgAction()" id="checkImg">
+                            </p>
+                            <spring:message code="login.register.agree"/>
+                            <a href="javascript:void(0)" onclick="look()"><spring:message code="login.register.look"/></a>
                             <label id="agreeLabel"></label>
                         </li>
-                        <li class="small-height"><a href="javascript:void(0)" class="submit-btn btn-blue"
-                                                    onclick="confirmAction()"><spring:message
-                                code="login.register.lijizhuce"/></a></li>
+                        <li class="small-height"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="confirmAction()"><spring:message code="login.register.lijizhuce"/></a></li>
                     </ul>
                 </div>
             </div>
@@ -265,6 +247,8 @@
 </html>
 <script>
     var isAgree = 1;
+    var isHiden = 1;
+    var hidenFlag;
     var isLoaded = false;
     $(function () {
         Loading.HideLoading();
@@ -280,6 +264,7 @@
             $("#loginDiv").hide();
             $("#registerDiv").show();
         }
+        showCode();
 //        loadCountry();
     });
 
@@ -304,6 +289,18 @@
     };
 
     //——————————————————————登录——————————————————————
+    function showCode(){
+        hidenFlag = localStorage.getItem("isHiden");
+        if (hidenFlag != null && hidenFlag != ""){
+            if (hidenFlag >= 3){
+                $("#checkCodeIsHiden").show();
+                isHiden = 0;
+                return;
+            }
+        }
+        isHiden = 1;
+        $("#checkCodeIsHiden").hide();
+    }
     function login() {
         var phone = $("#phoneid").val();
         var psd = $("#psdid").val();
@@ -332,13 +329,14 @@
         } else {
             $("#psdLabel").css("display", "none");
         }
-
-        if (code == "" || code == null) {
-            $("#codeLabel").html("<spring:message code="login.login.entercode"/>");
-            $("#codeLabel").css("display", "block");
-            return;
-        } else {
-            $("#codeLabel").css("display", "none");
+        if (isHiden == 0){
+            if (code == "" || code == null) {
+                $("#codeLabel").html("<spring:message code="login.login.entercode"/>");
+                $("#codeLabel").css("display", "block");
+                return;
+            } else {
+                $("#codeLabel").css("display", "none");
+            }
         }
         $("#translateGif").show();
         $("#loginBtn").hide();
@@ -360,18 +358,24 @@
                 $("#translateGif").hide();
                 $("#loginBtn").show();
                 if (data.status == 1) {
+                    localStorage.setItem("isHiden",0);
                     if (${ToUrl==null || ToUrl==""}) {
                         window.location.href = "<%=path%>" + "/";
                     } else {
                         window.location.href = "<%=path%>" + "<%=ToUrl%>";
                     }
-//                    Loading.HideLoading();
                 } else {
-//                    Loading.HideLoading();
                     createCode();
-                    $("#codeLabel").html(data.msg);
-                    $("#codeLabel").css("display", "block");
-                    return;
+                    if (isHiden == 1){
+                        $("#psdLabel").html(data.msg);
+                        $("#psdLabel").css("display", "block");
+                    }else {
+                        $("#codeLabel").html(data.msg);
+                        $("#codeLabel").css("display", "block");
+                    }
+                    hidenFlag ++;
+                    localStorage.setItem("isHiden",hidenFlag);
+                    showCode();
                 }
 
             },
@@ -379,9 +383,16 @@
                 $("#translateGif").hide();
                 $("#loginBtn").show();
                 createCode();
-                $("#codeLabel").html("<spring:message code="safe.safesuccess.failNet"/>");
-                $("#codeLabel").css("display", "block");
-//                Loading.HideLoading();
+                hidenFlag ++;
+                localStorage.setItem("isHiden",hidenFlag);
+                if (isHiden == 1){
+                    $("#psdLabel").html("<spring:message code="safe.safesuccess.failNet"/>");
+                    $("#psdLabel").css("display", "block");
+                }else {
+                    $("#codeLabel").html("<spring:message code="safe.safesuccess.failNet"/>");
+                    $("#codeLabel").css("display", "block");
+                }
+                showCode();
             }
         });
 

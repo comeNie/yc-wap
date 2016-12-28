@@ -70,11 +70,14 @@ public class LoginController extends BaseController {
     Object checklogin() {
         MsgBean result = new MsgBean();
         String checkCode = request.getParameter("code");//图文验证码
-        String sessionCode = (String) session.getAttribute("certCode");
-        if (!checkCode.toUpperCase().equals(sessionCode.toUpperCase())){
-            result.put("status","2");
-            result.put("msg",rb.getMessage("loginCtrl.checkCode"));
-            return result.returnMsg();
+        if (checkCode != null && checkCode != ""){
+
+            String sessionCode = (String) session.getAttribute("certCode");
+            if (!checkCode.toUpperCase().equals(sessionCode.toUpperCase())){
+                result.put("status","2");
+                result.put("msg",rb.getMessage("loginCtrl.checkCode"));
+                return result.returnMsg();
+            }
         }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
