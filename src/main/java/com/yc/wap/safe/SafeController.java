@@ -3,6 +3,8 @@ package com.yc.wap.safe;
 import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.paas.ipaas.ccs.IConfigClient;
+import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
+import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
 import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
 import com.ai.yc.common.api.country.param.CountryRequest;
@@ -24,10 +26,12 @@ import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeResponse;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 
+import com.yc.wap.system.utils.AiPassUitl;
 import com.yc.wap.system.utils.ImageCodeUtil;
 import com.yc.wap.system.utils.MD5Util;
 import com.yc.wap.system.utils.RegexUtils;
@@ -502,6 +506,53 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
 
         String info = request.getParameter("info");
+        String type = request.getParameter("type");
+        SmsRequest smsRequest = new SmsRequest();
+        smsRequest.setPhone(info);
+        /** 手机验证码key **/
+        String codeKey = null;
+        /** 手机验证码超时时间 **/
+        String codeOverTimeKey = null;
+        /** 最多发送次数key **/
+        String maxCountKey = null;
+        /** 最多发送次数超时时间key **/
+        String maxCountOverTimeKey = null;
+        /** 当前发送次数key **/
+        String nowCountKey = null;
+        if (Constants.CheckOpreation.PhoneActivate.equals(type)) {// 注册手机激活码
+            codeKey = Constants.PhoneVerify.REGISTER_PHONE_CODE + info;
+            codeOverTimeKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_OVERTIME;
+            nowCountKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_COUNT + info;
+            maxCountKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT;
+            maxCountOverTimeKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT_OVERTIME;
+        } else if (Constants.CheckOpreation.PhoneCheck.equals(type) || Constants.CheckOpreation.PasswordOperation.equals(type)) {// 手机验证码
+            codeKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE + info;
+            codeOverTimeKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_OVERTIME;
+            nowCountKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_COUNT + info;
+            maxCountKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_MAX_COUNT;
+            maxCountOverTimeKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_MAX_COUNT_OVERTIME;
+        }
+        smsRequest.setCodeKey(codeKey);
+        smsRequest.setCodeOverTimeKey(codeOverTimeKey);
+        smsRequest.setMaxCountKey(maxCountKey);
+        smsRequest.setMaxCountOverTimeKey(maxCountOverTimeKey);
+        smsRequest.setNowCountKey(nowCountKey);
+        ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+        JSONObject config = AiPassUitl.getVerificationCodeConfig();
+        // 最多发送次数 key
+        int maxCount = config.getIntValue(smsRequest.getMaxCountKey());
+        // 当前发送次数
+        Integer nowCount = 0;
+        String sendCount = iCacheClient.get(smsRequest.getNowCountKey());
+        if (!StringUtil.isBlank(sendCount)) {
+            nowCount = Integer.parseInt(sendCount);
+            log.info(info+"发送验证码的次数:"+nowCount);
+        }
+        if (nowCount > maxCount) {
+            result.put("msg","验证码发送次数达到当天限制");
+            return result.returnMsg();
+        }
+        /*
         String lastInfo = (String) session.getAttribute("lastInfo");
         if (lastInfo == "" || lastInfo == null){
             //判断请求时间间隔是否小于60s
@@ -531,8 +582,8 @@ public class SafeController extends BaseController {
             }
         }
         session.setAttribute("lastInfo",info);
+        */
 
-        String type = request.getParameter("type");
         String uid = request.getParameter("uid");
         String domainName = request.getParameter("domain");
         UcMembersGetOperationcodeRequest res = new UcMembersGetOperationcodeRequest();
@@ -617,8 +668,17 @@ public class SafeController extends BaseController {
                         result.put("status","0");
                         result.put("msg",rb.getMessage("safeCtrl.codeSendFail"));
                     }else {
-                        long t = new Date().getTime();
-                        session.setAttribute("isSpace",Long.toString(t));
+                        // 最多发送次数超时时间
+                        int maxOverTimeCount = config.getIntValue(smsRequest
+                                .getMaxCountOverTimeKey());
+                        nowCount = nowCount + 1;
+                        iCacheClient.setex(smsRequest.getNowCountKey(), maxOverTimeCount,
+                                String.valueOf(nowCount));
+                        // 手机验证码超时时间
+                        int overTime = config.getIntValue(smsRequest.getCodeOverTimeKey());
+                        iCacheClient.setex(smsRequest.getCodeKey(), overTime, vo.getOperationcode());
+//                        long t = new Date().getTime();
+//                        session.setAttribute("isSpace",Long.toString(t));
                     }
                 }
             }else{
