@@ -3,6 +3,8 @@ package com.yc.wap.account;
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV;
+import com.ai.slp.balance.api.accountquery.param.AccountInfoVo;
 import com.ai.slp.balance.api.fundquery.interfaces.IFundQuerySV;
 import com.ai.slp.balance.api.fundquery.param.AccountIdParam;
 import com.ai.slp.balance.api.fundquery.param.FundInfo;
@@ -32,6 +34,7 @@ public class AccountController extends BaseController {
 
     private IFundQuerySV iFundQuerySV = DubboConsumerFactory.getService(IFundQuerySV.class);
     private IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+    private IAccountQuerySV iAccountQuerySV = DubboConsumerFactory.getService(IAccountQuerySV.class);
 
     @RequestMapping(value = "recharge")
     public String recharge() {
@@ -100,9 +103,36 @@ public class AccountController extends BaseController {
 
     @RequestMapping(value = "rechargesuccess")
     public String rechargesuccess() {
-        log.info("account-rechargesuccess invoked");
 
         return "account/rechargesuccess";
+    }
+
+    @RequestMapping(value = "checkAccount")
+    @ResponseBody
+    public Object checkAccount() {
+        MsgBean result = new MsgBean();
+        String UID = (String) session.getAttribute("UID");
+
+        SearchYCUserRequest userRequest = new SearchYCUserRequest();
+        userRequest.setUserId(UID);
+        YCUserInfoResponse infoResponse = iycUserServiceSV.searchYCUserInfo(userRequest);
+        Long AccountId = infoResponse.getAccountId();
+
+        com.ai.slp.balance.api.accountquery.param.AccountIdParam req = new com.ai.slp.balance.api.accountquery.param.AccountIdParam();
+        req.setTenantId(Constants.TENANTID);
+        req.setAccountId(AccountId);
+        try {
+            AccountInfoVo resp = iAccountQuerySV.queryAccontById(req);
+            String payCheck = resp.getPayCheck();
+            log.info("GetAccountInfoPayCheck: " + payCheck);
+            result.put("needPayCheck", payCheck);
+
+        } catch (BusinessException | SystemException e) {
+            e.printStackTrace();
+            throw new RuntimeException("GetAccountInfoFailed");
+        }
+
+        return result.returnMsg();
     }
 
 }

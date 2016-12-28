@@ -261,6 +261,7 @@ public class PayController extends BaseController {
     public String BalancePayment() {
         String OrderId = request.getParameter("orderId");
         String Amount = request.getParameter("orderAmount");
+        String password = request.getParameter("password");
         Double _Amount = Double.valueOf(Amount) * 1000;
 
         log.info("-----BalancePayment-----");
@@ -284,7 +285,8 @@ public class PayController extends BaseController {
         Param.setExternalId(OrderId);
         Param.setBusinessCode(Constants.BusinessCode);
         Param.setAccountId(AccountId);
-        Param.setCheckPwd(0);
+        Param.setCheckPwd(1);
+        Param.setPassword(password);
         Param.setTotalAmount(_Amount.longValue());
         Param.setCurrencyUnit("1"); //1-RMB 2-USD
         Param.setChannel(Constants.COMPANY);

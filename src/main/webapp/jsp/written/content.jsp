@@ -280,6 +280,7 @@
             var temp_value = $(this).val();
             if (temp_value == setLanguageCn || temp_value == setLanguageEn) {
                 $(this)[0].selected = true;
+                $(this).html("检测语言：" + $(this).html());
             }
         });
 
@@ -490,6 +491,10 @@
     function DualChange() {
         var key = $("#dualSource").val();
         var Map = ${DualJson};
+
+        if (key.substr(0, 4) == "检测语言") {
+            key = key.substr(5);
+        }
 
         var obj = document.getElementById("dualTarget");
         obj.options.length = 0;

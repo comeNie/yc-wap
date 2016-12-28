@@ -37,5 +37,6 @@
 	<dubbo:reference id="iFundQuerySV" registry="ycRegistry" interface="com.ai.slp.balance.api.fundquery.interfaces.IFundQuerySV" />
 	<dubbo:reference id="iDepositSV" registry="ycRegistry" interface="com.ai.slp.balance.api.deposit.interfaces.IDepositSV" />
 	<dubbo:reference id="iDeductSV" registry="ycRegistry" interface="com.ai.slp.balance.api.deduct.interfaces.IDeductSV" />
+	<dubbo:reference id="iAccountQuerySV" registry="ycRegistry" interface="com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV" />
 
 </beans>

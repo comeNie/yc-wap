@@ -38,9 +38,24 @@
             <div class="prompt-confirm-btn">
                 <a href="#" id="prompt-btn">确认</a>
             </div>
-
         </div>
         <div class="mask" id="eject-mask"></div>
+    </div>
+
+    <div class="eject-big">
+        <div class="prompt" id="password">
+            <div class="prompt-title">支付</div>
+            <div class="prompt-confirm">
+                <ul>
+                    <li>请输入支付密码，完成订单支付</li>
+                    <li><input type="password" class="int-passwod" id="int-password"></li>
+                </ul>
+            </div>
+            <div class="prompt-confirm-btn">
+                <input type="button" class="btn btn-white" id="set-passbtn" value="确认"/>
+            </div>
+        </div>
+        <%--<div class="mask" id="eject-mask"></div>--%>
     </div>
 
     <%--头部--%>
@@ -122,6 +137,7 @@
 <form id="toBalancePay" method="post" action="<%=path%>/pay/BalancePayment">
     <input type="hidden" name="orderId" value="${OrderId}">
     <input type="hidden" name="orderAmount" value="${PriceDisplay}">
+    <input type="hidden" name="password" id="passInput" value="">
 </form>
 
 <!--底部-->
@@ -147,10 +163,28 @@
     var balanceBuzu = false;
     var Channel = "1";
     var orderState = "";
+    var payCheck = "";
+    var getInfoFalse = false;
+
     $(document).ready(function () {
         GetBalance();
-        CheckState();
+
+        $('#set-passbtn').click(function () {
+            $("#passInput").val($("#int-password").val());
+            Loading.ShowLoading();
+            $('#eject-mask').fadeOut(200);
+            $('#password').slideUp(200);
+            $("#toBalancePay").submit();
+        });
+
         $("#submit").bind("click", function () {
+            if (getInfoFalse) {
+                $("#EjectTitle").html("获取信息失败，请刷新重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
+            }
+
             if (orderState == "20") {
                 $("#EjectTitle").html("订单已经支付，请勿重复支付");
                 $('#eject-mask').fadeIn(100);
@@ -166,7 +200,7 @@
                 $("#toPayForm").submit();
             } else if (Channel == "3") {
                 if (!balanceBuzu) {
-                    $("#toBalancePay").submit();
+                    BalancePay();
                 } else {
                     $("#EjectTitle").html("余额不足，请选用其他支付方式");
                     $('#eject-mask').fadeIn(100);
@@ -201,34 +235,6 @@
 
     });
 
-    function CheckState() {
-        var orderId = "${OrderId}";
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: "<%=path%>/order/GetOrderState",
-            modal: true,
-            timeout: 30000,
-            data: {
-                orderId: orderId
-            },
-            success: function (data) {
-                if (data.status == 1) {
-                    orderState = data.orderState;
-                }
-            },
-            error: function (data) {
-
-            },
-            beforeSend: function () {
-                Loading.ShowLoading();
-            },
-            complete: function () {
-                Loading.HideLoading();
-            }
-        });
-    }
-
     function GetBalance() {
         $.ajax({
             async: true,
@@ -246,18 +252,114 @@
                         $("#buzu").css("display", "block");
                         balanceBuzu = true;
                     }
+                    CheckState();
+                } else {
+                    $("#EjectTitle").html("获取信息失败，请重试");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
+                    getInfoFalse = true;
+                    Loading.HideLoading();
                 }
             },
             error: function (data) {
-
+                $("#EjectTitle").html("获取信息失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                getInfoFalse = true;
+                Loading.HideLoading();
             },
             beforeSend: function () {
-                Loading.ShowLoading();
+//                Loading.ShowLoading();
+            },
+            complete: function () {
+//                Loading.HideLoading();
+            }
+        });
+    }
+
+    function CheckState() {
+        var orderId = "${OrderId}";
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/order/GetOrderState",
+            modal: true,
+            timeout: 30000,
+            data: {
+                orderId: orderId
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    orderState = data.orderState;
+                    CheckAccount();
+                } else {
+                    $("#EjectTitle").html("获取信息失败，请重试");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
+                    getInfoFalse = true;
+                    Loading.HideLoading();
+                }
+            },
+            error: function (data) {
+                $("#EjectTitle").html("获取信息失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                getInfoFalse = true;
+                Loading.HideLoading();
+            },
+            beforeSend: function () {
+//                Loading.ShowLoading();
+            },
+            complete: function () {
+//                Loading.HideLoading();
+            }
+        });
+    }
+
+    function CheckAccount() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/account/checkAccount",
+            modal: true,
+            timeout: 30000,
+            data: {},
+            success: function (data) {
+                if (data.status == 1) {
+                    payCheck = data.needPayCheck;
+                } else {
+                    $("#EjectTitle").html("获取信息失败，请重试");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
+                    getInfoFalse = true;
+                    Loading.HideLoading();
+                }
+            },
+            error: function (data) {
+                $("#EjectTitle").html("获取信息失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                getInfoFalse = true;
+                Loading.HideLoading();
+            },
+            beforeSend: function () {
+//                Loading.ShowLoading();
             },
             complete: function () {
                 Loading.HideLoading();
             }
         });
+    }
+
+    function BalancePay() {
+        if (payCheck == "0") {
+            $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单。");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+        } else {
+            $('#eject-mask').fadeIn(100);
+            $('#password').slideDown(100);
+        }
     }
 
     function toRecharge() {
