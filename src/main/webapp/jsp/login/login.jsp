@@ -709,7 +709,7 @@
     function look() {
         clearText();
         var u = window.location.pathname;
-        var href = "<%=path%>/common/agreement?Flag=" + u;
+        var href = "<%=path%>/agreement?Flag=" + u;
         window.location.href = href;
     }
 </script>

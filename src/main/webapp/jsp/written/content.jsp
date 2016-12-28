@@ -503,7 +503,7 @@
     }
 
     function toLicense() {
-        window.location.href = "<%=path%>/common/agreement"
+        window.location.href = "<%=path%>/agreement"
     }
 
     function Back() {
