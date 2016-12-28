@@ -309,7 +309,7 @@
 .original-cont ul{width:100%;float:left;margin-bottom:0.45rem;}
 .original-cont ul li{font-size:0.46rem;}
 .original-cont ul li span{color:#ff4949}
-.original-cont ul li .sm-word{width:14.7rem;overflow:hidden;text-overflow: ellipsis; white-space: nowrap;word-break:break-all; }
+.original-cont ul li .sm-word{width:14.7rem;overflow:hidden;}
 .click-more{width:100%;float:left;text-align:center;}
 .click-more a{color:#666;font-size:0.42rem}
 #cont-hid{display: none;}

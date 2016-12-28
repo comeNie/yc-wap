@@ -90,8 +90,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="click-more" id="click-more"><a href="javascript:void(0)" id="more" flag="closed">点击查看更多</a>
-                </div>
+                <div class="click-more" id="click-more"><a href="javascript:void(0)">点击查看更多</a></div>
+                <div class="tran-jiaz" id="click-close" style="display: none"><a href="javascript:void(0)"><i class="icon-double-angle-up"></i></a></div>
             </section>
         </c:if>
         <%--文档--%>
@@ -509,6 +509,7 @@
     <%--<div class="tran-jiaz"><a href="#"><i class="icon-double-angle-up"></i></a></div>--%>
 </div>
 
+<div class="zanw"></div>
 <section class="order-submit-kou" id="bottom_button">
     <p class="cent blue" id="ButtonLeftP"><a href="javascript:void(0)" id="ButtonLeft">评价订单</a></p>
     <p class="cent green" id="ButtonRightP"><a href="javascript:GoTrack()">订单跟踪</a></p>
@@ -552,16 +553,15 @@
         $("#OrderStatus").html(OrderStatus);
 
         $("#click-more").bind("click", function () {
-            if ($("#more").attr("flag") == "closed") {
-                $("#cont-hid").css("display", "block");
-                $("#more").attr("flag", "opened");
-                $("#more").html("点击隐藏");
-//                $("#click-more").css("display", "none");
-            } else if ($("#more").attr("flag") == "opened") {
-                $("#cont-hid").css("display", "none");
-                $("#more").attr("flag", "closed");
-                $("#more").html("点击查看更多");
-            }
+            $("#cont-hid").css("display", "block");
+            $("#click-close").css("display", "block");
+            $("#click-more").css("display", "none");
+        });
+
+        $("#click-close").bind("click", function () {
+            $("#cont-hid").css("display", "none");
+            $("#click-more").css("display", "block");
+            $("#click-close").css("display", "none");
         });
 
         $("#nav-list2").bind("click", function () {
@@ -613,10 +613,9 @@
     });
 
     function ShowText() {
-        $("#OrderText").css("display", "block");
-        $("#OrderDetail").css("display", "none");
-        $("#OrderTrack").css("display", "none");
-        $("#bottom_button").css("display", "block");
+        $("#cont-hid").css("display", "block");
+        $("#click-close").css("display", "block");
+        $("#click-more").css("display", "none");
     }
 
     function GoDetail() {
