@@ -106,7 +106,12 @@
             <p>
                 <select tabindex="5" class="select testing-select" id="source-lan">
                     <%--自动检测--%>
-                    <option value="auto"><spring:message code="start.zidongjiance"/></option>
+                    <c:if test="${pageContext.response.locale == 'zh_CN'}">
+                        <option value="auto"><spring:message code="start.jianceCH"/></option>
+                    </c:if>
+                    <c:if test="${pageContext.response.locale != 'zh_CN'}">
+                        <option value="auto"><spring:message code="start.jianceEng"/></option>
+                    </c:if>
                     <%--中文简体--%>
                     <option value="zh"><spring:message code="start.zh"/></option>
                     <%--英语--%>
@@ -123,10 +128,18 @@
 
             <p>
                 <select class="select testing-select" id="target-lan">
-                    <%--中文简体--%>
-                    <option value="zh"><spring:message code="start.zh"/></option>
-                    <%--英语--%>
-                    <option value="en" selected><spring:message code="start.en"/></option>
+                    <c:if test="${pageContext.response.locale != 'zh_CN'}">
+                        <%--中文简体--%>
+                        <option value="zh" selected><spring:message code="start.zh"/></option>
+                        <%--英语--%>
+                        <option value="en"><spring:message code="start.en"/></option>
+                    </c:if>
+                    <c:if test="${pageContext.response.locale == 'zh_CN'}">
+                        <%--中文简体--%>
+                        <option value="zh"><spring:message code="start.zh"/></option>
+                        <%--英语--%>
+                        <option value="en" selected><spring:message code="start.en"/></option>
+                    </c:if>
                     <%--俄语--%>
                     <option value="ru"><spring:message code="start.ru"/></option>
                     <%--葡萄牙语--%>
@@ -259,12 +272,6 @@
 //        监听输入的文本内容
         $("#chick-int").bind("input propertychange", function () {
             var landetec = $("#chick-int").val();
-            if (landetec == "" || landetec == null) {
-                $("#clear").hide();
-                return;
-            }else {
-                $("#clear").show();
-            }
             if(isEmojiCharacter(landetec)){
                 autoTip("<spring:message code="start.tipBiaoqing"/>");
                 return;
@@ -282,6 +289,7 @@
             $("#results").hide();
             $('#chick-btn').show();
             $('#wrapper-hide').hide();
+            $("#clear").show();
         });
         //清除
         $("#clear").click(function(){
@@ -300,11 +308,6 @@
 
 //        跳转到笔译下单
         $("#banner1").bind("click", function () {
-//            var date = new Date();
-//            date.setDate(date.getDate() - 1);
-//            document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
-//            document.cookie = "dualChoose=0" + ";path=/";
-
             window.location.href = "<%=path%>/written";
         });
 
@@ -547,7 +550,7 @@
 
                 } else {
                     IsTranslated = false;
-                    autoTip("服务出问题了，请稍候再试。");
+                    autoTip("抱歉，该翻译失败，请选择人工翻译");
                     $("#results").hide();
                     $("#chick-btn").show();
 
@@ -557,7 +560,7 @@
             },
             error: function (data) {
                 IsTranslated = false;
-                autoTip("服务出问题了，请稍候再试。");
+                autoTip("抱歉，该翻译失败，请选择人工翻译");
                 $("#results").hide();
                 $("#chick-btn").show();
 
