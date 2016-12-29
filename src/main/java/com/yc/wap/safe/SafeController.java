@@ -543,8 +543,10 @@ public class SafeController extends BaseController {
         SmsRequest smsRequest = new SmsRequest();
         //现在发送次数
         Integer nowCount = 0;
+        //获取ipass平台配置
         JSONObject config = AiPassUitl.getVerificationCodeConfig();
         ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+        //短信验证码进入判断
         if (!type.equals("4") && !type.equals("5")){
             Object[] objects = smsPhone(smsRequest,info,type,iCacheClient,config);
             nowCount = (Integer) objects[1];
@@ -591,6 +593,7 @@ public class SafeController extends BaseController {
                 UcMembersVo vo = new UcMembersVo(m);
                 log.info("uid:-----"+m.get("uid"));
                 log.info("验证码是:" +vo.getOperationcode());
+                //发邮件
                 if (type.equals("4") || type.equals("5")){
                     SendEmailRequest emailRequest = new SendEmailRequest();
                     emailRequest.setTomails(new String[] { info });
@@ -627,7 +630,7 @@ public class SafeController extends BaseController {
                         long t = new Date().getTime();
                         session.setAttribute("isSpace",Long.toString(t));
                     }
-
+                    //发短信
                 }else {
                     //默认中文模版
                     String _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
@@ -640,15 +643,17 @@ public class SafeController extends BaseController {
                         result.put("status","0");
                         result.put("msg",rb.getMessage("safeCtrl.codeSendFail"));
                     }else {
-                        // 最多发送次数超时时间
+                        // 获取最多发送次数超时时间
                         int maxOverTimeCount = config.getIntValue(smsRequest
                                 .getMaxCountOverTimeKey());
                         nowCount = nowCount + 1;
+                        //把当前发送次数存入缓存
                         iCacheClient.setex(smsRequest.getNowCountKey(), maxOverTimeCount,
                                 String.valueOf(nowCount));
                         // 手机验证码超时时间
                         int overTime = config.getIntValue(smsRequest.getCodeOverTimeKey());
                         iCacheClient.setex(smsRequest.getCodeKey(), overTime, vo.getOperationcode());
+                        //验证码发送间隔
                         long t = new Date().getTime();
                         session.setAttribute("isSpace",Long.toString(t));
                     }
@@ -672,6 +677,16 @@ public class SafeController extends BaseController {
 
         return  result.returnMsg();
     }
+
+    /**
+     * 判断发送短信次数
+     * @param smsRequest
+     * @param info
+     * @param type
+     * @param iCacheClient
+     * @param config
+     * @return
+     */
     public Object[] smsPhone(SmsRequest smsRequest,String info,String type,ICacheClient iCacheClient,JSONObject config){
         smsRequest.setPhone(info);
         /** 手机验证码key **/
