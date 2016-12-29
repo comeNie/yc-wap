@@ -195,6 +195,7 @@
         <section class="banner"><a href="javascript:void (0)"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
 
     </section>
+
     <!--上传提示弹出框-->
     <%--<div class="eject-big">--%>
         <%--<div class="prompt" id="prompt">--%>
@@ -230,6 +231,9 @@
     <jsp:param name="class" value="index-footer-big"/>
 </jsp:include>
 
+
+<div class="release-showbj" id="release-showbj"></div>
+<div class="release-btn" id="release-btn"><a href="javascript:window.location.href='<%=path%>/written'">发布翻译需求</a></div>
 
 </body>
 <%@ include file="../common/timezone.jsp" %>
@@ -268,7 +272,16 @@
     });
     $(document).ready(function () {
 
-
+        window.onscroll = function() {
+            var rbtn = document.getElementById('release-btn');
+            var rbtnshow = document.getElementById('release-showbj');
+            var t = document.documentElement.scrollTop || document.body.scrollTop;  //离上方的距离
+            var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight; //可见宽度
+            if (t >= document.documentElement.scrollHeight - h) {
+                rbtn.style.display = 'block';
+                rbtnshow.style.display = 'block';
+            }
+        }
 //        监听输入的文本内容
         $("#chick-int").bind("input propertychange", function () {
             var landetec = $("#chick-int").val();
@@ -368,6 +381,7 @@
             audioPlay.pause;
         }
     }
+
     function mbStringLength(s) {
         var totalLength = 0;
         var charCode;

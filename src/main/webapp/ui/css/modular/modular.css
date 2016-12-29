@@ -90,7 +90,7 @@
 .choice-list label{width:100%;float:left;padding-left:3rem;color:red}
 .testing-select-small{width:5.56rem;height:1.32rem;border:1px solid #c4c4c4;font-size:0.51rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.64rem 0.24rem;border-radius:0.21rem}
-.choice-list ul .element{margin-left:0.4rem;}
+.choice-list ul .element{margin-left:0.3rem;}
 
 .choice-list ul li .p-mr{margin-left:0.2rem;}
 .choice-list ul li .p-mr1{margin-left:0.2rem;}
@@ -419,3 +419,8 @@
 .choice-list .imgcheckbox{width:0.5rem;height:0.5rem;margin:0 0.2rem;}
 .prompt-confirm-btn .btn-white-50{width:50%;float:left;}
 .set-int .imgcheckbox{width:0.5rem;height:0.5rem;margin:0.1rem 0.2rem;}
+/**发布按钮**/
+
+.release-showbj{width:100%;height:1.92rem;float:left;display:none;}
+.release-btn{width:100%;height:1.92rem;display:none;position:fixed;bottom:0;}
+.release-btn a{width:100%;height:1.92rem;background:#1780e3;float:left; text-align:center;line-height:1.92rem;font-size:0.64rem;color:#fff}
