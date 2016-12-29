@@ -2,6 +2,7 @@ package com.yc.wap.safe;
 
 import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
@@ -506,6 +507,7 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String info = request.getParameter("info");
 
+        //发送验证码时间
         String lastInfo = (String) session.getAttribute("lastInfo");
         if (lastInfo == "" || lastInfo == null){
             //判断请求时间间隔是否小于60s
@@ -536,54 +538,22 @@ public class SafeController extends BaseController {
         }
         session.setAttribute("lastInfo",info);
 
+        //发送短信验证码次数
         String type = request.getParameter("type");
-
-
-
         SmsRequest smsRequest = new SmsRequest();
-        smsRequest.setPhone(info);
-        /** 手机验证码key **/
-        String codeKey = null;
-        /** 手机验证码超时时间 **/
-        String codeOverTimeKey = null;
-        /** 最多发送次数key **/
-        String maxCountKey = null;
-        /** 最多发送次数超时时间key **/
-        String maxCountOverTimeKey = null;
-        /** 当前发送次数key **/
-        String nowCountKey = null;
-        if (Constants.CheckOpreation.PhoneActivate.equals(type)) {// 注册手机激活码
-            codeKey = Constants.PhoneVerify.REGISTER_PHONE_CODE + info;
-            codeOverTimeKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_OVERTIME;
-            nowCountKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_COUNT + info;
-            maxCountKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT;
-            maxCountOverTimeKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT_OVERTIME;
-        } else if (Constants.CheckOpreation.PhoneCheck.equals(type) || Constants.CheckOpreation.PasswordOperation.equals(type)) {// 手机验证码
-            codeKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE + info;
-            codeOverTimeKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_OVERTIME;
-            nowCountKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_COUNT + info;
-            maxCountKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_MAX_COUNT;
-            maxCountOverTimeKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_MAX_COUNT_OVERTIME;
-        }
-        smsRequest.setCodeKey(codeKey);
-        smsRequest.setCodeOverTimeKey(codeOverTimeKey);
-        smsRequest.setMaxCountKey(maxCountKey);
-        smsRequest.setMaxCountOverTimeKey(maxCountOverTimeKey);
-        smsRequest.setNowCountKey(nowCountKey);
-        ICacheClient iCacheClient = AiPassUitl.getCacheClient();
-        JSONObject config = AiPassUitl.getVerificationCodeConfig();
-        // 最多发送次数 key
-        int maxCount = config.getIntValue(smsRequest.getMaxCountKey());
-        // 当前发送次数
+        //现在发送次数
         Integer nowCount = 0;
-        String sendCount = iCacheClient.get(smsRequest.getNowCountKey());
-        if (!StringUtil.isBlank(sendCount)) {
-            nowCount = Integer.parseInt(sendCount);
-            log.info(info+"发送验证码的次数:"+nowCount);
-        }
-        if (nowCount >= maxCount) {
-            result.put("msg","验证码发送次数达到当天限制");
-            return result.returnMsg();
+        JSONObject config = AiPassUitl.getVerificationCodeConfig();
+        ICacheClient iCacheClient = AiPassUitl.getCacheClient();
+        if (!type.equals("4") && !type.equals("5")){
+            Object[] objects = smsPhone(smsRequest,info,type,iCacheClient,config);
+            nowCount = (Integer) objects[1];
+            boolean isFail = (boolean) objects[0];
+            if(!isFail){
+                result.put("status","0");
+                result.put("msg","验证码发送次数达到当天限制");
+                return result.returnMsg();
+            }
         }
 
         String uid = request.getParameter("uid");
@@ -701,6 +671,54 @@ public class SafeController extends BaseController {
         }
 
         return  result.returnMsg();
+    }
+    public Object[] smsPhone(SmsRequest smsRequest,String info,String type,ICacheClient iCacheClient,JSONObject config){
+        smsRequest.setPhone(info);
+        /** 手机验证码key **/
+        String codeKey = null;
+        /** 手机验证码超时时间 **/
+        String codeOverTimeKey = null;
+        /** 最多发送次数key **/
+        String maxCountKey = null;
+        /** 最多发送次数超时时间key **/
+        String maxCountOverTimeKey = null;
+        /** 当前发送次数key **/
+        String nowCountKey = null;
+        if (Constants.CheckOpreation.PhoneActivate.equals(type)) {// 注册手机激活码
+            codeKey = Constants.PhoneVerify.REGISTER_PHONE_CODE + info;
+            codeOverTimeKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_OVERTIME;
+            nowCountKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_COUNT + info;
+            maxCountKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT;
+            maxCountOverTimeKey = Constants.PhoneVerify.REGISTER_PHONE_CODE_MAX_COUNT_OVERTIME;
+        } else if (Constants.CheckOpreation.PhoneCheck.equals(type) || Constants.CheckOpreation.PasswordOperation.equals(type)) {// 手机验证码
+            codeKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE + info;
+            codeOverTimeKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_OVERTIME;
+            nowCountKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_COUNT + info;
+            maxCountKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_MAX_COUNT;
+            maxCountOverTimeKey = Constants.PhoneVerify.UPDATE_DATA_PHONE_CODE_MAX_COUNT_OVERTIME;
+        }
+        smsRequest.setCodeKey(codeKey);
+        smsRequest.setCodeOverTimeKey(codeOverTimeKey);
+        smsRequest.setMaxCountKey(maxCountKey);
+        smsRequest.setMaxCountOverTimeKey(maxCountOverTimeKey);
+        smsRequest.setNowCountKey(nowCountKey);
+        // 最多发送次数 key
+        int maxCount = config.getIntValue(smsRequest.getMaxCountKey());
+        // 当前发送次数
+        Integer nowCount = 0;
+        String sendCount = iCacheClient.get(smsRequest.getNowCountKey());
+        if (!StringUtil.isBlank(sendCount)) {
+            nowCount = Integer.parseInt(sendCount);
+            log.info(info+"发送验证码的次数:"+nowCount);
+        }
+        if (nowCount >= maxCount) {
+
+            Object[] objects = {false,nowCount};
+            return objects;
+        }else {
+            Object[] objects = {true,nowCount};
+            return objects;
+        }
     }
 
     /**
