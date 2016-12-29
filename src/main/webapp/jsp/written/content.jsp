@@ -141,7 +141,7 @@
                     </p>
                 </li>
                 <li class="word-checkbox mb-0">
-                    <p id="TranslateSpeed">预计翻译速度: N/A小时/千字</p>
+                    <p id="TranslateSpeed">预计翻译速度：N/A小时/千字</p>
                     <p class="p-mr1" id="pQuick">
                         <img id="quick" src="<%=path%>/ui/images/checkbox.png" class="imgcheckbox" value="0">加急<b>（加急订单，更快获得译文）</b>
                     </p>
@@ -463,21 +463,21 @@
         var Lv = $("#translateLv").find("option:selected").attr("transLv");
         if (Lv == "100210") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：2小时/千字");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 1小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：1小时/千字");
             }
         } else if (Lv == "100220") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：3小时/千字");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：2小时/千字");
             }
         } else if (Lv == "100230") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度: 4小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：4小时/千字");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：3小时/千字");
             }
         }
     }
