@@ -118,7 +118,7 @@
                         </select>
                         <span>|</span>
                     </p>
-                    <p class="p-mr" id="otherService">
+                    <p class="p-mr" id="otherService" style="display: none">
                         <select id="otherServi" class="select testing-select-small">
                             <option>Excel</option>
                             <option>Word</option>
