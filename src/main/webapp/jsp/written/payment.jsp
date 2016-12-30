@@ -390,7 +390,7 @@
                     var resultCode = data.resultCode;
                     if (payResult == "success") {
                         var toUrl = "?result=success&OrderId=" + orderId + "&type=pay";
-                        window.location.href = '<%=path%>/written/payresult' + toUrl;
+                        window.location.href = '<%=path%>/written/PayResult' + toUrl;
                     } else if (payResult == "fail") {
                         if (resultCode == "6") {
                             $('#eject-mask').fadeIn(100);
@@ -403,17 +403,17 @@
                             $('#prompt').slideDown(100);
                         } else if (resultCode == "0") {
                             var toUrl = "?result=fail&OrderId=" + orderId + "&type=pay";
-                            window.location.href = '<%=path%>/written/payresult' + toUrl;
+                            window.location.href = '<%=path%>/written/PayResult' + toUrl;
                         }
                     }
                 } else {
                     var toUrl = "?result=fail&OrderId=" + orderId + "&type=pay";
-                    window.location.href = '<%=path%>/written/payresult' + toUrl;
+                    window.location.href = '<%=path%>/written/PayResult' + toUrl;
                 }
             },
             error: function (data) {
                 var toUrl = "?result=fail&OrderId=" + orderId + "&type=pay";
-                window.location.href = '<%=path%>/written/payresult' + toUrl;
+                window.location.href = '<%=path%>/written/PayResult' + toUrl;
             },
             beforeSend: function () {
                 Loading.ShowLoading();

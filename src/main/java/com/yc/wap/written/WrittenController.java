@@ -439,7 +439,6 @@ public class WrittenController extends BaseController {
 
     @RequestMapping(value = "PayResult")
     public String PayResult() {
-        request.setAttribute("result", "success");
         return "written/payresult";
     }
 

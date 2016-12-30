@@ -10,6 +10,10 @@
 <%
     String path = request.getContextPath();
     String index = path + "/";
+    request.setAttribute("result", request.getParameter("result"));
+    request.setAttribute("OrderId", request.getParameter("OrderId"));
+    request.setAttribute("type", request.getParameter("type"));
+    request.setAttribute("OrderAmount", request.getParameter("OrderAmount"));
 %>
 <html>
 <head>
