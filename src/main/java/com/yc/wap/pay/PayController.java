@@ -16,9 +16,11 @@ import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.yc.wap.system.base.BaseController;
+import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
 import com.yc.wap.system.utils.ConfigUtil;
+import com.yc.wap.system.utils.MD5Util;
 import com.yc.wap.system.utils.PaymentUtil;
 import com.yc.wap.system.utils.VerifyUtil;
 import org.apache.commons.logging.Log;
@@ -258,12 +260,16 @@ public class PayController extends BaseController {
     }
 
     @RequestMapping(value = "BalancePayment")
-    public String BalancePayment() {
+    @ResponseBody
+    public Object BalancePayment() {
+        MsgBean result = new MsgBean();
+
         String OrderId = request.getParameter("orderId");
         String Amount = request.getParameter("orderAmount");
         String password = request.getParameter("password");
         String payCheck = request.getParameter("payCheck");
         Double _Amount = Double.valueOf(Amount) * 1000;
+        String passwordCheck = MD5Util.encodePassword(password);
 
         log.info("-----BalancePayment-----");
         log.info("OrderId: " + OrderId + ", Amount: " + Amount);
@@ -286,8 +292,8 @@ public class PayController extends BaseController {
         Param.setExternalId(OrderId);
         Param.setBusinessCode(Constants.BusinessCode);
         Param.setAccountId(AccountId);
-        Param.setCheckPwd(Integer.parseInt(payCheck));
-        Param.setPassword(password);
+//        Param.setCheckPwd(Integer.parseInt(payCheck));
+        Param.setPassword(passwordCheck);
         Param.setTotalAmount(_Amount.longValue());
         Param.setCurrencyUnit("1"); //1-RMB 2-USD
         Param.setChannel(Constants.COMPANY);
@@ -296,24 +302,38 @@ public class PayController extends BaseController {
         log.info("BalancePaymentParam: " + com.alibaba.fastjson.JSONArray.toJSONString(Param));
         try {
             DeductResponse response = iDeductSV.deductFund(Param);
-            if (response.getResponseHeader().getResultCode().equals(ConstantsResultCode.FUNDSUCCESS1)) {
+            if (response.getResponseHeader().getResultCode().equals(ConstantsResultCode.PAYSUCCESS)) {
                 String serialNo = response.getSerialNo();
                 log.info("BalancePaySuccess: " + serialNo);
-
                 Timestamp ts = new Timestamp(new Date().getTime());
                 OrderPayFinished(OrderId, "YE", _Amount.longValue(), serialNo, ts, UID);
-                request.setAttribute("result", "success");
+//                request.setAttribute("result", "success");
+                result.put("payResult", "success");
+            } else if (response.getResponseHeader().getResultCode().equals(ConstantsResultCode.WRONGPASSWORD)) {
+                log.info("BalancePayFail: " + response.getResponseHeader().getResultCode() + response.getResponseHeader().getResultMessage());
+//                request.setAttribute("result", "fail");
+                result.put("payResult", "fail");
+                result.put("resultCode", "6");
+            } else if (response.getResponseHeader().getResultCode().equals(ConstantsResultCode.SETPASSWORD)) {
+                log.info("BalancePayFail: " + response.getResponseHeader().getResultCode() + response.getResponseHeader().getResultMessage());
+//                request.setAttribute("result", "fail");
+                result.put("payResult", "fail");
+                result.put("resultCode", "7");
             } else {
                 log.info("BalancePayFail: " + response.getResponseHeader().getResultCode() + response.getResponseHeader().getResultMessage());
-                request.setAttribute("result", "fail");
+//                request.setAttribute("result", "fail");
+                result.put("payResult", "fail");
+                result.put("resultCode", "0");
             }
         } catch (BusinessException | SystemException e) {
             e.printStackTrace();
             throw new RuntimeException("BalancePaymentFail");
         }
-        request.setAttribute("OrderId", OrderId);
-        request.setAttribute("type", "pay");
-        return "written/payresult";
+//        request.setAttribute("OrderId", OrderId);
+//        request.setAttribute("type", "pay");
+
+        return result.returnMsg();
+//        return "written/payresult";
     }
 
     private boolean OrderPayFinished(String OrderId, String PayType, long Amount, String outOrderId, Timestamp FinishTime, String uid) {

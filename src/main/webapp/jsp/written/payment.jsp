@@ -47,12 +47,13 @@
             <div class="prompt-title">支付</div>
             <div class="prompt-confirm">
                 <ul>
-                    <li>请输入支付密码，完成订单支付</li>
+                    <li id="password-tip">请输入支付密码，完成订单支付</li>
                     <li><input type="password" class="int-passwod" id="int-password"></li>
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <input type="button" class="btn btn-white" id="set-passbtn" value="确认"/>
+                <a class="btn btn-white-50" id="set-passbtn">确 认</a>
+                <a class="btn btn-white-50" id="set-passbtn-close">取 消</a>
             </div>
         </div>
         <%--<div class="mask" id="eject-mask"></div>--%>
@@ -172,10 +173,14 @@
 
         $('#set-passbtn').click(function () {
             $("#passInput").val($("#int-password").val());
-            Loading.ShowLoading();
             $('#eject-mask').fadeOut(200);
             $('#password').slideUp(200);
-            $("#toBalancePay").submit();
+            toBalancePay();
+        });
+
+        $("#set-passbtn-close").click(function () {
+            $('#eject-mask').fadeOut(200);
+            $('#password').slideUp(200);
         });
 
         $("#submit").bind("click", function () {
@@ -355,14 +360,68 @@
 
     function BalancePay() {
         if (payCheck == "0") {
-//            $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单。");
-//            $('#eject-mask').fadeIn(100);
-//            $('#prompt').slideDown(100);
-            $("#toBalancePay").submit();
+            toBalancePay();
         } else {
+            $("#password-tip").html("请输入支付密码，完成订单支付");
+            $("#int-password").val("");
             $('#eject-mask').fadeIn(100);
             $('#password').slideDown(100);
         }
+    }
+
+    function toBalancePay() {
+        var orderId = "${OrderId}";
+        var orderAmount = "${PriceDisplay}";
+        var password = $("#int-password").val();
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/pay/BalancePayment",
+            modal: true,
+            timeout: 30000,
+            data: {
+                orderId: orderId,
+                orderAmount: orderAmount,
+                password: password
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    var payResult = data.payResult;
+                    var resultCode = data.resultCode;
+                    if (payResult == "success") {
+                        var toUrl = "?result=success&OrderId=" + orderId + "&type=pay";
+                        window.location.href = '<%=path%>/written/payresult' + toUrl;
+                    } else if (payResult == "fail") {
+                        if (resultCode == "6") {
+                            $('#eject-mask').fadeIn(100);
+                            $('#password').slideDown(100);
+                            $("#password-tip").html("支付密码错误，请重新输入");
+                            $("#int-password").val("");
+                        } else if (resultCode == "7") {
+                            $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单");
+                            $('#eject-mask').fadeIn(100);
+                            $('#prompt').slideDown(100);
+                        } else if (resultCode == "0") {
+                            var toUrl = "?result=fail&OrderId=" + orderId + "&type=pay";
+                            window.location.href = '<%=path%>/written/payresult' + toUrl;
+                        }
+                    }
+                } else {
+                    var toUrl = "?result=fail&OrderId=" + orderId + "&type=pay";
+                    window.location.href = '<%=path%>/written/payresult' + toUrl;
+                }
+            },
+            error: function (data) {
+                var toUrl = "?result=fail&OrderId=" + orderId + "&type=pay";
+                window.location.href = '<%=path%>/written/payresult' + toUrl;
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
     }
 
     function toRecharge() {
