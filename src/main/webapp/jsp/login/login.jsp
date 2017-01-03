@@ -248,10 +248,11 @@
 </body>
 </html>
 <script>
-    var isAgree = 1;
-    var isHiden = 1;
-    var hidenFlag;
-    var isLoaded = false;
+    var isAgree = 1;    //协议那块
+    var isHiden = 1;    //验证码隐藏
+    var hidenFlag;      //验证码隐藏标识
+    var isLoaded = false;   //登录加载
+    var blurCheck = 0;  //注册界面手机号失去焦点判断
     $(function () {
         Loading.HideLoading();
 
@@ -269,10 +270,17 @@
         showCode();
 //        loadCountry();
     });
-
+    var blurTime;
     $(document).ready(function () {
         clearText();
         Loading.SetNoneOpacity();
+        $("#phone").blur(function() {
+
+//            clearTimeout(blurTime);
+//            blurTime = setTimeout(checkRegisterPhone, 200);
+            //校验注册界面手机号的方法
+            checkRegisterPhone();
+        });
     });
 
     var Loading = {
@@ -496,10 +504,6 @@
             clearText();
             wait = 0;
         }
-//        else if(document.referrer.indexOf("agreement")){
-//            console.log(window.history);
-//            window.history.go(-2);
-//        }
         else {
             window.history.go(-1);
         }
@@ -520,12 +524,74 @@
             $("#checkImg").attr("src", "<%=path%>/ui/images/checkbox1.png");
         }
     }
+
+    //校验注册界面手机号的方法
+    function checkRegisterPhone(){
+        var phone = $("#phone").val();
+        if (phone == "" || phone == null) {
+            $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
+            $("#phoneLabel1").css("display", "block");
+            blurCheck = 0;
+            return;
+        } else {
+            $("#phoneLabel1").css("display", "none");
+        }
+        var selectValue = $('#selectid').val();
+        var code = localStorage.getItem(selectValue + "1");
+        var reg = localStorage.getItem(selectValue);
+        var t = new RegExp(reg);
+        if (!t.test(code + phone)) {
+            $("#phoneLabel1").html("<spring:message code="login.register.enterRightphone"/>");
+            $("#phoneLabel1").css("display", "block");
+            blurCheck = 0;
+            return;
+        } else {
+            $("#phoneLabel1").css("display", "none");
+        }
+        checkAvailable(phone)
+    }
+    //检测是否可用
+    function checkAvailable(phone){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/checkPhoneOrEmail",
+            modal: true,
+            timeout: 30000,
+            data: {
+                checkType: "phone",
+                checkVal:phone,
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#phoneLabel1").css("display", "none");
+                    blurCheck = 1;
+                } else {
+                    $("#phoneLabel1").html(data.msg);
+                    blurCheck = 0;
+                    $("#phoneLabel1").css("display", "block");
+                }
+            },
+            error: function () {
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
+    }
     function confirmAction() {
         var phone = $("#phone").val();
         var codeid = $("#codeid").val();
         var psdid = $("#psdids").val();
         var confimid = $("#confimid").val();
-        if (phone == "" || phone == null) {
+        if (blurCheck == 0){
+            return;
+        }
+        /*
+       if (phone == "" || phone == null) {
             $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
             $("#phoneLabel1").css("display", "block");
             return;
@@ -542,7 +608,7 @@
             return;
         } else {
             $("#phoneLabel1").css("display", "none");
-        }
+        }*/
 
         if (codeid == "" || codeid == null) {
             $("#codeLabel1").html("<spring:message code="login.login.entercode"/>");
@@ -638,8 +704,9 @@
 
 
     function getnumberonclick() {
+
         var phone = $("#phone").val();
-        if (phone == "" || phone == null) {
+       /* if (phone == "" || phone == null) {
             $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
             $("#phoneLabel1").css("display", "block");
             return;
@@ -656,8 +723,11 @@
             return;
         } else {
             $("#phoneLabel1").css("display", "none");
+        }*/
+        if (blurCheck == 0){
+            return;
         }
-
+        var selectValue = $('#selectid').val();
         getTestCode(phone, selectValue);
     }
     //    发送验证码
