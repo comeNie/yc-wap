@@ -65,18 +65,22 @@ public class PayController extends BaseController {
 
 
         String notifyUrl = ConfigUtil.getProperty("NOTIFY_URL") + "?uid=" + session.getAttribute("UID");
-//        String returnUrl = ConfigUtil.getProperty("RETURN_URL") + "?uid=" + session.getAttribute("UID");
         String returnUrl = ConfigUtil.getProperty("RETURN_URL");
         String urls = "";
 
         log.info("-----Sessions-----");
-        HttpSession session = request.getSession();
-        Enumeration<?> enumeration = session.getAttributeNames();
-        while (enumeration.hasMoreElements()) {
-            String name = enumeration.nextElement().toString();
-            Object value = session.getAttribute(name);
-            log.info("SessionName: " + name + ", SessionValue: " + value);
-            urls += "&" + name + "=" + URLEncoder.encode(value.toString(), "UTF-8");
+        Map<String, String> sessionMap = new HashMap<String, String>();
+        sessionMap.put("isLogin", URLEncoder.encode(session.getAttribute("isLogin").toString(), "UTF-8"));
+        sessionMap.put("UID", URLEncoder.encode(session.getAttribute("UID").toString(), "UTF-8"));
+        sessionMap.put("password", URLEncoder.encode(session.getAttribute("password").toString(), "UTF-8"));
+        sessionMap.put("mobilePhone", URLEncoder.encode(session.getAttribute("mobilePhone").toString(), "UTF-8"));
+        sessionMap.put("domainname", URLEncoder.encode(session.getAttribute("domainname").toString(), "UTF-8"));
+        sessionMap.put("email", URLEncoder.encode(session.getAttribute("email").toString(), "UTF-8"));
+        sessionMap.put("username", URLEncoder.encode(session.getAttribute("username").toString(), "UTF-8"));
+
+        for (Map.Entry<String, String> entry : sessionMap.entrySet()) {
+            log.info("SessionName: " + entry.getKey() + ", SessionValue: " + entry.getValue());
+            urls += "&" + entry.getKey() + "=" + entry.getValue();
         }
         log.info("-----Sessions-----");
         returnUrl += "?" + urls.substring(1);
@@ -159,7 +163,6 @@ public class PayController extends BaseController {
         session.setAttribute("UID", URLDecoder.decode(request.getParameter("UID"), "UTF-8"));
         session.setAttribute("password", URLDecoder.decode(request.getParameter("password"), "UTF-8"));
         session.setAttribute("mobilePhone", URLDecoder.decode(request.getParameter("mobilePhone"), "UTF-8"));
-        session.setAttribute("certCode", URLDecoder.decode(request.getParameter("certCode"), "UTF-8"));
         session.setAttribute("domainname", URLDecoder.decode(request.getParameter("domainname"), "UTF-8"));
         session.setAttribute("email", URLDecoder.decode(request.getParameter("email"), "UTF-8"));
         session.setAttribute("username", URLDecoder.decode(request.getParameter("username"), "UTF-8"));

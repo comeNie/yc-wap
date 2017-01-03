@@ -87,10 +87,6 @@
     });
 
     function onLogout() {
-        window.onload = function () {
-            window.history.go(1);
-        };
-
         $.ajax({
             async: true,
             type: "POST",

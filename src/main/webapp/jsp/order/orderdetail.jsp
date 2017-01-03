@@ -680,7 +680,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     var ToUrl = "<%=path%>/";
-                    window.location.href = ToUrl;
+                    window.location.href = ToUrl + "?bindLogout=1";
                 }
             },
             error: function (data) {
