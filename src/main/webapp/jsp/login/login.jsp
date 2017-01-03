@@ -437,6 +437,8 @@
         $("#psdLabel").css("display", "none");
         $("#codeLabel").css("display", "none");
         $("#phone").attr("disabled", false);
+        isAgree = 1;
+        $("#checkImg").attr("src", "<%=path%>/ui/images/checkbox1.png");
     }
     //验证码代码
     function createCode() {
@@ -512,7 +514,7 @@
     function checkImgAction() {
         if (isAgree == 1) {
             isAgree = 0;
-            $("#checkImg").attr("src", "<%=path%>/ui/images/checkbox.png")
+            $("#checkImg").attr("src", "<%=path%>/ui/images/checkbox.png");
         } else {
             isAgree = 1;
             $("#checkImg").attr("src", "<%=path%>/ui/images/checkbox1.png");
@@ -702,12 +704,13 @@
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
             $("#getnumber").attr("onclick", "getnumberonclick()");
-            $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
+            $("#getnumber").html("<spring:message code="login.register.getcode"/>");//改变按钮中value的值
 
             $("#getnumber").attr("class", "btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 120;
         } else {
+            //<spring:message code="login.register.getcode"/>
             var txtStr = wait + '<spring:message code="safe.changemail.chongxinhuoqu"/>';
             $("#getnumber").html(txtStr);
             $("#getnumber").attr("class", "btn bnt-yzm-gray");
