@@ -443,6 +443,14 @@ public class SafeController extends BaseController {
                 resp = iUcMembersSV.ucCheckeMobilephone(phoneReq);
                 log.info("校验手机返回：" + JSON.toJSONString(resp));
             }
+            if (Constants.PhoneOrMail.Register.equals(checkType)) {// 注册界面
+                UcMembersCheckeMobileRequest phoneReq = new UcMembersCheckeMobileRequest();
+                phoneReq.setTenantId(Constants.TENANTID);
+                phoneReq.setMobilephone(Constants.PhoneOrMail.Phone);
+                msg = rb.getMessage("safeCtrl.phoneHadRegister");
+                resp = iUcMembersSV.ucCheckeMobilephone(phoneReq);
+                log.info("校验手机返回：" + JSON.toJSONString(resp));
+            }
         } catch (Exception e) {
             log.info(e.getMessage(), e);
         }

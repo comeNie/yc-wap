@@ -559,7 +559,7 @@
             modal: true,
             timeout: 30000,
             data: {
-                checkType: "phone",
+                checkType: "register",
                 checkVal:phone,
             },
             success: function (data) {

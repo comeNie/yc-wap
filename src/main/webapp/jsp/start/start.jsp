@@ -231,9 +231,9 @@
     <jsp:param name="class" value="index-footer-big"/>
 </jsp:include>
 
-
 <div class="release-showbj" id="release-showbj"></div>
 <div class="release-btn" id="release-btn"><a href="javascript:window.location.href='<%=path%>/written'">发布翻译需求</a></div>
+
 
 </body>
 <%@ include file="../common/timezone.jsp" %>
@@ -244,7 +244,7 @@
 
     var IsTranslated = false;
     var realLangeuage="zh";
-
+    var getBlur = 0;
     $(function () {
 
         //初始化数据库
@@ -273,13 +273,15 @@
     $(document).ready(function () {
 
         window.onscroll = function() {
-            var rbtn = document.getElementById('release-btn');
-            var rbtnshow = document.getElementById('release-showbj');
-            var t = document.documentElement.scrollTop || document.body.scrollTop;  //离上方的距离
-            var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight; //可见宽度
-            if (t >= document.documentElement.scrollHeight - h) {
-                rbtn.style.display = 'block';
-                rbtnshow.style.display = 'block';
+            if(!getBlur){
+                var rbtn = document.getElementById('release-btn');
+                var rbtnshow = document.getElementById('release-showbj');
+                var t = document.documentElement.scrollTop || document.body.scrollTop;  //离上方的距离
+                var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight; //可见宽度
+                if (t >= document.documentElement.scrollHeight - h) {
+                    rbtn.style.display = 'block';
+                    rbtnshow.style.display = 'block';
+                }
             }
         }
 //        监听输入的文本内容
@@ -303,6 +305,9 @@
             $('#chick-btn').show();
             $('#wrapper-hide').hide();
             $("#clear").show();
+            $("#release-showbj").hide();
+            $("#release-btn").hide();
+            getBlur = 1;
         });
         //清除
         $("#clear").click(function(){
