@@ -123,6 +123,8 @@ public class Constants {
         public static final String Mail = "mail";
         //2：手机
         public static final String Phone = "phone";
+        //3:注册界面
+        public static final String Register = "register";
     }
     /**
      * 获取用户信息方式
