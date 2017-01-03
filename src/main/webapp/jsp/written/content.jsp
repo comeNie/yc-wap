@@ -56,7 +56,7 @@
 
     <section class="index-wrapper">
         <div class="testing-title">
-            <p>选择语言:</p>
+            <p>选择语言：</p>
         </div>
         <!--转换语言-->
         <section class="testing">
@@ -76,6 +76,9 @@
                 <span>|</span>
             </p>
         </section>
+        <div class="testing-title">
+            <p>翻译内容：</p>
+        </div>
         <!--文字翻译-->
         <section class="translation-content">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
@@ -88,7 +91,7 @@
         <div class="choice-list">
             <ul>
                 <li>
-                    <p class="word">用途:</p>
+                    <p class="word">用途：</p>
                     <p>
                         <select id="purpose" class="select testing-select-small">
                             <c:forEach items="${PurposeList}" var="pair">
@@ -99,7 +102,7 @@
                     </p>
                 </li>
                 <li>
-                    <p class="word">领域:</p>
+                    <p class="word">领域：</p>
                     <p>
                         <select id="domain" class="select testing-select-small">
                             <c:forEach items="${DomainList}" var="pair">
@@ -110,7 +113,7 @@
                     </p>
                 </li>
                 <li>
-                    <p class="word">增值服务:</p>
+                    <p class="word">增值服务：</p>
                     <p>
                         <select id="otherServ" class="select testing-select-small" onchange="ServerChange()">
                             <option otherServId="N">无排版</option>
@@ -127,7 +130,7 @@
                     </p>
                 </li>
                 <li>
-                    <p class="word">级别选择:</p>
+                    <p class="word">级别选择：</p>
                     <p>
                         <select id="translateLv" class="select testing-select-small" onchange="LvChange()">
                             <option transLv="100210">标准级</option>
@@ -138,7 +141,7 @@
                     </p>
                 </li>
                 <li class="word-checkbox mb-0">
-                    <p id="TranslateSpeed">预计翻译速度: N/A小时/千字</p>
+                    <p id="TranslateSpeed">预计翻译速度：N/A小时/千字</p>
                     <p class="p-mr1" id="pQuick">
                         <img id="quick" src="<%=path%>/ui/images/checkbox.png" class="imgcheckbox" value="0">加急<b>（加急订单，更快获得译文）</b>
                     </p>
@@ -460,21 +463,21 @@
         var Lv = $("#translateLv").find("option:selected").attr("transLv");
         if (Lv == "100210") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：2小时/千字");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 1小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：1小时/千字");
             }
         } else if (Lv == "100220") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：3小时/千字");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 2小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：2小时/千字");
             }
         } else if (Lv == "100230") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度: 4小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：4小时/千字");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度: 3小时/千字");
+                $("#TranslateSpeed").html("预计翻译速度：3小时/千字");
             }
         }
     }
