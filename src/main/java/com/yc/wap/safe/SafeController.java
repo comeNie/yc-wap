@@ -267,7 +267,7 @@ public class SafeController extends BaseController {
                 result.put("username",vo.getUsername());
                 result.put("email",vo.getEmail());
                 result.put("password",vo.getPassword());
-                log.info(vo.getUid());
+                log.info("uid:"+vo.getUid());
             }else {
                 result.put("status","0");
                 result.put("msg",rb.getMessage("safeCtrl.userisExit"));
