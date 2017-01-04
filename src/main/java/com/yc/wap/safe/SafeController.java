@@ -446,7 +446,7 @@ public class SafeController extends BaseController {
             if (Constants.PhoneOrMail.Register.equals(checkType)) {// 注册界面
                 UcMembersCheckeMobileRequest phoneReq = new UcMembersCheckeMobileRequest();
                 phoneReq.setTenantId(Constants.TENANTID);
-                phoneReq.setMobilephone(Constants.PhoneOrMail.Phone);
+                phoneReq.setMobilephone(checkVal);
                 msg = rb.getMessage("safeCtrl.phoneHadRegister");
                 resp = iUcMembersSV.ucCheckeMobilephone(phoneReq);
                 log.info("校验手机返回：" + JSON.toJSONString(resp));

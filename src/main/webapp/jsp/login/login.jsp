@@ -564,7 +564,8 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-                    $("#phoneLabel1").css("display", "none");
+                    $("#phoneLabel1").css("display", "block");
+                    $("#phoneLabel1").html("该手机号可用");
                     blurCheck = 1;
                 } else {
                     $("#phoneLabel1").html(data.msg);
