@@ -231,9 +231,10 @@
     <jsp:param name="class" value="index-footer-big"/>
 </jsp:include>
 
-<div class="release-showbj" id="release-showbj"></div>
-<div class="release-btn" id="release-btn"><a href="javascript:window.location.href='<%=path%>/written'">发布翻译需求</a></div>
-
+<div id="index-btnshow" style="display:none;">
+    <div class="release-showbj" id="release-showbj"></div>
+    <div class="release-btn" id="release-btn"><a href="javascript:window.location.href='<%=path%>/written'">发布翻译需求</a></div>
+</div>
 
 </body>
 <%@ include file="../common/timezone.jsp" %>
@@ -272,16 +273,10 @@
     });
     $(document).ready(function () {
 
-        window.onscroll = function() {
-            if(!getBlur){
-                var rbtn = document.getElementById('release-btn');
-                var rbtnshow = document.getElementById('release-showbj');
-                var t = document.documentElement.scrollTop || document.body.scrollTop;  //离上方的距离
-                var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight; //可见宽度
-                if (t >= document.documentElement.scrollHeight - h) {
-                    rbtn.style.display = 'block';
-                    rbtnshow.style.display = 'block';
-                }
+        document.getElementsByTagName("body")[0].onscroll=function(){
+            var rbtn=document.getElementById('index-btnshow');
+            if(document.getElementsByTagName("body")[0].scrollTop>10){
+                rbtn.style.display='block';
             }
         }
 //        监听输入的文本内容

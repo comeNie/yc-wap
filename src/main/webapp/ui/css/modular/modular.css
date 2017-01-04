@@ -421,6 +421,6 @@
 .set-int .imgcheckbox{width:0.5rem;height:0.5rem;margin:0.1rem 0.2rem;}
 /**发布按钮**/
 
-.release-showbj{width:100%;height:1.92rem;float:left;display:none;}
-.release-btn{width:100%;height:1.92rem;display:none;position:fixed;bottom:0;}
+.release-showbj{width:100%;height:1.92rem;float:left;}
+.release-btn{width:100%;height:1.92rem;position:fixed;bottom:0;}
 .release-btn a{width:100%;height:1.92rem;background:#1780e3;float:left; text-align:center;line-height:1.92rem;font-size:0.64rem;color:#fff}
