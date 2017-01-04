@@ -83,7 +83,7 @@
         <section class="translation-content">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
                       placeholder="还可以输入2000字"></textarea>
-            <a href="javascript:inputClear()"><i class="icon iconfont">&#xe618;</i></a>
+            <a href="javascript:inputClear()" id="clearIcon" style="display: none"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">
             <p>您可以任意选择输入内容或者<a href="javascript:" id="upload">上传附件</a></p>
@@ -197,6 +197,15 @@
             }
             oldContent = Content;
             DetectLanguage(Content);
+        });
+
+        $("#chick-int").on("input propertychange", function () {
+            var Content = $("#chick-int").val();
+            if (Content == "") {
+                $("#clearIcon").css("display", "none");
+            } else {
+                $("#clearIcon").css("display", "block");
+            }
         });
 
         $("#pQuick").click(function () {
