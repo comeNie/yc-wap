@@ -10,10 +10,23 @@
 <%
     String path = request.getContextPath();
     String index = path + "/";
-    request.setAttribute("result", request.getParameter("result"));
-    request.setAttribute("OrderId", request.getParameter("OrderId"));
-    request.setAttribute("type", request.getParameter("type"));
-    request.setAttribute("OrderAmount", request.getParameter("OrderAmount"));
+
+    String result = request.getParameter("result");
+    String OrderId = request.getParameter("OrderId");
+    String type = request.getParameter("type");
+    String OrderAmount = request.getParameter("OrderAmount");
+    if (result != null && !result.equals("")) {
+        request.setAttribute("result", result);
+    }
+    if (OrderId != null && !OrderId.equals("")) {
+        request.setAttribute("OrderId", OrderId);
+    }
+    if (type != null && !type.equals("")) {
+        request.setAttribute("type", type);
+    }
+    if (OrderAmount != null && !OrderAmount.equals("")) {
+        request.setAttribute("OrderAmount", OrderAmount);
+    }
 %>
 <html>
 <head>
