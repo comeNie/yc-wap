@@ -325,6 +325,7 @@ public class OrderController extends BaseController {
             String fieldCn = ProdList.getFieldCn();
             String takeTime = ProdList.getTakeTime();
             String Remark = Contacts.getRemark();
+            String Remark1 = resp.getRemark();
             String isUrgent = ProdList.getIsUrgent();
             String contactName = Contacts.getContactName();
             String contactTel = Contacts.getContactTel();
@@ -361,6 +362,7 @@ public class OrderController extends BaseController {
             ParamJson.put("fieldCn", fieldCn);
             ParamJson.put("takeTime", takeTime);
             ParamJson.put("Remark", Remark);
+            ParamJson.put("Remark1", Remark1);
             ParamJson.put("discountSum", discountSum);
             ParamJson.put("contactName", contactName);
             ParamJson.put("contactTel", contactTel);

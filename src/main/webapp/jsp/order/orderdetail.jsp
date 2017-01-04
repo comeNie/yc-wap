@@ -178,7 +178,7 @@
                     </li>
                 </ul>
                 <ul class="ulborder">
-                    <li class="lin-hei">${Params.Remark}</li>
+                    <li class="lin-hei">${Params.Remark}${Params.Remark1}</li>
                 </ul>
             </div>
         </section>

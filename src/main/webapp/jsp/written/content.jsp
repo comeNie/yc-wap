@@ -34,14 +34,14 @@
 <div class="wrapper-big" id="body">
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title">请选择</div>
+            <div class="prompt-title"><spring:message code="written.content.ptitle"/></div>
             <div class="prompt-confirm">
                 <ul>
-                    <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+                    <li id="EjectTitle"></li>
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a class="btn btn-white" id="prompt-btn">确认</a>
+                <a class="btn btn-white" id="prompt-btn"><spring:message code="written.content.confirm"/></a>
             </div>
 
         </div>
@@ -49,14 +49,15 @@
     </div>
 
     <%--头部--%>
+    <spring:message code="written.content.ltitle" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="翻译下单"/>
+        <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:Back()"/>
     </jsp:include>
 
     <section class="index-wrapper">
         <div class="testing-title">
-            <p>选择语言：</p>
+            <p><spring:message code="written.content.choose"/></p>
         </div>
         <!--转换语言-->
         <section class="testing">
@@ -77,12 +78,12 @@
             </p>
         </section>
         <div class="testing-title">
-            <p>翻译内容：</p>
+            <p><spring:message code="written.content.content"/></p>
         </div>
         <!--文字翻译-->
         <section class="translation-content">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
-                      placeholder="还可以输入2000字"></textarea>
+                      placeholder=<spring:message code="written.content.number"/>></textarea>
             <a href="javascript:inputClear()" id="clearIcon" style="display: none"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">
@@ -91,7 +92,7 @@
         <div class="choice-list">
             <ul>
                 <li>
-                    <p class="word">用途：</p>
+                    <p class="word"><spring:message code="written.content.use"/></p>
                     <p>
                         <select id="purpose" class="select testing-select-small">
                             <c:forEach items="${PurposeList}" var="pair">
@@ -102,7 +103,7 @@
                     </p>
                 </li>
                 <li>
-                    <p class="word">领域：</p>
+                    <p class="word"><spring:message code="written.content.place"/></p>
                     <p>
                         <select id="domain" class="select testing-select-small">
                             <c:forEach items="${DomainList}" var="pair">
@@ -113,10 +114,10 @@
                     </p>
                 </li>
                 <li>
-                    <p class="word">增值服务：</p>
+                    <p class="word"><spring:message code="written.content.service"/></p>
                     <p>
                         <select id="otherServ" class="select testing-select-small" onchange="ServerChange()">
-                            <option otherServId="N">无排版</option>
+                            <option otherServId="N"><spring:message code="written.content.word"/></option>
                             <%--<option otherServId="Y">需排版</option>--%>
                         </select>
                         <span>|</span>
@@ -130,29 +131,34 @@
                     </p>
                 </li>
                 <li>
-                    <p class="word">级别选择：</p>
+                    <p class="word"><spring:message code="written.content.level"/></p>
                     <p>
                         <select id="translateLv" class="select testing-select-small" onchange="LvChange()">
-                            <option transLv="100210">标准级</option>
-                            <option transLv="100220" selected="selected">专业级</option>
-                            <option transLv="100230">出版级</option>
+                            <option transLv="100210"><spring:message code="written.content.level1"/></option>
+                            <option transLv="100220" selected="selected"><spring:message
+                                    code="written.content.level2"/></option>
+                            <option transLv="100230"><spring:message code="written.content.level3"/></option>
                         </select>
                         <span>|</span>
                     </p>
                 </li>
                 <li class="word-checkbox mb-0">
-                    <p id="TranslateSpeed">预计翻译速度：N/A小时/千字</p>
+                    <p id="TranslateSpeed"></p>
                     <p class="p-mr1" id="pQuick">
-                        <img id="quick" src="<%=path%>/ui/images/checkbox.png" class="imgcheckbox" value="0">加急<b>（加急订单，更快获得译文）</b>
+                        <img id="quick" src="<%=path%>/ui/images/checkbox.png" class="imgcheckbox" value="0">
+                        <spring:message code="written.content.quick"/><b><spring:message
+                            code="written.content.quick1"/></b>
                     </p>
                 </li>
                 <li id="pIsRead">
                     <p><img id="isRead" src="<%=path%>/ui/images/checkbox1.png" class="imgcheckbox" value="1"></p>
-                    <p class="a-link">我已阅读并同意中译语通的<a href="javascript:toLicense()">《翻译协议》</a></p>
+                    <p class="a-link"><spring:message code="written.content.read"/>
+                        <a href="javascript:toLicense()"><spring:message code="written.content.protocol"/></a></p>
                 </li>
             </ul>
         </div>
-        <div class="wap-btn"><a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交</a></div>
+        <div class="wap-btn"><a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue"><spring:message
+                code="written.content.submit"/></a></div>
     </section>
 </div>
 <!--底部-->
@@ -235,19 +241,19 @@
             var Content = $("#chick-int").val();
             var ContentLength = count(escape(Content));
             if (ContentLength == 0) {
-                $("#EjectTitle").html("请输入翻译内容");
+                $("#EjectTitle").html("<spring:message code="written.content.tips1"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             }
             if (ContentLength > 2000) {
-                $("#EjectTitle").html("翻译内容超出2000字");
+                $("#EjectTitle").html("<spring:message code="written.content.tips2"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             }
             if (!($("#isRead").attr("value") == "1")) {
-                $("#EjectTitle").html("请阅读翻译协议");
+                $("#EjectTitle").html("<spring:message code="written.content.tips3"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
@@ -425,7 +431,7 @@
                 }
             });
         } else {
-            $("#EjectTitle").html("系统不支持该语言");
+            $("#EjectTitle").html("<spring:message code="written.content.tips4"/>");
             $('#eject-mask').fadeIn(100);
             $('#prompt').slideDown(100);
             return;
@@ -443,7 +449,7 @@
 
     function AutoChangeDual(SourceCn, SourceEn) {
         if (SourceCn == "" || SourceEn == "") {
-            $("#EjectTitle").html("检测输入语言系统暂不支持，请确认");
+            $("#EjectTitle").html("<spring:message code="written.content.tips5"/>");
             $('#eject-mask').fadeIn(100);
             $('#prompt').slideDown(100);
             return;
@@ -472,21 +478,21 @@
         var Lv = $("#translateLv").find("option:selected").attr("transLv");
         if (Lv == "100210") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度：2小时/千字");
+                $("#TranslateSpeed").html("<spring:message code="written.content.speed"/>" + "2" + "<spring:message code="written.content.speed1"/>");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度：1小时/千字");
+                $("#TranslateSpeed").html("<spring:message code="written.content.speed"/>" + "1" + "<spring:message code="written.content.speed1"/>");
             }
         } else if (Lv == "100220") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度：3小时/千字");
+                $("#TranslateSpeed").html("<spring:message code="written.content.speed"/>" + "3" + "<spring:message code="written.content.speed1"/>");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度：2小时/千字");
+                $("#TranslateSpeed").html("<spring:message code="written.content.speed"/>" + "2" + "<spring:message code="written.content.speed1"/>");
             }
         } else if (Lv == "100230") {
             if ($("#quick").attr("value") == "0") {
-                $("#TranslateSpeed").html("预计翻译速度：4小时/千字");
+                $("#TranslateSpeed").html("<spring:message code="written.content.speed"/>" + "4" + "<spring:message code="written.content.speed1"/>");
             } else {
-                $("#TranslateSpeed").html("预计翻译速度：3小时/千字");
+                $("#TranslateSpeed").html("<spring:message code="written.content.speed"/>" + "3" + "<spring:message code="written.content.speed1"/>");
             }
         }
     }
