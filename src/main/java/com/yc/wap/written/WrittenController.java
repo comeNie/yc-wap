@@ -55,7 +55,7 @@ public class WrittenController extends BaseController {
 
     @RequestMapping(value = "")
     public String content() {
-        String Language = "zh_CN";
+        String Language = rb.getDefaultLocale().toString();
 
         List<SysDuadVo> DualList = GetDualList(Constants.OrderType.DOC, Language);
         List<SysPurposeVo> PurposeList = GetPurposeList(Language);
