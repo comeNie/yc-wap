@@ -83,7 +83,7 @@
         <!--文字翻译-->
         <section class="translation-content">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
-                      placeholder=<spring:message code="written.content.number"/>></textarea>
+                      placeholder="<spring:message code="written.content.number"/>"></textarea>
             <a href="javascript:inputClear()" id="clearIcon" style="display: none"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">

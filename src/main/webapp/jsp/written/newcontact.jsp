@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
@@ -14,7 +15,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>联系方式</title>
+    <title><spring:message code="written.content.title2"/></title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -31,38 +32,42 @@
 <div class="wrapper-big" id="body">
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title">请选择</div>
+            <div class="prompt-title"><spring:message code="written.content.ptitle1"/></div>
             <div class="prompt-confirm">
                 <ul>
-                    <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+                    <li id="EjectTitle"></li>
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a class="btn btn-white" id="prompt-btn">确认</a>
+                <a class="btn btn-white" id="prompt-btn"><spring:message code="written.content.confirm1"/></a>
             </div>
 
         </div>
         <div class="mask" id="eject-mask"></div>
     </div>
     <%--头部--%>
+    <spring:message code="written.content.title2" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="联系方式"/>
+        <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
     </jsp:include>
     <!--订单内容-->
     <section class="order-content new-cont">
         <div class="order-list">
             <ul>
-                <li>手机：</li>
-                <li><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码（必填）"></li>
+                <li><spring:message code="written.content.phone"/></li>
+                <li><input type="text" class="input input-medium" id="phone"
+                           placeholder="<spring:message code="written.content.holder1"/>"></li>
             </ul>
             <ul>
-                <li>姓名：</li>
-                <li><input type="text" class="input input-medium" id="name" placeholder="请输入姓名" maxlength="20"></li>
+                <li><spring:message code="written.content.name"/></li>
+                <li><input type="text" class="input input-medium" id="name"
+                           placeholder="<spring:message code="written.content.holder2"/>" maxlength="20"></li>
             </ul>
             <ul>
-                <li>邮箱：</li>
-                <li><input type="text" class="input input-medium" id="email" placeholder="请输入接收译文的邮箱" maxlength="35"></li>
+                <li><spring:message code="written.content.email"/></li>
+                <li><input type="text" class="input input-medium" id="email"
+                           placeholder="<spring:message code="written.content.holder3"/>" maxlength="35"></li>
             </ul>
 
             <ul class="none-border" style="display: none">
@@ -75,7 +80,8 @@
     </section>
 </div>
 <section class="add-btn">
-    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交订单</a>
+    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue"><spring:message
+            code="written.content.submit1"/></a>
 </section>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
@@ -93,13 +99,13 @@
             var nameCheck = /['"#$%&\^*]/;
 
             if (phone == "" || phone == null) {
-                $("#EjectTitle").html("请输入手机号");
+                $("#EjectTitle").html("<spring:message code="written.content.tips6"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             } else {
                 if (!phoneCheck.test(phone)) {
-                    $("#EjectTitle").html("请输入正确的手机号");
+                    $("#EjectTitle").html("<spring:message code="written.content.tips7"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     return;
@@ -107,13 +113,13 @@
             }
 
             if (name == "" || name == null) {
-                $("#EjectTitle").html("请输入姓名");
+                $("#EjectTitle").html("<spring:message code="written.content.tips8"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             } else {
                 if (isEmojiCharacter(name) || nameCheck.test(name)) {
-                    $("#EjectTitle").html("请输入正确的姓名");
+                    $("#EjectTitle").html("<spring:message code="written.content.tips9"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     return;
@@ -121,13 +127,13 @@
             }
 
             if (email == "" || email == null) {
-                $("#EjectTitle").html("请输入邮箱");
+                $("#EjectTitle").html("<spring:message code="written.content.tips10"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             } else {
                 if (!emailCheck.test(email)) {
-                    $("#EjectTitle").html("请输入正确的邮箱");
+                    $("#EjectTitle").html("<spring:message code="written.content.tips11"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     return;
@@ -179,13 +185,13 @@
                     var OrderId = data.OrderId;
                     window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
                 } else {
-                    $("#EjectTitle").html("下单失败，请重试");
+                    $("#EjectTitle").html("<spring:message code="written.content.tips12"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                 }
             },
             error: function (data) {
-                $("#EjectTitle").html("下单失败，请重试");
+                $("#EjectTitle").html("<spring:message code="written.content.tips12"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
             },
