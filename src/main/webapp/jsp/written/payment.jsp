@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
@@ -13,7 +14,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>支付订单</title>
+    <title><spring:message code="pay.payment.title"/></title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -29,14 +30,14 @@
 <div class="wrapper-big" id="body">
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title">请选择</div>
+            <div class="prompt-title"><spring:message code="pay.payment.titles"/></div>
             <div class="prompt-confirm">
                 <ul>
-                    <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+                    <li id="EjectTitle"></li>
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a href="#" id="prompt-btn">确认</a>
+                <a href="#" id="prompt-btn"><spring:message code="pay.payment.confirm"/></a>
             </div>
         </div>
         <div class="mask" id="eject-mask"></div>
@@ -44,46 +45,47 @@
 
     <div class="eject-big">
         <div class="prompt" id="password">
-            <div class="prompt-title">支付</div>
+            <div class="prompt-title"><spring:message code="pay.payment.pay"/></div>
             <div class="prompt-confirm">
                 <ul>
-                    <li id="password-tip">请输入支付密码，完成订单支付</li>
+                    <li id="password-tip"><spring:message code="pay.payment.pass"/></li>
                     <li><input type="password" class="int-passwod" id="int-password"></li>
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a class="btn btn-white-50" id="set-passbtn">确 认</a>
-                <a class="btn btn-white-50" id="set-passbtn-close">取 消</a>
+                <a class="btn btn-white-50" id="set-passbtn"><spring:message code="pay.payment.confirm1"/></a>
+                <a class="btn btn-white-50" id="set-passbtn-close"><spring:message code="pay.payment.cancel"/></a>
             </div>
         </div>
         <%--<div class="mask" id="eject-mask"></div>--%>
     </div>
 
     <%--头部--%>
+    <spring:message code="pay.payment.title1" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="支付订单"/>
+        <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
     </jsp:include>
 
     <!--订单内容-->
     <div class="confirm-list">
         <ul>
-            <li class="word">订单性质:</li>
+            <li class="word"><spring:message code="pay.payment.type"/></li>
             <li>
                 <p>
                     <select class="select testing-select-big" disabled id="sel">
-                        <option>个人订单</option>
+                        <option><spring:message code="pay.payment.person"/></option>
                     </select>
                     <span>|</span>
                 </p>
             </li>
         </ul>
         <ul style="display: none">
-            <li class="word">使用优惠劵:</li>
+            <li class="word"><spring:message code="pay.payment.cheap"/></li>
             <li>
                 <p>
                     <select class="select testing-select-big" disabled id="sel">
-                        <option>暂无可用优惠券</option>
+                        <option><spring:message code="pay.payment.nocheap"/></option>
                     </select>
                     <span>|</span>
                     <label></label>
@@ -91,11 +93,11 @@
             </li>
         </ul>
         <ul style="display: none">
-            <li class="word">输入优惠码:</li>
+            <li class="word"><spring:message code="pay.payment.cheap1"/><</li>
             <li>
                 <p>
                     <select class="select testing-select-big" disabled id="sel">
-                        <option>暂无可用优惠码</option>
+                        <option><spring:message code="pay.payment.nocheap1"/><</option>
                     </select>
                     <span>|</span>
                 </p>
@@ -103,7 +105,7 @@
         </ul>
 
         <%--<ul>--%>
-        <%--<li><input type="radio" name="choose" class="radio"/>翻译后付费</li>--%>
+        <%--<li><input type="radio" name="choose" class="radio"/><spring:message code="pay.payment.after"/></li>--%>
         <%--</ul>--%>
 
         <ul>
@@ -118,10 +120,10 @@
         <ul id="balance" style="display: none">
             <li id="imgCash" class="word-ash">
                 <img src="<%=path%>/ui/images/radio1.jpg" id="cash" class="radio-img"/>
-                <a id="balanceNumber">账户余额支付（余额：0元）</a>
+                <a id="balanceNumber"></a>
             </li>
             <li class="right" id="buzu" style="display: none">
-                <a href="javascript:toRecharge()">余额不足，请先充值</a>
+                <a href="javascript:toRecharge()"><spring:message code="pay.payment.balance2"/></a>
             </li>
         </ul>
     </div>
@@ -145,13 +147,13 @@
 <!--底部-->
 <section class="order-submit">
     <div class="left">
-        <p>应付金额:${PriceDisplay}元</p>
+        <p><spring:message code="pay.payment.needpay"/>${PriceDisplay}<spring:message code="pay.payment.yuan"/></p>
         <p>
-            <span>订单金额:${PriceDisplay}元</span>
-            <%--<span>优惠:50元</span>--%>
+            <span><spring:message code="pay.payment.needpay1"/>${PriceDisplay}<spring:message code="pay.payment.yuan"/></span>
+            <%--<span><spring:message code="pay.payment.needpay2"/>50<spring:message code="pay.payment.yuan"/></span>--%>
         </p>
     </div>
-    <div class="right"><a href="javascript:void(0)" id="submit">确认支付</a></div>
+    <div class="right"><a href="javascript:void(0)" id="submit"><spring:message code="pay.payment.confirm2"/></a></div>
 </section>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 
@@ -185,14 +187,14 @@
 
         $("#submit").bind("click", function () {
             if (getInfoFalse) {
-                $("#EjectTitle").html("获取信息失败，请刷新重试");
+                $("#EjectTitle").html("<spring:message code="pay.payment.tips1"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             }
 
             if (orderState == "20") {
-                $("#EjectTitle").html("订单已经支付，请勿重复支付");
+                $("#EjectTitle").html("<spring:message code="pay.payment.tips2"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
@@ -208,7 +210,7 @@
                 if (!balanceBuzu) {
                     BalancePay();
                 } else {
-                    $("#EjectTitle").html("余额不足，请选用其他支付方式");
+                    $("#EjectTitle").html("<spring:message code="pay.payment.tips3"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                 }
@@ -252,7 +254,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     balance = data.balance;
-                    $("#balanceNumber").html("账户余额支付（余额：" + data.balance + "元）");
+                    $("#balanceNumber").html("<spring:message code="pay.payment.balance"/>" + data.balance + "<spring:message code="pay.payment.balance1"/>");
                     $("#balance").css("display", "block");
                     if (data.balance < ${PriceDisplay}) {
                         $("#buzu").css("display", "block");
@@ -260,7 +262,7 @@
                     }
                     CheckState();
                 } else {
-                    $("#EjectTitle").html("获取信息失败，请重试");
+                    $("#EjectTitle").html("<spring:message code="pay.payment.tips1"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     getInfoFalse = true;
@@ -268,7 +270,7 @@
                 }
             },
             error: function (data) {
-                $("#EjectTitle").html("获取信息失败，请重试");
+                $("#EjectTitle").html("<spring:message code="pay.payment.tips1"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 getInfoFalse = true;
@@ -299,7 +301,7 @@
                     orderState = data.orderState;
                     CheckAccount();
                 } else {
-                    $("#EjectTitle").html("获取信息失败，请重试");
+                    $("#EjectTitle").html("<spring:message code="pay.payment.tips1"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     getInfoFalse = true;
@@ -307,7 +309,7 @@
                 }
             },
             error: function (data) {
-                $("#EjectTitle").html("获取信息失败，请重试");
+                $("#EjectTitle").html("<spring:message code="pay.payment.tips1"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 getInfoFalse = true;
@@ -335,7 +337,7 @@
                     payCheck = data.needPayCheck;
                     $("#isPayCheck").val(payCheck);
                 } else {
-                    $("#EjectTitle").html("获取信息失败，请重试");
+                    $("#EjectTitle").html("<spring:message code="pay.payment.tips1"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     getInfoFalse = true;
@@ -343,7 +345,7 @@
                 }
             },
             error: function (data) {
-                $("#EjectTitle").html("获取信息失败，请重试");
+                $("#EjectTitle").html("<spring:message code="pay.payment.tips1"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 getInfoFalse = true;
@@ -362,7 +364,7 @@
         if (payCheck == "0") {
             toBalancePay();
         } else {
-            $("#password-tip").html("请输入支付密码，完成订单支付");
+            $("#password-tip").html("<spring:message code="pay.payment.pass"/>");
             $("#int-password").val("");
             $('#eject-mask').fadeIn(100);
             $('#password').slideDown(100);
@@ -393,12 +395,12 @@
                         window.location.href = '<%=path%>/written/PayResult' + toUrl;
                     } else if (payResult == "fail") {
                         if (resultCode == "6") {
+                            $("#password-tip").html("<spring:message code="pay.payment.pass1"/>");
                             $('#eject-mask').fadeIn(100);
                             $('#password').slideDown(100);
-                            $("#password-tip").html("支付密码错误，请重新输入");
                             $("#int-password").val("");
                         } else if (resultCode == "7") {
-                            $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单");
+                            $("#EjectTitle").html("<spring:message code="pay.payment.pass2"/>");
                             $('#eject-mask').fadeIn(100);
                             $('#prompt').slideDown(100);
                         } else if (resultCode == "0") {
