@@ -166,6 +166,7 @@
     var Channel = "1";
     var orderState = "";
     var payCheck = "";
+    var setPassword = true;
     var getInfoFalse = false;
 
     $(document).ready(function () {
@@ -333,6 +334,10 @@
             success: function (data) {
                 if (data.status == 1) {
                     payCheck = data.needPayCheck;
+                    var passwd = data.payPassword;
+                    if (passwd == null || passwd == "") {
+                        setPassword = false;
+                    }
                     $("#isPayCheck").val(payCheck);
                 } else {
                     $("#EjectTitle").html("获取信息失败，请重试");
@@ -359,6 +364,13 @@
     }
 
     function BalancePay() {
+        if (!setPassword) {
+            $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+            return;
+        }
+
         if (payCheck == "0") {
             toBalancePay();
         } else {
