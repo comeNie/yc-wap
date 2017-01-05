@@ -244,7 +244,9 @@
     </div>
 </div>
 <%--底部視圖--%>
+<div id="bottomDiv">
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
+</div>
 </body>
 </html>
 <script>
@@ -262,10 +264,18 @@
         if ("${to}" == "login") {
             $("#loginDiv").show();
             $("#registerDiv").hide();
+            $("#bottomDiv").hide();
+            setTimeout(function(){
+                $("#bottomDiv").show();
+            },100);
         } else {
             loadCountry();
             $("#loginDiv").hide();
             $("#registerDiv").show();
+            $("#bottomDiv").hide();
+            setTimeout(function(){
+                $("#bottomDiv").show();
+            },100);
         }
         showCode();
 //        loadCountry();
@@ -415,6 +425,11 @@
     function registJump() {
         $("#loginDiv").hide();
         $("#registerDiv").show();
+
+        $("#bottomDiv").hide();
+        setTimeout(function(){
+            $("#bottomDiv").show();
+        },100);
         if (!isLoaded) {
             loadCountry();
         }
@@ -501,6 +516,11 @@
         if ("${to}" == "login") {
             $("#loginDiv").show();
             $("#registerDiv").hide();
+
+            $("#bottomDiv").hide();
+            setTimeout(function(){
+                $("#bottomDiv").show();
+            },100);
             clearText();
             wait = 0;
         }
@@ -511,6 +531,11 @@
     function jumpLogin() {
         $("#loginDiv").show();
         $("#registerDiv").hide();
+
+        $("#bottomDiv").hide();
+        setTimeout(function(){
+            $("#bottomDiv").show();
+        },100);
         clearText();
         wait = 0;
     }
