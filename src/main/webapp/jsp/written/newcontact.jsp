@@ -15,7 +15,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title><spring:message code="written.content.title2"/></title>
+    <title><spring:message code="written.contact.title2"/></title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -32,21 +32,21 @@
 <div class="wrapper-big" id="body">
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title"><spring:message code="written.content.ptitle1"/></div>
+            <div class="prompt-title"><spring:message code="written.contact.ptitle1"/></div>
             <div class="prompt-confirm">
                 <ul>
                     <li id="EjectTitle"></li>
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a class="btn btn-white" id="prompt-btn"><spring:message code="written.content.confirm1"/></a>
+                <a class="btn btn-white" id="prompt-btn"><spring:message code="written.contact.confirm1"/></a>
             </div>
 
         </div>
         <div class="mask" id="eject-mask"></div>
     </div>
     <%--头部--%>
-    <spring:message code="written.content.title2" var="title"/>
+    <spring:message code="written.contact.title2" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
@@ -55,24 +55,24 @@
     <section class="order-content new-cont">
         <div class="order-list">
             <ul>
-                <li><spring:message code="written.content.phone"/></li>
+                <li><spring:message code="written.contact.phone"/></li>
                 <li><input type="text" class="input input-medium" id="phone"
-                           placeholder="<spring:message code="written.content.holder1"/>"></li>
+                           placeholder="<spring:message code="written.contact.holder1"/>"></li>
             </ul>
             <ul>
-                <li><spring:message code="written.content.name"/></li>
+                <li><spring:message code="written.contact.name"/></li>
                 <li><input type="text" class="input input-medium" id="name"
-                           placeholder="<spring:message code="written.content.holder2"/>" maxlength="20"></li>
+                           placeholder="<spring:message code="written.contact.holder2"/>" maxlength="20"></li>
             </ul>
             <ul>
-                <li><spring:message code="written.content.email"/></li>
+                <li><spring:message code="written.contact.email"/></li>
                 <li><input type="text" class="input input-medium" id="email"
-                           placeholder="<spring:message code="written.content.holder3"/>" maxlength="35"></li>
+                           placeholder="<spring:message code="written.contact.holder3"/>" maxlength="35"></li>
             </ul>
 
             <ul class="none-border" style="display: none">
                 <li class="width-large">
-                    <p>设为默认地址</p>
+                    <p><spring:message code="written.contact.default"/></p>
                     <p class="right-multi"><input type="checkbox" class="multi-switch" value="0"/></p>
                 </li>
             </ul>
@@ -81,7 +81,7 @@
 </div>
 <section class="add-btn">
     <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue"><spring:message
-            code="written.content.submit1"/></a>
+            code="written.contact.submit1"/></a>
 </section>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
@@ -99,13 +99,13 @@
             var nameCheck = /['"#$%&\^*]/;
 
             if (phone == "" || phone == null) {
-                $("#EjectTitle").html("<spring:message code="written.content.tips6"/>");
+                $("#EjectTitle").html("<spring:message code="written.contact.tips6"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             } else {
                 if (!phoneCheck.test(phone)) {
-                    $("#EjectTitle").html("<spring:message code="written.content.tips7"/>");
+                    $("#EjectTitle").html("<spring:message code="written.contact.tips7"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     return;
@@ -113,13 +113,13 @@
             }
 
             if (name == "" || name == null) {
-                $("#EjectTitle").html("<spring:message code="written.content.tips8"/>");
+                $("#EjectTitle").html("<spring:message code="written.contact.tips8"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             } else {
                 if (isEmojiCharacter(name) || nameCheck.test(name)) {
-                    $("#EjectTitle").html("<spring:message code="written.content.tips9"/>");
+                    $("#EjectTitle").html("<spring:message code="written.contact.tips9"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     return;
@@ -127,13 +127,13 @@
             }
 
             if (email == "" || email == null) {
-                $("#EjectTitle").html("<spring:message code="written.content.tips10"/>");
+                $("#EjectTitle").html("<spring:message code="written.contact.tips10"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
                 return;
             } else {
                 if (!emailCheck.test(email)) {
-                    $("#EjectTitle").html("<spring:message code="written.content.tips11"/>");
+                    $("#EjectTitle").html("<spring:message code="written.contact.tips11"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     return;
@@ -185,13 +185,13 @@
                     var OrderId = data.OrderId;
                     window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
                 } else {
-                    $("#EjectTitle").html("<spring:message code="written.content.tips12"/>");
+                    $("#EjectTitle").html("<spring:message code="written.contact.tips12"/>");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                 }
             },
             error: function (data) {
-                $("#EjectTitle").html("<spring:message code="written.content.tips12"/>");
+                $("#EjectTitle").html("<spring:message code="written.contact.tips12"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
             },

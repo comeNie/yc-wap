@@ -15,7 +15,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title><spring:message code="written.content.title1"/></title>
+    <title><spring:message code="written.confirm.title1"/></title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -31,40 +31,40 @@
 <body>
 <div class="wrapper-big" id="body">
     <%--头部--%>
-    <spring:message code="written.content.title1" var="title"/>
+    <spring:message code="written.confirm.title1" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:ToContent()"/>
     </jsp:include>
     <!--新增联系方式-->
     <section class="add-contact" style="display: none">
-        <a href="#"><i class="icon-plus"></i>新增联系方式</a>
+        <a href="#"><i class="icon-plus"></i><spring:message code="written.confirm.new"/></a>
     </section>
     <!--订单内容-->
     <section class="order-content">
         <div class="order-list">
             <ul>
-                <li><spring:message code="written.content.detail"/></li>
+                <li><spring:message code="written.confirm.detail"/></li>
                 <li class="right word">${Detail}
                 </li>
             </ul>
             <ul>
-                <li><spring:message code="written.content.language"/></li>
+                <li><spring:message code="written.confirm.language"/></li>
                 <li class="right">${DualVal}
                 </li>
             </ul>
             <ul>
-                <li><spring:message code="written.content.domain"/></li>
+                <li><spring:message code="written.confirm.domain"/></li>
                 <li class="right">${DomainVal}
                 </li>
             </ul>
             <ul>
-                <li><spring:message code="written.content.purpose"/></li>
+                <li><spring:message code="written.confirm.purpose"/></li>
                 <li class="right">${PurposeVal}
                 </li>
             </ul>
             <ul class="none-border">
-                <li><spring:message code="written.content.level11"/></li>
+                <li><spring:message code="written.confirm.level11"/></li>
                 <li class="right">${TransLvVal}
                 </li>
             </ul>
@@ -74,9 +74,9 @@
     <section class="order-content">
         <div class="order-message">
             <ul>
-                <li><spring:message code="written.content.remark"/></li>
+                <li><spring:message code="written.confirm.remark"/></li>
                 <li><textarea id="message" class="textarea textarea-large"
-                              placeholder="<spring:message code="written.content.holder"/>"></textarea></li>
+                              placeholder="<spring:message code="written.confirm.holder"/>"></textarea></li>
             </ul>
         </div>
     </section>
@@ -85,7 +85,7 @@
 <section class="order-submit">
     <p class="left">${Price}
     </p>
-    <p class="right"><a href="javascript:void(0)" id="submit"><spring:message code="written.content.next"/></a></p>
+    <p class="right"><a href="javascript:void(0)" id="submit"><spring:message code="written.confirm.next"/></a></p>
 </section>
 
 </body>

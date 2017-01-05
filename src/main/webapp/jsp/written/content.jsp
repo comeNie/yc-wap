@@ -87,7 +87,7 @@
             <a href="javascript:inputClear()" id="clearIcon" style="display: none"><i class="icon iconfont">&#xe618;</i></a>
         </section>
         <div class="testing-title" style="display: none">
-            <p>您可以任意选择输入内容或者<a href="javascript:" id="upload">上传附件</a></p>
+            <p><spring:message code="written.content.upload1"/><a href="javascript:" id="upload"><spring:message code="written.content.upload2"/></a></p>
         </div>
         <div class="choice-list">
             <ul>
