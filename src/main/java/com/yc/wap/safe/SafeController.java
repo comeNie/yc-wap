@@ -344,7 +344,14 @@ public class SafeController extends BaseController {
                 session.setAttribute("password","true");
             }else{
                 result.put("status","0");
-                result.put("msg",responseCode.getCodeMessage());
+//                result.put("msg",responseCode.getCodeMessage());
+                if (responseCode.getCodeNumber() == -1){
+                    result.put("msg",rb.getMessage("safeCtrl.oldpsdError"));
+                }else if (responseCode.getCodeNumber() == 0){
+                    result.put("msg",rb.getMessage("safeCtrl.codeLoseTime"));
+                }else {
+                    result.put("msg",rb.getMessage("safeCtrl.psdChangeError"));
+                }
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
@@ -387,7 +394,14 @@ public class SafeController extends BaseController {
                 session.setAttribute("domainname",domainvalue);
             }else{
                 result.put("status","0");
-                result.put("msg",responseCode.getCodeMessage());
+//                result.put("msg",responseCode.getCodeMessage());
+                if (responseCode.getCodeNumber() == 0){
+                    result.put("msg",rb.getMessage("safeCtrl.codeLoseTime"));
+                }else if (responseCode.getCodeNumber() == -1){
+                    result.put("msg",rb.getMessage("safeCtrl.codeError"));
+                }else {
+                    result.put("msg",rb.getMessage("safeCtrl.phoneOpeError"));
+                }
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
@@ -496,6 +510,13 @@ public class SafeController extends BaseController {
             }else{
                 result.put("status","0");
                 result.put("msg",responseCode.getCodeMessage());
+                if (responseCode.getCodeNumber() == 0){
+                    result.put("msg",rb.getMessage("safeCtrl.codeLoseTime"));
+                }else if (responseCode.getCodeNumber() == -1){
+                    result.put("msg",rb.getMessage("safeCtrl.codeError"));
+                }else {
+                    result.put("msg",rb.getMessage("safeCtrl.mailOpeError"));
+                }
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
@@ -561,7 +582,7 @@ public class SafeController extends BaseController {
             boolean isFail = (boolean) objects[0];
             if(!isFail){
                 result.put("status","0");
-                result.put("msg","验证码发送次数达到当天限制");
+                result.put("msg",rb.getMessage("safeCtrl.codeSoMuch"));
                 return result.returnMsg();
             }
         }
@@ -674,7 +695,6 @@ public class SafeController extends BaseController {
                     result.put("msg",rb.getMessage("safeCtrl.phoneError"));
                 }else {
                     result.put("msg",rb.getMessage("safeCtrl.codeSendFail"));
-
                 }
             }
         }catch (Exception e){

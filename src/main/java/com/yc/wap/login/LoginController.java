@@ -118,6 +118,9 @@ public class LoginController extends BaseController {
             }else {
                 result.put("status","0");
                 result.put("msg",code.getCodeMessage());
+                if (code.getCodeNumber() == 0){
+                    result.put("msg","账号或密码错误");
+                }
             }
         }catch (Exception e){
             log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
@@ -156,6 +159,9 @@ public class LoginController extends BaseController {
             if (!resp.getResponseHeader().getResultCode().equals("000000")){
                 result.put("status","0");
                 result.put("msg",resp.getResponseHeader().getResultMessage());
+                if (resp.getResponseHeader().getResultCode().equals("000001")){
+                    result.put("msg",rb.getMessage("loginCtrl.codeError"));
+                }
 
             }
             /*code:失败，未找到该用户信息-1 code:成功1    */
@@ -206,7 +212,7 @@ public class LoginController extends BaseController {
     		for(int i=0;i<3;i++){
     			BaseResponse resp=userSv.completeUserInfo(cmpUser);
     			if(resp.getResponseHeader().getIsSuccess()){
-    				flag=true;
+    				flag = true;
     				long endTimeCompleteUser = System.currentTimeMillis();
     		    	log.info("结束自动补全客户信息,当前时间戳:"+endTimeCompleteUser+"，耗时:"+(endTimeCompleteUser-startTimeCompleteUser)+"毫秒");
     				break;
