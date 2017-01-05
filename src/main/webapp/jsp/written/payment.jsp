@@ -364,20 +364,20 @@
     }
 
     function BalancePay() {
-        if (!setPassword) {
-            $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单");
-            $('#eject-mask').fadeIn(100);
-            $('#prompt').slideDown(100);
-            return;
-        }
-
         if (payCheck == "0") {
             toBalancePay();
         } else {
-            $("#password-tip").html("请输入支付密码，完成订单支付");
-            $("#int-password").val("");
-            $('#eject-mask').fadeIn(100);
-            $('#password').slideDown(100);
+            if (!setPassword) {
+                $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
+            } else {
+                $("#password-tip").html("请输入支付密码，完成订单支付");
+                $("#int-password").val("");
+                $('#eject-mask').fadeIn(100);
+                $('#password').slideDown(100);
+            }
         }
     }
 
