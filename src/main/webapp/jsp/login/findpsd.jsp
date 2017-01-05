@@ -50,7 +50,7 @@
                                 <label id="nameLabel1"></label>
                             </li>
                             <li class="int-border">
-                                <p><input id="codeid1" type="text" class="input input-yzm" placeholder="<spring:message code="login.login.yanzhengma"/>" autocomplete="off"></p>
+                                <p><input id="codeid1" type="text" class="input input-yzm" placeholder="<spring:message code="login.findpsd.yanzhengma"/>" autocomplete="off"></p>
                                 <img id="checkCodeImg" src="<%=path%>/safe/getpiccode" onclick="createCode()"/>
                                 <p class="right"><a href="javascript:void(0)" onclick="createCode()"><i class="icon iconfont">&#xe66c;</i></a></p>
                                 <label id="codeLabel1"></label>
@@ -64,14 +64,14 @@
             <div id="next2">
                 <div class="set-password">
                     <div class="set-phone">
-                        <p id="checkP"><spring:message code="safe.checkphone.hadcheckPhone"/></p>
+                        <p id="checkP"><spring:message code="login.findpsd.hadcheckPhone"/></p>
                         <p class="word" id="phone2"></p>
                     </div>
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="codeid2" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>" autocomplete="off"></p>
-                                <p class="yzm"><a id="getnumber" onclick="getTestCode()" href="javascript:void(0)"  class="btn bnt-yzm"><spring:message code="login.register.getcode"/></a></p>
+                                <p><input id="codeid2" type="text" class="input input-small" placeholder="<spring:message code="login.findpsd.enterDycode"/>" autocomplete="off"></p>
+                                <p class="yzm"><a id="getnumber" onclick="getTestCode()" href="javascript:void(0)"  class="btn bnt-yzm"><spring:message code="login.findpsd.getcode"/></a></p>
                                 <label id="codeLabel2"></label>
                             </li>
                             <li><a href="javascript:void(0)" id="next-btn2" class="submit-btn btn-blue"><spring:message code="login.findpsd.next"/></a></li>
@@ -85,11 +85,11 @@
                     <div class="set-int">
                         <ul>
                             <li>
-                                <p><input id="psdid3" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input1"/>" autocomplete="off"></p>
+                                <p><input id="psdid3" type="password" class="input input-large" placeholder="<spring:message code="login.findpsd.large_input1"/>" autocomplete="off"></p>
                                 <label id="psdLabel3"></label>
                             </li>
                             <li>
-                                <p><input id="confirmid3" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input2"/>" autocomplete="off"></p>
+                                <p><input id="confirmid3" type="password" class="input input-large" placeholder="<spring:message code="login.findpsd.large_input2"/>" autocomplete="off"></p>
                                 <label id="confirmLabel3"></label>
                             </li>
                             <li><a href="javascript:void(0)" id="next-btn3" class="submit-btn btn-blue"><spring:message code="login.findpsd.next"/></a></li>
@@ -103,7 +103,7 @@
                     <ul>
                         <li><i class="icon iconfont">&#xe612;</i></li>
                         <li class="word"><spring:message code="login.findpsd.success"/></li>
-                        <li><span id="spanTime">5s</span><spring:message code="login.registersuccess.huidao"/><a href="javascript:void(0)" onclick="goLogin()"><spring:message code="login.registersuccess.jiemian"/></a></li>
+                        <li><span id="spanTime">5s</span><spring:message code="login.findpsd.huidao"/><a href="javascript:void(0)" onclick="goLogin()"><spring:message code="login.findpsd.jiemian"/></a></li>
                     </ul>
                 </section>
             </div>
@@ -136,7 +136,7 @@
             var phone = $("#nameid1").val();
             var code = $("#codeid1").val();
             if (phone == "" || phone == null) {
-                $("#nameLabel1").html("<spring:message code="login.register.enterphone"/>");
+                $("#nameLabel1").html("<spring:message code="login.findpsd.enterphone"/>");
                 $("#nameLabel1").css("display","block");
                 return;
             }else {
@@ -144,14 +144,14 @@
             }
             var t = /^[0-9]*$/;
             if(!t.test(phone)){
-                $("#nameLabel1").html("<spring:message code="login.register.enterRightphone"/>");
+                $("#nameLabel1").html("<spring:message code="login.findpsd.enterRightphone"/>");
                 $("#nameLabel1").css("display","block");
                 return;
             }else {
                 $("#nameLabel1").css("display","none");
             }
             if (code == "" || code == null) {
-                $("#codeLabel1").html("<spring:message code="login.login.entercode"/>");
+                $("#codeLabel1").html("<spring:message code="login.findpsd.entercode"/>");
                 $("#codeLabel1").css("display","block");
                 return;
             }else {
@@ -167,7 +167,7 @@
             var code = $("#codeid2").val();
             var phone = $("#nameid1").val();
             if (code == "" || code == null) {
-                $("#codeLabel2").html("<spring:message code="login.register.entercode"/>");
+                $("#codeLabel2").html("<spring:message code="login.findpsd.entercode"/>");
                 $("#codeLabel2").css("display","block");
                 return;
             }else {
@@ -185,7 +185,7 @@
             var psdid = $("#psdid3").val();
             var confimid = $("#confirmid3").val();
             if (psdid == "" || psdid == null){
-                $("#psdLabel3").html("<spring:message code="login.login.enterpsd"/>");
+                $("#psdLabel3").html("<spring:message code="login.findpsd.enterpsd"/>");
                 $("#psdLabel3").css("display","block");
                 return;
             }else {
@@ -194,7 +194,7 @@
 //            var t = /^[0-9a-zA-Z]{6,16}$/;
             var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
             if (!t.test(psdid)){
-                $("#psdLabel3").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+                $("#psdLabel3").html("<spring:message code="login.findpsd.alert_newLength"/>");
                 $("#psdLabel3").css("display","block");
                 return;
             }else {
@@ -202,7 +202,7 @@
             }
 
             if (confimid == "" || confimid == null){
-                $("#confirmLabel3").html("<spring:message code="login.login.enterpsd"/>");
+                $("#confirmLabel3").html("<spring:message code="login.findpsd.enterpsd"/>");
                 $("#confirmLabel3").css("display","block");
                 return;
             }else {
@@ -210,7 +210,7 @@
             }
 //        判断新密码是否相同
             if (psdid != confimid) {
-                $("#confirmLabel3").html("<spring:message code="safe.changepsd.tip_lable"/>");
+                $("#confirmLabel3").html("<spring:message code="login.findpsd.tip_lable"/>");
                 $("#confirmLabel3").css("display","block");
                 return;
             }else {
@@ -236,7 +236,7 @@
             index --;
             createCode();
             wait = 0;
-            $("#checkP").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
+            $("#checkP").html("<spring:message code="login.findpsd.hadcheckPhone"/>");
         }else if (index == 2){
 
             $("#next2").show();
@@ -402,7 +402,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#codeLabel2").css("display", "none");
-                    $("#checkP").html("已发送动态码短信到");
+                    $("#checkP").html("<spring:message code="login.findpsd.hadDynCode"/>");
                     wait = 60;
                     countDown(60);
 
@@ -410,14 +410,14 @@
                 } else {
                     $("#codeLabel2").html(data.msg);
                     $("#codeLabel2").css("display", "block");
-                    $("#checkP").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
+                    $("#checkP").html("<spring:message code="login.findpsd.hadcheckPhone"/>");
                     Loading.HideLoading();
                 }
             },
             error: function () {
                 $("#codeLabel2").html(<spring:message code="safe.safesuccess.failNet"/>);
                 $("#codeLabel2").css("display", "block");
-                $("#checkP").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
+                $("#checkP").html("<spring:message code="login.findpsd.hadcheckPhone"/>");
                 Loading.HideLoading();
             }
         });
@@ -428,13 +428,13 @@
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
             $("#getnumber").attr("onclick", "getTestCode()");
-            $("#getnumber").html("<spring:message code="login.register.getcode"/>");//改变按钮中value的值
+            $("#getnumber").html("<spring:message code="login.findpsd.getcode"/>");//改变按钮中value的值
             $("#getnumber").attr("class","btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
             <%--var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';--%>
-            var txtStr = wait+ '<spring:message code="safe.changemail.chongxinhuoqu"/>';
+            var txtStr = wait+ '<spring:message code="login.findpsd.chongxinhuoqu"/>';
             $("#getnumber").html(txtStr);
             // 按钮里面的内容呈现倒计时状态
             $("#getnumber").attr("disabled", "block");

@@ -196,22 +196,6 @@
 
     </section>
 
-    <!--上传提示弹出框-->
-    <%--<div class="eject-big">--%>
-        <%--<div class="prompt" id="prompt">--%>
-            <%--<div class="prompt-title">请选择</div>--%>
-            <%--<div class="prompt-confirm">--%>
-                <%--<ul>--%>
-                    <%--<li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>--%>
-                <%--</ul>--%>
-            <%--</div>--%>
-            <%--<div class="prompt-confirm-btn">--%>
-                <%--<a class="btn btn-white" id="prompt-btn">确认</a>--%>
-            <%--</div>--%>
-
-        <%--</div>--%>
-        <%--<div class="mask" id="eject-mask"></div>--%>
-    <%--</div>--%>
 
     <div class="eject-big">
         <div class="prompt" id="prompt">
@@ -233,7 +217,7 @@
 
 <div id="index-btnshow" style="display:none;">
     <div class="release-showbj" id="release-showbj"></div>
-    <div class="release-btn" id="release-btn"><a href="javascript:window.location.href='<%=path%>/written'">发布翻译需求</a></div>
+    <div class="release-btn" id="release-btn"><a href="javascript:window.location.href='<%=path%>/written'"><spring:message code="start.sayTrans"/></a></div>
 </div>
 
 </body>
@@ -564,7 +548,7 @@
 
                 } else {
                     IsTranslated = false;
-                    autoTip("抱歉，该翻译失败，请选择人工翻译");
+                    autoTip("<spring:message code="start.transError"/>");
                     $("#results").hide();
                     $("#chick-btn").show();
 
@@ -574,7 +558,7 @@
             },
             error: function (data) {
                 IsTranslated = false;
-                autoTip("抱歉，该翻译失败，请选择人工翻译");
+                autoTip("<spring:message code="start.transError"/>");
                 $("#results").hide();
                 $("#chick-btn").show();
 

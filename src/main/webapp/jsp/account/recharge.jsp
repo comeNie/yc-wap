@@ -45,7 +45,7 @@
             <div class="choice-list">
                 <ul>
                     <li>
-                        <p class="word"><spring:message code="account.balance.yuer"/></p>
+                        <p class="word"><spring:message code="account.recharge.yuer"/></p>
                         <p>${balance}<spring:message code="account.recharge.yuan"/></p>
                     </li>
                     <li>
