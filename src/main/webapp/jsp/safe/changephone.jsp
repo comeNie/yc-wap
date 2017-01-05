@@ -87,7 +87,7 @@
         $("#getnumber").removeAttr("disabled");
         $("#getnumber").attr("class","btn bnt-yzm");
         $("#getnumber").attr("onclick", "getnumberonclick()");
-        $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
+        $("#getnumber").html("<spring:message code="safe.changephone.bntyzm_input"/>");//改变按钮中value的值
        //加载国家的数据
         loadCountry();
     });
@@ -173,7 +173,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#phonetips").css("display", "none");
-                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.safe.bangdingphone"/>";
+                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changephone.bangdingphone"/>";
                     window.location.href=tourl;
                     Loading.HideLoading();
                 } else {
@@ -284,13 +284,13 @@
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
             $("#getnumber").attr("onclick", "getnumberonclick()");
-            $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
+            $("#getnumber").html("<spring:message code="safe.changephone.bntyzm_input"/>");//改变按钮中value的值
             $("#getnumber").attr("class","btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 60;
         }else {
             <%--var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';--%>
-            var txtStr = wait+ '<spring:message code="safe.changemail.chongxinhuoqu"/>';
+            var txtStr = wait+ '<spring:message code="safe.changephone.chongxinhuoqu"/>';
             $("#getnumber").html(txtStr);
             $("#getnumber").attr("class","btn bnt-yzm-gray");
             // 按钮里面的内容呈现倒计时状态

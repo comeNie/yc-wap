@@ -56,86 +56,49 @@
                 <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()"><spring:message code="login.login.zhuce"/></a>
             </ul>
         </nav>
-        <%--<!--tab-->
-        <section class="login-tab">
-         <ul>
-             <li><a href="javascript:void(0)" class="current">快速登录</a></li>
-             <li><a href="javascript:void(0)">普通登录</a></li>
-         </ul>
-        </section>
-        <!--tab1-->
-        <section id="tab1">
-            <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
-            <section class="form-big">
-                <div class="set-password">
-                    <div class="set-int">
-                        <ul>
-                            <li>
-                                <p>
-                                    <select class="select testing-select-big" id="selectid">
-                                    </select>
-                                    <span>|</span>
-                                </p>
-                            </li>
-                            <li>
-                                <p><input type="text" class="input input-large" placeholder="手机号"></p>
-                                <label id="phoneLabel"></label>
-                            </li>
-                            <li>
-                                <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-                                <p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>
-                                <label id="phonetips"></label>
-                            </li>
-                            <li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>
-                            <li class="right"><a href="javascript:void(0)">忘记密码 </a></li>
-                        </ul>
-                    </div>
-    <div class="wrapper-big"><!--包含除底部外的所有层-->
-        <!--登录-->
-        <nav class="wap-second-nav">
-            <ul>
-                <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
-                <li>登录</li>
-                <a href="javascript:void(0)" class="btn login-btn right1" onclick="registJump()">注册</a>
-            </ul>
-        </nav>
-        <%--<!--tab-->
-        <section class="login-tab">
-         <ul>
-             <li><a href="javascript:void(0)" class="current">快速登录</a></li>
-             <li><a href="javascript:void(0)">普通登录</a></li>
-         </ul>
-        </section>
-        <!--tab1-->
-        <section id="tab1">
-            <section class="login-prompt">验证成功则登录，未注册将自动创建译云帐号</section>
-            <section class="form-big">
-                <div class="set-password">
-                    <div class="set-int">
-                        <ul>
-                            <li>
-                                <p>
-                                    <select class="select testing-select-big" id="selectid">
-                                    </select>
-                                    <span>|</span>
-                                </p>
-                            </li>
-                            <li>
-                                <p><input type="text" class="input input-large" placeholder="手机号"></p>
-                                <label id="phoneLabel"></label>
-                            </li>
-                            <li>
-                                <p><input type="text" class="input input-small" placeholder="请输入动态码"></p>
-                                <p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>
-                                <label id="phonetips"></label>
-                            </li>
-                            <li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>
-                            <li class="right"><a href="javascript:void(0)">忘记密码 </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        <!--tab1-->--%>
+
+
+        <%--<!--tab-->--%>
+        <%--<section class="login-tab">--%>
+         <%--<ul>--%>
+             <%--<li><a href="javascript:void(0)" class="current"><spring:message code="login.login.fastLogin"/>快速登录</a></li>--%>
+             <%--<li><a href="javascript:void(0)"><spring:message code="login.login.norLogin"/>普通登录</a></li>--%>
+         <%--</ul>--%>
+        <%--</section>--%>
+        <%--<!--tab1-->--%>
+        <%--<section id="tab1">--%>
+            <%--<section class="login-prompt"><spring:message code="login.login.fastTip"/>验证成功则登录，未注册将自动创建译云帐号</section>--%>
+            <%--<section class="form-big">--%>
+                <%--<div class="set-password">--%>
+                    <%--<div class="set-int">--%>
+                        <%--<ul>--%>
+                            <%--<li>--%>
+                                <%--<p>--%>
+                                    <%--<select class="select testing-select-big" id="selectid">--%>
+                                    <%--</select>--%>
+                                    <%--<span>|</span>--%>
+                                <%--</p>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<p><input type="text" class="input input-large" placeholder="手机号"></p>--%>
+                                <%--<label id="phoneLabel"></label>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<p><input type="text" class="input input-small" placeholder="请输入动态码"></p>--%>
+                                <%--<p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>--%>
+                                <%--<label id="phonetips"></label>--%>
+                            <%--</li>--%>
+                            <%--<li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>--%>
+                            <%--<li class="right"><a href="javascript:void(0)">忘记密码 </a></li>--%>
+                        <%--</ul>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</section>--%>
+        <%--</section>--%>
+
+
+
+
         <section id="tab2" style="display:block;">
             <section class="form-big">
                 <div class="set-password">
@@ -172,7 +135,7 @@
         <section class="other-big">
             <div class="other-login">
                 <p class="line"></p>
-                <p class="word">其他登录</p>
+                <p class="word"><spring:message code="login.login.otherLogin"/>其他登录</p>
                 <p class="line"></p>
             </div>
             <div class="other-login-icon">
@@ -346,7 +309,7 @@
 //        var t = /^[0-9a-zA-Z]{6,16}$/;
         var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
         if (!t.test(psd)) {
-            $("#psdLabel").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+            $("#psdLabel").html("<spring:message code="login.login.alert_newLength"/>");
             $("#psdLabel").css("display", "block");
             return;
         } else {
@@ -593,7 +556,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#phoneLabel1").css("display", "block");
-                    $("#phoneLabel1").html("该手机号可用");
+                    $("#phoneLabel1").html("<spring:message code="login.login.phoneAble"/>");
                     blurCheck = 1;
                 } else {
                     $("#phoneLabel1").html(data.msg);
@@ -657,7 +620,7 @@
 //        var t = /^[0-9a-zA-Z]{6,16}$/;
         var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
         if (!t.test(psdid)) {
-            $("#psdLabel1").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+            $("#psdLabel1").html("<spring:message code="login.login.alert_newLength"/>");
             $("#psdLabel1").css("display", "block");
             return;
         } else {
@@ -673,7 +636,7 @@
         }
 //        判断新密码是否相同
         if (psdid != confimid) {
-            $("#confimPsd").html("<spring:message code="safe.changepsd.tip_lable"/>");
+            $("#confimPsd").html("<spring:message code="login.login.tip_lable"/>");
             $("#confimPsd").css("display", "block");
             return;
         } else {
@@ -810,7 +773,7 @@
             wait = 120;
         } else {
             //<spring:message code="login.register.getcode"/>
-            var txtStr = wait + '<spring:message code="safe.changemail.chongxinhuoqu"/>';
+            var txtStr = wait + '<spring:message code="login.login.chongxinhuoqu"/>';
             $("#getnumber").html(txtStr);
             $("#getnumber").attr("class", "btn bnt-yzm-gray");
             // 按钮里面的内容呈现倒计时状态

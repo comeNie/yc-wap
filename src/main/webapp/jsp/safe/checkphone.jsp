@@ -63,7 +63,7 @@
                             <p class="yzm"><a id="getnumber" onclick="getnumberonclick()"class="btn bnt-yzm"><spring:message code="safe.checkphone.yzm_input"/></a></p>
                             <label id="phonetips"></label>
                         </li>
-                        <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.changephone.nextbtn"/></a></li>
+                        <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
                     </ul>
                 </div>
             </div>
@@ -226,7 +226,7 @@
             wait = 60;
         }else {
             <%--var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';--%>
-            var txtStr = wait+ '<spring:message code="safe.changemail.chongxinhuoqu"/>';
+            var txtStr = wait+ '<spring:message code="safe.checkphone.chongxinhuoqu"/>';
             $("#getnumber").html(txtStr);
             $("#getnumber").attr("class","btn bnt-yzm-gray");
             // 按钮里面的内容呈现倒计时状态
