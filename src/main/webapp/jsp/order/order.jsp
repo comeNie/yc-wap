@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -15,7 +16,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-        <title>我的订单</title>
+        <title><spring:message code="order.order.title"/></title>
         <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
         <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
         <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -32,32 +33,33 @@
 <div class="wrapper-big">
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title">请选择</div>
+            <div class="prompt-title"><spring:message code="order.order.titles"/></div>
             <div class="prompt-confirm">
                 <ul>
-                    <li>是否确认取消订单？</li>
+                    <li><spring:message code="order.order.tips"/></li>
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a class="btn btn-white-50" id="prompt-btn">确 认</a>
-                <a class="btn btn-white-50" id="prompt-btn-close">取 消</a>
+                <a class="btn btn-white-50" id="prompt-btn"><spring:message code="order.order.confirm"/></a>
+                <a class="btn btn-white-50" id="prompt-btn-close"><spring:message code="order.order.cancel"/></a>
             </div>
         </div>
         <div class="mask" id="eject-mask"></div>
     </div>
     <%--头部--%>
+    <spring:message code="order.order.title1" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="我的订单"/>
+        <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="javascript:window.history.go(-1)"/>
     </jsp:include>
     <section class="tij-cg" id="error" style="display: none">
         <ul>
             <li><i class="icon iconfont red">&#xe62b;</i></li>
-            <li class="word red">您还没有相应的订单</li>
+            <li class="word red"><spring:message code="order.order.no"/></li>
         </ul>
     </section>
     <div id="wrapper"></div>
-    <div class="loading" id="spinner"><a href="javascript:doSomething()" id="spId">点击加载更多</a></div>
+    <div class="loading" id="spinner"><a href="javascript:doSomething()" id="spId"></a></div>
     <div><p></p></div>
 </div>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
@@ -186,18 +188,21 @@
                         var date = new Date(data.OrderList[key].orderTime).Format("yyyy/MM/dd hh:mm:ss");
                         var price = (data.OrderList[key].totalFee / 1000).toFixed(2);
 
+                        var orderIdText = "<spring:message code="order.order.orderid"/>";
+                        var yuan = "<spring:message code="order.order.yuan"/>";
+
                         if (orderId == null || orderId == "") {
                             continue;
                         }
 
                         if (statusFlag == "0") {
-                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li></ul></div></section>";
+                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>orderIdText</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + yuan + "</p></li></ul></div></section>";
                         } else if (statusFlag == "1") {
-                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn blue'><a href='javascript:ToOrderPay(" + orderId + "," + price + ")'>" + btn1 + "</a></p><p class='bord-btn ash'><a href='javascript:CancelOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
+                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>orderIdText</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + yuan + "</p></li><li class='right'><p class='bord-btn blue'><a href='javascript:ToOrderPay(" + orderId + "," + price + ")'>" + btn1 + "</a></p><p class='bord-btn ash'><a href='javascript:CancelOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         } else if (statusFlag == "2") {
-                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + "元</p></li><li class='right'><p class='bord-btn ash'><a href='javascript:ConfirmOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
+                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>orderIdText</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + price + yuan + "</p></li><li class='right'><p class='bord-btn ash'><a href='javascript:ConfirmOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         } else if (statusFlag == "3") {
-                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>订单号:</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + "</p></li><li class='right'><p class='bord-btn ash'><a href='javascript:CancelOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
+                            var htmlStr = "<section class='my-order-content'><div class='my-order-list'><ul><li><p>orderIdText</p><p class='blue-word' onclick='window.location.href=\"" + detailUrl + orderId + "\"'>" + orderId + "</p></li><li class='right red-word'>" + StateShow + "</li></ul><ul><li><p class='ow-h' onclick='window.location.href=\"" + detailUrl + orderId + "&to=text\"'>" + translateName + "</p></li><li class='right ash-word'>" + date + "</li></ul><ul class='ulborder'><li><p>" + tips + "</p></li><li class='right'><p class='bord-btn ash'><a href='javascript:CancelOrder(" + orderId + ")'>" + btn2 + "</a></p></li></ul></div></section>";
                         }
 
                         $('#wrapper').append(htmlStr);
@@ -208,15 +213,15 @@
 
             },
             beforeSend: function () {
-                $("#spId").html("正在加载");
+                $("#spId").html("<spring:message code="order.order.loading"/>");
                 $("#spinner").css("display", "block");
             },
             complete: function () {
                 if (noMore) {
-                    $("#spId").html("没有更多了");
+                    $("#spId").html("<spring:message code="order.order.nomore"/>");
                     $("#spinner").css("display", "block");
                 } else {
-                    $("#spId").html("点击加载更多");
+                    $("#spId").html("<spring:message code="order.order.click"/>");
                     $("#spinner").css("display", "block");
                 }
             }
@@ -320,53 +325,53 @@
      */
     function GetStateShow(state) {
         if (state == "11") {
-            btn1 = "支付";
-            btn2 = "取消";
-            tips = "需支付：";
+            btn1 = "<spring:message code="order.order.pay"/>";
+            btn2 = "<spring:message code="order.order.cancel1"/>";
+            tips = "<spring:message code="order.order.need"/>";
             statusFlag = "1";
-            return "待支付";
+            return "<spring:message code="order.order.status1"/>";
         } else if (state == "13") {
             btn1 = "";
-            btn2 = "取消";
-            tips = "请等待报价";
+            btn2 = "<spring:message code="order.order.cancel1"/>";
+            tips = "<spring:message code="order.order.wait"/>";
             statusFlag = "3";
-            return "待报价";
+            return "<spring:message code="order.order.status2"/>";
         } else if (state == "23") {
             btn1 = "";
             btn2 = "";
-            tips = "订单金额：";
+            tips = "<spring:message code="order.order.count"/>";
             statusFlag = "0";
-            return "翻译中";
+            return "<spring:message code="order.order.status3"/>";
         } else if (state == "50") {
             btn1 = "";
-            btn2 = "确认";
-            tips = "订单金额：";
+            btn2 = "<spring:message code="order.order.confirm1"/>";
+            tips = "<spring:message code="order.order.count"/>";
             statusFlag = "2";
-            return "待确认";
+            return "<spring:message code="order.order.status4"/>";
         } else if (state == "52") {
             btn1 = "";
             btn2 = "";
-            tips = "订单金额：";
+            tips = "<spring:message code="order.order.count"/>";
             statusFlag = "0";
-            return "待评价";
+            return "<spring:message code="order.order.status5"/>";
         } else if (state == "90") {
             btn1 = "";
             btn2 = "";
-            tips = "订单金额：";
+            tips = "<spring:message code="order.order.count"/>";
             statusFlag = "0";
-            return "已完成";
+            return "<spring:message code="order.order.status6"/>";
         } else if (state == "91") {
             btn1 = "";
             btn2 = "";
-            tips = "订单金额：";
+            tips = "<spring:message code="order.order.count"/>";
             statusFlag = "0";
-            return "已关闭";
+            return "<spring:message code="order.order.status7"/>";
         } else if (state == "92") {
             btn1 = "";
             btn2 = "";
-            tips = "订单金额：";
+            tips = "<spring:message code="order.order.count"/>";
             statusFlag = "0";
-            return "已退款";
+            return "<spring:message code="order.order.status8"/>";
         }
     }
 

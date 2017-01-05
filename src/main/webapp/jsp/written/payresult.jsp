@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -32,7 +33,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>支付结果</title>
+    <title><spring:message code="pay.result.title1"/></title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -47,8 +48,9 @@
 <body>
 <div class="wrapper-big" id="body">
     <%--头部--%>
+    <spring:message code="pay.result.title2" var="title"/>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
-        <jsp:param name="Title" value="支付结果"/>
+        <jsp:param name="Title" value="${title}"/>
         <jsp:param name="BackTo" value="<%=index%>"/>
         <jsp:param name="ShowIcon" value="false"/>
     </jsp:include>
@@ -59,9 +61,12 @@
             <section class="tij-cg" id="successlabel">
                 <ul>
                     <li><i class="icon iconfont">&#xe612;</i></li>
-                    <li class="word">您的订单支付成功</li>
-                    <li>您的订单号:<a href="javascript:toDetail('${OrderId}')">${OrderId}</a>
-                        ，您可以在<a href="javascript:toOrder()">“我的订单”</a>中查看您的订单信息，若有任何疑问，欢迎致电咨询:<br>400-119-8080
+                    <li class="word"><spring:message code="pay.result.success"/></li>
+                    <li><spring:message code="pay.result.order"/>
+                        <a href="javascript:toDetail('${OrderId}')">${OrderId}</a>
+                        <spring:message code="pay.result.order1"/><a href="javascript:toOrder()">
+                            <spring:message code="pay.result.order2"/></a><spring:message code="pay.result.order3"/>
+                        <br><spring:message code="pay.result.order4"/>
                     </li>
                 </ul>
             </section>
@@ -70,8 +75,12 @@
             <section class="tij-cg" id="successlabel">
                 <ul>
                     <li><i class="icon iconfont">&#xe612;</i></li>
-                    <li class="word">充值成功，本次充值金额${OrderAmount}元</li>
-                    <li>充值单号：<a href="javascript:void(0)">${OrderId}</a>，查看<a href="javascript:toBalance()">我的账户</a></li>
+                    <li class="word"><spring:message code="pay.result.recharge"/>${OrderAmount}
+                        <spring:message code="pay.result.yuan"/></li>
+                    <li><spring:message code="pay.result.recharge1"/><a href="javascript:void(0)">${OrderId}</a>
+                        <spring:message code="pay.result.recharge2"/><a href="javascript:toBalance()">
+                            <spring:message code="pay.result.recharge3"/></a>
+                    </li>
                 </ul>
             </section>
         </c:if>
@@ -83,9 +92,12 @@
             <section class="tij-cg" id="faillabel">
                 <ul>
                     <li><i class="icon iconfont red">&#xe62b;</i></li>
-                    <li class="word red">您的订单支付失败</li>
-                    <li>您的订单号:<a href="javascript:toDetail('${OrderId}')">${OrderId}</a>
-                        ，您可以在<a href="javascript:toOrder()">“我的订单”</a>中查看您的订单信息，若有任何疑问，欢迎致电咨询:<br>400-119-8080
+                    <li class="word red"><spring:message code="pay.result.order5"/></li>
+                    <li><spring:message code="pay.result.order"/>
+                        <a href="javascript:toDetail('${OrderId}')">${OrderId}</a>
+                        <spring:message code="pay.result.order1"/><a href="javascript:toOrder()">
+                            <spring:message code="pay.result.order2"/></a><spring:message code="pay.result.order3"/>
+                        <br><spring:message code="pay.result.order4"/>
                     </li>
                 </ul>
             </section>
@@ -94,8 +106,9 @@
             <section class="tij-cg" id="faillabel">
                 <ul>
                     <li><i class="icon iconfont red">&#xe62b;</i></li>
-                    <li class="word red">充值失败</li>
-                    <li>查看<a href="javascript:toBalance()">我的账户</a></li>
+                    <li class="word red"><spring:message code="pay.result.recharge4"/></li>
+                    <li><spring:message code="pay.result.recharge2"/>
+                        <a href="javascript:toBalance()"><spring:message code="pay.result.recharge3"/></a></li>
                 </ul>
             </section>
         </c:if>
