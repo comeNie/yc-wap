@@ -545,6 +545,8 @@
     var ButtonLeft = "";
     var OrderStatus = "";
     $(document).ready(function () {
+        Loading.HideLoading();
+
         GetStateShow('${Params.displayFlag}');
 
         if (ShowAmount == "0") {
