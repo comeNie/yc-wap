@@ -20,7 +20,7 @@ import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.constants.ConstantsResultCode;
 import com.yc.wap.system.utils.ConfigUtil;
-import com.yc.wap.system.utils.MD5Util;
+import com.yc.wap.system.utils.PasswordMD5Util;
 import com.yc.wap.system.utils.PaymentUtil;
 import com.yc.wap.system.utils.VerifyUtil;
 import org.apache.commons.logging.Log;
@@ -272,7 +272,7 @@ public class PayController extends BaseController {
         String password = request.getParameter("password");
         String payCheck = request.getParameter("payCheck");
         Double _Amount = Double.valueOf(Amount) * 1000;
-        String passwordCheck = MD5Util.encodePassword(password);
+        String passwordCheck = PasswordMD5Util.Md5Utils.md5(password);
 
         log.info("-----BalancePayment-----");
         log.info("OrderId: " + OrderId + ", Amount: " + Amount);

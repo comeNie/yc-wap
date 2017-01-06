@@ -1,4 +1,3 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
@@ -168,6 +167,7 @@
     var Channel = "1";
     var orderState = "";
     var payCheck = "";
+    var setPassword = true;
     var getInfoFalse = false;
 
     $(document).ready(function () {
@@ -335,6 +335,10 @@
             success: function (data) {
                 if (data.status == 1) {
                     payCheck = data.needPayCheck;
+                    var passwd = data.payPassword;
+                    if (passwd == null || passwd == "") {
+                        setPassword = false;
+                    }
                     $("#isPayCheck").val(payCheck);
                 } else {
                     $("#EjectTitle").html("<spring:message code="pay.payment.tips1"/>");
@@ -364,10 +368,16 @@
         if (payCheck == "0") {
             toBalancePay();
         } else {
-            $("#password-tip").html("<spring:message code="pay.payment.pass"/>");
-            $("#int-password").val("");
-            $('#eject-mask').fadeIn(100);
-            $('#password').slideDown(100);
+            if (!setPassword) {
+                $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+            } else {
+                $("#password-tip").html("请输入支付密码，完成订单支付");
+                $("#int-password").val("");
+                $('#eject-mask').fadeIn(100);
+                $('#password').slideDown(100);
+            }
         }
     }
 
