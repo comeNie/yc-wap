@@ -177,12 +177,13 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-//                    var date = new Date();
-//                    date.setDate(date.getDate() - 1);
-//                    document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
-//                    document.cookie = "dualChoose=0" + ";path=/";
-
                     var OrderId = data.OrderId;
+                    if (OrderId == "") {
+                        $("#EjectTitle").html("下单失败，请重试");
+                        $('#eject-mask').fadeIn(100);
+                        $('#prompt').slideDown(100);
+                        return;
+                    }
                     window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
                 } else {
                     $("#EjectTitle").html("<spring:message code="written.contact.tips12"/>");

@@ -339,12 +339,12 @@ public class WrittenController extends BaseController {
 
         JSONObject WrittenShowJSON = JSONObject.fromObject(session.getAttribute("WrittenShowJSON"));
 
-        String OrderId = OrderSubmit(WrittenContextJSON, WrittenShowJSON).toString();
+        String OrderId = OrderSubmit(WrittenContextJSON, WrittenShowJSON);
         result.put("OrderId", OrderId);
         return result.returnMsg();
     }
 
-    private Long OrderSubmit(JSONObject WrittenContextJSON, JSONObject WrittenShowJSON) {
+    private String OrderSubmit(JSONObject WrittenContextJSON, JSONObject WrittenShowJSON) {
         Timestamp Time = new Timestamp(System.currentTimeMillis());
         String UserId = (String) session.getAttribute("UID");
 
@@ -410,11 +410,11 @@ public class WrittenController extends BaseController {
                 Long OrderId = resp.getOrderId();
                 log.info("orderSubmissionSuccess");
                 log.info("OrderId: " + OrderId);
-                return OrderId;
+                return OrderId.toString();
             } else {
                 log.info("orderSubmissionFailed: " + resp.getResponseHeader().getResultMessage());
                 log.info("orderSubmissionFailed: " + resp.getResponseHeader().getResultCode());
-                throw new RuntimeException("orderSubmissionFailed");
+                return "";
             }
         } catch (BusinessException | SystemException e) {
             e.printStackTrace();
