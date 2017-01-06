@@ -35,7 +35,7 @@
             <div class="prompt-title">请选择</div>
             <div class="prompt-confirm">
                 <ul>
-                    <li>是否确认取消订单？</li>
+                    <li id="promptText"></li>
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
@@ -79,6 +79,7 @@
     var detailUrl = "<%=path%>/order/OrderDetail?OrderId=";
     var indexArray = [];
     var orderCancelId = "";
+    var orderConfirmId = "";
 
     $(document).ready(function () {
         Loading.HideLoading();
@@ -87,17 +88,21 @@
         $("#prompt-btn").bind("click", function () {
             $('#eject-mask').fadeOut(200);
             $('#prompt').slideUp(200);
-            OnConfirm(orderCancelId);
+            if (orderCancelId != "") {
+                onCancelOrder(orderCancelId);
+            } else if (orderConfirmId != "") {
+                onConfirmOrder(orderConfirmId);
+            }
         });
 
         $("#prompt-btn-close").bind("click", function () {
             $('#eject-mask').fadeOut(200);
             $('#prompt').slideUp(200);
-            OnCancel();
         });
     });
 
-    function EjectConfirm() {
+    function EjectConfirm(text) {
+        $('#promptText').html(text);
         $('#eject-mask').fadeIn(100);
         $('#prompt').slideDown(100);
     }
@@ -243,10 +248,10 @@
 
     function CancelOrder(OrderId) {
         orderCancelId = OrderId;
-        EjectConfirm();
+        EjectConfirm("是否确认取消订单？");
     }
 
-    function OnConfirm(OrderId) {
+    function onCancelOrder(OrderId) {
         $.ajax({
             async: true,
             type: "POST",
@@ -262,6 +267,8 @@
                         Loading.HideLoading();
                         window.location.reload(true);
                     }, 800);
+                } else {
+                    Loading.HideLoading();
                 }
             },
             error: function (data) {
@@ -271,16 +278,17 @@
                 Loading.ShowLoading();
             },
             complete: function () {
-
+                orderCancelId = "";
             }
         });
     }
 
-    function OnCancel() {
+    function ConfirmOrder(OrderId) {
+        orderConfirmId = OrderId;
+        EjectConfirm("请确认翻译结果无问题，点击“确定”后将付款给译员");
     }
 
-    function ConfirmOrder(OrderId) {
-//        Todo tips
+    function onConfirmOrder(OrderId) {
         $.ajax({
             async: true,
             type: "POST",
@@ -293,19 +301,21 @@
             success: function (data) {
                 if (data.status == 1) {
                     setTimeout(function () {
-                        Loading.ShowLoading();
+                        Loading.HideLoading();
                         window.location.reload(true);
                     }, 800);
+                } else {
+                    Loading.HideLoading();
                 }
             },
             error: function (data) {
-                Loading.ShowLoading();
+                Loading.HideLoading();
             },
             beforeSend: function () {
                 Loading.ShowLoading();
             },
             complete: function () {
-
+                orderConfirmId = "";
             }
         });
     }
