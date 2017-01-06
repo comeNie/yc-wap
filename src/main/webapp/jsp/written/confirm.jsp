@@ -32,14 +32,14 @@
 <div class="wrapper-big" id="body">
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title">请选择</div>
+            <div class="prompt-title"><spring:message code="written.content.ptitle"/></div>
             <div class="prompt-confirm">
                 <ul>
-                    <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+                    <li id="EjectTitle"></li>
                 </ul>
             </div>
             <div class="prompt-confirm-btn">
-                <a class="btn btn-white" id="prompt-btn">确认</a>
+                <a class="btn btn-white" id="prompt-btn"><spring:message code="written.content.confirm"/></a>
             </div>
 
         </div>
@@ -135,7 +135,7 @@
     function onSubmit() {
         var msg = $("#message").val();
         if (isEmojiCharacter(msg)) {
-            $("#EjectTitle").html("请勿输入特殊字符及表情符号");
+            $("#EjectTitle").html("<spring:message code="written.confirm.tips6"/>");
             $('#eject-mask').fadeIn(100);
             $('#prompt').slideDown(100);
             return;

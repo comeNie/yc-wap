@@ -80,8 +80,8 @@
     </section>
 </div>
 <section class="add-btn">
-    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue"><spring:message
-            code="written.contact.submit1"/></a>
+    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">
+        <spring:message code="written.contact.submit1"/></a>
 </section>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
@@ -179,7 +179,7 @@
                 if (data.status == 1) {
                     var OrderId = data.OrderId;
                     if (OrderId == "") {
-                        $("#EjectTitle").html("下单失败，请重试");
+                        $("#EjectTitle").html("<spring:message code="written.contact.tips12"/>");
                         $('#eject-mask').fadeIn(100);
                         $('#prompt').slideDown(100);
                         return;

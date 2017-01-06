@@ -253,7 +253,7 @@
 
     function CancelOrder(OrderId) {
         orderCancelId = OrderId;
-        EjectConfirm("是否确认取消订单？");
+        EjectConfirm("<spring:message code="order.order.tips"/>");
     }
 
     function onCancelOrder(OrderId) {
@@ -290,7 +290,7 @@
 
     function ConfirmOrder(OrderId) {
         orderConfirmId = OrderId;
-        EjectConfirm("请确认翻译结果无问题，点击“确定”后将付款给译员");
+        EjectConfirm("<spring:message code="order.order.tips1"/>");
     }
 
     function onConfirmOrder(OrderId) {
