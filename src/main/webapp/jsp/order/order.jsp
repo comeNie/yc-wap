@@ -280,6 +280,7 @@
     }
 
     function ConfirmOrder(OrderId) {
+//        Todo tips
         $.ajax({
             async: true,
             type: "POST",
