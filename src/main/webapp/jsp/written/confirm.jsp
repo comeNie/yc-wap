@@ -29,6 +29,21 @@
 </head>
 <body>
 <div class="wrapper-big" id="body">
+    <div class="eject-big">
+        <div class="prompt" id="prompt">
+            <div class="prompt-title">请选择</div>
+            <div class="prompt-confirm">
+                <ul>
+                    <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>
+                </ul>
+            </div>
+            <div class="prompt-confirm-btn">
+                <a class="btn btn-white" id="prompt-btn">确认</a>
+            </div>
+
+        </div>
+        <div class="mask" id="eject-mask"></div>
+    </div>
     <%--头部--%>
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Title" value="确认订单"/>
@@ -106,7 +121,7 @@
             }
         });
     });
-    
+
     function ToContent() {
         var href = "<%=path%>/written";
         window.location.href = href;
@@ -116,6 +131,13 @@
 
     function onSubmit() {
         var msg = $("#message").val();
+        if (isEmojiCharacter(msg)) {
+            $("#EjectTitle").html("请勿输入特殊字符及表情符号");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+            return;
+        }
+
         $.ajax({
             async: true,
             type: "POST",
@@ -138,6 +160,41 @@
 
             }
         });
+    }
+
+    function isEmojiCharacter(substring) {
+        for (var i = 0; i < substring.length; i++) {
+            var hs = substring.charCodeAt(i);
+            if (0xd800 <= hs && hs <= 0xdbff) {
+                if (substring.length > 1) {
+                    var ls = substring.charCodeAt(i + 1);
+                    var uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
+                    if (0x1d000 <= uc && uc <= 0x1f77f) {
+                        return true;
+                    }
+                }
+            } else if (substring.length > 1) {
+                var ls = substring.charCodeAt(i + 1);
+                if (ls == 0x20e3) {
+                    return true;
+                }
+            } else {
+                if (0x2100 <= hs && hs <= 0x27ff) {
+                    return true;
+                } else if (0x2B05 <= hs && hs <= 0x2b07) {
+                    return true;
+                } else if (0x2934 <= hs && hs <= 0x2935) {
+                    return true;
+                } else if (0x3297 <= hs && hs <= 0x3299) {
+                    return true;
+                } else if (hs == 0xa9 || hs == 0xae || hs == 0x303d || hs == 0x3030
+                        || hs == 0x2b55 || hs == 0x2b1c || hs == 0x2b1b
+                        || hs == 0x2b50) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 </script>
