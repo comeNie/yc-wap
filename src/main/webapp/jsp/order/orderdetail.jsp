@@ -682,13 +682,15 @@
             success: function (data) {
                 if (data.status == 1) {
                     setTimeout(function () {
-                        Loading.ShowLoading();
+                        Loading.HideLoading();
                         window.location.reload(true);
                     }, 800);
+                } else {
+                    Loading.HideLoading();
                 }
             },
             error: function (data) {
-                Loading.ShowLoading();
+                Loading.HideLoading();
             },
             beforeSend: function () {
                 Loading.ShowLoading();
