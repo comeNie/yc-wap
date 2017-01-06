@@ -513,8 +513,9 @@
 
 <div class="zanw"></div>
 <section class="order-submit-kou" id="bottom_button">
-    <p class="cent blue" id="ButtonLeftP"><a href="javascript:void(0)" id="ButtonLeft">评价订单</a></p>
-    <p class="cent green" id="ButtonRightP"><a href="javascript:GoTrack()">订单跟踪</a></p>
+    <p class="cent blue" id="ButtonLeftP"><a href="javascript:void(0)" id="ButtonLeft"></a></p>
+    <p class="cent green" id="ButtonRightP"><a href="javascript:GoTrack()">
+        <spring:message code="order.track.btn4"/></a></p>
 </section>
 
 <form id="ToOrderPay" method="post" action="<%=path%>/pay/OrderPay">
@@ -541,9 +542,9 @@
         if (ButtonLeft != "") {
             $("#ButtonLeft").html(ButtonLeft);
             $("#ButtonLeft").bind("click", function () {
-                if (ButtonLeft == "支付订单") {
+                if (ButtonLeft == "<spring:message code="order.track.btn1"/>") {
                     ToOrderPay('${Params.OrderId}', '${Params.OrderPrice}');
-                } else if (ButtonLeft == "确认订单") {
+                } else if (ButtonLeft == "<spring:message code="order.track.btn2"/>") {
                     ConfirmOrder('${Params.OrderId}');
                 }
             });
@@ -708,36 +709,36 @@
     function GetStateShow(state) {
         if (state == "11") {
             ShowAmount = "0";
-            ButtonLeft = "支付订单";
-            OrderStatus = "待支付";
+            ButtonLeft = "<spring:message code="order.track.btn1"/>";
+            OrderStatus = "<spring:message code="order.track.status1"/>";
         } else if (state == "13") {
             ShowAmount = "0";
             ButtonLeft = "";
-            OrderStatus = "待报价";
+            OrderStatus = "<spring:message code="order.track.status2"/>";
         } else if (state == "23") {
             ShowAmount = "1";
             ButtonLeft = "";
-            OrderStatus = "翻译中";
+            OrderStatus = "<spring:message code="order.track.status3"/>";
         } else if (state == "50") {
             ShowAmount = "1";
-            ButtonLeft = "确认订单";
-            OrderStatus = "待确认";
+            ButtonLeft = "<spring:message code="order.track.btn2"/>";
+            OrderStatus = "<spring:message code="order.track.status4"/>";
         } else if (state == "52") {
             ShowAmount = "1";
-            ButtonLeft = "评价订单";
-            OrderStatus = "待评价";
+            ButtonLeft = "<spring:message code="order.track.btn3"/>";
+            OrderStatus = "<spring:message code="order.track.status5"/>";
         } else if (state == "90") {
             ShowAmount = "1";
             ButtonLeft = "";
-            OrderStatus = "已完成";
+            OrderStatus = "<spring:message code="order.track.status6"/>";
         } else if (state == "91") {
             ShowAmount = "0";
             ButtonLeft = "";
-            OrderStatus = "已关闭";
+            OrderStatus = "<spring:message code="order.track.status7"/>";
         } else if (state == "92") {
             ShowAmount = "1";
             ButtonLeft = "";
-            OrderStatus = "已退款";
+            OrderStatus = "<spring:message code="order.track.status8"/>";
         }
     }
 
