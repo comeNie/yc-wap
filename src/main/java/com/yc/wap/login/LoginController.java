@@ -118,8 +118,14 @@ public class LoginController extends BaseController {
             }else {
                 result.put("status","0");
                 result.put("msg",code.getCodeMessage());
-                if (code.getCodeNumber() == 0){
-                    result.put("msg","账号或密码错误");
+                if (code.getCodeNumber() == -101){
+                    result.put("msg",rb.getMessage("loginCtrl.userNotExit"));
+                }else if (code.getCodeNumber() == -102){
+                    result.put("msg",rb.getMessage("loginCtrl.userNotAble"));
+                }else if (code.getCodeNumber() == -103){
+                    result.put("msg",rb.getMessage("loginCtrl.userOrPsdError"));
+                }else {
+                    result.put("msg",rb.getMessage("loginCtrl.loginFail"));
                 }
             }
         }catch (Exception e){
@@ -158,9 +164,12 @@ public class LoginController extends BaseController {
             log.info("--------message:"+ message);
             if (!resp.getResponseHeader().getResultCode().equals("000000")){
                 result.put("status","0");
-                result.put("msg",resp.getResponseHeader().getResultMessage());
-                if (resp.getResponseHeader().getResultCode().equals("000001")){
-                    result.put("msg",rb.getMessage("loginCtrl.codeError"));
+                if (resp.getResponseHeader().getResultCode().equals("-1")){
+                    result.put("msg",rb.getMessage("safeCtrl.codeError"));
+                }else if (resp.getResponseHeader().getResultCode().equals("0")){
+                    result.put("msg",rb.getMessage("safeCtrl.codeLoseTime"));
+                }else {
+                    result.put("msg",rb.getMessage("loginCtrl.registerFail"));
                 }
 
             }

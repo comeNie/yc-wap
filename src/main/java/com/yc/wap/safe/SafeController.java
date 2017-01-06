@@ -400,7 +400,7 @@ public class SafeController extends BaseController {
                 }else if (responseCode.getCodeNumber() == -1){
                     result.put("msg",rb.getMessage("safeCtrl.codeError"));
                 }else {
-                    result.put("msg",rb.getMessage("safeCtrl.phoneOpeError"));
+                    result.put("msg",rb.getMessage("safeCtrl.bindPhoneFail"));
                 }
             }
         }catch (Exception e){
@@ -515,7 +515,7 @@ public class SafeController extends BaseController {
                 }else if (responseCode.getCodeNumber() == -1){
                     result.put("msg",rb.getMessage("safeCtrl.codeError"));
                 }else {
-                    result.put("msg",rb.getMessage("safeCtrl.mailOpeError"));
+                    result.put("msg",rb.getMessage("safeCtrl.bindMailFail"));
                 }
             }
         }catch (Exception e){
