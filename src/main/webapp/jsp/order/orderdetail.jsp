@@ -517,6 +517,23 @@
     <p class="cent green" id="ButtonRightP"><a href="javascript:GoTrack()">
         <spring:message code="order.track.btn4"/></a></p>
 </section>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
+
+<div class="eject-big">
+    <div class="prompt" id="prompt">
+        <div class="prompt-title">请选择</div>
+        <div class="prompt-confirm">
+            <ul>
+                <li id="promptText"></li>
+            </ul>
+        </div>
+        <div class="prompt-confirm-btn">
+            <a class="btn btn-white-50" id="prompt-btn">确 认</a>
+            <a class="btn btn-white-50" id="prompt-btn-close">取 消</a>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
 
 <form id="ToOrderPay" method="post" action="<%=path%>/pay/OrderPay">
     <input type="hidden" id="OrderId" name="OrderId" value="">
@@ -530,6 +547,8 @@
     var ButtonLeft = "";
     var OrderStatus = "";
     $(document).ready(function () {
+        Loading.HideLoading();
+
         GetStateShow('${Params.displayFlag}');
 
         if (ShowAmount == "0") {
@@ -545,7 +564,7 @@
                 if (ButtonLeft == "<spring:message code="order.track.btn1"/>") {
                     ToOrderPay('${Params.OrderId}', '${Params.OrderPrice}');
                 } else if (ButtonLeft == "<spring:message code="order.track.btn2"/>") {
-                    ConfirmOrder('${Params.OrderId}');
+                    EjectConfirm();
                 }
             });
         } else {
@@ -603,6 +622,17 @@
             }
         });
 
+        $("#prompt-btn").bind("click", function () {
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
+            ConfirmOrder('${Params.OrderId}');
+        });
+
+        $("#prompt-btn-close").bind("click", function () {
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
+        });
+
         if (${text=="text"}) {
             if (${Params.translateType=='1' || Params.translateType=="2"}) {
                 return;
@@ -635,6 +665,12 @@
         $("#OrderText").css("display", "none");
     }
 
+    function EjectConfirm() {
+        $('#promptText').html("请确认翻译结果无问题，点击“确定”后将付款给译员");
+        $('#eject-mask').fadeIn(100);
+        $('#prompt').slideDown(100);
+    }
+
     function ConfirmOrder(OrderId) {
         $.ajax({
             async: true,
@@ -648,13 +684,15 @@
             success: function (data) {
                 if (data.status == 1) {
                     setTimeout(function () {
-                        Loading.ShowLoading();
+                        Loading.HideLoading();
                         window.location.reload(true);
                     }, 800);
+                } else {
+                    Loading.HideLoading();
                 }
             },
             error: function (data) {
-                Loading.ShowLoading();
+                Loading.HideLoading();
             },
             beforeSend: function () {
                 Loading.ShowLoading();
