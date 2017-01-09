@@ -776,6 +776,7 @@
                     $("#phoneLabel1").css("display", "none");
                     $("#phone").attr("disabled", "true");
                     personUid = data.uid;
+                    wait = 120;
                     countDown();
                 } else {
                     $("#phoneLabel1").html(data.msg);

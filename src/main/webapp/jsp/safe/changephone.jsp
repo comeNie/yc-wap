@@ -260,7 +260,8 @@
                 if (data.status == 1) {
                     $("#phonetips").css("display", "none");
                     $("#phone").attr("disabled","true");
-                    countDown(60);
+                    wait = 60;
+                    countDown();
                     Loading.HideLoading();
                 } else {
                     $("#phonetips").html(data.msg);
