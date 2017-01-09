@@ -510,11 +510,15 @@ public class SafeController extends BaseController {
      * 激活码:注册时发的    验证码:修改邮箱手机等
      *操作类型 1：手机激活码 2：手机验证码 3：手机动态密码 4：邮箱激活码 5：邮箱验证码 6：密码操作验证码
      */
-    @RequestMapping(value = "sendTestCode")
+    @RequestMapping(value = "sendTestCode" )
     public @ResponseBody Object sendTestCode() {
         MsgBean result = new MsgBean();
         String info = request.getParameter("info");
-
+        String isRegister = request.getParameter("isRegister");
+        long addTime = Constants.CodeTime.OtherTime;
+        if(isRegister != "" && isRegister != null){
+            addTime = Constants.CodeTime.RegisterTime;
+        }
         //发送验证码时间
         String lastInfo = (String) session.getAttribute("lastInfo");
         if (lastInfo == "" || lastInfo == null){
@@ -523,7 +527,7 @@ public class SafeController extends BaseController {
             long newTime = new Date().getTime();
             if (oldTime != "" && oldTime != null){
                 long time = Long.parseLong(oldTime);
-                if (newTime < time+60*1000){
+                if (newTime < time+addTime){
                     result.put("status","0");
                     result.put("msg",rb.getMessage("safeCtrl.codeHadSoMuch"));
                     return result.returnMsg();
@@ -536,7 +540,7 @@ public class SafeController extends BaseController {
                 long newTime = new Date().getTime();
                 if (oldTime != "" && oldTime != null){
                     long time = Long.parseLong(oldTime);
-                    if (newTime < time+60*1000){
+                    if (newTime < time+addTime){
                         result.put("status","0");
                         result.put("msg",rb.getMessage("safeCtrl.codeHadSoMuch"));
                         return result.returnMsg();

@@ -769,6 +769,7 @@
                 type: 1,
                 info: phone,
                 domain: selectValue,
+                isRegister:0
             },
             success: function (data) {
                 if (data.status == 1) {
