@@ -106,12 +106,18 @@
         <%--<li><input type="radio" name="choose" class="radio"/>翻译后付费</li>--%>
         <%--</ul>--%>
 
+        <ul id="balance1" style="display: none">
+            <li id="imgCash1" class="word-ash">
+                <img src="<%=path%>/ui/images/radio1.jpg" id="cash1" class="radio-img"/>
+                <a id="balanceNumber1">账户余额支付（余额：0元）</a>
+            </li>
+        </ul>
+
         <ul>
             <li class="zhifb" id="imgAliPay"><img src="<%=path%>/ui/images/radio.jpg" id="alipay" class="radio-img"/>
                 <img src="<%=path%>/ui/images/zhifb.png"/></li>
 
-            <li class="unionpay" id="imgUniPay"><img src="<%=path%>/ui/images/radio1.jpg" id="unipay"
-                                                     class="radio-img"/>
+            <li class="unionpay" id="imgUniPay"><img src="<%=path%>/ui/images/radio1.jpg" id="unipay" class="radio-img"/>
                 <img src="<%=path%>/ui/images/unionpay.png"/></li>
         </ul>
 
@@ -221,6 +227,7 @@
             document.getElementById("alipay").src = CheckedImg;
             document.getElementById("unipay").src = UnCheckedImg;
             document.getElementById("cash").src = UnCheckedImg;
+            document.getElementById("cash1").src = UnCheckedImg;
         });
 
         $("#imgUniPay").bind("click", function () {
@@ -228,6 +235,7 @@
             document.getElementById("alipay").src = UnCheckedImg;
             document.getElementById("unipay").src = CheckedImg;
             document.getElementById("cash").src = UnCheckedImg;
+            document.getElementById("cash1").src = UnCheckedImg;
         });
 
         $("#imgCash").bind("click", function () {
@@ -235,6 +243,15 @@
             document.getElementById("alipay").src = UnCheckedImg;
             document.getElementById("unipay").src = UnCheckedImg;
             document.getElementById("cash").src = CheckedImg;
+            document.getElementById("cash1").src = CheckedImg;
+        });
+
+        $("#imgCash1").bind("click", function () {
+            Channel = "3";
+            document.getElementById("alipay").src = UnCheckedImg;
+            document.getElementById("unipay").src = UnCheckedImg;
+            document.getElementById("cash").src = CheckedImg;
+            document.getElementById("cash1").src = CheckedImg;
         });
     });
 
@@ -254,10 +271,14 @@
                 if (data.status == 1) {
                     balance = data.balance;
                     $("#balanceNumber").html("账户余额支付（余额：" + data.balance + "元）");
-                    $("#balance").css("display", "block");
+                    $("#balanceNumber1").html("账户余额支付（余额：" + data.balance + "元）");
                     if (data.balance < ${PriceDisplay}) {
+                        $("#balance").css("display", "block");
                         $("#buzu").css("display", "block");
                         balanceBuzu = true;
+                    } else {
+                        $("#balance1").css("display", "block");
+                        balanceBuzu = false;
                     }
                     CheckState();
                 } else {
@@ -368,7 +389,7 @@
             toBalancePay();
         } else {
             if (!setPassword) {
-                $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单");
+                $("#EjectTitle").html("抱歉，您还没有设置支付密码，无法使用账户余额付款");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
             } else {
@@ -409,7 +430,7 @@
                             $("#password-tip").html("支付密码错误，请重新输入");
                             $("#int-password").val("");
                         } else if (resultCode == "7") {
-                            $("#EjectTitle").html("您的账户未设置支付密码，请使用PC客户端设置密码后再使用账户余额支付订单");
+                            $("#EjectTitle").html("抱歉，您还没有设置支付密码，无法使用账户余额付款");
                             $('#eject-mask').fadeIn(100);
                             $('#prompt').slideDown(100);
                         } else if (resultCode == "0") {
