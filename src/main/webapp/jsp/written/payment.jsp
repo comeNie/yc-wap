@@ -111,7 +111,7 @@
         <ul id="balance1" style="display: none">
             <li id="imgCash1" class="word-ash">
                 <img src="<%=path%>/ui/images/radio1.jpg" id="cash1" class="radio-img"/>
-                <a id="balanceNumber1">账户余额支付（余额：0元）</a>
+                <a id="balanceNumber1"></a>
             </li>
         </ul>
 
@@ -391,7 +391,7 @@
             toBalancePay();
         } else {
             if (!setPassword) {
-                $("#EjectTitle").html("抱歉，您还没有设置支付密码，无法使用账户余额付款");
+                $("#EjectTitle").html("<spring:message code="pay.payment.pass2"/>");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
             } else {
@@ -432,7 +432,7 @@
                             $('#password').slideDown(100);
                             $("#int-password").val("");
                         } else if (resultCode == "7") {
-                            $("#EjectTitle").html("抱歉，您还没有设置支付密码，无法使用账户余额付款");
+                            $("#EjectTitle").html("<spring:message code="pay.payment.pass2"/>");
                             $('#eject-mask').fadeIn(100);
                             $('#prompt').slideDown(100);
                         } else if (resultCode == "0") {

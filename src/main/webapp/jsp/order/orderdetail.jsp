@@ -521,15 +521,15 @@
 
 <div class="eject-big">
     <div class="prompt" id="prompt">
-        <div class="prompt-title">请选择</div>
+        <div class="prompt-title"><spring:message code="order.order.titles"/></div>
         <div class="prompt-confirm">
             <ul>
                 <li id="promptText"></li>
             </ul>
         </div>
         <div class="prompt-confirm-btn">
-            <a class="btn btn-white-50" id="prompt-btn">确 认</a>
-            <a class="btn btn-white-50" id="prompt-btn-close">取 消</a>
+            <a class="btn btn-white-50" id="prompt-btn"><spring:message code="order.order.confirm"/></a>
+            <a class="btn btn-white-50" id="prompt-btn-close"><spring:message code="order.order.cancel"/></a>
         </div>
     </div>
     <div class="mask" id="eject-mask"></div>
@@ -666,7 +666,7 @@
     }
 
     function EjectConfirm() {
-        $('#promptText').html("请确认翻译结果无问题，点击“确定”后将付款给译员");
+        $('#promptText').html("<spring:message code="order.order.tips1"/>");
         $('#eject-mask').fadeIn(100);
         $('#prompt').slideDown(100);
     }
