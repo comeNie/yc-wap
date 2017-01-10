@@ -18,7 +18,7 @@
 				<div class="word-list-text" style="width:100%;float:left;padding:30px 0px;">
 					<ul style="float:left;margin-left:-20px;list-style: none;">
 						<li style="list-style: none;line-height:25px;color:#6a6c6f">
-						您好，您在译云平台获取的邮箱验证码是<span>{2}</span>（30分钟有效），译云伴您步入语言沟通无障碍的世界
+						您好，您在译云平台获取的邮箱验证码是<span>{2}</span>（60分钟有效），译云伴您步入语言沟通无障碍的世界
 						</li>
 					</ul>
 				</div>
