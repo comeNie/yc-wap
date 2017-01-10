@@ -36,7 +36,13 @@
     <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
-<div class="loading-bj" id="_loading" style="opacity: 0">
+    <c:if test="${to == 'login'}">
+        <div class="loading-bj" id="_loading" style="opacity: 0">
+    </c:if>
+    <c:if test="${to != 'login'}">
+        <div class="loading-bj" id="_loading" style="opacity: 1">
+    </c:if>
+
     <section class="loading-wrapper">
         <p class="img1"><img src="<%=path%>/ui/images/loading-logo.png"/></p>
         <p class="img2">
@@ -47,7 +53,13 @@
 
 <div class="wrapper-big">
     <%--登录界面--%>
-    <div id="loginDiv"><!--包含除底部外的所有层-->
+    <c:if test="${to == 'login'}">
+        <div id="loginDiv"><!--包含除底部外的所有层-->
+    </c:if>
+
+    <c:if test="${to != 'login'}">
+        <div id="loginDiv" hidden><!--包含除底部外的所有层-->
+    </c:if>
         <!--登录-->
         <nav class="wap-second-nav">
             <ul>
@@ -188,7 +200,12 @@
     </div>
 
     <%--注册界面--%>
-    <div id="registerDiv" hidden><!--包含除底部外的所有层-->
+        <c:if test="${to == 'register'}">
+            <div id="registerDiv"><!--包含除底部外的所有层-->
+        </c:if>
+        <c:if test="${to != 'register'}">
+            <div id="registerDiv" hidden> <!--包含除底部外的所有层-->
+        </c:if>
         <!--注册-->
         <nav class="wap-second-nav">
             <ul>
@@ -256,22 +273,23 @@
     var isLoaded = false;   //登录加载
     var blurCheck = 0;  //注册界面手机号失去焦点判断
     $(function () {
-        Loading.HideLoading();
 
         $("#translateGif").hide();
         $("#phone").attr("disabled", false);
 
         if ("${to}" == "login") {
-            $("#loginDiv").show();
-            $("#registerDiv").hide();
+            Loading.HideLoading();
+
+//            $("#loginDiv").show();
+//            $("#registerDiv").hide();
             $("#bottomDiv").hide();
             setTimeout(function(){
                 $("#bottomDiv").show();
             },100);
         } else {
             loadCountry();
-            $("#loginDiv").hide();
-            $("#registerDiv").show();
+//            $("#loginDiv").hide();
+//            $("#registerDiv").show();
             $("#bottomDiv").hide();
             setTimeout(function(){
                 $("#bottomDiv").show();
@@ -431,6 +449,7 @@
             $("#bottomDiv").show();
         },100);
         if (!isLoaded) {
+            Loading.ShowLoading();
             loadCountry();
         }
         clearText();
@@ -505,7 +524,7 @@
                 $("#selectLabel").css("display", "block");
             },
             beforeSend: function () {
-                Loading.ShowLoading();
+//                Loading.ShowLoading();
             },
             complete: function () {
                 Loading.HideLoading();
