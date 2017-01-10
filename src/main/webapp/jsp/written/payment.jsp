@@ -108,12 +108,18 @@
         <%--<li><input type="radio" name="choose" class="radio"/><spring:message code="pay.payment.after"/></li>--%>
         <%--</ul>--%>
 
+        <ul id="balance1" style="display: none">
+            <li id="imgCash1" class="word-ash">
+                <img src="<%=path%>/ui/images/radio1.jpg" id="cash1" class="radio-img"/>
+                <a id="balanceNumber1"></a>
+            </li>
+        </ul>
+
         <ul>
             <li class="zhifb" id="imgAliPay"><img src="<%=path%>/ui/images/radio.jpg" id="alipay" class="radio-img"/>
                 <img src="<%=path%>/ui/images/zhifb.png"/></li>
 
-            <li class="unionpay" id="imgUniPay"><img src="<%=path%>/ui/images/radio1.jpg" id="unipay"
-                                                     class="radio-img"/>
+            <li class="unionpay" id="imgUniPay"><img src="<%=path%>/ui/images/radio1.jpg" id="unipay" class="radio-img"/>
                 <img src="<%=path%>/ui/images/unionpay.png"/></li>
         </ul>
 
@@ -168,6 +174,7 @@
     var Channel = "1";
     var orderState = "";
     var payCheck = "";
+    var setPassword = true;
     var getInfoFalse = false;
 
     $(document).ready(function () {
@@ -222,6 +229,7 @@
             document.getElementById("alipay").src = CheckedImg;
             document.getElementById("unipay").src = UnCheckedImg;
             document.getElementById("cash").src = UnCheckedImg;
+            document.getElementById("cash1").src = UnCheckedImg;
         });
 
         $("#imgUniPay").bind("click", function () {
@@ -229,6 +237,7 @@
             document.getElementById("alipay").src = UnCheckedImg;
             document.getElementById("unipay").src = CheckedImg;
             document.getElementById("cash").src = UnCheckedImg;
+            document.getElementById("cash1").src = UnCheckedImg;
         });
 
         $("#imgCash").bind("click", function () {
@@ -236,6 +245,15 @@
             document.getElementById("alipay").src = UnCheckedImg;
             document.getElementById("unipay").src = UnCheckedImg;
             document.getElementById("cash").src = CheckedImg;
+            document.getElementById("cash1").src = CheckedImg;
+        });
+
+        $("#imgCash1").bind("click", function () {
+            Channel = "3";
+            document.getElementById("alipay").src = UnCheckedImg;
+            document.getElementById("unipay").src = UnCheckedImg;
+            document.getElementById("cash").src = CheckedImg;
+            document.getElementById("cash1").src = CheckedImg;
         });
     });
 
@@ -255,10 +273,14 @@
                 if (data.status == 1) {
                     balance = data.balance;
                     $("#balanceNumber").html("<spring:message code="pay.payment.balance"/>" + data.balance + "<spring:message code="pay.payment.balance1"/>");
-                    $("#balance").css("display", "block");
+                    $("#balanceNumber1").html("<spring:message code="pay.payment.balance"/>" + data.balance + "<spring:message code="pay.payment.balance1"/>");
                     if (data.balance < ${PriceDisplay}) {
+                        $("#balance").css("display", "block");
                         $("#buzu").css("display", "block");
                         balanceBuzu = true;
+                    } else {
+                        $("#balance1").css("display", "block");
+                        balanceBuzu = false;
                     }
                     CheckState();
                 } else {
@@ -335,6 +357,10 @@
             success: function (data) {
                 if (data.status == 1) {
                     payCheck = data.needPayCheck;
+                    var passwd = data.payPassword;
+                    if (passwd == null || passwd == "") {
+                        setPassword = false;
+                    }
                     $("#isPayCheck").val(payCheck);
                 } else {
                     $("#EjectTitle").html("<spring:message code="pay.payment.tips1"/>");
@@ -364,10 +390,16 @@
         if (payCheck == "0") {
             toBalancePay();
         } else {
-            $("#password-tip").html("<spring:message code="pay.payment.pass"/>");
-            $("#int-password").val("");
-            $('#eject-mask').fadeIn(100);
-            $('#password').slideDown(100);
+            if (!setPassword) {
+                $("#EjectTitle").html("<spring:message code="pay.payment.pass2"/>");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+            } else {
+                $("#password-tip").html("<spring:message code="pay.payment.pass"/>");
+                $("#int-password").val("");
+                $('#eject-mask').fadeIn(100);
+                $('#password').slideDown(100);
+            }
         }
     }
 

@@ -124,8 +124,11 @@ public class AccountController extends BaseController {
         try {
             AccountInfoVo resp = iAccountQuerySV.queryAccontById(req);
             String payCheck = resp.getPayCheck();
+            String payPassword = resp.getPayPassword();
             log.info("GetAccountInfoPayCheck: " + payCheck);
+            log.info("GetAccountInfoPayPassword: " + payPassword);
             result.put("needPayCheck", payCheck);
+            result.put("payPassword", payPassword);
 
         } catch (BusinessException | SystemException e) {
             e.printStackTrace();

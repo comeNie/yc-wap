@@ -245,19 +245,19 @@ public class OrderController extends BaseController {
             ///// Level & TranslateType /////
             for (ProdLevelVo k : prodLevels) {
                 String TransLV = k.getTranslateLevel();
-                String TranslateLevel = "其他";
+                String TranslateLevel = rb.getMessage("order.detail.level1");
                 if (TransLV.equals(Constants.TranslateLevel.Normal)) {
-                    TranslateLevel = "标准级";
+                    TranslateLevel = rb.getMessage("order.detail.level2");
                 } else if (TransLV.equals(Constants.TranslateLevel.Professional)) {
-                    TranslateLevel = "专业级";
+                    TranslateLevel = rb.getMessage("order.detail.level3");
                 } else if (TransLV.equals(Constants.TranslateLevel.Publish)) {
-                    TranslateLevel = "出版级";
+                    TranslateLevel = rb.getMessage("order.detail.level4");
                 } else if (TransLV.equals(Constants.TranslateLevel.Together)) {
-                    TranslateLevel = "陪同翻译";
+                    TranslateLevel = rb.getMessage("order.detail.level5");
                 } else if (TransLV.equals(Constants.TranslateLevel.Simulate)) {
-                    TranslateLevel = "同声传译";
+                    TranslateLevel = rb.getMessage("order.detail.level6");
                 } else if (TransLV.equals(Constants.TranslateLevel.Alter)) {
-                    TranslateLevel = "交替翻译";
+                    TranslateLevel = rb.getMessage("order.detail.level7");
                 }
                 k.setTranslateLevel(TranslateLevel);
             }
@@ -267,11 +267,11 @@ public class OrderController extends BaseController {
             String Sex = "";
             if (interperGen != null) {
                 if (interperGen.equals(Constants.Sex.MALE)) {
-                    Sex = "男";
+                    Sex = rb.getMessage("order.detail.sex1");
                 } else if (interperGen.equals(Constants.Sex.FEMALE)) {
-                    Sex = "女";
+                    Sex = rb.getMessage("order.detail.sex2");
                 } else if (interperGen.equals(Constants.Sex.ALL)) {
-                    Sex = "不限";
+                    Sex = rb.getMessage("order.detail.sex3");
                 }
             }
 
@@ -280,16 +280,16 @@ public class OrderController extends BaseController {
             if (discountSum == null || discountSum.equals("")) {
                 discountSum = "";
             } else {
-                discountSum = discountSum + "折";
+                discountSum = discountSum + rb.getMessage("order.detail.zhe");
             }
 
             ///// OrderPrice /////
             Double OrderPrice = Double.valueOf(OrderFee.getTotalFee()) / 1000;
             DecimalFormat df = new DecimalFormat("######0.00");
             String displayFlag = resp.getDisplayFlag();
-            String PriceDisplay = "请等待报价";
+            String PriceDisplay = rb.getMessage("order.order.wait");
             if (!displayFlag.equals("13")) {
-                PriceDisplay = df.format(OrderPrice) + "元";
+                PriceDisplay = df.format(OrderPrice) + rb.getMessage("order.detail.yuan");
             }
 
             ///// OrderStateTrack /////
@@ -371,7 +371,7 @@ public class OrderController extends BaseController {
             ParamJson.put("needTranslateInfo", needTranslateInfo);
             ParamJson.put("translateInfo", translateInfo);
             if (isUrgent != null && isUrgent.equals("Y")) {
-                ParamJson.put("Urgent", "加急");
+                ParamJson.put("Urgent", rb.getMessage("order.detail.quick"));
             }
 
             log.info("OrderDetailParamJson.." + ParamJson.toString());

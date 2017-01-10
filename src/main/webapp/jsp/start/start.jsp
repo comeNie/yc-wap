@@ -257,12 +257,19 @@
     });
     $(document).ready(function () {
 
-        document.getElementsByTagName("body")[0].onscroll=function(){
+//        document.getElementsByTagName("body")[0].onscroll=function(){
+//            var rbtn=document.getElementById('index-btnshow');
+//            if(document.getElementsByTagName("body")[0].scrollTop>10){
+//                rbtn.style.display='block';
+//            }
+//        }
+        $(window).scroll(function(e){
+            p = $(this).scrollTop();
             var rbtn=document.getElementById('index-btnshow');
-            if(document.getElementsByTagName("body")[0].scrollTop>10){
+            if(0<=p){//下滚
                 rbtn.style.display='block';
             }
-        }
+        });
 //        监听输入的文本内容
         $("#chick-int").bind("input propertychange", function () {
             var landetec = $("#chick-int").val();

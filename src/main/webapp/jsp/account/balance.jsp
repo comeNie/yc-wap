@@ -40,6 +40,21 @@
         <jsp:param name="BackTo" value="javascript:retLeft()"/>
     </jsp:include>
 
+    <%--<section class="account-tab">--%>
+        <%--<ul>--%>
+            <%--<a href="#" class="current">--%>
+                <%--<li>--%>
+                    <%--<p><spring:message code="account.balance.onlyyue"/></p>--%>
+                <%--</li>--%>
+            <%--</a>--%>
+            <%--<a href="#">--%>
+                <%--<li class="none-border">--%>
+                    <%--<p><spring:message code="account.balance.youhujuan"/></p>--%>
+                <%--</li>--%>
+            <%--</a>--%>
+        <%--</ul>--%>
+    <%--</section>--%>
+
     <section class="form-big">
         <div class="balance">
             <spring:message code="account.balance.yuer"/><span id="BigSpan"><b id="littleB"></b></span>
@@ -48,6 +63,31 @@
         </div>
         <div class="balance-word"><spring:message code="account.balance.balancezhuyi"/></div>
     </section>
+
+    <%--<section class="form-big" id="acc-tab2"  style="display: none;">--%>
+        <%--<div class="coupon-bj">--%>
+            <%--<div class="coupon-left">--%>
+                <%--<ul>--%>
+                    <%--<li class="word">满1000元可使用</li>--%>
+                    <%--<li>仅可在中英翻译服务中使用</li>--%>
+                    <%--<li>有效期： 2015/02/06—2015/05/06</li>--%>
+                    <%--<li>编号：2467320578091758</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+            <%--<div class="coupon-right"><span>¥</span>100</div>--%>
+        <%--</div>--%>
+        <%--<div class="coupon-bj">--%>
+            <%--<div class="coupon-left">--%>
+                <%--<ul>--%>
+                    <%--<li class="word">满1000元可使用</li>--%>
+                    <%--<li>仅可在中英翻译服务中使用</li>--%>
+                    <%--<li>有效期： 2015/02/06—2015/05/06</li>--%>
+                    <%--<li>编号：2467320578091758</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+            <%--<div class="coupon-right"><span>¥</span>100</div>--%>
+        <%--</div>--%>
+    <%--</section>--%>
 </div>
 
 <%--底部視圖--%>

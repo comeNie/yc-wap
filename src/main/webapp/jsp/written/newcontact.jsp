@@ -80,8 +80,8 @@
     </section>
 </div>
 <section class="add-btn">
-    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue"><spring:message
-            code="written.contact.submit1"/></a>
+    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">
+        <spring:message code="written.contact.submit1"/></a>
 </section>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
@@ -177,12 +177,13 @@
             },
             success: function (data) {
                 if (data.status == 1) {
-//                    var date = new Date();
-//                    date.setDate(date.getDate() - 1);
-//                    document.cookie = "dualChoose=0" + ';expires=' + date + ";path=/";
-//                    document.cookie = "dualChoose=0" + ";path=/";
-
                     var OrderId = data.OrderId;
+                    if (OrderId == "") {
+                        $("#EjectTitle").html("<spring:message code="written.contact.tips12"/>");
+                        $('#eject-mask').fadeIn(100);
+                        $('#prompt').slideDown(100);
+                        return;
+                    }
                     window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
                 } else {
                     $("#EjectTitle").html("<spring:message code="written.contact.tips12"/>");

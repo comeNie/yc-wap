@@ -274,6 +274,10 @@ public class Constants {
         /** 手机注册验证码UID后缀 */
         public static final String  PHONE_CODE_REGISTER_UID = "_uid";
     }
+    public static final class CodeTime {
+        public static final long RegisterTime = 120*1000;
+        public static final long OtherTime = 60*1000;
+    }
 
     /**
      * 订单提交

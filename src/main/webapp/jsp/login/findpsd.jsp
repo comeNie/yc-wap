@@ -293,6 +293,7 @@
             },
             error: function () {
                 Loading.HideLoading();
+                createCode();
                 $("#codeLabel1").html("<spring:message code="safe.safesuccess.failNet"/>");
                 $("#codeLabel1").css("display", "block");
             }

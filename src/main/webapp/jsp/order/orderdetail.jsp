@@ -20,7 +20,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>订单详细</title>
+    <title><spring:message code="order.detail.title"/></title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
@@ -42,7 +42,7 @@
             <c:if test="${FromRes==null || FromRes==''}">
                 <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
             </c:if>
-            <li>订单详细</li>
+            <li><spring:message code="order.detail.title"/></li>
             <a href="javascript:" id="nav-list"><i class="icon iconfont right" id="rightIcon">&#xe629;</i></a>
         </ul>
         <div class="pop-nav" id="pop-nav">
@@ -68,30 +68,31 @@
                 <div class="original-cont" id="cont-name">
                     <ul>
                         <li>
-                            <p>翻译主题:</p>
+                            <p><spring:message code="order.detail.name"/></p>
                             <p class="sm-word">${Params.translateName}</p>
                         </li>
                     </ul>
                 </div>
-                <div id="cont-hid" style="display: none"><!--加载显示-->
+                <div id="cont-hid" style="display: none">
                     <div class="original-cont">
                         <ul>
                             <li>
-                                <p>原文:</p>
+                                <p><spring:message code="order.detail.word"/></p>
                                 <p class="sm-word">${Params.needTranslateInfo}</p>
                             </li>
                         </ul>
                         <ul id="Translated">
                             <li>
-                                <p>译文:</p>
+                                <p><spring:message code="order.detail.translate"/></p>
                                 <p class="sm-word">${Params.translateInfo}</p>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="click-more" id="click-more"><a href="javascript:void(0)">点击查看更多</a></div>
-                <div class="tran-jiaz" id="click-close" style="display: none"><a href="javascript:void(0)"><i
-                        class="icon-double-angle-up"></i></a></div>
+                <div class="click-more" id="click-more"><a href="javascript:void(0)">
+                    <spring:message code="order.detail.click"/></a></div>
+                <div class="tran-jiaz" id="click-close" style="display: none"><a href="javascript:void(0)">
+                    <i class="icon-double-angle-up"></i></a></div>
             </section>
         </c:if>
         <%--文档--%>
@@ -101,12 +102,12 @@
                     <c:forEach items="${Params.needTranslateFiles}" var="pair">
                         <ul>
                             <li>
-                                <p>原文:</p>
+                                <p><spring:message code="order.detail.word"/></p>
                             </li>
                             <li>
                                 <p>${pair.key}</p>
-                                <p class="right"><a
-                                        href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
+                                <p class="right"><a href="javascript:DownloadFile('${pair.value}', '${pair.key}')">
+                                    <spring:message code="order.detail.download"/></a></p>
                             </li>
                         </ul>
                     </c:forEach>
@@ -118,62 +119,62 @@
             <div class="my-order-list">
                 <ul>
                     <li>
-                        <p>订单号:</p>
+                        <p><spring:message code="order.detail.orderid"/></p>
                     </li>
                     <li class="right">${Params.OrderId}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>订单金额:</p>
+                        <p><spring:message code="order.detail.price"/></p>
                     </li>
                     <li class="right">${Params.PriceDisplay}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>订单日期:</p>
+                        <p><spring:message code="order.detail.date"/></p>
                     </li>
                     <li class="right">${Params.OrderTime}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>翻译语言:</p>
+                        <p><spring:message code="order.detail.language"/></p>
                     </li>
                     <li class="right">${Params.TransLang[0].langungePairName}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>翻译级别:</p>
+                        <p><spring:message code="order.detail.level"/></p>
                     </li>
                     <li class="right">${Params.TranslateLevel[0].translateLevel}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>用途:</p>
+                        <p><spring:message code="order.detail.use"/></p>
                     </li>
                     <li class="right">${Params.useCn}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>领域:</p>
+                        <p><spring:message code="order.detail.field"/></p>
                     </li>
                     <li class="right">${Params.fieldCn}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>预计翻译耗时:</p>
+                        <p><spring:message code="order.detail.needtime"/></p>
                     </li>
-                    <li class="right">${Params.takeTime}小时</li>
+                    <li class="right">${Params.takeTime}<spring:message code="order.detail.hours"/></li>
                 </ul>
 
                 <ul>
                     <li>
-                        <p>其他:</p>
+                        <p><spring:message code="order.detail.other"/></p>
                     </li>
                     <li class="right">${Params.Urgent}</li>
                 </ul>
                 <ul class="ulborder">
                     <li class="lin-hei">
-                        <p>需求备注:</p>
+                        <p><spring:message code="order.detail.remark"/></p>
                     </li>
                 </ul>
                 <ul class="ulborder">
@@ -185,13 +186,13 @@
             <div class="my-order-list">
                 <ul class="ulborder">
                     <li>
-                        <p>订单总额:</p>
+                        <p><spring:message code="order.detail.total"/></p>
                     </li>
                     <li class="right">${Params.PriceDisplay}</li>
                 </ul>
                 <ul class="zhek">
                     <li>
-                        <p>－折扣:</p>
+                        <p>－<spring:message code="order.detail.discard"/></p>
                     </li>
                     <li class="right">${Params.discountSum}</li>
                 </ul>
@@ -209,7 +210,7 @@
                     <%--</ul>--%>
                 <ul class="top-ulborder ulborder" id="PaidFee1">
                     <li>
-                        <p>实付款:</p>
+                        <p><spring:message code="order.detail.payed"/></p>
                     </li>
                     <li class="right blue-word">${Params.PriceDisplay}</li>
                 </ul>
@@ -219,7 +220,7 @@
             <div class="my-order-list">
                 <ul class="ulborder">
                     <li>
-                        <p>联系人信息:</p>
+                        <p><spring:message code="order.detail.contact"/></p>
                     </li>
                 </ul>
                 <ul class="zhek zhek-height">
@@ -231,13 +232,14 @@
                 </ul>
             </div>
         </section>
+        <%--发票--%>
         <section class="my-order-content" style="display: none;">
             <div class="my-order-list">
                 <ul class="ulborder">
                     <li>
-                        <p>发票类型:</p>
+                        <p><spring:message code="order.detail.feeinfo"/></p>
                     </li>
-                    <li class="right">不开发票</li>
+                    <li class="right"><spring:message code="order.detail.feeinfo"/></li>
                 </ul>
             </div>
         </section>
@@ -249,25 +251,25 @@
             <div class="my-order-list">
                 <ul>
                     <li>
-                        <p>订单号:</p>
+                        <p><spring:message code="order.detail.orderid"/></p>
                     </li>
                     <li class="right">${Params.OrderId}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>订单金额:</p>
+                        <p><spring:message code="order.detail.price"/></p>
                     </li>
                     <li class="right">${Params.PriceDisplay}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>订单日期:</p>
+                        <p><spring:message code="order.detail.date"/></p>
                     </li>
                     <li class="right">${Params.OrderTime}</li>
                 </ul>
                 <ul class="big-word">
                     <li>
-                        <p>翻译类型:</p>
+                        <p><spring:message code="order.detail.type"/></p>
                     </li>
                     <li class="right">
                         <c:forEach var="pair" items="${Params.TranslateLevel}">
@@ -277,7 +279,7 @@
                 </ul>
                 <ul class="big-word">
                     <li>
-                        <p>翻译语言:</p>
+                        <p><spring:message code="order.detail.language"/></p>
                     </li>
                     <li class="right">
                         <c:forEach var="pair" items="${Params.TransLang}">
@@ -287,43 +289,43 @@
                 </ul>
                 <ul>
                     <li>
-                        <p>会议开始时间:</p>
+                        <p><spring:message code="order.detail.starttime"/></p>
                     </li>
                     <li class="right">${Params.stateTime}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>会议结束时间:</p>
+                        <p><spring:message code="order.detail.endtime"/></p>
                     </li>
                     <li class="right">${Params.endTime}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>译员数量:</p>
+                        <p><spring:message code="order.detail.number"/></p>
                     </li>
                     <li class="right">${Params.interperSum}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>会议地点:</p>
+                        <p><spring:message code="order.detail.place"/></p>
                     </li>
                     <li class="right">${Params.meetingAddress}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>会议场数:</p>
+                        <p><spring:message code="order.detail.meetsum"/></p>
                     </li>
                     <li class="right">${Params.meetingSum}</li>
                 </ul>
                 <ul>
                     <li>
-                        <p>译员性别:</p>
+                        <p><spring:message code="order.detail.sex"/></p>
                     </li>
                     <li class="right">${Params.interperGen}</li>
                 </ul>
                 <ul class="ulborder">
                     <li class="lin-hei">
-                        <p>需求备注:</p>
+                        <p><spring:message code="order.detail.remark"/></p>
                     </li>
                 </ul>
                 <ul class="ulborder">
@@ -335,13 +337,13 @@
             <div class="my-order-list">
                 <ul class="ulborder">
                     <li>
-                        <p>订单总额:</p>
+                        <p><spring:message code="order.detail.total"/></p>
                     </li>
                     <li class="right">${Params.PriceDisplay}</li>
                 </ul>
                 <ul class="zhek">
                     <li>
-                        <p>－折扣:</p>
+                        <p>－<spring:message code="order.detail.discard"/></p>
                     </li>
                     <li class="right">${Params.discountSum}</li>
                 </ul>
@@ -359,7 +361,7 @@
                     <%--</ul>--%>
                 <ul class="top-ulborder ulborder" id="PaidFee2">
                     <li>
-                        <p>实付款:</p>
+                        <p><spring:message code="order.detail.payed"/></p>
                     </li>
                     <li class="right blue-word">${Params.PriceDisplay}</li>
                 </ul>
@@ -369,7 +371,7 @@
             <div class="my-order-list">
                 <ul class="ulborder">
                     <li>
-                        <p>联系人信息:</p>
+                        <p><spring:message code="order.detail.contact"/></p>
                     </li>
                 </ul>
                 <ul class="zhek">
@@ -385,9 +387,9 @@
             <div class="my-order-list">
                 <ul class="ulborder">
                     <li>
-                        <p>发票类型:</p>
+                        <p><spring:message code="order.detail.feeinfo"/></p>
                     </li>
-                    <li class="right">不开发票</li>
+                    <li class="right"><spring:message code="order.detail.feeinfo"/></li>
                 </ul>
             </div>
         </section>
@@ -398,7 +400,7 @@
     <nav class="wap-second-nav">
         <ul>
             <a href="javascript:GoDetail()"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>订单跟踪</li>
+            <li><spring:message code="order.track.title"/></li>
             <a href="javascript:" id="nav-list1"><i class="icon iconfont right" id="rightIcon1">&#xe629;</i></a>
         </ul>
         <div class="pop-nav" id="pop-nav1">
@@ -421,11 +423,11 @@
         <div class="track-title">
             <ul>
                 <li>
-                    <p>订单号：</p>
+                    <p><spring:message code="order.track.orderid"/></p>
                     <p class="blue">${Params.OrderId}</p>
                 </li>
                 <li>
-                    <p>订单状态：</p>
+                    <p><spring:message code="order.track.status"/></p>
                     <p id="OrderStatus">Status</p>
                 </li>
             </ul>
@@ -434,7 +436,7 @@
     <!--跟踪状态-->
     <section class="original-big mt-20">
         <div class="track-list">
-            <div class="track-list-title">订单动态</div>
+            <div class="track-list-title"><spring:message code="order.track.list"/></div>
             <div class="track-list-ctn">
                 <c:forEach var="pair" items="${OrderTrackCn}" varStatus="i">
                     <c:if test="${i.index==0}">
@@ -475,7 +477,7 @@
     <nav class="wap-second-nav">
         <ul>
             <a href="javascript:window.history.go(-1)"><i class="icon iconfont left">&#xe626;</i></a>
-            <li>订单详细</li>
+            <li><spring:message code="order.detail.title"/></li>
             <a href="javascript:" id="nav-list2"><i class="icon iconfont right" id="rightIcon2">&#xe629;</i></a>
         </ul>
         <div class="pop-nav" id="pop-nav2">
@@ -496,13 +498,13 @@
     <!--译文-->
     <div class="tran-big">
         <ul>
-            <li>原文:</li>
+            <li><spring:message code="order.detail.word"/></li>
             <li>${Params.needTranslateInfo}</li>
         </ul>
     </div>
     <div class="tran-big m-top" id="TranslatedText">
         <ul>
-            <li>译文:</li>
+            <li><spring:message code="order.detail.translate"/></li>
             <li>${Params.translateInfo}</li>
         </ul>
     </div>
@@ -511,9 +513,27 @@
 
 <div class="zanw"></div>
 <section class="order-submit-kou" id="bottom_button">
-    <p class="cent blue" id="ButtonLeftP"><a href="javascript:void(0)" id="ButtonLeft">评价订单</a></p>
-    <p class="cent green" id="ButtonRightP"><a href="javascript:GoTrack()">订单跟踪</a></p>
+    <p class="cent blue" id="ButtonLeftP"><a href="javascript:void(0)" id="ButtonLeft"></a></p>
+    <p class="cent green" id="ButtonRightP"><a href="javascript:GoTrack()">
+        <spring:message code="order.track.btn4"/></a></p>
 </section>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
+
+<div class="eject-big">
+    <div class="prompt" id="prompt">
+        <div class="prompt-title"><spring:message code="order.order.titles"/></div>
+        <div class="prompt-confirm">
+            <ul>
+                <li id="promptText"></li>
+            </ul>
+        </div>
+        <div class="prompt-confirm-btn">
+            <a class="btn btn-white-50" id="prompt-btn"><spring:message code="order.order.confirm"/></a>
+            <a class="btn btn-white-50" id="prompt-btn-close"><spring:message code="order.order.cancel"/></a>
+        </div>
+    </div>
+    <div class="mask" id="eject-mask"></div>
+</div>
 
 <form id="ToOrderPay" method="post" action="<%=path%>/pay/OrderPay">
     <input type="hidden" id="OrderId" name="OrderId" value="">
@@ -527,6 +547,8 @@
     var ButtonLeft = "";
     var OrderStatus = "";
     $(document).ready(function () {
+        Loading.HideLoading();
+
         GetStateShow('${Params.displayFlag}');
 
         if (ShowAmount == "0") {
@@ -539,10 +561,10 @@
         if (ButtonLeft != "") {
             $("#ButtonLeft").html(ButtonLeft);
             $("#ButtonLeft").bind("click", function () {
-                if (ButtonLeft == "支付订单") {
+                if (ButtonLeft == "<spring:message code="order.track.btn1"/>") {
                     ToOrderPay('${Params.OrderId}', '${Params.OrderPrice}');
-                } else if (ButtonLeft == "确认订单") {
-                    ConfirmOrder('${Params.OrderId}');
+                } else if (ButtonLeft == "<spring:message code="order.track.btn2"/>") {
+                    EjectConfirm();
                 }
             });
         } else {
@@ -600,6 +622,17 @@
             }
         });
 
+        $("#prompt-btn").bind("click", function () {
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
+            ConfirmOrder('${Params.OrderId}');
+        });
+
+        $("#prompt-btn-close").bind("click", function () {
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
+        });
+
         if (${text=="text"}) {
             if (${Params.translateType=='1' || Params.translateType=="2"}) {
                 return;
@@ -632,6 +665,12 @@
         $("#OrderText").css("display", "none");
     }
 
+    function EjectConfirm() {
+        $('#promptText').html("<spring:message code="order.order.tips1"/>");
+        $('#eject-mask').fadeIn(100);
+        $('#prompt').slideDown(100);
+    }
+
     function ConfirmOrder(OrderId) {
         $.ajax({
             async: true,
@@ -645,13 +684,15 @@
             success: function (data) {
                 if (data.status == 1) {
                     setTimeout(function () {
-                        Loading.ShowLoading();
+                        Loading.HideLoading();
                         window.location.reload(true);
                     }, 800);
+                } else {
+                    Loading.HideLoading();
                 }
             },
             error: function (data) {
-                Loading.ShowLoading();
+                Loading.HideLoading();
             },
             beforeSend: function () {
                 Loading.ShowLoading();
@@ -706,36 +747,36 @@
     function GetStateShow(state) {
         if (state == "11") {
             ShowAmount = "0";
-            ButtonLeft = "支付订单";
-            OrderStatus = "待支付";
+            ButtonLeft = "<spring:message code="order.track.btn1"/>";
+            OrderStatus = "<spring:message code="order.track.status1"/>";
         } else if (state == "13") {
             ShowAmount = "0";
             ButtonLeft = "";
-            OrderStatus = "待报价";
+            OrderStatus = "<spring:message code="order.track.status2"/>";
         } else if (state == "23") {
             ShowAmount = "1";
             ButtonLeft = "";
-            OrderStatus = "翻译中";
+            OrderStatus = "<spring:message code="order.track.status3"/>";
         } else if (state == "50") {
             ShowAmount = "1";
-            ButtonLeft = "确认订单";
-            OrderStatus = "待确认";
+            ButtonLeft = "<spring:message code="order.track.btn2"/>";
+            OrderStatus = "<spring:message code="order.track.status4"/>";
         } else if (state == "52") {
             ShowAmount = "1";
-            ButtonLeft = "评价订单";
-            OrderStatus = "待评价";
+            ButtonLeft = "<spring:message code="order.track.btn3"/>";
+            OrderStatus = "<spring:message code="order.track.status5"/>";
         } else if (state == "90") {
             ShowAmount = "1";
             ButtonLeft = "";
-            OrderStatus = "已完成";
+            OrderStatus = "<spring:message code="order.track.status6"/>";
         } else if (state == "91") {
             ShowAmount = "0";
             ButtonLeft = "";
-            OrderStatus = "已关闭";
+            OrderStatus = "<spring:message code="order.track.status7"/>";
         } else if (state == "92") {
             ShowAmount = "1";
             ButtonLeft = "";
-            OrderStatus = "已退款";
+            OrderStatus = "<spring:message code="order.track.status8"/>";
         }
     }
 
