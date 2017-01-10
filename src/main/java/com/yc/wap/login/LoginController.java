@@ -186,16 +186,16 @@ public class LoginController extends BaseController {
     	log.info("=====开始populateUsrUserInfo,当前时间戳:"+startTime);
     	SearchYCUserRequest userReq=new SearchYCUserRequest();
     	userReq.setUserId(m.get("uid")+"");
-    	long startTimeQryUser = System.currentTimeMillis();
-    	log.info("开始查询客户信息,当前时间戳:"+startTimeQryUser);
+    	//long startTimeQryUser = System.currentTimeMillis();
+    	//log.info("开始查询客户信息,当前时间戳:"+startTimeQryUser);
     	IYCUserServiceSV userSv=DubboConsumerFactory.getService(IYCUserServiceSV.class);
-    	YCUserInfoResponse userResp= userSv.searchYCUserInfo(userReq);
-    	long endTimeQryUser = System.currentTimeMillis();
-    	log.info("结束查询客户信息,当前时间戳:"+endTimeQryUser+"，耗时:"+(endTimeQryUser-startTimeQryUser)+"毫秒");
+    	//YCUserInfoResponse userResp= userSv.searchYCUserInfo(userReq);
+    	//long endTimeQryUser = System.currentTimeMillis();
+    	//log.info("结束查询客户信息,当前时间戳:"+endTimeQryUser+"，耗时:"+(endTimeQryUser-startTimeQryUser)+"毫秒");
     	
-    	if(userResp==null||StringUtil.isBlank(userResp.getUserId())){
+    	//if(userResp==null||StringUtil.isBlank(userResp.getUserId())){
     		long startTimeCompleteUser = System.currentTimeMillis();
-    		log.info("客户信息不存在，需自动补全,当前时间戳:"+startTimeCompleteUser);
+    		log.info("开始更新或补全客户信息,当前时间戳:"+startTimeCompleteUser);
     		//说明客户信息不存在，需要依据登录信息创建默认的客户信息
     		CompleteUserInfoRequest cmpUser=new CompleteUserInfoRequest();
     		cmpUser.setUserId(m.get("uid")+"");
@@ -206,23 +206,23 @@ public class LoginController extends BaseController {
     		for(int i=0;i<3;i++){
     			BaseResponse resp=userSv.completeUserInfo(cmpUser);
     			if(resp.getResponseHeader().getIsSuccess()){
-    				flag=true;
+    				flag = true;
     				long endTimeCompleteUser = System.currentTimeMillis();
-    		    	log.info("结束自动补全客户信息,当前时间戳:"+endTimeCompleteUser+"，耗时:"+(endTimeCompleteUser-startTimeCompleteUser)+"毫秒");
+    		    	log.info("结束更新或补全客户信息,当前时间戳:"+endTimeCompleteUser+"，耗时:"+(endTimeCompleteUser-startTimeCompleteUser)+"毫秒");
     				break;
     			}
     		}
     		if(flag){
-    			log.info("结束自动补全客户信息OK");
+    			log.info("结束更新或补全客户信息OK");
     		}
     		else{
-    			log.info("结束自动补全客户信息FAILURE");
+    			log.info("结束更新或补全客户信息FAILURE");
     		}
     		
-    	}
-    	else{
-    		log.info("客户存在，不需补全");
-    	}
+//    	}
+//    	else{
+//    		log.info("客户存在，不需补全");
+//    	}
     	
      	long endTime = System.currentTimeMillis();
         log.info("=====结束populateUsrUserInfo,客户信息补全,当前时间戳:"+endTime+"，耗时:"+(endTime-startTime)+"毫秒");
