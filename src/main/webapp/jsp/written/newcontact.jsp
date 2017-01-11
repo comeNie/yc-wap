@@ -88,13 +88,18 @@
 
         var json = ${contentJson};
         if (json != null) {
-            console.log(json);
             var phone = json.Phone;
             var name = json.Name;
             var email = json.Email;
-            $("#phone").val(phone);
-            $("#name").val(name);
-            $("#email").val(email);
+            if (phone != null && phone != "") {
+                $("#phone").val(phone);
+            }
+            if (name != null && name != "") {
+                $("#name").val(name);
+            }
+            if (email != null && email != "") {
+                $("#email").val(email);
+            }
         }
 
         $("#submit").bind("click", function () {
