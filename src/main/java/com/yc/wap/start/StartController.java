@@ -72,6 +72,9 @@ public class StartController extends BaseController {
             }
             log.info("TranslateResultTarget: " + target);
             result.put("target", target);
+            if (target.length() == 0){
+                result.put("status","0");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             result.put("status","0");
