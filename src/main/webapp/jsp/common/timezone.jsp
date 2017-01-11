@@ -12,7 +12,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <%--CNZZ--%>
-    <%@ include file="cs.jsp" %>
+    <%@ include file="../common/cs.jsp" %>
 </head>
 
 <body>
