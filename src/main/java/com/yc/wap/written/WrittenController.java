@@ -312,6 +312,8 @@ public class WrittenController extends BaseController {
 
     @RequestMapping(value = "newContact")
     public String newContact() {
+        JSONObject WrittenContextJSON = JSONObject.fromObject(session.getAttribute("WrittenContextJSON"));
+        request.setAttribute("contentJson", WrittenContextJSON);
         return "written/newcontact";
     }
 
@@ -347,6 +349,7 @@ public class WrittenController extends BaseController {
     private String OrderSubmit(JSONObject WrittenContextJSON, JSONObject WrittenShowJSON) {
         Timestamp Time = new Timestamp(System.currentTimeMillis());
         String UserId = (String) session.getAttribute("UID");
+        String userName = (String) session.getAttribute("username");
 
         LanguagePairInfo languagePairInfo = new LanguagePairInfo();
         languagePairInfo.setLanguagePairId(WrittenContextJSON.getString("DualId"));
@@ -398,10 +401,14 @@ public class WrittenController extends BaseController {
         reqContactInfo.setContactEmail(WrittenContextJSON.getString("Email"));
         reqContactInfo.setRemark(WrittenContextJSON.getString("Message"));
 
+        StateChgInfo reqStateChgInfo = new StateChgInfo();
+        reqStateChgInfo.setOperName(userName);
+
         req.setBaseInfo(reqBaseInfo);
         req.setProductInfo(reqProductInfo);
         req.setFeeInfo(reqFeeInfo);
         req.setContactInfo(reqContactInfo);
+        req.setStateChgInfo(reqStateChgInfo);
 
         log.info("OrderSubmissionInputParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
         try {

@@ -85,6 +85,18 @@
 <script type="text/javascript">
     $(document).ready(function () {
         Loading.HideLoading();
+
+        var json = ${contentJson};
+        if (json != null) {
+            console.log(json);
+            var phone = json.Phone;
+            var name = json.Name;
+            var email = json.Email;
+            $("#phone").val(phone);
+            $("#name").val(name);
+            $("#email").val(email);
+        }
+
         $("#submit").bind("click", function () {
             var phone = $("#phone").val();
             var name = $("#name").val();
