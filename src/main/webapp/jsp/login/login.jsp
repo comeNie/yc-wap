@@ -58,48 +58,47 @@
         </nav>
 
 
-        <%--<!--tab-->--%>
-        <%--<section class="login-tab">--%>
-         <%--<ul>--%>
-             <%--<li><a href="javascript:void(0)" class="current"><spring:message code="login.login.fastLogin"/>快速登录</a></li>--%>
-             <%--<li><a href="javascript:void(0)"><spring:message code="login.login.norLogin"/>普通登录</a></li>--%>
-         <%--</ul>--%>
-        <%--</section>--%>
-        <%--<!--tab1-->--%>
-        <%--<section id="tab1">--%>
-            <%--<section class="login-prompt"><spring:message code="login.login.fastTip"/>验证成功则登录，未注册将自动创建译云帐号</section>--%>
-            <%--<section class="form-big">--%>
-                <%--<div class="set-password">--%>
-                    <%--<div class="set-int">--%>
-                        <%--<ul>--%>
-                            <%--<li>--%>
-                                <%--<p>--%>
-                                    <%--<select class="select testing-select-big" id="selectid">--%>
-                                    <%--</select>--%>
-                                    <%--<span>|</span>--%>
-                                <%--</p>--%>
-                            <%--</li>--%>
-                            <%--<li>--%>
-                                <%--<p><input type="text" class="input input-large" placeholder="手机号"></p>--%>
-                                <%--<label id="phoneLabel"></label>--%>
-                            <%--</li>--%>
-                            <%--<li>--%>
-                                <%--<p><input type="text" class="input input-small" placeholder="请输入动态码"></p>--%>
-                                <%--<p class="yzm"><a href="javascript:void(0)" class="btn bnt-yzm">获取动态码</a></p>--%>
-                                <%--<label id="phonetips"></label>--%>
-                            <%--</li>--%>
-                            <%--<li><a href="javascript:void(0)" class="submit-btn btn-blue">立即登录</a></li>--%>
-                            <%--<li class="right"><a href="javascript:void(0)">忘记密码 </a></li>--%>
-                        <%--</ul>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</section>--%>
-        <%--</section>--%>
-
-
-
-
-        <section id="tab2" style="display:block;">
+        <!--tab-->
+        <section class="login-tab">
+         <ul>
+             <li><a href="javascript:void(0)" class="current"><spring:message code="login.login.fastLogin"/></a></li>
+             <li><a href="javascript:void(0)"><spring:message code="login.login.norLogin"/></a></li>
+         </ul>
+        </section>
+        <!--tab1-->
+        <section id="tab1">
+            <section class="login-prompt"><spring:message code="login.login.fastTip"/></section>
+            <section class="form-big">
+                <div class="set-password">
+                    <div class="set-int">
+                        <ul>
+                            <li>
+                                <p>
+                                    <select class="select testing-select-big" id="selectid1">
+                                    </select>
+                                    <span>|</span>
+                                </p>
+                                <label id="selectLabel1"></label>
+                            </li>
+                            <li>
+                                <p><input id="fastphoneid" type="text" class="input input-large" placeholder="<spring:message code="login.login.phone"/>"></p>
+                                <label id="fastphoneidLabel"></label>
+                            </li>
+                            <li>
+                                <p><input id="fastcodeid" type="text" class="input input-small" placeholder="<spring:message code="login.register.entercode"/>"></p>
+                                <p class="yzm"><a id="fastgetnumber" href="javascript:void(0)" onclick="fastGetCode()" class="btn bnt-yzm"><spring:message code="login.register.getcode"/></a></p>
+                                <label id="fastCodetips"></label>
+                            </li>
+                            <li class="small-height" id="loginBtn1"><a href="javascript:void(0)" class="submit-btn btn-blue" onclick="fastlogin()"><spring:message code="login.login.lijidenglu"/></a></li>
+                            <img src="<%=path%>/ui/images/载入中.gif" id="translateGif1" style="width: 5.29rem;height: 1.13rem; display:block;margin:0 auto">
+                            <li class="right"><a href="javascript:void(0)" onclick="forgetpsd()"><spring:message code="login.login.wangjimima"/> </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <%--普通登录--%>
+        <section id="tab2" style="display:none;">
             <section class="form-big">
                 <div class="set-password">
                     <div class="set-int">
@@ -223,8 +222,9 @@
         Loading.HideLoading();
 
         $("#translateGif").hide();
+        $("#translateGif1").hide();
         $("#phone").attr("disabled", false);
-
+        loadCountry();
         if ("${to}" == "login") {
             $("#loginDiv").show();
             $("#registerDiv").hide();
@@ -232,9 +232,8 @@
             setTimeout(function(){
                 $("#bottomDiv").show();
             },100);
-
         } else {
-            loadCountry();
+
             $("#loginDiv").hide();
             $("#registerDiv").show();
             $("#bottomDiv").hide();
@@ -244,11 +243,12 @@
 
         }
         showCode();
-//        loadCountry();
     });
     var blurTime;
     $(document).ready(function () {
         clearText();
+
+
         Loading.SetNoneOpacity();
         $("#phone").blur(function() {
 
@@ -287,6 +287,7 @@
         isHiden = 1;
         $("#checkCodeIsHiden").hide();
     }
+    /*------------------------------------普通登录------------------------------------*/
     function login() {
         var phone = $("#phoneid").val();
         var psd = $("#psdid").val();
@@ -306,7 +307,6 @@
         } else {
             $("#psdLabel").css("display", "none");
         }
-//        var t = /^[0-9a-zA-Z]{6,16}$/;
         var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
         if (!t.test(psd)) {
             $("#psdLabel").html("<spring:message code="login.login.alert_newLength"/>");
@@ -381,8 +381,8 @@
                 showCode();
             }
         });
-
     }
+
     function forgetpsd() {
         clearText();
         var tourl = "<%=path%>/login/findpsd";
@@ -396,9 +396,9 @@
             $("#bottomDiv").show();
         },100);
 
-        if (!isLoaded) {
-            loadCountry();
-        }
+//        if (!isLoaded) {
+//            loadCountry();
+//        }
         clearText();
     }
     function leftBtn() {
@@ -435,6 +435,115 @@
         $("#checkCodeId").attr("src", "<%=path%>/safe/getpiccode?time=" + d.getTime());
     }
 
+    /*------------------------------------快速登录------------------------------------*/
+    function fastGetCode(){
+        var fastPhoneVal = $("#fastphoneid").val();
+        if (fastPhoneVal == "" || fastPhoneVal == null) {
+            $("#fastphoneidLabel").html("<spring:message code="login.register.enterphone"/>");
+            $("#fastphoneidLabel").css("display", "block");
+            return;
+        } else {
+            $("#fastphoneidLabel").css("display", "none");
+        }
+        var selectValue = $('#selectid1').val();
+        var code = localStorage.getItem(selectValue + "1");
+        var reg = localStorage.getItem(selectValue);
+        var t = new RegExp(reg);
+        if (!t.test(code + fastPhoneVal)) {
+            $("#fastphoneidLabel").html("<spring:message code="login.register.enterRightphone"/>");
+            $("#fastphoneidLabel").css("display", "block");
+            return;
+        } else {
+            $("#fastphoneidLabel").css("display", "none");
+        }
+        getFastCode(fastPhoneVal,selectValue);
+    }
+    function getFastCode(fastPhoneVal,selectValue){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/sendTestCode",
+            modal: true,
+            timeout: 30000,
+            data: {
+                type: 1,
+                info: fastPhoneVal,
+                domain: selectValue,
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#fastphoneidLabel").css("display", "none");
+                    fastwait = 60;
+                    fastCuntDown();
+                } else {
+                    $("#fastphoneidLabel").html(data.msg);
+                    $("#fastphoneidLabel").css("display", "block");
+                }
+            },
+            error: function () {
+                $("#fastphoneidLabel").html("<spring:message code="safe.safesuccess.failNet"/>");
+                $("#fastphoneidLabel").css("display", "block");
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
+    }
+    var fastwait = 60;
+    function fastCuntDown() {
+        if (fastwait == 0) {
+            $("#fastgetnumber").removeAttr("disabled");
+            $("#fastgetnumber").attr("onclick", "fastCuntDown()");
+            $("#fastgetnumber").html("<spring:message code="login.register.getcode"/>");//改变按钮中value的值
+
+            $("#fastgetnumber").attr("class", "btn bnt-yzm");
+            //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
+            fastwait = 60;
+        } else {
+            var txtStr = fastwait + '<spring:message code="login.login.chongxinhuoqu"/>';
+            $("#fastgetnumber").html(txtStr);
+            $("#fastgetnumber").attr("class", "btn bnt-yzm-gray");
+            // 按钮里面的内容呈现倒计时状态
+            $("#fastgetnumber").attr("disabled", "block");
+            $("#fastgetnumber").attr("onclick", "javascript:void(0)");
+            fastwait--;
+            setTimeout(function () {
+                fastCuntDown();
+            }, 1000);
+        }
+    }
+    function fastlogin(){
+        var fastPhoneVal = $("#fastphoneid").val();
+        var fastcodeVal = $("#fastcodeid").val();
+        if (fastPhoneVal == "" || fastPhoneVal == null) {
+            $("#fastphoneidLabel").html("<spring:message code="login.register.enterphone"/>");
+            $("#fastphoneidLabel").css("display", "block");
+            return;
+        } else {
+            $("#fastphoneidLabel").css("display", "none");
+        }
+        var selectValue = $('#selectid1').val();
+        var code = localStorage.getItem(selectValue + "1");
+        var reg = localStorage.getItem(selectValue);
+        var t = new RegExp(reg);
+        if (!t.test(code + fastPhoneVal)) {
+            $("#fastphoneidLabel").html("<spring:message code="login.register.enterRightphone"/>");
+            $("#fastphoneidLabel").css("display", "block");
+            return;
+        } else {
+            $("#fastphoneidLabel").css("display", "none");
+        }
+        if (fastcodeVal == "" || fastcodeVal == null) {
+            $("#fastCodetips").html("<spring:message code="login.login.entercode"/>");
+            $("#fastCodetips").css("display", "block");
+            return;
+        } else {
+            $("#fastCodetips").css("display", "none");
+        }
+    }
     //------------------------------注册界面-------------------------
     //加载国家的数据
     var personUid;
@@ -451,12 +560,15 @@
                 if (data.status == 1) {
                     isLoaded = true;
                     $("#selectLabel").css("display", "none");
+                    $("#selectLabel1").css("display", "none");
                     var list = data.list;
                     $.each(list, function (index, value) {
                         if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN") {
                             $('#selectid').append("<option value='" + value.countryValue + "'>" + value.countryNameCn + " +" + value.countryCode + "</option>");
+                            $('#selectid1').append("<option value='" + value.countryValue + "'>" + value.countryNameCn + " +" + value.countryCode + "</option>");
                         } else {
                             $('#selectid').append("<option value='" + value.countryValue + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
+                            $('#selectid1').append("<option value='" + value.countryValue + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
                         }
                         localStorage.setItem(value.countryValue, value.regularExpression);
                         localStorage.setItem(value.countryValue + "1", value.countryCode);
@@ -464,17 +576,23 @@
                 } else {
                     $("#selectLabel").html("<spring:message code="login.register.countryCode"/>");
                     $("#selectLabel").css("display", "block");
+
+                    $("#selectLabel1").html("<spring:message code="login.register.countryCode"/>");
+                    $("#selectLabel1").css("display", "block");
                 }
             },
             error: function () {
                 $("#selectLabel").html("<spring:message code="login.register.countryCode"/>");
                 $("#selectLabel").css("display", "block");
+
+                $("#selectLabel1").html("<spring:message code="login.register.countryCode"/>");
+                $("#selectLabel1").css("display", "block");
             },
             beforeSend: function () {
-                Loading.ShowLoading();
+//                Loading.ShowLoading();
             },
             complete: function () {
-                Loading.HideLoading();
+//                Loading.HideLoading();
             }
         });
     }
@@ -773,7 +891,6 @@
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
             wait = 120;
         } else {
-            //<spring:message code="login.register.getcode"/>
             var txtStr = wait + '<spring:message code="login.login.chongxinhuoqu"/>';
             $("#getnumber").html(txtStr);
             $("#getnumber").attr("class", "btn bnt-yzm-gray");

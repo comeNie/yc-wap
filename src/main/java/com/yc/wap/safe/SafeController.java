@@ -183,6 +183,8 @@ public class SafeController extends BaseController {
             request.setAttribute("to", "login");
             return "login/login";
         }
+        String code = request.getParameter("code");
+        request.setAttribute("code",code);
         log.info("safe-installpsd invoked");
         return "safe/installpsd";
     }

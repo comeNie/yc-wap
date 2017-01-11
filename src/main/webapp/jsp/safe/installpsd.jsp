@@ -64,6 +64,9 @@
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 
+    <%--loading--%>
+    <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
+
 </body>
 </html>
 <script>
@@ -71,6 +74,7 @@
         $("#leftRe").click(function() {
             window.history.go(-1);
         });
+        Loading.HideLoading();
     });
     function confirmBtn() {
         var newpsd = $("#newPsdID").val();
@@ -83,7 +87,6 @@
         }else {
             $("#newLable").css("display","none");
         }
-//        var t = /^[0-9a-zA-Z]{6,16}$/;
         var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
         if (!t.test(newpsd)){
             $("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");
@@ -108,9 +111,42 @@
         }else {
             $("#confirmLable").css("display","none");
         }
-
-//        跳转
-        var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.safe.shezhemima"/>";
-        window.location.href=tourl;
+        editPsd(newpsd);
+    }
+    function editPsd(newpsd){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/editpssword",
+            modal: true,
+            timeout: 30000,
+            data: {
+                uid:${uid},
+                newpw: newpsd,
+                code:${code},
+                mode:2,
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#confirmLable").css("display", "none");
+            //        跳转
+                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.safe.shezhemima"/>";
+                    window.location.href=tourl;
+                } else {
+                    $("#confirmLable").html(data.msg);
+                    $("#confirmLable").css("display", "block");
+                }
+            },
+            error: function () {
+                $("#confirmLable").html("<spring:message code="safe.safesuccess.failNet"/>");
+                $("#confirmLable").css("display", "block");
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
     }
 </script>

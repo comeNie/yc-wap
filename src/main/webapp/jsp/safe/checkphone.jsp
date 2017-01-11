@@ -149,7 +149,7 @@
                     //跳转
                     var s = "${jump}";
                     if (s=="psd"){
-                        var tourl = "<%=path%>/safe/installpsd";
+                        var tourl = "<%=path%>/safe/installpsd?code="+code;
                         window.location.href=tourl;
                     }else if(s == "mail") {
                         var tourl = "<%=path%>/safe/changemail?mailTitle=<spring:message code="safe.checkphone.change_jump"/>";
