@@ -25,7 +25,6 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
-    <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -92,6 +91,7 @@
             </ul>
         </div>
     </section>
+    <jsp:include page="/jsp/common/timezone.jsp" flush="true"/>
 </div>
 <!--底部-->
 <section class="order-submit">
@@ -99,7 +99,6 @@
     </p>
     <p class="right"><a href="javascript:void(0)" id="submit">下一步</a></p>
 </section>
-
 </body>
 </html>
 

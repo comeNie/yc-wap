@@ -28,7 +28,6 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
-    <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -160,6 +159,7 @@
         <div class="wap-btn"><a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue"><spring:message
                 code="written.content.submit"/></a></div>
     </section>
+    <jsp:include page="/jsp/common/timezone.jsp" flush="true"/>
 </div>
 <!--底部-->
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>

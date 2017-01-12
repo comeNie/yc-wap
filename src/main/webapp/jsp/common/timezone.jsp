@@ -9,6 +9,13 @@
     String _base = request.getContextPath();
     request.setAttribute("_base", _base);
 %>
+<%--CNZZ--%>
+<%
+    CS cs = new CS(1253200201);
+    cs.setHttpServlet(request, response);
+    String imgurl = cs.trackPageView();
+%>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <%--CNZZ--%>
@@ -16,13 +23,7 @@
 </head>
 
 <body>
-<%--CNZZ--%>
-<%
-    CS cs = new CS(1253200201);
-    cs.setHttpServlet(request, response);
-    String imgurl = cs.trackPageView();
-%>
-<img src="<%= imgurl %>" width="0" height="0"/>
+<img src="<%=imgurl%>" width="0" height="0"/>
 </body>
 
 <script>
@@ -42,8 +43,8 @@
     $.post("${_base}/timezone.htm?offset=" + today.stdTimezoneOffset());
 
     //百度商桥
-    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0f7edd714a27976c6673e5db7079b08a' type='text/javascript'%3E%3C/script%3E"));
+    //    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    //    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0f7edd714a27976c6673e5db7079b08a' type='text/javascript'%3E%3C/script%3E"));
 
     //百度统计
     var _hmt = _hmt || [];
