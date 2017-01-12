@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<img src="<%=imgurl%>" width="0" height="0" style="position:absolute;top: 0;left: 0;z-index: 999"/>
+<img src="<%=imgurl%>" width="0" height="0" style="position:absolute;top: 0;left: 0;z-index: -1"/>
 </body>
 
 <script>
