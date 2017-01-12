@@ -373,7 +373,7 @@
                         <p>联系人信息:</p>
                     </li>
                 </ul>
-                <ul class="zhek">
+                <ul class="zhek zhek-height">
                     <li>
                         <p>${Params.contactName}</p>
                         <p>${Params.contactTel}</p>
