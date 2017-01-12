@@ -22,6 +22,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
+    <%@ include file="../common/timezone.jsp" %>
 </head>
 
 <body>
@@ -223,7 +224,6 @@
         </div>
         <div class="mask" id="eject-mask"></div>
     </div>
-    <jsp:include page="/jsp/common/timezone.jsp" flush="true"/>
 </div>
 
 <!--底部-->

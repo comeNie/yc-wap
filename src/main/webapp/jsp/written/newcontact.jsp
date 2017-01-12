@@ -25,6 +25,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <script src="<%=path%>/js/modular/multi-switch.js"></script>
+    <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -73,7 +74,6 @@
             </ul>
         </div>
     </section>
-    <jsp:include page="/jsp/common/timezone.jsp" flush="true"/>
 </div>
 <section class="add-btn">
     <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交订单</a>
