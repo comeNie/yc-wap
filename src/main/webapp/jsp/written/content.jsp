@@ -575,7 +575,7 @@
             Express = "Y";
         }
         var Detail = "";
-        if (Content.length > 10) {
+        if (Content.length > 15) {
             Detail = Content.substring(0, 15) + "...";
         } else {
             Detail = Content;
