@@ -87,14 +87,15 @@ public class StartController extends BaseController {
     @ResponseBody
     public Object lanDetection() throws UnsupportedEncodingException {
         MsgBean result = new MsgBean();
+        log.info("-----LanguageDetection-----");
         String finalLan = request.getParameter("text");
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("text", URLEncoder.encode(finalLan, "UTF-8"));
+        log.info("Detection Input: " + finalLan);
         String detecUrl = ConfigUtil.getProperty("yee.detection.url");
         String resultStr = HttpUtil.doGet(detecUrl, params);
         JSONObject translated = JSONObject.parseObject(resultStr);
-        log.info("-----LanguageDetection-----");
-        log.info(translated.toString());
+        log.info("Detection Return: " + translated.toString());
         log.info("-----LanguageDetection-----");
 
         //返回失败信息
