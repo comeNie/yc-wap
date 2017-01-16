@@ -123,6 +123,7 @@
     var getPhone;
     var getuids;
     var getCode;
+    var countryCode;
     $(document).ready(function() {
        Loading.HideLoading();
     });
@@ -270,6 +271,7 @@
                     var newphone = data.userPhone;
                     getuids = data.uids;
                     getPhone = newphone;
+                    countryCode = data.countryCode;
                     var myphone1=newphone.substr(0,3);
                     var myphone2=newphone.substr(7,4);
                     var lphone=myphone1+"****"+myphone2;
@@ -398,7 +400,7 @@
             data: {
                 type: 6,
                 info:getPhone,
-                domain:"${domainname}"
+                domain:countryCode
             },
             success: function (data) {
                 if (data.status == 1) {

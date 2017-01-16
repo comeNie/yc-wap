@@ -524,8 +524,16 @@
                     source = realLangeuage;
                     break;
                 default:
+                    source = realLangeuage;
                     <%--autoTip("<spring:message code="start.buzhichiyuyan"/>");--%>
-                    <%--return;--%>
+                    $("#result-text").html(textStr);
+                    $("#results").show();
+                    $("#chick-btn").hide();
+
+                    $("#translateAid").show();
+                    $("#translateGif").hide();
+                    IsTranslated = true;
+                    return;
             }
 
         }
