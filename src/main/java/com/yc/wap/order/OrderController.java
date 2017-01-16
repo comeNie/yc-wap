@@ -334,6 +334,9 @@ public class OrderController extends BaseController {
             String Remark = Contacts.getRemark();
             String Remark1 = resp.getRemark();
             String isUrgent = ProdList.getIsUrgent();
+            String isSetType = ProdList.getIsSetType();
+            String typeDesc = ProdList.getTypeDesc();
+
             String contactName = Contacts.getContactName();
             String contactTel = Contacts.getContactTel();
             String contactEmail = Contacts.getContactEmail();
@@ -380,7 +383,19 @@ public class OrderController extends BaseController {
             ParamJson.put("needTranslateInfo", needTranslateInfo);
             ParamJson.put("translateInfo", translateInfo);
             if (isUrgent != null && isUrgent.equals("Y")) {
-                ParamJson.put("Urgent", "加急");
+                ParamJson.put("Urgent", "加急；");
+            } else {
+                ParamJson.put("Urgent", "无加急；");
+            }
+            if (isSetType != null && isSetType.equals("Y")) {
+                ParamJson.put("SetType", "需要排版；");
+            } else {
+                ParamJson.put("SetType", "无排版；");
+            }
+            if (typeDesc == null || typeDesc.equals("")) {
+                ParamJson.put("TypeDesc", "无格式转换");
+            } else {
+                ParamJson.put("TypeDesc", "格式转化：" + typeDesc);
             }
 
             log.info("OrderDetailParamJson.." + ParamJson.toString());

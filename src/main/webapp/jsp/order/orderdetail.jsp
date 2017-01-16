@@ -185,7 +185,7 @@
                     <li>
                         <p>其他:</p>
                     </li>
-                    <li class="right">${Params.Urgent}</li>
+                    <li class="right">${Params.Urgent}${Params.SetType}${Params.TypeDesc}</li>
                 </ul>
                 <ul class="ulborder">
                     <li class="lin-hei">
