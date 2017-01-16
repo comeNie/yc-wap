@@ -205,14 +205,14 @@
                     </li>
                     <li class="right">${Params.PriceDisplay}</li>
                 </ul>
-                <c:if test="${Params.translateType=='0'}">
-                    <ul class="zhek">
-                        <li>
-                            <p>－折扣:</p>
-                        </li>
-                        <li class="right">${Params.discountSum}</li>
-                    </ul>
-                </c:if>
+                    <%--<c:if test="${Params.translateType=='0'}">--%>
+                    <%--<ul class="zhek">--%>
+                    <%--<li>--%>
+                    <%--<p>－折扣:</p>--%>
+                    <%--</li>--%>
+                    <%--<li class="right">${Params.discountSum}</li>--%>
+                    <%--</ul>--%>
+                    <%--</c:if>--%>
                     <%--<ul class="zhek">--%>
                     <%--<li>--%>
                     <%--<p>－优惠码:</p>--%>
@@ -339,14 +339,14 @@
                     </li>
                     <li class="right">${Params.interperGen}</li>
                 </ul>
-                    <%--<ul class="ulborder">--%>
-                    <%--<li class="lin-hei">--%>
-                    <%--<p>需求备注:</p>--%>
-                    <%--</li>--%>
-                    <%--</ul>--%>
-                    <%--<ul class="ulborder">--%>
-                    <%--<li class="lin-hei">${Params.Remark}</li>--%>
-                    <%--</ul>--%>
+                <ul class="ulborder">
+                    <li class="lin-hei">
+                        <p>需求备注:</p>
+                    </li>
+                </ul>
+                <ul class="ulborder">
+                    <li class="lin-hei">${Params.Remark}</li>
+                </ul>
             </div>
         </section>
         <section class="my-order-content">

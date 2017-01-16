@@ -311,12 +311,15 @@ public class OrderController extends BaseController {
             ///// Files /////
             Map<String, String> needTranslateFiles = new HashMap<String, String>();
             Map<String, String> translatedFiles = new HashMap<String, String>();
-
             if (resp.getTranslateType().equals(Constants.OrderType.DOC)) {
                 List<ProdFileVo> ProdFiles = resp.getProdFiles();
                 for (ProdFileVo k : ProdFiles) {
-                    needTranslateFiles.put(k.getFileName(), k.getFileSaveId());
-                    translatedFiles.put(k.getFileTranslateName(), k.getFileTranslateId());
+                    if (k.getFileName() != null && k.getFileSaveId() != null) {
+                        needTranslateFiles.put(k.getFileName(), k.getFileSaveId());
+                    }
+                    if (k.getFileTranslateName() != null && k.getFileTranslateId() != null) {
+                        translatedFiles.put(k.getFileTranslateName(), k.getFileTranslateId());
+                    }
                 }
             }
 
