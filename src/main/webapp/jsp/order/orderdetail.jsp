@@ -106,7 +106,8 @@
                             </li>
                             <li>
                                 <p>${pair.key}</p>
-                                <p class="right"><a href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
+                                <p class="right"><a
+                                        href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
                             </li>
                         </ul>
                     </c:forEach>
@@ -117,7 +118,8 @@
                             </li>
                             <li>
                                 <p>${pair.key}</p>
-                                <p class="right"><a href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
+                                <p class="right"><a
+                                        href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
                             </li>
                         </ul>
                     </c:forEach>
@@ -169,16 +171,17 @@
                     </li>
                     <li class="right">${Params.fieldCn}</li>
                 </ul>
-                <ul>
+                <ul id="timeShow">
                     <li>
-                        <p>预计翻译耗时:</p>
+                        <p id="takeTime">预计翻译耗时:</p>
                     </li>
-                    <c:if test="${Params.takeDay!='0'}">
-                        <li class="right">${Params.takeDay}天${Params.takeTime}小时</li>
+                    <c:if test="${Params.takeDay!='0' && Params.takeDay!=null}">
+                        <li class="right" id="takeTimes">${Params.takeDay}天${Params.takeTime}小时</li>
                     </c:if>
-                    <c:if test="${Params.takeDay=='0'}">
-                        <li class="right">${Params.takeTime}小时</li>
+                    <c:if test="${Params.takeDay=='0' || Params.takeDay==null}">
+                        <li class="right" id="takeTimes">${Params.takeTime}小时</li>
                     </c:if>
+                    <li class="right" id="upTimes">${Params.upTime}</li>
                 </ul>
 
                 <ul>
@@ -229,7 +232,7 @@
                     <li>
                         <p>实付款:</p>
                     </li>
-                    <li class="right blue-word">${Params.PriceDisplay}</li>
+                    <li class="right blue-word1">${Params.PriceDisplay}</li>
                 </ul>
             </div>
         </section>
@@ -379,7 +382,7 @@
                     <li>
                         <p>实付款:</p>
                     </li>
-                    <li class="right blue-word">${Params.PriceDisplay}</li>
+                    <li class="right blue-word1">${Params.PriceDisplay}</li>
                 </ul>
             </div>
         </section>
@@ -559,6 +562,7 @@
 
 <script type="text/javascript">
     var ShowAmount = "0";
+    var ShowTime = "0"; //0不显示 1显示预计翻译耗时 2显示交稿时间
     var ButtonLeft = "";
     var OrderStatus = "";
     $(document).ready(function () {
@@ -585,6 +589,18 @@
         } else {
             $("#ButtonLeftP").css("display", "none");
             $("#ButtonRightP").attr("class", "cent2 green");
+        }
+
+        if (ShowTime == "0") {
+            $("#timeShow").css("display", "none");
+        } else if (ShowTime == "1") {
+            $("#takeTime").html("预计翻译耗时:");
+            $("#takeTimes").css("display", "block");
+            $("#upTimes").css("display", "none");
+        } else if (ShowTime == "2") {
+            $("#takeTime").html("交稿时间:");
+            $("#takeTimes").css("display", "none");
+            $("#upTimes").css("display", "block");
         }
 
         $("#OrderStatus").html(OrderStatus);
@@ -762,34 +778,42 @@
     function GetStateShow(state) {
         if (state == "11") {
             ShowAmount = "0";
+            ShowTime = "0";
             ButtonLeft = "支付订单";
             OrderStatus = "待支付";
         } else if (state == "13") {
             ShowAmount = "0";
+            ShowTime = "0";
             ButtonLeft = "";
             OrderStatus = "待报价";
         } else if (state == "23") {
             ShowAmount = "1";
+            ShowTime = "1";
             ButtonLeft = "";
             OrderStatus = "翻译中";
         } else if (state == "50") {
             ShowAmount = "1";
+            ShowTime = "2";
             ButtonLeft = "确认订单";
             OrderStatus = "待确认";
         } else if (state == "52") {
             ShowAmount = "1";
+            ShowTime = "2";
             ButtonLeft = "评价订单";
             OrderStatus = "待评价";
         } else if (state == "90") {
             ShowAmount = "1";
+            ShowTime = "2";
             ButtonLeft = "";
             OrderStatus = "已完成";
         } else if (state == "91") {
             ShowAmount = "0";
+            ShowTime = "0";
             ButtonLeft = "";
             OrderStatus = "已关闭";
         } else if (state == "92") {
             ShowAmount = "1";
+            ShowTime = "0";
             ButtonLeft = "";
             OrderStatus = "已退款";
         }

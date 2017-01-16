@@ -336,6 +336,7 @@ public class OrderController extends BaseController {
             String isUrgent = ProdList.getIsUrgent();
             String isSetType = ProdList.getIsSetType();
             String typeDesc = ProdList.getTypeDesc();
+            Timestamp upTime = ProdList.getUpdateTime();
 
             String contactName = Contacts.getContactName();
             String contactTel = Contacts.getContactTel();
@@ -355,6 +356,9 @@ public class OrderController extends BaseController {
             if (sTime != null && eTime != null) {
                 ParamJson.put("stateTime", sdf.format(sTime));
                 ParamJson.put("endTime", sdf.format(eTime));
+            }
+            if (upTime != null) {
+                ParamJson.put("upTime", sdf.format(upTime));
             }
 
             ParamJson.put("translateType", translateType);
