@@ -90,6 +90,23 @@
 <script type="text/javascript">
     $(document).ready(function () {
         Loading.HideLoading();
+
+        var json = ${contentJson};
+        if (json != null) {
+            var phone = json.Phone;
+            var name = json.Name;
+            var email = json.Email;
+            if (phone != null && phone != "") {
+                $("#phone").val(phone);
+            }
+            if (name != null && name != "") {
+                $("#name").val(name);
+            }
+            if (email != null && email != "") {
+                $("#email").val(email);
+            }
+        }
+
         $("#submit").bind("click", function () {
             var phone = $("#phone").val();
             var name = $("#name").val();
