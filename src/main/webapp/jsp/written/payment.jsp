@@ -1,3 +1,5 @@
+<%@ page import="com.ai.opt.sdk.components.ccs.CCSClientFactory" %>
+<%@ page import="com.yc.wap.system.constants.Constants" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
@@ -8,6 +10,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
+    String accountEnable = "1";
+    try {
+        accountEnable = CCSClientFactory.getDefaultConfigClient().get(Constants.Account.CCS_PATH_ACCOUNT_ENABLE);
+    } catch (Exception e) {
+        //获取配置出错，直接忽略，视为开启
+    }
+    System.out.println("accountEnable: " + accountEnable);
 %>
 <html>
 <head>
@@ -126,9 +135,11 @@
                 <img src="<%=path%>/ui/images/radio1.jpg" id="cash" class="radio-img"/>
                 <a id="balanceNumber">账户余额支付（余额：0元）</a>
             </li>
+            <% if (Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)) { %>
             <li class="right" id="buzu" style="display: none">
                 <a href="javascript:toRecharge()">余额不足，请先充值</a>
             </li>
+            <% } %>
         </ul>
     </div>
 </div>

@@ -389,4 +389,14 @@ public class Constants {
     // 资金类型
     public static final long SubjectID = 100000L;
 
+    public static final class Account {
+        /** 账户余额充值启用 */
+        public static final String ACCOUNT_ENABLE = "1";
+        /** 账户余额充值禁用*/
+        public static final String ACCOUNT_DISABLE = "0";
+        /** 账户余额充值是否启用配置中心路径*/
+        public static final String CCS_PATH_ACCOUNT_ENABLE = "/account_enable";
+
+    }
+
 }
