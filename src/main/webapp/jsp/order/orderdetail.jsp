@@ -536,7 +536,7 @@
 
 <div class="eject-big">
     <div class="prompt" id="prompt">
-        <div class="prompt-title">请选择</div>
+        <div class="prompt-title">提示</div>
         <div class="prompt-confirm">
             <ul>
                 <li id="promptText"></li>

@@ -30,7 +30,7 @@
 <!--分享弹出框-->
 <div class="eject-big">
     <div class="prompt-share" id="share-eject">
-        <div class="prompt-share-title"><spring:message code="start.qingxuanze"/></div>
+        <div class="prompt-share-title"><spring:message code="start.tishi"/></div>
         <!--确认删除-->
         <div class="prompt-share-confirm">
             <ul>
@@ -370,10 +370,6 @@
         if (beRead == "" || beRead == null) {
             return;
         }
-        var ttslength = mbStringLength(beRead);
-        if (ttslength > 1024) {
-            $("#text_audio").css("display", "none");
-        }
         var audioPlay = document.getElementById("audioPlay");
         if (audioPlay.paused) {
             var target = $("#target-lan").val();
@@ -561,8 +557,10 @@
                 if (data.status == 1) {//成功
                     $("#result-text").html(data.target);
                     var ttslength = mbStringLength(data.target);
-                    if (ttslength <= 1024) {
-                        $("#text_audio").css("display", "block");
+                    if (ttslength > 1024) {
+                        $("#text_audio").hide()
+                    }else {
+                        $("#text_audio").show();
                     }
                     $("#results").show();
                     $("#chick-btn").hide();
