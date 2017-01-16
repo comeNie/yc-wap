@@ -292,6 +292,7 @@
                 autoTip("<spring:message code="start.tipBiaoqing"/>");
                 return;
             }
+
             contentDetection(landetec);
             if(!checkLength(landetec)){
                 var tex = landetec.substr(0,2000);
@@ -559,6 +560,10 @@
             success: function (data) {
                 if (data.status == 1) {//成功
                     $("#result-text").html(data.target);
+                    var ttslength = mbStringLength(data.target);
+                    if (ttslength <= 1024) {
+                        $("#text_audio").css("display", "block");
+                    }
                     $("#results").show();
                     $("#chick-btn").hide();
 
