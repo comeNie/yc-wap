@@ -439,6 +439,9 @@
     function AutoChangeDual(SourceCn, SourceEn) {
         $("#dualSource").children('option').each(function () {
             var temp_value = $(this).val();
+            if (temp_value.substr(0, 4) == "检测语言") {
+                temp_value = temp_value.substr(5);
+            }
             if (temp_value == SourceCn || temp_value == SourceEn) {
                 $(this)[0].selected = true;
             }

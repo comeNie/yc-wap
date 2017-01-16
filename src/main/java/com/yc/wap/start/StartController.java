@@ -100,6 +100,8 @@ public class StartController extends BaseController {
         }
         //获取语言
         String fintec = translated.getString("result");
+        log.info("-----检测语言返回-----:" + fintec);
+
         result.put("fintec", fintec);
         return result.returnMsg();
     }
