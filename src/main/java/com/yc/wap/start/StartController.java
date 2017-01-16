@@ -93,6 +93,10 @@ public class StartController extends BaseController {
         String detecUrl = ConfigUtil.getProperty("yee.detection.url");
         String resultStr = HttpUtil.doGet(detecUrl, params);
         JSONObject translated = JSONObject.parseObject(resultStr);
+        log.info("-----LanguageDetection-----");
+        log.info(translated.toString());
+        log.info("-----LanguageDetection-----");
+
         //返回失败信息
         if (translated.getInteger("errorCode") != 0) {
             log.error("detection text is error:" + resultStr);
@@ -100,8 +104,6 @@ public class StartController extends BaseController {
         }
         //获取语言
         String fintec = translated.getString("result");
-        log.info("-----检测语言返回-----:" + fintec);
-
         result.put("fintec", fintec);
         return result.returnMsg();
     }

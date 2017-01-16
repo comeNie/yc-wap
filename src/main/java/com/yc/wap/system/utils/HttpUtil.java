@@ -54,7 +54,7 @@ public class HttpUtil {
             HttpGet httpPost = new HttpGet(apiUrl);
             HttpResponse response = httpClient.execute(httpPost);
             int statusCode = response.getStatusLine().getStatusCode();
-
+            log.info("HttpGet statusCode: " + statusCode);
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 InputStream instream = entity.getContent();
