@@ -76,7 +76,7 @@
 
     <!--订单内容-->
     <div class="confirm-list">
-        <ul>
+        <ul style="display: none">
             <li class="word">订单性质:</li>
             <li>
                 <p>
