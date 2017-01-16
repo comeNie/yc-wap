@@ -588,9 +588,9 @@ public class SafeController extends BaseController {
                 }
             }
             res.setDomainname(domainName);
-            if (domainvalue.equals("86")){
-                domainvalue = "";
-            }
+//            if (domainvalue.equals("86")){
+//                domainvalue = "";
+//            }
         }
         if (uid != null){
             Integer u = Integer.parseInt(uid);
