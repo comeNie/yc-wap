@@ -2,7 +2,6 @@ package com.yc.wap.safe;
 
 import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
@@ -260,13 +259,11 @@ public class SafeController extends BaseController {
 
             if (code.getCodeNumber() == 1){
                 Map m = resp.getDate();
-                log.info(m);
                 UcMembersVo vo = new UcMembersVo(m);
+                log.info(m);
                 result.put("userPhone",vo.getMobilephone());
                 result.put("uids",m.get("uid")+"");
-                result.put("username",vo.getUsername());
-                result.put("email",vo.getEmail());
-                result.put("password",vo.getPassword());
+                result.put("countryCode",m.get("domainName"));
                 log.info("uid:"+vo.getUid());
             }else {
                 result.put("status","0");
