@@ -778,7 +778,7 @@
     function GetStateShow(state) {
         if (state == "11") {
             ShowAmount = "0";
-            ShowTime = "0";
+            ShowTime = "1";
             ButtonLeft = "支付订单";
             OrderStatus = "待支付";
         } else if (state == "13") {

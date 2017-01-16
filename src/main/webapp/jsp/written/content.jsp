@@ -667,7 +667,7 @@
                         }
                     }
 
-                    if ((SourceCn == "" || SourceEn == "") && notSupportChecked == false) {
+                    if (SourceCn == "" || SourceEn == "") { //&& notSupportChecked == false) {
                         $("#EjectTitle").html("<spring:message code="written.content.tips5"/>");
                         $('#eject-mask').fadeIn(100);
                         $('#prompt').slideDown(100);
