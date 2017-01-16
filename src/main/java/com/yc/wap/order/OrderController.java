@@ -310,10 +310,13 @@ public class OrderController extends BaseController {
 
             ///// Files /////
             Map<String, String> needTranslateFiles = new HashMap<String, String>();
+            Map<String, String> translatedFiles = new HashMap<String, String>();
+
             if (resp.getTranslateType().equals(Constants.OrderType.DOC)) {
                 List<ProdFileVo> ProdFiles = resp.getProdFiles();
                 for (ProdFileVo k : ProdFiles) {
                     needTranslateFiles.put(k.getFileName(), k.getFileSaveId());
+                    translatedFiles.put(k.getFileTranslateName(), k.getFileTranslateId());
                 }
             }
 
@@ -324,6 +327,7 @@ public class OrderController extends BaseController {
             String useCn = ProdList.getUseCn();
             String fieldCn = ProdList.getFieldCn();
             String takeTime = ProdList.getTakeTime();
+            String takeDay = ProdList.getTakeDay();
             String Remark = Contacts.getRemark();
             String Remark1 = resp.getRemark();
             String isUrgent = ProdList.getIsUrgent();
@@ -350,6 +354,7 @@ public class OrderController extends BaseController {
             ParamJson.put("translateType", translateType);
             ParamJson.put("translateName", translateName);
             ParamJson.put("needTranslateFiles", needTranslateFiles);
+            ParamJson.put("translatedFiles", translatedFiles);
             ParamJson.put("displayFlag", displayFlag);
 
             ParamJson.put("OrderId", OrderId);
@@ -361,6 +366,7 @@ public class OrderController extends BaseController {
             ParamJson.put("useCn", useCn);
             ParamJson.put("fieldCn", fieldCn);
             ParamJson.put("takeTime", takeTime);
+            ParamJson.put("takeDay", takeDay);
             ParamJson.put("Remark", Remark);
             ParamJson.put("Remark1", Remark1);
             ParamJson.put("discountSum", discountSum);

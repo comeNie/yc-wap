@@ -106,8 +106,18 @@
                             </li>
                             <li>
                                 <p>${pair.key}</p>
-                                <p class="right"><a
-                                        href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
+                                <p class="right"><a href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
+                            </li>
+                        </ul>
+                    </c:forEach>
+                    <c:forEach items="${Params.translatedFiles}" var="pair">
+                        <ul>
+                            <li>
+                                <p>译文:</p>
+                            </li>
+                            <li>
+                                <p>${pair.key}</p>
+                                <p class="right"><a href="javascript:DownloadFile('${pair.value}', '${pair.key}')">下载</a></p>
                             </li>
                         </ul>
                     </c:forEach>
@@ -163,7 +173,12 @@
                     <li>
                         <p>预计翻译耗时:</p>
                     </li>
-                    <li class="right">${Params.takeTime}小时</li>
+                    <c:if test="${Params.takeDay!='0'}">
+                        <li class="right">${Params.takeDay}天${Params.takeTime}小时</li>
+                    </c:if>
+                    <c:if test="${Params.takeDay=='0'}">
+                        <li class="right">${Params.takeTime}小时</li>
+                    </c:if>
                 </ul>
 
                 <ul>
@@ -190,12 +205,14 @@
                     </li>
                     <li class="right">${Params.PriceDisplay}</li>
                 </ul>
-                <ul class="zhek">
-                    <li>
-                        <p>－折扣:</p>
-                    </li>
-                    <li class="right">${Params.discountSum}</li>
-                </ul>
+                <c:if test="${Params.translateType=='0'}">
+                    <ul class="zhek">
+                        <li>
+                            <p>－折扣:</p>
+                        </li>
+                        <li class="right">${Params.discountSum}</li>
+                    </ul>
+                </c:if>
                     <%--<ul class="zhek">--%>
                     <%--<li>--%>
                     <%--<p>－优惠码:</p>--%>
@@ -322,14 +339,14 @@
                     </li>
                     <li class="right">${Params.interperGen}</li>
                 </ul>
-                <ul class="ulborder">
-                    <li class="lin-hei">
-                        <p>需求备注:</p>
-                    </li>
-                </ul>
-                <ul class="ulborder">
-                    <li class="lin-hei">${Params.Remark}</li>
-                </ul>
+                    <%--<ul class="ulborder">--%>
+                    <%--<li class="lin-hei">--%>
+                    <%--<p>需求备注:</p>--%>
+                    <%--</li>--%>
+                    <%--</ul>--%>
+                    <%--<ul class="ulborder">--%>
+                    <%--<li class="lin-hei">${Params.Remark}</li>--%>
+                    <%--</ul>--%>
             </div>
         </section>
         <section class="my-order-content">
@@ -340,12 +357,12 @@
                     </li>
                     <li class="right">${Params.PriceDisplay}</li>
                 </ul>
-                <ul class="zhek">
-                    <li>
-                        <p>－折扣:</p>
-                    </li>
-                    <li class="right">${Params.discountSum}</li>
-                </ul>
+                    <%--<ul class="zhek">--%>
+                    <%--<li>--%>
+                    <%--<p>－折扣:</p>--%>
+                    <%--</li>--%>
+                    <%--<li class="right">${Params.discountSum}</li>--%>
+                    <%--</ul>--%>
                     <%--<ul class="zhek">--%>
                     <%--<li>--%>
                     <%--<p>－优惠码:</p>--%>
