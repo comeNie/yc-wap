@@ -20,6 +20,11 @@ import com.ai.yc.order.api.autooffer.param.QueryAutoOfferReq;
 import com.ai.yc.order.api.autooffer.param.QueryAutoOfferRes;
 import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
 import com.ai.yc.order.api.ordersubmission.param.*;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.ai.yc.user.api.userservice.param.InsertYCContactRequest;
+import com.ai.yc.user.api.userservice.param.SearchYCContactRequest;
+import com.ai.yc.user.api.userservice.param.UsrContactMessage;
+import com.ai.yc.user.api.userservice.param.YCContactInfoResponse;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -52,6 +57,7 @@ public class WrittenController extends BaseController {
     private IQuerySysDomainSV iQuerySysDomainSV = DubboConsumerFactory.getService(IQuerySysDomainSV.class);
     private IQueryAutoOfferSV iQueryAutoOfferSV = DubboConsumerFactory.getService(IQueryAutoOfferSV.class);
     private IOrderSubmissionSV iOrderSubmissionSV = DubboConsumerFactory.getService(IOrderSubmissionSV.class);
+    private IYCUserServiceSV iYCUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
 
     @RequestMapping(value = "")
     public String content() {
@@ -284,6 +290,33 @@ public class WrittenController extends BaseController {
 
     @RequestMapping(value = "onContentSubmit")
     public String onContentSubmit() {
+        String phone = "";
+        String name = "";
+        String email = "";
+        String contactId = "";
+        try {
+            SearchYCContactRequest req = new SearchYCContactRequest();
+            req.setUserId((String) session.getAttribute("UID"));
+            req.setTenantId(Constants.TENANTID);
+            log.info("QueryUserContactInfoParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
+            YCContactInfoResponse resp = iYCUserServiceSV.searchYCContactInfo(req);
+            if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                log.info("QueryUserContactInfoReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
+                List<UsrContactMessage> userContactList = resp.getUsrContactList();
+                for (UsrContactMessage k : userContactList) {
+                    //Todo 一阶段只有一个
+                    phone = k.getMobilePhone();
+                    name = k.getUserName();
+                    email = k.getEmail();
+                    contactId = k.getContactId();
+                }
+            } else {
+                throw new RuntimeException("QueryUserContactInfoFail: " + resp.getResponseHeader().getResultCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         JSONObject WrittenShowJSON = JSONObject.fromObject(session.getAttribute("WrittenShowJSON"));
 
         String Price = WrittenShowJSON.getString("Price");
@@ -296,6 +329,11 @@ public class WrittenController extends BaseController {
         request.setAttribute("TransLvVal", WrittenShowJSON.get("TransLvVal"));
         request.setAttribute("Detail", WrittenShowJSON.get("Detail"));
         request.setAttribute("Price", PriceDisplay);
+
+        request.setAttribute("phone", phone);
+        request.setAttribute("name", name);
+        request.setAttribute("email", email);
+        request.setAttribute("contactId", contactId);
         return "written/confirm";
     }
 
@@ -312,9 +350,28 @@ public class WrittenController extends BaseController {
 
     @RequestMapping(value = "newContact")
     public String newContact() {
-        JSONObject WrittenContextJSON = JSONObject.fromObject(session.getAttribute("WrittenContextJSON"));
-        request.setAttribute("contentJson", WrittenContextJSON);
+        String phone = request.getParameter("phone");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        JSONObject contentJson = new JSONObject();
+        contentJson.put("phone", phone);
+        contentJson.put("name", name);
+        contentJson.put("email", email);
+        request.setAttribute("contentJson", contentJson);
         return "written/newcontact";
+    }
+
+    @RequestMapping(value = "onSaveContact")
+    public Object onSaveContact() {
+        MsgBean result = new MsgBean();
+        String phone = request.getParameter("phone");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        InsertYCContactRequest req = new InsertYCContactRequest();
+
+
+
+        return result.returnMsg();
     }
 
     @RequestMapping(value = "onNewContactSubmit")

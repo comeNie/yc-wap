@@ -50,8 +50,24 @@
         <jsp:param name="BackTo" value="javascript:ToContent()"/>
     </jsp:include>
     <!--新增联系方式-->
-    <section class="add-contact" style="display: none">
-        <a href="#"><i class="icon-plus"></i>新增联系方式</a>
+    <section class="add-contact" id="contactNew">
+        <a href="#" id="newContact" style="display: none"><i class="icon-plus"></i>新增联系方式</a>
+        <ul class="left" id="contacts1">
+            <li>
+                <p>
+                    <span><i class="icon iconfont">&#xe661;</i></span>
+                    <span id="contactName"></span>
+                </p>
+                <p>
+                    <span><i class="icon iconfont">&#xe60b;</i></span>
+                    <span id="contactPhone"></span>
+                </p>
+            </li>
+            <li class="mail" id="contactMail"></li>
+        </ul>
+        <ul class="right" id="contacts2">
+            <li><i class="icon iconfont">&#xe62c;</i></li>
+        </ul>
     </section>
     <!--订单内容-->
     <section class="order-content">
@@ -97,19 +113,40 @@
 <section class="order-submit">
     <p class="left">${Price}
     </p>
-    <p class="right"><a href="javascript:void(0)" id="submit">下一步</a></p>
+    <p class="right"><a href="javascript:void(0)" id="submit">提交订单</a></p>
 </section>
 </body>
 </html>
 
 <script type="text/javascript">
-    $(function () {
+    var contactId = "${contactId}";
 
+    $(function () {
+        if (contactId == "") {
+            $("#newContact").css("display", "block");
+            $("#contacts1").css("display", "none");
+            $("#contacts2").css("display", "none");
+        } else {
+            $("#newContact").css("display", "none");
+            $("#contacts1").css("display", "block");
+            $("#contacts2").css("display", "block");
+            $("#contactName").html('${name}');
+            $("#contactPhone").html('${phone}');
+            $("#contactMail").html('${email}');
+        }
     });
 
     $(document).ready(function () {
         $("#submit").bind("click", function () {
             onSubmit();
+        });
+
+        $("#contactNew").bind("click", function () {
+            var name = $("#contactName").html();
+            var phone = $("#contactPhone").html();
+            var email = $("#contactMail").html();
+            var ToUrl = "/written/newContact?name=" + name + "&phone=" + phone + "&email=" + email;
+            window.location.href = "<%=path%>" + ToUrl;
         });
 
         $("#message").on("input propertychange", function () {

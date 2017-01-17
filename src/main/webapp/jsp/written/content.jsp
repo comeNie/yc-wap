@@ -645,6 +645,13 @@
     }
 
     function DetectLanguage(text, submit) {
+        if (submit && text == "") {
+            $("#EjectTitle").html("<spring:message code="written.content.tips1"/>");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+            Loading.HideLoading();
+            return;
+        }
         $.ajax({
             async: true,
             type: "POST",
@@ -684,13 +691,6 @@
                         var Content = text;
                         var ContentLength = count(escape(Content));
 
-                        if (ContentLength == 0) {
-                            $("#EjectTitle").html("<spring:message code="written.content.tips1"/>");
-                            $('#eject-mask').fadeIn(100);
-                            $('#prompt').slideDown(100);
-                            Loading.HideLoading();
-                            return;
-                        }
                         if (ContentLength > 2000) {
                             $("#EjectTitle").html("<spring:message code="written.content.tips2"/>");
                             $('#eject-mask').fadeIn(100);

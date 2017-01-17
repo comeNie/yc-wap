@@ -76,7 +76,7 @@
     </section>
 </div>
 <section class="add-btn">
-    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">提交订单</a>
+    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">保存</a>
 </section>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
@@ -88,9 +88,9 @@
 
         var json = ${contentJson};
         if (json != null) {
-            var phone = json.Phone;
-            var name = json.Name;
-            var email = json.Email;
+            var phone = json.phone;
+            var name = json.name;
+            var email = json.email;
             if (phone != null && phone != "") {
                 $("#phone").val(phone);
             }
