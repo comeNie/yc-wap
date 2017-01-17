@@ -80,8 +80,7 @@
     </section>
     <footer class="footer">
         <ul>
-            <li><a href="javascript:window.location.href='<%=path%>/aboutus'"><spring:message code="all.project.public.footer.about"/></a>|
-                <a href="javascript:window.location.href='<%=path%>/tident'"><spring:message code="all.project.public.footer.find"/></a>
+            <li><a href="javascript:window.location.href='<%=path%>/aboutus'"><spring:message code="all.project.public.footer.about"/></a>|<a href="javascript:window.location.href='<%=path%>/tident'"><spring:message code="all.project.public.footer.find"/></a>
                 <%--|--%>
                 <%--<a href="javascript:void(0)"><spring:message code="all.project.public.footer.idea"/></a>|--%>
                 <%--<a href="javascript:void(0)"><spring:message code="all.project.public.footer.language"/></a></li>--%>
