@@ -512,10 +512,10 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String info = request.getParameter("info");
         String isRegister = request.getParameter("isRegister");
-        long addTime = Constants.CodeTime.OtherTime;
-        if(isRegister != "" && isRegister != null){
-            addTime = Constants.CodeTime.RegisterTime;
-        }
+        long addTime = Constants.CodeTime.RegisterTime;
+//        if(isRegister != "" && isRegister != null){
+//            addTime = Constants.CodeTime.RegisterTime;
+//        }
         //发送验证码时间
         String lastInfo = (String) session.getAttribute("lastInfo");
         if (lastInfo == "" || lastInfo == null){
