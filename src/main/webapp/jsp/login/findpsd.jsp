@@ -123,6 +123,7 @@
     var getPhone;
     var getuids;
     var getCode;
+    var countryCode;
     $(document).ready(function() {
        Loading.HideLoading();
     });
@@ -270,6 +271,7 @@
                     var newphone = data.userPhone;
                     getuids = data.uids;
                     getPhone = newphone;
+                    countryCode = data.countryCode;
                     var myphone1=newphone.substr(0,3);
                     var myphone2=newphone.substr(7,4);
                     var lphone=myphone1+"****"+myphone2;
@@ -398,14 +400,14 @@
             data: {
                 type: 6,
                 info:getPhone,
-                domain:"${domainname}"
+                domain:countryCode
             },
             success: function (data) {
                 if (data.status == 1) {
                     $("#codeLabel2").css("display", "none");
-                    $("#checkP").html("<spring:message code="login.findpsd.hadDynCode"/>");
-                    wait = 60;
-                    countDown(60);
+                    $("#checkP").html("已发送动态码短信到");
+                    wait = 120;
+                    countDown();
 
                     Loading.HideLoading();
                 } else {
@@ -424,7 +426,7 @@
         });
     }
     //    倒计时
-    var wait = 60;
+    var wait = 120;
     function countDown() {
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
@@ -432,7 +434,7 @@
             $("#getnumber").html("<spring:message code="login.findpsd.getcode"/>");//改变按钮中value的值
             $("#getnumber").attr("class","btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
-            wait = 60;
+            wait = 120;
         }else {
             <%--var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';--%>
             var txtStr = wait+ '<spring:message code="login.findpsd.chongxinhuoqu"/>';

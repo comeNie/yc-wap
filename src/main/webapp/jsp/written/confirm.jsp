@@ -32,7 +32,7 @@
 <div class="wrapper-big" id="body">
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title"><spring:message code="written.content.ptitle"/></div>
+            <div class="prompt-title">提示</div>
             <div class="prompt-confirm">
                 <ul>
                     <li id="EjectTitle"></li>
@@ -52,8 +52,24 @@
         <jsp:param name="BackTo" value="javascript:ToContent()"/>
     </jsp:include>
     <!--新增联系方式-->
-    <section class="add-contact" style="display: none">
-        <a href="#"><i class="icon-plus"></i><spring:message code="written.confirm.new"/></a>
+    <section class="add-contact" id="contactNew">
+        <a href="#" id="newContact" style="display: none"><i class="icon-plus"></i>新增联系方式</a>
+        <ul class="left" id="contacts1">
+            <li>
+                <p>
+                    <span><img src="<%=path%>/ui/images/icon-lx.jpg" class="img1"></span>
+                    <span class="uesr" id="contactName"></span>
+                </p>
+                <p>
+                    <span><img src="<%=path%>/ui/images/icon-lx1.jpg" class="img2"></span>
+                    <span class="iphone" id="contactPhone"></span>
+                </p>
+            </li>
+            <li class="mail" id="contactMail"></li>
+        </ul>
+        <ul class="right" id="contacts2">
+            <li><i class="icon iconfont">&#xe62c;</i></li>
+        </ul>
     </section>
     <!--订单内容-->
     <section class="order-content">
@@ -100,19 +116,42 @@
 <section class="order-submit">
     <p class="left">${Price}
     </p>
-    <p class="right"><a href="javascript:void(0)" id="submit"><spring:message code="written.confirm.next"/></a></p>
+    <p class="right"><a href="javascript:void(0)" id="submit">提交订单</a></p>
 </section>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 
 <script type="text/javascript">
+    var contactId = "${contactId}";
+    var GnCountryId = "${GnCountryId}";
+    var countryCode = "${countryCode}";
+    var name = "${name}";
+    var phone = "${phone}";
+    var email = "${email}";
     $(function () {
-
+        if (contactId == "") {
+            $("#newContact").css("display", "block");
+            $("#contacts1").css("display", "none");
+            $("#contacts2").css("display", "none");
+        } else {
+            $("#newContact").css("display", "none");
+            $("#contacts1").css("display", "block");
+            $("#contacts2").css("display", "block");
+            $("#contactName").html(name);
+            $("#contactPhone").html('+' + countryCode + ' ' + phone);
+            $("#contactMail").html(email);
+        }
     });
 
     $(document).ready(function () {
+        Loading.HideLoading();
         $("#submit").bind("click", function () {
-            onSubmit();
+            orderSubmit();
+        });
+
+        $("#contactNew").bind("click", function () {
+            toNewContact();
         });
 
         $("#message").on("input propertychange", function () {
@@ -124,14 +163,7 @@
         });
     });
 
-    function ToContent() {
-        var href = "<%=path%>/written";
-        window.location.href = href;
-        location.replace("<%=path%>/written");
-    }
-
-
-    function onSubmit() {
+    function toNewContact() {
         var msg = $("#message").val();
         if (isEmojiCharacter(msg)) {
             $("#EjectTitle").html("<spring:message code="written.confirm.tips6"/>");
@@ -143,23 +175,95 @@
         $.ajax({
             async: true,
             type: "POST",
-            url: "<%=path%>/written/onConfirmSubmit",
+            url: "<%=path%>/written/saveMessage",
             modal: true,
             timeout: 30000,
             data: {
                 msg: msg
             },
             success: function (data) {
-                window.location.href = "<%=path%>/written/newContact";
+                var ToUrl = "";
+                if (contactId == "") {
+                    ToUrl = "/written/newContact";
+                } else {
+                    ToUrl = "/written/newContact?name="
+                            + encodeURIComponent(name) + "&phone=" + encodeURIComponent(phone)
+                            + "&email=" + encodeURIComponent(email) + "&contactId=" + contactId + "&GnCountryId=" + GnCountryId;
+                }
+                window.location.href = "<%=path%>" + ToUrl;
             },
             error: function (data) {
 
             },
             beforeSend: function () {
-
+                Loading.ShowLoading();
             },
             complete: function () {
+                Loading.HideLoading();
+            }
+        });
+    }
 
+    function orderSubmit() {
+        var msg = $("#message").val();
+        if (isEmojiCharacter(msg)) {
+            $("#EjectTitle").html("请勿输入特殊字符及表情符号");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+            return;
+        }
+
+        Date.prototype.stdTimezoneOffset = function () {
+            var jan = new Date(this.getFullYear(), 0, 1);
+            var jul = new Date(this.getFullYear(), 6, 1);
+            return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+        };
+
+        Date.prototype.dst = function () {
+            return this.getTimezoneOffset() < this.stdTimezoneOffset();
+        };
+        var today = new Date();
+        var TimeZoneOffset = today.stdTimezoneOffset();
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/written/onOrderSubmit",
+            modal: true,
+            timeout: 30000,
+            data: {
+                msg: msg,
+                name: name,
+                phone: phone,
+                email: email,
+                TimeZoneOffset: TimeZoneOffset
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    var OrderId = data.OrderId;
+                    if (OrderId == "") {
+                        $("#EjectTitle").html("下单失败，请重试");
+                        $('#eject-mask').fadeIn(100);
+                        $('#prompt').slideDown(100);
+                        return;
+                    }
+                    window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
+                } else {
+                    $("#EjectTitle").html("下单失败，请重试");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
+                }
+            },
+            error: function (data) {
+                $("#EjectTitle").html("下单失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
             }
         });
     }
@@ -197,6 +301,12 @@
             }
         }
         return false;
+    }
+
+    function ToContent() {
+        var href = "<%=path%>/written";
+        window.location.href = href;
+        location.replace("<%=path%>/written");
     }
 
 </script>

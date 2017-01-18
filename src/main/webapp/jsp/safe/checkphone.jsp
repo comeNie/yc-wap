@@ -200,7 +200,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#phonetips").css("display", "none");
-                    wait = 60;
+                    wait = 120;
                     countDown();
                     Loading.HideLoading();
                 } else {
@@ -216,7 +216,7 @@
             }
         });
     }
-    var wait = 60;
+    var wait = 120;
     function countDown() {
         if (wait == 0) {
             $("#getnumber").removeAttr("disabled");
@@ -224,7 +224,7 @@
             $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
             $("#getnumber").attr("class","btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
-            wait = 60;
+            wait = 120;
         }else {
             <%--var txtStr = '<spring:message code="safe.changemail.chongxinhuoqu"/>(' + wait + ')';--%>
             var txtStr = wait+ '<spring:message code="safe.checkphone.chongxinhuoqu"/>';

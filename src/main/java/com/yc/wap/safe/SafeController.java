@@ -2,7 +2,6 @@ package com.yc.wap.safe;
 
 import com.ai.opt.sdk.components.ccs.CCSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
@@ -262,13 +261,11 @@ public class SafeController extends BaseController {
 
             if (code.getCodeNumber() == 1){
                 Map m = resp.getDate();
-                log.info(m);
                 UcMembersVo vo = new UcMembersVo(m);
+                log.info(m);
                 result.put("userPhone",vo.getMobilephone());
                 result.put("uids",m.get("uid")+"");
-                result.put("username",vo.getUsername());
-                result.put("email",vo.getEmail());
-                result.put("password",vo.getPassword());
+                result.put("countryCode",m.get("domainName"));
                 log.info("uid:"+vo.getUid());
             }else {
                 result.put("status","0");
@@ -538,10 +535,10 @@ public class SafeController extends BaseController {
         MsgBean result = new MsgBean();
         String info = request.getParameter("info");
         String isRegister = request.getParameter("isRegister");
-        long addTime = Constants.CodeTime.OtherTime;
-        if(isRegister != "" && isRegister != null){
-            addTime = Constants.CodeTime.RegisterTime;
-        }
+        long addTime = Constants.CodeTime.RegisterTime;
+//        if(isRegister != "" && isRegister != null){
+//            addTime = Constants.CodeTime.RegisterTime;
+//        }
         //发送验证码时间
         String lastInfo = (String) session.getAttribute("lastInfo");
         if (lastInfo == "" || lastInfo == null){
@@ -611,9 +608,9 @@ public class SafeController extends BaseController {
                 }
             }
             res.setDomainname(domainName);
-            if (domainvalue.equals("86")){
-                domainvalue = "";
-            }
+//            if (domainvalue.equals("86")){
+//                domainvalue = "";
+//            }
         }
         if (uid != null){
             Integer u = Integer.parseInt(uid);

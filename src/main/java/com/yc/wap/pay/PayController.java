@@ -340,6 +340,8 @@ public class PayController extends BaseController {
     }
 
     private boolean OrderPayFinished(String OrderId, String PayType, long Amount, String outOrderId, Timestamp FinishTime, String uid) {
+        String userName = (String) session.getAttribute("username");
+
         SearchYCUserRequest request = new SearchYCUserRequest();
         request.setUserId(uid);
         YCUserInfoResponse response = iycUserServiceSV.searchYCUserInfo(request);
@@ -349,6 +351,7 @@ public class PayController extends BaseController {
         OrderPayProcessedResultBaseInfo BaseInfo = new OrderPayProcessedResultBaseInfo();
         OrderPayProcessedResultFeeInfo FeeInfo = new OrderPayProcessedResultFeeInfo();
         OrderPayProcessedResultProdInfo ProdInfo = new OrderPayProcessedResultProdInfo();
+        OrderPayProcessedResultStateChgInfo stateChgInfo = new OrderPayProcessedResultStateChgInfo();
 
         BaseInfo.setOrderId(Long.parseLong(OrderId));
         BaseInfo.setOrderType(Constants.OrderType2.PERSIONAL);
@@ -367,9 +370,12 @@ public class PayController extends BaseController {
 
         ProdInfo.setStateTime(FinishTime);
 
+        stateChgInfo.setOperName(userName);
+
         req.setBaseInfo(BaseInfo);
         req.setFeeInfo(FeeInfo);
         req.setProdInfo(ProdInfo);
+        req.setStateChgInfo(stateChgInfo);
 
         log.info("OrderPayFinishedProcessedParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
         try {

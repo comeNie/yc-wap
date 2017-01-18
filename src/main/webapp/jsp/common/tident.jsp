@@ -68,7 +68,7 @@
     <!--上传提示弹出框-->
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title">请选择</div>
+            <div class="prompt-title">提示</div>
             <div class="prompt-confirm">
                 <ul>
                     <li id="EjectTitle">IOS端不支持上传附件请前往PC端</li>

@@ -78,8 +78,8 @@
 
     <!--订单内容-->
     <div class="confirm-list">
-        <ul>
-            <li class="word"><spring:message code="pay.payment.type"/></li>
+        <ul style="display: none">
+            <li class="word">订单性质:</li>
             <li>
                 <p>
                     <select class="select testing-select-big" disabled id="sel">

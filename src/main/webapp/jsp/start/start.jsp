@@ -30,7 +30,7 @@
 <!--分享弹出框-->
 <div class="eject-big">
     <div class="prompt-share" id="share-eject">
-        <div class="prompt-share-title"><spring:message code="start.qingxuanze"/></div>
+        <div class="prompt-share-title"><spring:message code="start.tishi"/></div>
         <!--确认删除-->
         <div class="prompt-share-confirm">
             <ul>
@@ -276,6 +276,7 @@
                 autoTip("<spring:message code="start.tipBiaoqing"/>");
                 return;
             }
+
             contentDetection(landetec);
             if(!checkLength(landetec)){
                 var tex = landetec.substr(0,2000);
@@ -352,10 +353,6 @@
         var beRead = $.trim($("#result-text").val());
         if (beRead == "" || beRead == null) {
             return;
-        }
-        var ttslength = mbStringLength(beRead);
-        if (ttslength > 1024) {
-            $("#text_audio").css("display", "none");
         }
         var audioPlay = document.getElementById("audioPlay");
         if (audioPlay.paused) {
@@ -511,8 +508,16 @@
                     source = realLangeuage;
                     break;
                 default:
+                    source = realLangeuage;
                     <%--autoTip("<spring:message code="start.buzhichiyuyan"/>");--%>
-                    <%--return;--%>
+                    $("#result-text").html(textStr);
+                    $("#results").show();
+                    $("#chick-btn").hide();
+
+                    $("#translateAid").show();
+                    $("#translateGif").hide();
+                    IsTranslated = true;
+                    return;
             }
 
         }
@@ -543,6 +548,12 @@
             success: function (data) {
                 if (data.status == 1) {//成功
                     $("#result-text").html(data.target);
+                    var ttslength = mbStringLength(data.target);
+                    if (ttslength > 1024) {
+                        $("#text_audio").hide()
+                    }else {
+                        $("#text_audio").show();
+                    }
                     $("#results").show();
                     $("#chick-btn").hide();
 

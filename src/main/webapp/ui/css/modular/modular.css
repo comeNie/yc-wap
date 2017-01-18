@@ -106,10 +106,23 @@
 .add-contact{width:100%;float:left;height:2.92rem;margin-top:0.42rem;background:url(../../images/add-contact-bj.png) no-repeat;background-size:100%;}
 .add-contact a{width:4.82rem;height:1.2rem;border:2px solid #1780e3;border-radius:5px;float:left;margin:0.74rem 0 0  0.74rem;text-align: center;line-height:1.17rem;font-size:0.51rem;color:#666}
 .add-contact a i{margin-right:0.42rem;color:#1780e3}
+.add-contact .left{width:14.6rem;float:left;padding:0.55rem 0 0 0.55rem;}
+.add-contact .left li{width:100%;float:left;color:#999;font-size:0.51rem}
+.add-contact .left li p,.add-contact .left li p span{float:left}
+.add-contact .left li p span{color:#666;font-size:0.51rem}
+.add-contact .left li p span .img1{width:0.68rem;height:0.68rem;margin-right:0.2rem;}
+.add-contact .left li p span .img2{width:0.42rem;height:0.68rem;margin-right:0.2rem;}
+.add-contact .left li p{margin-right:0.98rem;}
+.add-contact .left .mail{width:14.6rem;margin-top:0.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.add-contact .left .uesr{width:2.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.add-contact .left .iphone{width:7.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.add-contact .right{float:right;margin-right:0.55rem;}
+.add-contact .right li{line-height:2.9rem;font-size:0.72rem;color:#1780e3}
+
 .order-content{width:100%;float:left;background:#fff;border-top:1px solid #c4c4c4;border-bottom:1px solid #c4c4c4;margin-top:0.42rem;}
-.order-list{width:100%;float:left}
+.order-list{width:100%;float:left;}
 .order-list ul{width:100%;height:1.92rem;border-bottom:1px solid #e9e9e9;padding:0 0.64rem;}
-.order-list ul li{float:left;line-height:1.92rem;font-size:0.55rem;color:#666}
+.order-list ul li{float:left;line-height:1.92rem;font-size:0.55rem;color:#666;}
 .order-list ul .right{float:right;text-align:right;}
 .order-list ul .word{width:5.6rem;overflow:hidden;text-overflow: ellipsis; white-space: nowrap;}
 .order-list ul p{float:left}
@@ -135,7 +148,11 @@
 
 .new-cont{margin-top:0;}
 .input-medium{width:11.5rem;height:1.92rem;border:none;background:none;padding-left:0.34rem;color:#666;font-size:0.55rem;line-height:1.92rem;float:right}
-.add-btn{width:100%;margin:-1.7rem auto 0rem;padding:0 0.64rem 0.34rem;float:left}
+.add-btn{width:100%;margin:-1.7rem auto 0rem;padding:0 0.64rem 0.34rem;float:left;text-align:center;}
+.add-btn p{margin-bottom:0.5rem;}
+.newly-select{width:13rem;height:1.49rem;border:none;font-size:0.55rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
+ background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.64rem 0.24rem;border-radius:0.21rem;color:#666}
+.order-list ul .iphone{/*margin-left:1.4rem;*/}
 /**提交成功**/
 .tij-cg{width:100%;float:left;margin:2.45rem 0 0 0;padding:0 1.2rem;}
 .tij-cg ul{width:100%;float:left;margin-top:2rem;}
@@ -283,7 +300,8 @@
 .my-order-list ul .red-word{color:#ff4949}
 .my-order-list ul .ash-word{color:#c7c7c7}
 .my-order-list ul .ow-h{width:150px;overflow:hidden;text-overflow: ellipsis; white-space: nowrap;}
-.my-order-list ul .blue-word{color:#1780e3;margin:0 0.5rem;}
+.my-order-list ul .blue-word{color:#1780e3;margin:0 0 0 0.5rem;}
+.my-order-list ul .blue-word1{color:#1780e3;margin:0 0 0 0.5rem;font-size:0.68rem}
 .my-order-list ul .bord-btn{width:2.13rem;height:1.06rem;text-align: center;line-height:1.06rem;margin:0.4rem 0 0 0.4rem;border-radius:0.21rem;float:left}
 .my-order-list ul .red{border:1px solid #ff4949}
 .my-order-list ul .red a{color:#ff4949;font-size:0.55rem}
@@ -424,3 +442,42 @@
 .release-showbj{width:100%;height:1.92rem;float:left;}
 .release-btn{width:100%;height:1.92rem;position:fixed;bottom:0;}
 .release-btn a{width:100%;height:1.92rem;background:#1780e3;float:left; text-align:center;line-height:1.92rem;font-size:0.64rem;color:#fff}
+/**我的积分**/
+.points{width:100%;float:left}
+.points ul{width:100%;float:left;padding:0.3rem 0.55rem;border-bottom:1px solid #e9e9e9;}
+.points ul li{float:left;font-size:0.55rem;color:#999}
+.points ul li p{float:left;line-height:2.13rem;}
+.points ul .right{float:right}
+.points ul li .title{color:#666}
+.points ul li .number{color:#ff4949;font-size:1rem;margin-left:0.5rem;}
+.points ul li span{width:100%;float:left;line-height:1rem;font-size:0.46rem}
+.points ul li .title-j{font-size:0.55rem;color:#666}
+/**反馈**/
+.feedback{width:100%;float:left}
+.feedback ul{width:100%;float:left}
+.feedback ul .one{width:100%;float:left;border-bottom:1px solid #e9e9e9;height:1.7rem;padding:0 0.55rem;background:#fff;}
+.feedback ul .one p{float:left;line-height:1.7rem;font-size:0.55rem;color:#666}
+.feedback ul .one .right{float:right}
+.feedback-select{height:1.49rem;border:none;font-size:0.51rem;appearance:none;padding:0 0.7rem;-moz-appearance:none;-webkit-appearance:none;
+ background:url(../../images/icon-s.png) no-repeat scroll right ;background-size:0.64rem 0.24rem;border-radius:0.21rem;font-size:0.51rem;color:#666}
+.feedback-textarea{width:100%;height:4.48rem;border-bottom:1px solid #e9e9e9;padding:0.2rem 0.55rem;color:#999}
+.feedback ul .tow{width:100%;float:left;height:1.92rem;background:#fff;border:1px solid #e9e9e9;padding:0 0.55rem;}
+.feedback ul .tow p{float:left;line-height:1.92rem;font-size:0.55rem}
+.feedback ul .tow label{float:right;line-height:1.92rem;font-size:0.55rem;color:#ff4949;}
+.phone-input{width:5.5rem;height:1.92rem;background:none;font-size:0.55rem;color:#666}
+.consultation{width:100%;float:left;text-align:center;font-size:0.55rem;}
+/**评价**/
+.evaluate{width:100%;float:left}
+.evaluate-title{width:100%;float:left;padding:0.64rem 0.64rem 0;border-bottom:1px solid #c4c4c4;}
+.evaluate-title ul{float:left}
+.evaluate-title ul li{width:100%;float:left;font-size:0.55rem;color:#666;margin-bottom:0.5rem;}
+.evaluate-title ul li p,.evaluate-title ul li p span{float:left}
+.evaluate-title ul li p span img{width:0.76rem;height:0.76rem;margin-right:0.5rem;}
+.evaluate-title ul li .word{margin-top:0.1rem;}
+.evaluate-list{width:100%;float:left;}
+.evaluate-list-word{width:100%;float:left;background:#fff;height:1.92rem;border-bottom:1px solid #e9e9e9;line-height:1.92rem;padding:0 0.55rem;font-size:0.55rem}
+.evaluate-textarea{width:100%;height:7.89rem;background:#fff;padding:0.2rem  0.55rem 0;border-bottom:1px solid #c4c4c4;color:#666}
+.evaluate-title.none-border{border-bottom:none;}
+.pingj{font-size:0.55rem;color:#666;padding:0 0.55rem;}
+.pingj-list{font-size:0.55rem;color:#666;padding:0 0.55rem;margin-top:0.2rem;}
+.pingj-center{width:100%;float:left;text-align:center;color:#999;margin-top:0.2rem;}
