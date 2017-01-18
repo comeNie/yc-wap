@@ -86,7 +86,7 @@
 <script>
     function toRegister(){
         if ("${isLogin}"== "1"){
-            $("#EjectTitle").html("您已成功注册，请使用账号登录PC客户端使用议员功能。");
+            $("#EjectTitle").html("您已成功注册，请使用账号登录PC客户端使用译员功能。");
             $('#eject-mask').fadeIn(100);
             $('#prompt').slideDown(100);
             return;

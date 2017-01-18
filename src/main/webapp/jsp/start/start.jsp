@@ -22,7 +22,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
-
+    <%@ include file="../common/timezone.jsp" %>
 </head>
 
 <body>
@@ -221,7 +221,6 @@
 </div>
 
 </body>
-<%@ include file="../common/timezone.jsp" %>
 </html>
 
 
@@ -485,27 +484,37 @@
             return;
         }
         var source = $("#source-lan").val();
+        if (source == "auto"){
+            autoTip("<spring:message code="start.baoqiaoLan"/>");
+            return;
+        }
         var target = $("#target-lan").val();
         $("#tipLabel").html("");
+        console.log("真正的语言"+realLangeuage);
+        console.log("选择的语言"+source);
         if (realLangeuage != source){
             switch (realLangeuage){
                 case "zh":
                     $("#tipLabel").html("<spring:message code="start.testZH"/>");
+                    source = realLangeuage;
                     break;
                 case "en":
                     $("#tipLabel").html("<spring:message code="start.testEN"/>");
+                    source = realLangeuage;
                     break;
                 case "ru":
                     $("#tipLabel").html("<spring:message code="start.testRU"/>");
+                    source = realLangeuage;
                     break;
                 case "pt":
                     $("#tipLabel").html("<spring:message code="start.testPT"/>");
+                    source = realLangeuage;
                     break;
                 default:
-                    autoTip("<spring:message code="start.buzhichiyuyan"/>");
-                    return;
+                    <%--autoTip("<spring:message code="start.buzhichiyuyan"/>");--%>
+                    <%--return;--%>
             }
-            source = realLangeuage;
+
         }
         if(realLangeuage == target){
             $("#result-text").html(textStr);

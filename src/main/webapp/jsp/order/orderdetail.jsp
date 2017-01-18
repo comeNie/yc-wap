@@ -374,7 +374,7 @@
                         <p><spring:message code="order.detail.contact"/></p>
                     </li>
                 </ul>
-                <ul class="zhek">
+                <ul class="zhek zhek-height">
                     <li>
                         <p>${Params.contactName}</p>
                         <p>${Params.contactTel}</p>

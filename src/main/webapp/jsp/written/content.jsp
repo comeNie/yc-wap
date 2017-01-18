@@ -26,7 +26,6 @@
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/modular/eject.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
     <%@ include file="../common/timezone.jsp" %>
 </head>
@@ -116,8 +115,8 @@
                 <li>
                     <p class="word"><spring:message code="written.content.service"/></p>
                     <p>
-                        <select id="otherServ" class="select testing-select-small" onchange="ServerChange()">
-                            <option otherServId="N"><spring:message code="written.content.word"/></option>
+                        <select id="otherServ" class="select testing-select-small" onchange="ServerChange()" disabled>
+                            <option otherServId="N">无增值服务</option>
                             <%--<option otherServId="Y">需排版</option>--%>
                         </select>
                         <span>|</span>
@@ -176,6 +175,7 @@
     var EnglishEn = "";
     var EnglishCn = "";
     var oldContent = "";
+    var notSupportChecked = false;
 
     $(function () {
 
@@ -202,7 +202,8 @@
                 return;
             }
             oldContent = Content;
-            DetectLanguage(Content);
+            notSupportChecked = false;
+            DetectLanguage(Content, false);
         });
 
         $("#chick-int").on("input propertychange", function () {
@@ -237,28 +238,16 @@
             }
         });
 
+        $('#prompt-btn').click(function () {
+            $('#eject-mask').fadeOut(200);
+            $('#prompt').slideUp(200);
+            notSupportChecked = true;
+        });
+
         $("#submit").bind("click", function () {
             var Content = $("#chick-int").val();
-            var ContentLength = count(escape(Content));
-            if (ContentLength == 0) {
-                $("#EjectTitle").html("<spring:message code="written.content.tips1"/>");
-                $('#eject-mask').fadeIn(100);
-                $('#prompt').slideDown(100);
-                return;
-            }
-            if (ContentLength > 2000) {
-                $("#EjectTitle").html("<spring:message code="written.content.tips2"/>");
-                $('#eject-mask').fadeIn(100);
-                $('#prompt').slideDown(100);
-                return;
-            }
-            if (!($("#isRead").attr("value") == "1")) {
-                $("#EjectTitle").html("<spring:message code="written.content.tips3"/>");
-                $('#eject-mask').fadeIn(100);
-                $('#prompt').slideDown(100);
-                return;
-            }
-            saveContent(Content, ContentLength);
+            Loading.ShowLoading();
+            DetectLanguage(Content, true);
         });
     });
 
@@ -448,13 +437,6 @@
     }
 
     function AutoChangeDual(SourceCn, SourceEn) {
-        if (SourceCn == "" || SourceEn == "") {
-            $("#EjectTitle").html("<spring:message code="written.content.tips5"/>");
-            $('#eject-mask').fadeIn(100);
-            $('#prompt').slideDown(100);
-            return;
-        }
-
         $("#dualSource").children('option').each(function () {
             var temp_value = $(this).val();
             if (temp_value == SourceCn || temp_value == SourceEn) {
@@ -575,8 +557,8 @@
             Express = "Y";
         }
         var Detail = "";
-        if (Content.length > 10) {
-            Detail = Content.substring(0, 15) + "...";
+        if (Content.length > 15) {
+            Detail = Content.substring(0, 15) + "......";
         } else {
             Detail = Content;
         }
@@ -659,7 +641,7 @@
         $("#chick-int").val("");
     }
 
-    function DetectLanguage(text) {
+    function DetectLanguage(text, submit) {
         $.ajax({
             async: true,
             type: "POST",
@@ -684,7 +666,45 @@
                             SourceEn = DualList[k].sourceEn;
                         }
                     }
+
+                    if ((SourceCn == "" || SourceEn == "") && notSupportChecked == false) {
+                        $("#EjectTitle").html("<spring:message code="written.content.tips5"/>");
+                        $('#eject-mask').fadeIn(100);
+                        $('#prompt').slideDown(100);
+                        Loading.HideLoading();
+                        return;
+                    }
+
                     AutoChangeDual(SourceCn, SourceEn);
+
+                    if (submit) {
+                        var Content = text;
+                        var ContentLength = count(escape(Content));
+
+                        if (ContentLength == 0) {
+                            $("#EjectTitle").html("<spring:message code="written.content.tips1"/>");
+                            $('#eject-mask').fadeIn(100);
+                            $('#prompt').slideDown(100);
+                            Loading.HideLoading();
+                            return;
+                        }
+                        if (ContentLength > 2000) {
+                            $("#EjectTitle").html("<spring:message code="written.content.tips2"/>");
+                            $('#eject-mask').fadeIn(100);
+                            $('#prompt').slideDown(100);
+                            Loading.HideLoading();
+                            return;
+                        }
+                        if (!($("#isRead").attr("value") == "1")) {
+                            $("#EjectTitle").html("<spring:message code="written.content.tips3"/>");
+                            $('#eject-mask').fadeIn(100);
+                            $('#prompt').slideDown(100);
+                            Loading.HideLoading();
+                            return;
+                        }
+
+                        saveContent(Content, ContentLength);
+                    }
                 }
             },
             error: function (data) {

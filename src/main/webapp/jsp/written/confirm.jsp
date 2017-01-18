@@ -102,7 +102,6 @@
     </p>
     <p class="right"><a href="javascript:void(0)" id="submit"><spring:message code="written.confirm.next"/></a></p>
 </section>
-
 </body>
 </html>
 
