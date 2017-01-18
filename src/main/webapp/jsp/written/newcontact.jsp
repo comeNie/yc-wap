@@ -7,6 +7,7 @@
 --%>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -55,11 +56,10 @@
             <ul>
                 <li>手机：</li>
                 <li>
-                    <select class="select newly-select">
-                        <option>中国大陆+86</option>
-                        <option>中国大陆+86</option>
+                    <select class="select newly-select" id="selectid">
                     </select>
                 </li>
+                <label id="selectLabel"></label>
             </ul>
             <ul>
                 <li class="iphone"><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码（必填）"></li>
@@ -167,7 +167,7 @@
     });
 
     $(function () {
-
+        loadCountry();
     });
 
     function onSubmit(phone, name, email) {
@@ -239,5 +239,46 @@
             }
         }
         return false;
+    }
+
+    function loadCountry() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/countryid",
+            modal: true,
+            showBusi: false,
+            timeout: 30000,
+            data: {},
+            success: function (data) {
+                if (data.status == 1) {
+                    isLoaded = true;
+                    $("#selectLabel").css("display", "none");
+                    var list = data.list;
+                    $.each(list, function (index, value) {
+                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN") {
+                            $('#selectid').append("<option value='" + value.countryValue + "'>" + value.countryNameCn + " +" + value.countryCode + "</option>");
+                        } else {
+                            $('#selectid').append("<option value='" + value.countryValue + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
+                        }
+                        localStorage.setItem(value.countryValue, value.regularExpression);
+                        localStorage.setItem(value.countryValue + "1", value.countryCode);
+                    })
+                } else {
+                    $("#selectLabel").html("<spring:message code="login.register.countryCode"/>");
+                    $("#selectLabel").css("display", "block");
+                }
+            },
+            error: function () {
+                $("#selectLabel").html("<spring:message code="login.register.countryCode"/>");
+                $("#selectLabel").css("display", "block");
+            },
+            beforeSend: function () {
+//                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
     }
 </script>
