@@ -62,6 +62,7 @@
                 <label id="selectLabel"></label>
             </ul>
             <ul>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                 <li class="iphone"><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码（必填）"></li>
             </ul>
             <ul>

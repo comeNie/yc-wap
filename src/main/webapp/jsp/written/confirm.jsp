@@ -55,12 +55,12 @@
         <ul class="left" id="contacts1">
             <li>
                 <p>
-                    <span><i class="icon iconfont">&#xe661;</i></span>
-                    <span id="contactName"></span>
+                    <span><img src="<%=path%>/ui/images/icon-lx.jpg" class="img1"></span>
+                    <span class="uesr" id="contactName"></span>
                 </p>
                 <p>
-                    <span><i class="icon iconfont">&#xe60b;</i></span>
-                    <span id="contactPhone"></span>
+                    <span><img src="<%=path%>/ui/images/icon-lx1.jpg" class="img2"></span>
+                    <span class="iphone" id="contactPhone"></span>
                 </p>
             </li>
             <li class="mail" id="contactMail"></li>
