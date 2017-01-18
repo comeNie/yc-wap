@@ -115,6 +115,7 @@
     </p>
     <p class="right"><a href="javascript:void(0)" id="submit">提交订单</a></p>
 </section>
+<jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 
@@ -136,6 +137,7 @@
     });
 
     $(document).ready(function () {
+        Loading.HideLoading();
         $("#submit").bind("click", function () {
 
         });
@@ -179,7 +181,9 @@
                 if (contactId == "") {
                     ToUrl = "/written/newContact";
                 } else {
-                    ToUrl = "/written/newContact?name=" + name + "&phone=" + phone + "&email=" + email + "&contactId=" + contactId;
+                    ToUrl = "/written/newContact?name="
+                            + encodeURIComponent(name) + "&phone=" + encodeURIComponent(phone)
+                            + "&email=" + encodeURIComponent(email) + "&contactId=" + encodeURIComponent(contactId);
                 }
                 window.location.href = "<%=path%>" + ToUrl;
             },

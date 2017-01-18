@@ -379,7 +379,7 @@ public class WrittenController extends BaseController {
         if (!contactId.equals("")) {
             req.setContactId(contactId);
         }
-        
+
 
         return result.returnMsg();
     }
