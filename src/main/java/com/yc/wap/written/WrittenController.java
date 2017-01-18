@@ -304,7 +304,7 @@ public class WrittenController extends BaseController {
                 log.info("QueryUserContactInfoReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(resp));
                 List<UsrContactMessage> userContactList = resp.getUsrContactList();
                 for (UsrContactMessage k : userContactList) {
-                    //Todo 一阶段只有一个
+                    //Todo 一阶段只有一个联系人信息
                     phone = k.getMobilePhone();
                     name = k.getUserName();
                     email = k.getEmail();
@@ -328,6 +328,7 @@ public class WrittenController extends BaseController {
         request.setAttribute("DomainVal", WrittenShowJSON.get("DomainVal"));
         request.setAttribute("TransLvVal", WrittenShowJSON.get("TransLvVal"));
         request.setAttribute("Detail", WrittenShowJSON.get("Detail"));
+        request.setAttribute("Message", WrittenShowJSON.get("Message"));
         request.setAttribute("Price", PriceDisplay);
 
         request.setAttribute("phone", phone);
@@ -337,9 +338,9 @@ public class WrittenController extends BaseController {
         return "written/confirm";
     }
 
-    @RequestMapping(value = "onConfirmSubmit")
+    @RequestMapping(value = "saveMessage")
     @ResponseBody
-    public Object onConfirmSubmit() {
+    public Object saveMessage() {
         MsgBean result = new MsgBean();
         String msg = request.getParameter("msg");
         JSONObject WrittenContextJSON = JSONObject.fromObject(session.getAttribute("WrittenContextJSON"));
@@ -353,10 +354,12 @@ public class WrittenController extends BaseController {
         String phone = request.getParameter("phone");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
+        String contactId = request.getParameter("contactId");
         JSONObject contentJson = new JSONObject();
         contentJson.put("phone", phone);
         contentJson.put("name", name);
         contentJson.put("email", email);
+        contentJson.put("contactId", contactId);
         request.setAttribute("contentJson", contentJson);
         return "written/newcontact";
     }
@@ -367,20 +370,28 @@ public class WrittenController extends BaseController {
         String phone = request.getParameter("phone");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
+        String contactId = request.getParameter("contactId");
         InsertYCContactRequest req = new InsertYCContactRequest();
-
-
+        req.setUserId((String) session.getAttribute("UID"));
+        req.setMobilePhone(phone);
+        req.setUserName(name);
+        req.setEmail(email);
+        if (!contactId.equals("")) {
+            req.setContactId(contactId);
+        }
+        
 
         return result.returnMsg();
     }
 
-    @RequestMapping(value = "onNewContactSubmit")
+    @RequestMapping(value = "onOrderSubmit")
     @ResponseBody
-    public Object onNewContactSubmit() {
+    public Object onOrderSubmit() {
         MsgBean result = new MsgBean();
         String Phone = request.getParameter("phone");
         String Name = request.getParameter("name");
         String Email = request.getParameter("email");
+        String Message = request.getParameter("msg");
         int TimeZoneOffset = Integer.parseInt(request.getParameter("TimeZoneOffset"));
         String TimeZone = "";
         if (TimeZoneOffset > 0) {
@@ -394,6 +405,7 @@ public class WrittenController extends BaseController {
         WrittenContextJSON.put("Name", Name);
         WrittenContextJSON.put("Email", Email);
         WrittenContextJSON.put("TimeZone", TimeZone);
+        WrittenContextJSON.put("Message", Message);
         session.setAttribute("WrittenContextJSON", WrittenContextJSON);
 
         JSONObject WrittenShowJSON = JSONObject.fromObject(session.getAttribute("WrittenShowJSON"));

@@ -120,7 +120,6 @@
 
 <script type="text/javascript">
     var contactId = "${contactId}";
-
     $(function () {
         if (contactId == "") {
             $("#newContact").css("display", "block");
@@ -138,15 +137,11 @@
 
     $(document).ready(function () {
         $("#submit").bind("click", function () {
-            onSubmit();
+
         });
 
         $("#contactNew").bind("click", function () {
-            var name = $("#contactName").html();
-            var phone = $("#contactPhone").html();
-            var email = $("#contactMail").html();
-            var ToUrl = "/written/newContact?name=" + name + "&phone=" + phone + "&email=" + email;
-            window.location.href = "<%=path%>" + ToUrl;
+            toNewContact();
         });
 
         $("#message").on("input propertychange", function () {
@@ -158,14 +153,7 @@
         });
     });
 
-    function ToContent() {
-        var href = "<%=path%>/written";
-        window.location.href = href;
-        location.replace("<%=path%>/written");
-    }
-
-
-    function onSubmit() {
+    function toNewContact() {
         var msg = $("#message").val();
         if (isEmojiCharacter(msg)) {
             $("#EjectTitle").html("请勿输入特殊字符及表情符号");
@@ -177,23 +165,99 @@
         $.ajax({
             async: true,
             type: "POST",
-            url: "<%=path%>/written/onConfirmSubmit",
+            url: "<%=path%>/written/saveMessage",
             modal: true,
             timeout: 30000,
             data: {
                 msg: msg
             },
             success: function (data) {
-                window.location.href = "<%=path%>/written/newContact";
+                var name = $("#contactName").html();
+                var phone = $("#contactPhone").html();
+                var email = $("#contactMail").html();
+                var ToUrl = "";
+                if (contactId == "") {
+                    ToUrl = "/written/newContact";
+                } else {
+                    ToUrl = "/written/newContact?name=" + name + "&phone=" + phone + "&email=" + email + "&contactId=" + contactId;
+                }
+                window.location.href = "<%=path%>" + ToUrl;
             },
             error: function (data) {
 
             },
             beforeSend: function () {
-
+                Loading.ShowLoading();
             },
             complete: function () {
+                Loading.HideLoading();
+            }
+        });
+    }
 
+    function orderSubmit() {
+        var name = $("#contactName").html();
+        var phone = $("#contactPhone").html();
+        var email = $("#contactMail").html();
+        var msg = $("#message").val();
+        if (isEmojiCharacter(msg)) {
+            $("#EjectTitle").html("请勿输入特殊字符及表情符号");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+            return;
+        }
+
+        Date.prototype.stdTimezoneOffset = function () {
+            var jan = new Date(this.getFullYear(), 0, 1);
+            var jul = new Date(this.getFullYear(), 6, 1);
+            return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+        };
+
+        Date.prototype.dst = function () {
+            return this.getTimezoneOffset() < this.stdTimezoneOffset();
+        };
+        var today = new Date();
+        var TimeZoneOffset = today.stdTimezoneOffset();
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/written/onOrderSubmit",
+            modal: true,
+            timeout: 30000,
+            data: {
+                msg: msg,
+                name: name,
+                phone: phone,
+                email: email,
+                TimeZoneOffset: TimeZoneOffset
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    var OrderId = data.OrderId;
+                    if (OrderId == "") {
+                        $("#EjectTitle").html("下单失败，请重试");
+                        $('#eject-mask').fadeIn(100);
+                        $('#prompt').slideDown(100);
+                        return;
+                    }
+                    window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
+                } else {
+                    $("#EjectTitle").html("下单失败，请重试");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
+                }
+            },
+            error: function (data) {
+                $("#EjectTitle").html("下单失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
             }
         });
     }
@@ -231,6 +295,12 @@
             }
         }
         return false;
+    }
+
+    function ToContent() {
+        var href = "<%=path%>/written";
+        window.location.href = href;
+        location.replace("<%=path%>/written");
     }
 
 </script>

@@ -83,6 +83,7 @@
 </html>
 
 <script type="text/javascript">
+    var contactId = "";
     $(document).ready(function () {
         Loading.HideLoading();
 
@@ -91,6 +92,7 @@
             var phone = json.phone;
             var name = json.name;
             var email = json.email;
+            contactId = json.contactId;
             if (phone != null && phone != "") {
                 $("#phone").val(phone);
             }
@@ -161,55 +163,34 @@
     });
 
     function onSubmit(phone, name, email) {
-        Date.prototype.stdTimezoneOffset = function () {
-            var jan = new Date(this.getFullYear(), 0, 1);
-            var jul = new Date(this.getFullYear(), 6, 1);
-            return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-        };
-
-        Date.prototype.dst = function () {
-            return this.getTimezoneOffset() < this.stdTimezoneOffset();
-        };
-        var today = new Date();
-        var TimeZoneOffset = today.stdTimezoneOffset();
-
-        Loading.ShowLoading();
-
         $.ajax({
             async: true,
             type: "POST",
-            url: "<%=path%>/written/onNewContactSubmit",
+            url: "<%=path%>/written/onSaveContact",
             modal: true,
             timeout: 30000,
             data: {
                 phone: phone,
                 name: name,
                 email: email,
-                TimeZoneOffset: TimeZoneOffset
+                contactId: contactId
             },
             success: function (data) {
                 if (data.status == 1) {
-                    var OrderId = data.OrderId;
-                    if (OrderId == "") {
-                        $("#EjectTitle").html("下单失败，请重试");
-                        $('#eject-mask').fadeIn(100);
-                        $('#prompt').slideDown(100);
-                        return;
-                    }
-                    window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
+
                 } else {
-                    $("#EjectTitle").html("下单失败，请重试");
+                    $("#EjectTitle").html("保存失败，请重试");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                 }
             },
             error: function (data) {
-                $("#EjectTitle").html("下单失败，请重试");
+                $("#EjectTitle").html("保存失败，请重试");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
             },
             beforeSend: function () {
-
+                Loading.ShowLoading();
             },
             complete: function () {
                 Loading.HideLoading();
