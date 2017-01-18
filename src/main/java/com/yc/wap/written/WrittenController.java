@@ -21,10 +21,7 @@ import com.ai.yc.order.api.autooffer.param.QueryAutoOfferRes;
 import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
 import com.ai.yc.order.api.ordersubmission.param.*;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
-import com.ai.yc.user.api.userservice.param.InsertYCContactRequest;
-import com.ai.yc.user.api.userservice.param.SearchYCContactRequest;
-import com.ai.yc.user.api.userservice.param.UsrContactMessage;
-import com.ai.yc.user.api.userservice.param.YCContactInfoResponse;
+import com.ai.yc.user.api.userservice.param.*;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -294,6 +291,8 @@ public class WrittenController extends BaseController {
         String name = "";
         String email = "";
         String contactId = "";
+        int GnCountryId = 0;
+        String countryCode = "";
         try {
             SearchYCContactRequest req = new SearchYCContactRequest();
             req.setUserId((String) session.getAttribute("UID"));
@@ -309,8 +308,11 @@ public class WrittenController extends BaseController {
                     name = k.getUserName();
                     email = k.getEmail();
                     contactId = k.getContactId();
+                    GnCountryId = k.getGnCountryId();
+                    countryCode = k.getCountryVo().getCountryCode();
                 }
             } else {
+                log.info("QueryUserContactInfoFail");
                 throw new RuntimeException("QueryUserContactInfoFail: " + resp.getResponseHeader().getResultCode());
             }
         } catch (Exception e) {
@@ -335,6 +337,8 @@ public class WrittenController extends BaseController {
         request.setAttribute("name", name);
         request.setAttribute("email", email);
         request.setAttribute("contactId", contactId);
+        request.setAttribute("GnCountryId", GnCountryId);
+        request.setAttribute("countryCode", countryCode);
         return "written/confirm";
     }
 
@@ -355,32 +359,47 @@ public class WrittenController extends BaseController {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String contactId = request.getParameter("contactId");
+        String GnCountryId = request.getParameter("GnCountryId");
         JSONObject contentJson = new JSONObject();
         contentJson.put("phone", phone);
         contentJson.put("name", name);
         contentJson.put("email", email);
         contentJson.put("contactId", contactId);
+        contentJson.put("GnCountryId", GnCountryId);
         request.setAttribute("contentJson", contentJson);
         return "written/newcontact";
     }
 
     @RequestMapping(value = "onSaveContact")
+    @ResponseBody
     public Object onSaveContact() {
         MsgBean result = new MsgBean();
         String phone = request.getParameter("phone");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String contactId = request.getParameter("contactId");
+        String GnCountryId = request.getParameter("GnCountryId");
         InsertYCContactRequest req = new InsertYCContactRequest();
         req.setUserId((String) session.getAttribute("UID"));
         req.setMobilePhone(phone);
         req.setUserName(name);
         req.setEmail(email);
+        req.setGnCountryId(Integer.parseInt(GnCountryId));
         if (!contactId.equals("")) {
             req.setContactId(contactId);
         }
-
-
+        log.info("SaveContactParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
+        try {
+            YCInsertContactResponse resp = iYCUserServiceSV.insertYCContact(req);
+            if (resp.getResponseHeader().getResultCode().equals(ConstantsResultCode.SUCCESS)) {
+                log.info("SaveContactSuccess");
+            } else {
+                log.info("SaveContactFail: " + resp.getResponseHeader().getResultCode());
+                throw new RuntimeException("SaveContactFail");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return result.returnMsg();
     }
 

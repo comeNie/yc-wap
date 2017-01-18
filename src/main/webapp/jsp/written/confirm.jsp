@@ -121,6 +121,11 @@
 
 <script type="text/javascript">
     var contactId = "${contactId}";
+    var GnCountryId = "${GnCountryId}";
+    var countryCode = "${countryCode}";
+    var name = "${name}";
+    var phone = "${phone}";
+    var email = "${email}";
     $(function () {
         if (contactId == "") {
             $("#newContact").css("display", "block");
@@ -130,16 +135,16 @@
             $("#newContact").css("display", "none");
             $("#contacts1").css("display", "block");
             $("#contacts2").css("display", "block");
-            $("#contactName").html('${name}');
-            $("#contactPhone").html('${phone}');
-            $("#contactMail").html('${email}');
+            $("#contactName").html(name);
+            $("#contactPhone").html('+' + countryCode + ' ' + phone);
+            $("#contactMail").html(email);
         }
     });
 
     $(document).ready(function () {
         Loading.HideLoading();
         $("#submit").bind("click", function () {
-
+            orderSubmit();
         });
 
         $("#contactNew").bind("click", function () {
@@ -174,16 +179,13 @@
                 msg: msg
             },
             success: function (data) {
-                var name = $("#contactName").html();
-                var phone = $("#contactPhone").html();
-                var email = $("#contactMail").html();
                 var ToUrl = "";
                 if (contactId == "") {
                     ToUrl = "/written/newContact";
                 } else {
                     ToUrl = "/written/newContact?name="
                             + encodeURIComponent(name) + "&phone=" + encodeURIComponent(phone)
-                            + "&email=" + encodeURIComponent(email) + "&contactId=" + encodeURIComponent(contactId);
+                            + "&email=" + encodeURIComponent(email) + "&contactId=" + contactId + "&GnCountryId=" + GnCountryId;
                 }
                 window.location.href = "<%=path%>" + ToUrl;
             },
@@ -200,9 +202,6 @@
     }
 
     function orderSubmit() {
-        var name = $("#contactName").html();
-        var phone = $("#contactPhone").html();
-        var email = $("#contactMail").html();
         var msg = $("#message").val();
         if (isEmojiCharacter(msg)) {
             $("#EjectTitle").html("请勿输入特殊字符及表情符号");
