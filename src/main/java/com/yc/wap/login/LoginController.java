@@ -1,19 +1,24 @@
 package com.yc.wap.login;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.yc.wap.system.utils.ConfigUtil;
+import com.yc.wap.system.utils.HttpUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.entity.StringEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.opt.base.vo.BaseResponse;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
-import com.ai.opt.sdk.util.StringUtil;
 import com.ai.yc.ucenter.api.members.interfaces.IUcMembersSV;
 import com.ai.yc.ucenter.api.members.param.UcMembersVo;
 import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
@@ -24,7 +29,6 @@ import com.ai.yc.user.api.userservice.param.CompleteUserInfoRequest;
 import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
-import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -55,6 +59,11 @@ public class LoginController extends BaseController {
         MsgBean result = new MsgBean();
         return "login/registersuccess";
     }
+    @RequestMapping(value = "kinglogin")
+    public String kinglogin() {
+        MsgBean result = new MsgBean();
+        return "login/kinglogin";
+    }
 
     @RequestMapping(value = "findpsd")
     public String findpsd() {
@@ -67,7 +76,48 @@ public class LoginController extends BaseController {
         MsgBean result = new MsgBean();
         return "login/findfail";
     }
+    /**
+     * 金山登录
+     */
+    @RequestMapping(value = "kingchecklogin")
+    public @ResponseBody Object kingchecklogin(){
+        MsgBean result = new MsgBean();
+        String checkCode = request.getParameter("code");//图文验证码
+        if (checkCode != null && checkCode != ""){
 
+            String sessionCode = (String) session.getAttribute("certCode");
+            if (!checkCode.toUpperCase().equals(sessionCode.toUpperCase())){
+                result.put("status","2");
+                result.put("msg",rb.getMessage("loginCtrl.checkCode"));
+                return result.returnMsg();
+            }
+        }
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        Map<String, Object> jsonObject = new HashMap<String, Object>();
+        jsonObject.put("c","sso");
+//        jsonObject.put("m","login");
+//        jsonObject.put("username",username);
+//        jsonObject.put("password",MD5Util.md5(password));
+        jsonObject.put("email","liudy@asiainfo.com");
+        jsonObject.put("m","username_check");
+
+        //返回结果
+        String resp = "";
+        try {
+//            resp = HttpsUtil.HttpsPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject.toString(), "UTF-8");
+            resp = HttpUtil.doPost("http://my.iciba.com/index.php", jsonObject);
+            log.info("TranslateResult: " + resp);
+            JSONObject json = JSON.parseObject(resp);
+
+            log.info("金山登录返回结果: " + json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("status","0");
+        }
+        return result.returnMsg();
+    }
     /**
      * 登录验证
      */
