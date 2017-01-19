@@ -767,7 +767,7 @@
     }
 
     function DownloadFile(fileId, fileName) {
-        var req = "?fileId=" + fileId + "&fileName=" + fileName;
+        var req = "?fileId=" + fileId + "&fileName=" + encodeURIComponent(fileName);
         var url = "<%=path%>/order/download";
         window.location.href = url + req;
     }
