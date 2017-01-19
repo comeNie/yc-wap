@@ -8,6 +8,7 @@
 --%>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -32,7 +33,7 @@
 <div class="wrapper-big" id="body">
     <div class="eject-big">
         <div class="prompt" id="prompt">
-            <div class="prompt-title"><spring:message code="written.contact.ptitle1"/></div>
+            <div class="prompt-title">提示</div>
             <div class="prompt-confirm">
                 <ul>
                     <li id="EjectTitle"></li>
@@ -55,9 +56,15 @@
     <section class="order-content new-cont">
         <div class="order-list">
             <ul>
-                <li><spring:message code="written.contact.phone"/></li>
-                <li><input type="text" class="input input-medium" id="phone"
-                           placeholder="<spring:message code="written.contact.holder1"/>"></li>
+                <li>手机：</li>
+                <li>
+                    <select class="select newly-select" id="selectid"></select>
+                </li>
+            </ul>
+            <ul>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li class="iphone"><input type="text" class="input input-medium" id="phone" placeholder="请输入手机号码（必填）">
+                </li>
             </ul>
             <ul>
                 <li><spring:message code="written.contact.name"/></li>
@@ -80,22 +87,28 @@
     </section>
 </div>
 <section class="add-btn">
-    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">
-        <spring:message code="written.contact.submit1"/></a>
+    <a href="javascript:void(0)" id="submit" class="btn submit-btn btn-blue">保存</a>
 </section>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
 </body>
 </html>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        Loading.HideLoading();
+    var contactId = "";
+    var GnCountryId = "";
 
+    $(function () {
+
+    });
+
+    $(document).ready(function () {
         var json = ${contentJson};
         if (json != null) {
-            var phone = json.Phone;
-            var name = json.Name;
-            var email = json.Email;
+            var phone = json.phone;
+            var name = json.name;
+            var email = json.email;
+            contactId = json.contactId;
+            GnCountryId = json.GnCountryId;
             if (phone != null && phone != "") {
                 $("#phone").val(phone);
             }
@@ -106,6 +119,7 @@
                 $("#email").val(email);
             }
         }
+        loadCountry();
 
         $("#submit").bind("click", function () {
             var phone = $("#phone").val();
@@ -161,60 +175,37 @@
         });
     });
 
-    $(function () {
-
-    });
-
     function onSubmit(phone, name, email) {
-        Date.prototype.stdTimezoneOffset = function () {
-            var jan = new Date(this.getFullYear(), 0, 1);
-            var jul = new Date(this.getFullYear(), 6, 1);
-            return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-        };
-
-        Date.prototype.dst = function () {
-            return this.getTimezoneOffset() < this.stdTimezoneOffset();
-        };
-        var today = new Date();
-        var TimeZoneOffset = today.stdTimezoneOffset();
-
-        Loading.ShowLoading();
-
+        GnCountryId = $('#selectid').val();
         $.ajax({
             async: true,
             type: "POST",
-            url: "<%=path%>/written/onNewContactSubmit",
+            url: "<%=path%>/written/onSaveContact",
             modal: true,
             timeout: 30000,
             data: {
                 phone: phone,
                 name: name,
                 email: email,
-                TimeZoneOffset: TimeZoneOffset
+                contactId: contactId,
+                GnCountryId: GnCountryId
             },
             success: function (data) {
                 if (data.status == 1) {
-                    var OrderId = data.OrderId;
-                    if (OrderId == "") {
-                        $("#EjectTitle").html("<spring:message code="written.contact.tips12"/>");
-                        $('#eject-mask').fadeIn(100);
-                        $('#prompt').slideDown(100);
-                        return;
-                    }
-                    window.location.href = "<%=path%>/written/payment?orderid=" + OrderId;
+                    window.location.href = "<%=path%>/written/onContentSubmit";
                 } else {
-                    $("#EjectTitle").html("<spring:message code="written.contact.tips12"/>");
+                    $("#EjectTitle").html("保存失败，请重试");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                 }
             },
             error: function (data) {
-                $("#EjectTitle").html("<spring:message code="written.contact.tips12"/>");
+                $("#EjectTitle").html("保存失败，请重试");
                 $('#eject-mask').fadeIn(100);
                 $('#prompt').slideDown(100);
             },
             beforeSend: function () {
-
+                Loading.ShowLoading();
             },
             complete: function () {
                 Loading.HideLoading();
@@ -255,5 +246,49 @@
             }
         }
         return false;
+    }
+
+    function loadCountry() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/countryid",
+            modal: true,
+            showBusi: false,
+            timeout: 30000,
+            data: {},
+            success: function (data) {
+                if (data.status == 1) {
+                    var list = data.list;
+                    $.each(list, function (index, value) {
+                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN") {
+                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameCn + " +" + value.countryCode + "</option>");
+                        } else {
+                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
+                        }
+//                        localStorage.setItem(value.countryValue, value.regularExpression);
+//                        localStorage.setItem(value.countryValue + "1", value.countryCode);
+                    });
+
+                    $("#selectid").children('option').each(function () {
+                        var temp_value = $(this).val();
+                        if (temp_value == GnCountryId) {
+                            $(this)[0].selected = true;
+                        }
+                    });
+                } else {
+
+                }
+            },
+            error: function () {
+
+            },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
     }
 </script>

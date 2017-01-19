@@ -310,10 +310,16 @@ public class OrderController extends BaseController {
 
             ///// Files /////
             Map<String, String> needTranslateFiles = new HashMap<String, String>();
+            Map<String, String> translatedFiles = new HashMap<String, String>();
             if (resp.getTranslateType().equals(Constants.OrderType.DOC)) {
                 List<ProdFileVo> ProdFiles = resp.getProdFiles();
                 for (ProdFileVo k : ProdFiles) {
-                    needTranslateFiles.put(k.getFileName(), k.getFileSaveId());
+                    if (k.getFileName() != null && k.getFileSaveId() != null) {
+                        needTranslateFiles.put(k.getFileName(), k.getFileSaveId());
+                    }
+                    if (k.getFileTranslateName() != null && k.getFileTranslateId() != null) {
+                        translatedFiles.put(k.getFileTranslateName(), k.getFileTranslateId());
+                    }
                 }
             }
 
@@ -324,9 +330,14 @@ public class OrderController extends BaseController {
             String useCn = ProdList.getUseCn();
             String fieldCn = ProdList.getFieldCn();
             String takeTime = ProdList.getTakeTime();
+            String takeDay = ProdList.getTakeDay();
             String Remark = Contacts.getRemark();
             String Remark1 = resp.getRemark();
             String isUrgent = ProdList.getIsUrgent();
+            String isSetType = ProdList.getIsSetType();
+            String typeDesc = ProdList.getTypeDesc();
+            Timestamp upTime = ProdList.getUpdateTime();
+
             String contactName = Contacts.getContactName();
             String contactTel = Contacts.getContactTel();
             String contactEmail = Contacts.getContactEmail();
@@ -346,10 +357,14 @@ public class OrderController extends BaseController {
                 ParamJson.put("stateTime", sdf.format(sTime));
                 ParamJson.put("endTime", sdf.format(eTime));
             }
+            if (upTime != null) {
+                ParamJson.put("upTime", sdf.format(upTime));
+            }
 
             ParamJson.put("translateType", translateType);
             ParamJson.put("translateName", translateName);
             ParamJson.put("needTranslateFiles", needTranslateFiles);
+            ParamJson.put("translatedFiles", translatedFiles);
             ParamJson.put("displayFlag", displayFlag);
 
             ParamJson.put("OrderId", OrderId);
@@ -361,6 +376,7 @@ public class OrderController extends BaseController {
             ParamJson.put("useCn", useCn);
             ParamJson.put("fieldCn", fieldCn);
             ParamJson.put("takeTime", takeTime);
+            ParamJson.put("takeDay", takeDay);
             ParamJson.put("Remark", Remark);
             ParamJson.put("Remark1", Remark1);
             ParamJson.put("discountSum", discountSum);
@@ -371,7 +387,19 @@ public class OrderController extends BaseController {
             ParamJson.put("needTranslateInfo", needTranslateInfo);
             ParamJson.put("translateInfo", translateInfo);
             if (isUrgent != null && isUrgent.equals("Y")) {
-                ParamJson.put("Urgent", rb.getMessage("order.detail.quick"));
+                ParamJson.put("Urgent", "加急；");
+            } else {
+                ParamJson.put("Urgent", "无加急；");
+            }
+            if (isSetType != null && isSetType.equals("Y")) {
+                ParamJson.put("SetType", "需要排版；");
+            } else {
+                ParamJson.put("SetType", "无排版；");
+            }
+            if (typeDesc == null || typeDesc.equals("")) {
+                ParamJson.put("TypeDesc", "无格式转换");
+            } else {
+                ParamJson.put("TypeDesc", "格式转化：" + typeDesc);
             }
 
             log.info("OrderDetailParamJson.." + ParamJson.toString());

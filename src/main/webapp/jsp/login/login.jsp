@@ -235,6 +235,7 @@
     var hidenFlag;      //验证码隐藏标识
     var isLoaded = false;   //登录加载
     var blurCheck = 0;  //注册界面手机号失去焦点判断
+    var isDoCheck = 0;  //是否调用失去焦点事件
     $(function () {
 
         $("#translateGif").hide();
@@ -660,6 +661,7 @@
 
     //校验注册界面手机号的方法
     function checkRegisterPhone(){
+        isDoCheck = 1;
         var phone = $("#phone").val();
         if (phone == "" || phone == null) {
             $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
@@ -721,6 +723,15 @@
         var codeid = $("#codeid").val();
         var psdid = $("#psdids").val();
         var confimid = $("#confimid").val();
+        if (isDoCheck == 0){
+            if (phone == "" || phone == null) {
+                $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
+                $("#phoneLabel1").css("display", "block");
+                return;
+            } else {
+                $("#phoneLabel1").css("display", "none");
+            }
+        }
         if (blurCheck == 0){
             return;
         }
@@ -840,6 +851,15 @@
     function getnumberonclick() {
 
         var phone = $("#phone").val();
+        if (isDoCheck == 0){
+            if (phone == "" || phone == null) {
+                $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
+                $("#phoneLabel1").css("display", "block");
+                return;
+            } else {
+                $("#phoneLabel1").css("display", "none");
+            }
+        }
        /* if (phone == "" || phone == null) {
             $("#phoneLabel1").html("<spring:message code="login.register.enterphone"/>");
             $("#phoneLabel1").css("display", "block");

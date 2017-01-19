@@ -439,6 +439,9 @@
     function AutoChangeDual(SourceCn, SourceEn) {
         $("#dualSource").children('option').each(function () {
             var temp_value = $(this).val();
+            if (temp_value.substr(0, 4) == "检测语言") {
+                temp_value = temp_value.substr(5);
+            }
             if (temp_value == SourceCn || temp_value == SourceEn) {
                 $(this)[0].selected = true;
             }
@@ -642,6 +645,13 @@
     }
 
     function DetectLanguage(text, submit) {
+        if (submit && text == "") {
+            $("#EjectTitle").html("<spring:message code="written.content.tips1"/>");
+            $('#eject-mask').fadeIn(100);
+            $('#prompt').slideDown(100);
+            Loading.HideLoading();
+            return;
+        }
         $.ajax({
             async: true,
             type: "POST",
@@ -667,7 +677,7 @@
                         }
                     }
 
-                    if ((SourceCn == "" || SourceEn == "") && notSupportChecked == false) {
+                    if (SourceCn == "" || SourceEn == "") { //&& notSupportChecked == false) {
                         $("#EjectTitle").html("<spring:message code="written.content.tips5"/>");
                         $('#eject-mask').fadeIn(100);
                         $('#prompt').slideDown(100);
@@ -681,13 +691,6 @@
                         var Content = text;
                         var ContentLength = count(escape(Content));
 
-                        if (ContentLength == 0) {
-                            $("#EjectTitle").html("<spring:message code="written.content.tips1"/>");
-                            $('#eject-mask').fadeIn(100);
-                            $('#prompt').slideDown(100);
-                            Loading.HideLoading();
-                            return;
-                        }
                         if (ContentLength > 2000) {
                             $("#EjectTitle").html("<spring:message code="written.content.tips2"/>");
                             $('#eject-mask').fadeIn(100);
