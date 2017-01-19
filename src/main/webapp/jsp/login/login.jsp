@@ -142,23 +142,23 @@
                 </div>
             </section>
         </section>
-        <%--<!--其他登录-->
+        <!--其他登录-->
         <section class="other-big">
             <div class="other-login">
                 <p class="line"></p>
-                <p class="word"><spring:message code="login.login.otherLogin"/>其他登录</p>
+                <p class="word"><spring:message code="login.login.otherLogin"/></p>
                 <p class="line"></p>
             </div>
             <div class="other-login-icon">
                 <ul>
-                    <li class="none-ml"><a href="javascript:void(0)"><img src="../ui/images/iocn-4.png" /></a></li>
-                    <li><a href="javascript:void(0)"><img src="../ui/images/iocn-5.png" /></a></li>
-                    <li><a href="javascript:void(0)"><img src="../ui/images/iocn-6.png" /></a></li>
-                    <li><a href="javascript:void(0)"><img src="../ui/images/iocn-7.png" /></a></li>
-                    <li><a href="javascript:void(0)"><img src="../ui/images/iocn-8.png" /></a></li>
+                    <li class="none-ml"><a href="javascript:void(0)" onclick="goKingLogin()"><img src="<%=path%>/ui/images/iocn-4.png" /></a></li>
+                    <li><a href="javascript:void(0)"><img src="<%=path%>/ui/images/iocn-5.png" /></a></li>
+                    <li><a href="javascript:void(0)"><img src="<%=path%>/ui/images/iocn-6.png" /></a></li>
+                    <li><a href="javascript:void(0)"><img src="<%=path%>/ui/images/iocn-7.png" /></a></li>
+                    <li><a href="javascript:void(0)"><img src="<%=path%>/ui/images/iocn-8.png" /></a></li>
                 </ul>
             </div>
-        </section>--%>
+        </section>
     </div>
 
     <%--注册界面--%>
@@ -405,6 +405,11 @@
     function forgetpsd() {
         clearText();
         var tourl = "<%=path%>/login/findpsd";
+        window.location.href = tourl;
+    }
+    //跳转金山登录
+    function goKingLogin(){
+        var tourl = "<%=path%>/login/kinglogin";
         window.location.href = tourl;
     }
     function registJump() {

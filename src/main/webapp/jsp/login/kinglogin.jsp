@@ -71,6 +71,7 @@
             </section>
         </section>
     </div>
+    <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>
 <script>
     var hidenFlag;//验证码隐藏标识

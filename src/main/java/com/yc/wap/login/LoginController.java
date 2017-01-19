@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yc.wap.system.utils.ConfigUtil;
 import com.yc.wap.system.utils.HttpUtil;
+import com.yc.wap.system.utils.MD5;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.entity.StringEntity;
@@ -94,6 +95,7 @@ public class LoginController extends BaseController {
         }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        password = MD5Util.encodePassword(password);
 
         Map<String, Object> jsonObject = new HashMap<String, Object>();
         jsonObject.put("c","sso");
