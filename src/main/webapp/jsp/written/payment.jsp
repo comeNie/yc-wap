@@ -114,13 +114,14 @@
         <%--<ul>--%>
         <%--<li><input type="radio" name="choose" class="radio"/>翻译后付费</li>--%>
         <%--</ul>--%>
-
+        <% if (Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)) { %>
         <ul id="balance1" style="display: none">
             <li id="imgCash1" class="word-ash">
                 <img src="<%=path%>/ui/images/radio1.jpg" id="cash1" class="radio-img"/>
                 <a id="balanceNumber1">账户余额支付（余额：0元）</a>
             </li>
         </ul>
+        <% } %>
 
         <ul>
             <li class="zhifb" id="imgAliPay"><img src="<%=path%>/ui/images/radio.jpg" id="alipay" class="radio-img"/>
@@ -130,17 +131,17 @@
                 <img src="<%=path%>/ui/images/unionpay.png"/></li>
         </ul>
 
+        <% if (Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)) { %>
         <ul id="balance" style="display: none">
             <li id="imgCash" class="word-ash">
                 <img src="<%=path%>/ui/images/radio1.jpg" id="cash" class="radio-img"/>
                 <a id="balanceNumber">账户余额支付（余额：0元）</a>
             </li>
-            <% if (Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)) { %>
             <li class="right" id="buzu" style="display: none">
                 <a href="javascript:toRecharge()">余额不足，请先充值</a>
             </li>
-            <% } %>
         </ul>
+        <% } %>
     </div>
 </div>
 
