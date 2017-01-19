@@ -191,7 +191,7 @@
 
         </section>
         <!--banner-->
-        <section class="banner"><a href="javascript:void (0)" id="banner1"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
+        <section class="banner"><a href="javascript:void (0)" onclick="toWritten()"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
         <section class="banner"><a href="javascript:void (0)"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
 
     </section>
@@ -327,9 +327,9 @@
         });
 
 //        跳转到笔译下单
-        $("#banner1").bind("click", function () {
-            window.location.href = "<%=path%>/written";
-        });
+//        $("#banner1").click(function () {
+//
+//        });
 
         //对应语言对事件
         $("#target-lan").bind("change",function(){
@@ -341,6 +341,9 @@
             goTranslate();
         });
     });
+    function toWritten(){
+        window.location.href = "<%=path%>/written";
+    }
     //检测文本长度
     function checkLength(landetec) {
         if (landetec.length > 2000){

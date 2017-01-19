@@ -610,7 +610,7 @@ public class SafeController extends BaseController {
                     String _template = "";
                     if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
                         _template = Constants.MailVerify.VERIFY_EMAIL_ZH_CN_TEMPLATE;
-                    } else if (Locale.US.toString().equals(locale.toString())) {
+                    } else{
                         _template = Constants.MailVerify.VERIFY_EMAIL_EN_US_TEMPLATE;
                     }
 
@@ -627,11 +627,18 @@ public class SafeController extends BaseController {
                     //发短信
                 }else {
                     //默认中文模版
-                    String _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+                    String _template = "";
                     Locale locale = rb.getDefaultLocale();
-                    if (Locale.US.toString().equals(locale.toString())) {
-                        _template =  Constants.PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+                    if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
+                        _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+                    } else{
+                        _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
                     }
+                    //非+86都发生英文模板
+                    if (!domainvalue.equals("86")){
+                        _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+                    }
+                    log.info("短信模板"+_template);
                     String content = MessageFormat.format(_template,vo.getOperationcode());
                     if(!SmsSenderUtil.sendMessage("+"+domainvalue+info,content)){
                         result.put("status","0");
