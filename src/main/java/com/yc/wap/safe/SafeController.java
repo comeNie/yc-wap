@@ -228,24 +228,9 @@ public class SafeController extends BaseController {
         }
 
         String username = request.getParameter("username");
-        String uid = request.getParameter("uid");
 
-        String mode;
-        boolean isEmail = RegexUtils.checkIsEmail(username);
-        boolean isPhone = RegexUtils.checkIsPhone(username);
-        if (isEmail) {
-            mode = Constants.GetUserMode.Mail; //2
-        }
-        else if (isPhone) {
-            mode = Constants.GetUserMode.Phone; //3
-        }else {
-            mode = Constants.GetUserMode.UserName; //4
-        }
-        if (uid != null){
-            username = uid;
-            mode = Constants.GetUserMode.UserID;
-        }
-        log.info(mode);
+        String mode = Constants.GetUserMode.Phone; //3;
+        log.info("获取方式"+mode);
 
         UcMembersGetRequest res = new UcMembersGetRequest();
         res.setTenantId(Constants.TENANTID);
