@@ -122,10 +122,11 @@
         loadCountry();
 
         $("#submit").bind("click", function () {
+            var selectVal = $('#selectid').val();
             var phone = $("#phone").val();
             var name = $("#name").val();
             var email = $("#email").val();
-            var phoneCheck = /^1\d{10}$/;
+            var phoneCheck = new RegExp(localStorage.getItem(localStorage.getItem(selectVal)));
             var emailCheck = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
             var nameCheck = /['"#$%&\^*]/;
 
@@ -135,8 +136,8 @@
                 $('#prompt').slideDown(100);
                 return;
             } else {
-                if (!phoneCheck.test(phone)) {
-                    $("#EjectTitle").html("<spring:message code="written.contact.tips7"/>");
+                if (!phoneCheck.test((localStorage.getItem(localStorage.getItem(selectVal) + "1")) + phone)) {
+                    $("#EjectTitle").html("请输入正确的手机号");
                     $('#eject-mask').fadeIn(100);
                     $('#prompt').slideDown(100);
                     return;
@@ -266,8 +267,9 @@
                         } else {
                             $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
                         }
-//                        localStorage.setItem(value.countryValue, value.regularExpression);
-//                        localStorage.setItem(value.countryValue + "1", value.countryCode);
+                        localStorage.setItem(value.countryValue, value.regularExpression);
+                        localStorage.setItem(value.id, value.countryValue);
+                        localStorage.setItem(value.countryValue + "1", value.countryCode);
                     });
 
                     $("#selectid").children('option').each(function () {

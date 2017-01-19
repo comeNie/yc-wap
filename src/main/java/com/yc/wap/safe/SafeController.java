@@ -230,24 +230,9 @@ public class SafeController extends BaseController {
         }
 
         String username = request.getParameter("username");
-        String uid = request.getParameter("uid");
 
-        String mode;
-        boolean isEmail = RegexUtils.checkIsEmail(username);
-        boolean isPhone = RegexUtils.checkIsPhone(username);
-        if (isEmail) {
-            mode = Constants.GetUserMode.Mail; //2
-        }
-        else if (isPhone) {
-            mode = Constants.GetUserMode.Phone; //3
-        }else {
-            mode = Constants.GetUserMode.UserName; //4
-        }
-        if (uid != null){
-            username = uid;
-            mode = Constants.GetUserMode.UserID;
-        }
-        log.info(mode);
+        String mode = Constants.GetUserMode.Phone; //3;
+        log.info("获取方式"+mode);
 
         UcMembersGetRequest res = new UcMembersGetRequest();
         res.setTenantId(Constants.TENANTID);
@@ -648,7 +633,7 @@ public class SafeController extends BaseController {
                     String _template = "";
                     if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
                         _template = Constants.MailVerify.VERIFY_EMAIL_ZH_CN_TEMPLATE;
-                    } else if (Locale.US.toString().equals(locale.toString())) {
+                    } else{
                         _template = Constants.MailVerify.VERIFY_EMAIL_EN_US_TEMPLATE;
                     }
 
@@ -665,11 +650,18 @@ public class SafeController extends BaseController {
                     //发短信
                 }else {
                     //默认中文模版
-                    String _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+                    String _template = "";
                     Locale locale = rb.getDefaultLocale();
-                    if (Locale.US.toString().equals(locale.toString())) {
-                        _template =  Constants.PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+                    if (Locale.SIMPLIFIED_CHINESE.toString().equals(locale.toString())) {
+                        _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_ZH_CN;
+                    } else{
+                        _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
                     }
+                    //非+86都发生英文模板
+                    if (!domainvalue.equals("86")){
+                        _template = Constants.PhoneVerify.SMS_CODE_TEMPLATE_EN_US;
+                    }
+                    log.info("短信模板"+_template);
                     String content = MessageFormat.format(_template,vo.getOperationcode());
                     if(!SmsSenderUtil.sendMessage("+"+domainvalue+info,content)){
                         result.put("status","0");

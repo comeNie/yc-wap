@@ -385,7 +385,7 @@ public class WrittenController extends BaseController {
         req.setUserName(name);
         req.setEmail(email);
         req.setGnCountryId(Integer.parseInt(GnCountryId));
-        if (!contactId.equals("")) {
+        if (contactId != null && !contactId.equals("")) {
             req.setContactId(contactId);
         }
         log.info("SaveContactParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));

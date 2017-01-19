@@ -116,13 +116,14 @@
         <%--<ul>--%>
         <%--<li><input type="radio" name="choose" class="radio"/><spring:message code="pay.payment.after"/></li>--%>
         <%--</ul>--%>
-
+        <% if (Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)) { %>
         <ul id="balance1" style="display: none">
             <li id="imgCash1" class="word-ash">
                 <img src="<%=path%>/ui/images/radio1.jpg" id="cash1" class="radio-img"/>
                 <a id="balanceNumber1"></a>
             </li>
         </ul>
+        <% } %>
 
         <ul>
             <li class="zhifb" id="imgAliPay"><img src="<%=path%>/ui/images/radio.jpg" id="alipay" class="radio-img"/>
@@ -132,17 +133,17 @@
                 <img src="<%=path%>/ui/images/unionpay.png"/></li>
         </ul>
 
+        <% if (Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)) { %>
         <ul id="balance" style="display: none">
             <li id="imgCash" class="word-ash">
                 <img src="<%=path%>/ui/images/radio1.jpg" id="cash" class="radio-img"/>
                 <a id="balanceNumber"></a>
             </li>
-            <% if (Constants.Account.ACCOUNT_ENABLE.equals(accountEnable)) { %>
             <li class="right" id="buzu" style="display: none">
                 <a href="javascript:toRecharge()"><spring:message code="pay.payment.balance2"/></a>
             </li>
-            <% } %>
         </ul>
+        <% } %>
     </div>
 </div>
 
