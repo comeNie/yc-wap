@@ -139,7 +139,7 @@
             $("#contacts1").css("display", "block");
             $("#contacts2").css("display", "block");
             $("#contactName").html(name);
-            $("#contactPhone").html('+' + countryCode + ' ' + phone);
+            $("#contactPhone").html(phone);
             $("#contactMail").html(email);
         }
     });
@@ -147,6 +147,12 @@
     $(document).ready(function () {
         Loading.HideLoading();
         $("#submit").bind("click", function () {
+            if (name == "" || phone == "" || email == "") {
+                $("#EjectTitle").html("请添加联系方式");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
+            }
             orderSubmit();
         });
 

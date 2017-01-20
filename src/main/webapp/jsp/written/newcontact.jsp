@@ -67,9 +67,8 @@
                 </li>
             </ul>
             <ul>
-                <li><spring:message code="written.contact.name"/></li>
-                <li><input type="text" class="input input-medium" id="name"
-                           placeholder="<spring:message code="written.contact.holder2"/>" maxlength="20"></li>
+                <li>姓名：</li>
+                <li><input type="text" class="input input-medium" id="name" placeholder="请输入姓名" maxlength="10"></li>
             </ul>
             <ul>
                 <li><spring:message code="written.contact.email"/></li>
@@ -102,23 +101,7 @@
     });
 
     $(document).ready(function () {
-        var json = ${contentJson};
-        if (json != null) {
-            var phone = json.phone;
-            var name = json.name;
-            var email = json.email;
-            contactId = json.contactId;
-            GnCountryId = json.GnCountryId;
-            if (phone != null && phone != "") {
-                $("#phone").val(phone);
-            }
-            if (name != null && name != "") {
-                $("#name").val(name);
-            }
-            if (email != null && email != "") {
-                $("#email").val(email);
-            }
-        }
+
         loadCountry();
 
         $("#submit").bind("click", function () {
@@ -178,6 +161,8 @@
 
     function onSubmit(phone, name, email) {
         GnCountryId = $('#selectid').val();
+        var countryCode = localStorage.getItem(localStorage.getItem(GnCountryId) + "1");
+        phone = "+" + countryCode + " " + phone;
         $.ajax({
             async: true,
             type: "POST",
@@ -207,6 +192,75 @@
             },
             beforeSend: function () {
                 Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
+    }
+
+    function loadCountry() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/countryid",
+            modal: true,
+            showBusi: false,
+            timeout: 30000,
+            data: {},
+            success: function (data) {
+                if (data.status == 1) {
+                    var list = data.list;
+                    $.each(list, function (index, value) {
+                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN") {
+                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameCn + " +" + value.countryCode + "</option>");
+                        } else {
+                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
+                        }
+                        localStorage.setItem(value.countryValue, value.regularExpression);
+                        localStorage.setItem(value.id, value.countryValue);
+                        localStorage.setItem(value.countryValue + "1", value.countryCode);
+                    });
+
+                    var json = ${contentJson};
+                    if (json != null) {
+                        var phone = json.phone;
+                        var name = json.name;
+                        var email = json.email;
+                        contactId = json.contactId;
+                        GnCountryId = json.GnCountryId;
+
+                        if (phone != null && phone != "") {
+                            var phoneNumber = phone.split(" ");
+                            $("#phone").val(phoneNumber[1]);
+                        }
+                        if (name != null && name != "") {
+                            $("#name").val(name);
+                        }
+                        if (email != null && email != "") {
+                            $("#email").val(email);
+                        }
+                    }
+
+                    $("#selectid").children('option').each(function () {
+                        var temp_value = $(this).val();
+                        if (temp_value == GnCountryId) {
+                            $(this)[0].selected = true;
+                        }
+                    });
+                } else {
+                    $("#EjectTitle").html("获取信息失败，请重试");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
+                }
+            },
+            error: function () {
+                $("#EjectTitle").html("获取信息失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+            },
+            beforeSend: function () {
+
             },
             complete: function () {
                 Loading.HideLoading();
@@ -247,50 +301,5 @@
             }
         }
         return false;
-    }
-
-    function loadCountry() {
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: "<%=path%>/safe/countryid",
-            modal: true,
-            showBusi: false,
-            timeout: 30000,
-            data: {},
-            success: function (data) {
-                if (data.status == 1) {
-                    var list = data.list;
-                    $.each(list, function (index, value) {
-                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN") {
-                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameCn + " +" + value.countryCode + "</option>");
-                        } else {
-                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
-                        }
-                        localStorage.setItem(value.countryValue, value.regularExpression);
-                        localStorage.setItem(value.id, value.countryValue);
-                        localStorage.setItem(value.countryValue + "1", value.countryCode);
-                    });
-
-                    $("#selectid").children('option').each(function () {
-                        var temp_value = $(this).val();
-                        if (temp_value == GnCountryId) {
-                            $(this)[0].selected = true;
-                        }
-                    });
-                } else {
-
-                }
-            },
-            error: function () {
-
-            },
-            beforeSend: function () {
-
-            },
-            complete: function () {
-                Loading.HideLoading();
-            }
-        });
     }
 </script>
