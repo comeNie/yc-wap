@@ -162,7 +162,6 @@
     function onSubmit(phone, name, email) {
         GnCountryId = $('#selectid').val();
         var countryCode = localStorage.getItem(localStorage.getItem(GnCountryId) + "1");
-        phone = "+" + countryCode + " " + phone;
         $.ajax({
             async: true,
             type: "POST",
