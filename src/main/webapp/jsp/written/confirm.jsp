@@ -144,6 +144,12 @@
     $(document).ready(function () {
         Loading.HideLoading();
         $("#submit").bind("click", function () {
+            if (name == "" || phone == "" || email == "") {
+                $("#EjectTitle").html("请添加联系方式");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+                return;
+            }
             orderSubmit();
         });
 

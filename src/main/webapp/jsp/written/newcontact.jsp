@@ -228,8 +228,8 @@
                         contactId = json.contactId;
                         GnCountryId = json.GnCountryId;
 
-                        var phoneNumber = phone.split(" ");
                         if (phone != null && phone != "") {
+                            var phoneNumber = phone.split(" ");
                             $("#phone").val(phoneNumber[1]);
                         }
                         if (name != null && name != "") {
