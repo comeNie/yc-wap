@@ -66,7 +66,7 @@
             </ul>
             <ul>
                 <li>姓名：</li>
-                <li><input type="text" class="input input-medium" id="name" placeholder="请输入姓名" maxlength="20"></li>
+                <li><input type="text" class="input input-medium" id="name" placeholder="请输入姓名" maxlength="10"></li>
             </ul>
             <ul>
                 <li>邮箱：</li>
@@ -99,25 +99,7 @@
     });
 
     $(document).ready(function () {
-        var json = ${contentJson};
-        if (json != null) {
-            var phone = json.phone;
-            var name = json.name;
-            var email = json.email;
-            contactId = json.contactId;
-            GnCountryId = json.GnCountryId;
 
-            var phoneNumber = phone.split(" ");
-            if (phone != null && phone != "") {
-                $("#phone").val(phoneNumber[1]);
-            }
-            if (name != null && name != "") {
-                $("#name").val(name);
-            }
-            if (email != null && email != "") {
-                $("#email").val(email);
-            }
-        }
         loadCountry();
 
         $("#submit").bind("click", function () {
@@ -215,6 +197,75 @@
         });
     }
 
+    function loadCountry() {
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/countryid",
+            modal: true,
+            showBusi: false,
+            timeout: 30000,
+            data: {},
+            success: function (data) {
+                if (data.status == 1) {
+                    var list = data.list;
+                    $.each(list, function (index, value) {
+                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN") {
+                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameCn + " +" + value.countryCode + "</option>");
+                        } else {
+                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
+                        }
+                        localStorage.setItem(value.countryValue, value.regularExpression);
+                        localStorage.setItem(value.id, value.countryValue);
+                        localStorage.setItem(value.countryValue + "1", value.countryCode);
+                    });
+
+                    var json = ${contentJson};
+                    if (json != null) {
+                        var phone = json.phone;
+                        var name = json.name;
+                        var email = json.email;
+                        contactId = json.contactId;
+                        GnCountryId = json.GnCountryId;
+
+                        var phoneNumber = phone.split(" ");
+                        if (phone != null && phone != "") {
+                            $("#phone").val(phoneNumber[1]);
+                        }
+                        if (name != null && name != "") {
+                            $("#name").val(name);
+                        }
+                        if (email != null && email != "") {
+                            $("#email").val(email);
+                        }
+                    }
+
+                    $("#selectid").children('option').each(function () {
+                        var temp_value = $(this).val();
+                        if (temp_value == GnCountryId) {
+                            $(this)[0].selected = true;
+                        }
+                    });
+                } else {
+                    $("#EjectTitle").html("获取信息失败，请重试");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
+                }
+            },
+            error: function () {
+                $("#EjectTitle").html("获取信息失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
+            },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
+    }
+
     function isEmojiCharacter(substring) {
         for (var i = 0; i < substring.length; i++) {
             var hs = substring.charCodeAt(i);
@@ -248,50 +299,5 @@
             }
         }
         return false;
-    }
-
-    function loadCountry() {
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: "<%=path%>/safe/countryid",
-            modal: true,
-            showBusi: false,
-            timeout: 30000,
-            data: {},
-            success: function (data) {
-                if (data.status == 1) {
-                    var list = data.list;
-                    $.each(list, function (index, value) {
-                        if ("${pageContext.response.locale}".toUpperCase() == "ZH_CN") {
-                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameCn + " +" + value.countryCode + "</option>");
-                        } else {
-                            $('#selectid').append("<option value='" + value.id + "'>" + value.countryNameEn + " +" + value.countryCode + "</option>");
-                        }
-                        localStorage.setItem(value.countryValue, value.regularExpression);
-                        localStorage.setItem(value.id, value.countryValue);
-                        localStorage.setItem(value.countryValue + "1", value.countryCode);
-                    });
-
-                    $("#selectid").children('option').each(function () {
-                        var temp_value = $(this).val();
-                        if (temp_value == GnCountryId) {
-                            $(this)[0].selected = true;
-                        }
-                    });
-                } else {
-
-                }
-            },
-            error: function () {
-
-            },
-            beforeSend: function () {
-
-            },
-            complete: function () {
-                Loading.HideLoading();
-            }
-        });
     }
 </script>
