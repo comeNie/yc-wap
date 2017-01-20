@@ -124,7 +124,7 @@
     var GnCountryId = "${GnCountryId}";
     var countryCode = "${countryCode}";
     var name = "${name}";
-    var phone = "${phone}";
+    var phone = "+${countryCode}" + " " + "${phone}";
     var email = "${email}";
     $(function () {
         if (contactId == "") {
