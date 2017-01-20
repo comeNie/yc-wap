@@ -2,6 +2,7 @@ package com.yc.wap.system.utils.send;
 
 import com.ai.opt.sdk.components.mail.EmailFactory;
 import com.ai.opt.sdk.components.mail.EmailTemplateUtil;
+import com.ai.paas.ipaas.util.StringUtil;
 import com.order.cc.sms.AccessType;
 import com.order.cc.sms.SmsSender;
 import com.order.cc.sms.entity.Body;
@@ -18,6 +19,9 @@ public class SmsSenderUtil {
      * @return
      */
 	public static boolean sendMessage(String telephone,String text){
+		if(!StringUtil.isBlank(telephone)&&telephone.startsWith("+86")){
+			telephone=telephone.replace("+86", "");
+		}
 		SmsSender sender=new SmsSender();
 		Head head=new Head();
 		head.setRequestType("SEND");
