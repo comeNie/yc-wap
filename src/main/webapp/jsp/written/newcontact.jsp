@@ -106,8 +106,10 @@
             var email = json.email;
             contactId = json.contactId;
             GnCountryId = json.GnCountryId;
+
+            var phoneNumber = phone.split(" ");
             if (phone != null && phone != "") {
-                $("#phone").val(phone);
+                $("#phone").val(phoneNumber[1]);
             }
             if (name != null && name != "") {
                 $("#name").val(name);
@@ -175,6 +177,8 @@
 
     function onSubmit(phone, name, email) {
         GnCountryId = $('#selectid').val();
+        var countryCode = localStorage.getItem(localStorage.getItem(GnCountryId) + "1");
+        phone = "+" + countryCode + " " + phone;
         $.ajax({
             async: true,
             type: "POST",
