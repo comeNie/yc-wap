@@ -33,11 +33,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by Nozomi on 11/10/2016.
@@ -470,6 +475,12 @@ public class OrderController extends BaseController {
      */
     @RequestMapping("/download")
     public void download(String fileId, String fileName, HttpServletResponse response) {
+        try {
+            String newFileName = URLDecoder.decode(fileName,"utf-8");
+            fileName = new String(newFileName.getBytes("utf-8"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         log.info("DownloadFileName: " + fileName + ", DownloadFileId: " + fileId);
         IDSSClient client = DSSClientFactory.getDSSClient("order-file-dss");
         byte[] b = client.read(fileId);
@@ -477,7 +488,7 @@ public class OrderController extends BaseController {
             OutputStream os = response.getOutputStream();
             response.setCharacterEncoding("GBK");
             response.setContentType("multipart/form-data");
-            response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            response.setHeader("Content-Disposition", "attachment;fileName=\"" + fileName +"\"");
             response.setHeader("Content-Length", b.length + "");
             os.write(b);
             os.close();
