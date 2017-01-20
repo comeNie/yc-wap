@@ -292,7 +292,6 @@ public class WrittenController extends BaseController {
         String email = "";
         String contactId = "";
         int GnCountryId = 0;
-        String countryCode = "";
         try {
             SearchYCContactRequest req = new SearchYCContactRequest();
             req.setUserId((String) session.getAttribute("UID"));
@@ -309,7 +308,6 @@ public class WrittenController extends BaseController {
                     email = k.getEmail();
                     contactId = k.getContactId();
                     GnCountryId = k.getGnCountryId();
-                    countryCode = k.getCountryVo().getCountryCode();
                 }
             } else {
                 log.info("QueryUserContactInfoFail");
@@ -338,7 +336,6 @@ public class WrittenController extends BaseController {
         request.setAttribute("email", email);
         request.setAttribute("contactId", contactId);
         request.setAttribute("GnCountryId", GnCountryId);
-        request.setAttribute("countryCode", countryCode);
         return "written/confirm";
     }
 

@@ -136,7 +136,7 @@
             $("#contacts1").css("display", "block");
             $("#contacts2").css("display", "block");
             $("#contactName").html(name);
-            $("#contactPhone").html('+' + countryCode + ' ' + phone);
+            $("#contactPhone").html(phone);
             $("#contactMail").html(email);
         }
     });
