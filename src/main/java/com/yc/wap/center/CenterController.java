@@ -59,4 +59,14 @@ public class CenterController extends BaseController {
         request.setAttribute("userurl",infoResponse.getUrl());
         return "center/center";
     }
+    @RequestMapping(value = "integral")
+    public String integral() {
+        String isLogin = (String) session.getAttribute("isLogin");
+        if (isLogin == null || isLogin.equals("") || isLogin.equals("0")) {
+            log.info("UserNotLogin");
+            request.setAttribute("to", "login");
+            return "login/login";
+        }
+        return "center/integral";
+    }
 }

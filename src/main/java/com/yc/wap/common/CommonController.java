@@ -29,6 +29,11 @@ public class CommonController extends BaseController {
         return "common/agreement";
     }
 
+    @RequestMapping(value = "feedback")
+    public String feedback() {
+        return "common/feedback";
+    }
+
     @RequestMapping(value = "error")
     public String error() {
         log.info("------404------");
