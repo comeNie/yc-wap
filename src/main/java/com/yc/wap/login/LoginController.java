@@ -6,14 +6,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSON;
+import com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV;
+import com.ai.slp.balance.api.accountquery.param.AccountIdParam;
+import com.ai.slp.balance.api.accountquery.param.AccountInfoVo;
+import com.ai.yc.user.api.userservice.param.*;
 import com.alibaba.fastjson.JSONObject;
-import com.yc.wap.system.utils.ConfigUtil;
-import com.yc.wap.system.utils.HttpUtil;
-import com.yc.wap.system.utils.MD5;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.entity.StringEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,10 +25,6 @@ import com.ai.yc.ucenter.api.members.param.base.ResponseCode;
 import com.ai.yc.ucenter.api.members.param.login.UcMembersLoginRequest;
 import com.ai.yc.ucenter.api.members.param.login.UcMembersLoginResponse;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
-import com.ai.yc.user.api.userservice.param.CompleteUserInfoRequest;
-import com.ai.yc.user.api.userservice.param.InsertYCUserRequest;
-import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
-import com.ai.yc.user.api.userservice.param.YCInsertUserResponse;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -45,6 +40,8 @@ public class LoginController extends BaseController {
     private Log log = LogFactory.getLog(LoginController.class);
     private IUcMembersSV iUcMembersSV = DubboConsumerFactory.getService(IUcMembersSV.class);
     private IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+    private IAccountQuerySV iAccountQuerySV = DubboConsumerFactory.getService(IAccountQuerySV.class);
+
     @RequestMapping(value = "login")
     public String login() {
         MsgBean result = new MsgBean();
@@ -95,28 +92,28 @@ public class LoginController extends BaseController {
         }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        password = MD5Util.encodePassword(password);
+        log.info("----------------------开始金山登录----------------------");
+        //调用金山接口
+        JSONObject kingObject = KingHttpUtil.loginToKing(username,password);
 
-        Map<String, Object> jsonObject = new HashMap<String, Object>();
-        jsonObject.put("c","sso");
-//        jsonObject.put("m","login");
-//        jsonObject.put("username",username);
-//        jsonObject.put("password",MD5Util.md5(password));
-        jsonObject.put("email","liudy@asiainfo.com");
-        jsonObject.put("m","username_check");
-
-        //返回结果
-        String resp = "";
-        try {
-//            resp = HttpsUtil.HttpsPost(ConfigUtil.getProperty("yeekit.translate.url"), jsonObject.toString(), "UTF-8");
-            resp = HttpUtil.doPost("http://my.iciba.com/index.php", jsonObject);
-            log.info("TranslateResult: " + resp);
-            JSONObject json = JSON.parseObject(resp);
-
-            log.info("金山登录返回结果: " + json);
-        } catch (Exception e) {
-            e.printStackTrace();
+        String errorCode;//错误编码
+        String msg;//错误提示语
+        String ssourl;//Sso 登录地址
+        if(kingObject!=null && kingObject.get("error_code")!=null){
+            errorCode = kingObject.getString("error_code");
+            if(errorCode.equals("10006")){
+                msg = "用户名不存在";
+            }else if(errorCode.equals("100010")){
+                msg = "密码错误";
+            }else{
+                msg = "用户名或密码错误";
+            }
+            result.put("msg",msg);
             result.put("status","0");
+            log.info("----------------------金山登录失败----------------------");
+        }else{
+            log.info("金山登录返回参数"+kingObject);
+           log.info("----------------------金山登录成功----------------------");
         }
         return result.returnMsg();
     }
@@ -154,7 +151,12 @@ public class LoginController extends BaseController {
             log.info("--------code:"+ code.getCodeMessage() + code.getCodeNumber());
             if (code.getCodeNumber() == 1){
                 Map m = resp.getDate();
-
+                //获取是否有支付密码
+                if(!isPaypsd(m.get("uid")+"")){
+                    result.put("status","0");
+                    result.put("msg",rb.getMessage("loginCtrl.loginFail"));
+                    return result.returnMsg();
+                }
                 UcMembersVo vo = new UcMembersVo(m);
                 session.setAttribute("isLogin","1");    //1登录  0未登录
                 session.setAttribute("UID",m.get("uid")+"");
@@ -165,7 +167,7 @@ public class LoginController extends BaseController {
                 session.setAttribute("domainname",m.get("domainname"));
                 session.setAttribute("mobilePhone",m.get("mobilephone"));
                 log.info(vo);
-                
+                //补全用户信息
                 populateUsrUserInfo(m);
             }else {
                 result.put("status","0");
@@ -246,7 +248,32 @@ public class LoginController extends BaseController {
         session.invalidate();
         return result.returnMsg();
     }
-    
+
+    /**
+     * 判断是否有支付密码
+     */
+    private boolean isPaypsd(String uid){
+        boolean isSuccess;
+        SearchYCUserRequest userRequest = new SearchYCUserRequest();
+        userRequest.setUserId(uid);
+        YCUserInfoResponse infoResponse = iycUserServiceSV.searchYCUserInfo(userRequest);
+        Long AccountId = infoResponse.getAccountId();
+
+        AccountIdParam req = new AccountIdParam();
+        req.setTenantId(Constants.TENANTID);
+        req.setAccountId(AccountId);
+        try {
+            AccountInfoVo resp = iAccountQuerySV.queryAccontById(req);
+            String payPassword = resp.getPayPassword();
+            log.info("支付密码"+payPassword);
+            session.setAttribute("payPsd",payPassword==null || payPassword=="" ? 0 : 1);
+            isSuccess = true;
+        }catch (Exception e){
+            isSuccess = false;
+            e.printStackTrace();
+        }
+        return isSuccess;
+    }
   //如果客户表中不存在客户信息，则依据登录信息创建默认的客户信息
     private void populateUsrUserInfo(Map m) {
     	long startTime = System.currentTimeMillis();

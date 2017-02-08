@@ -57,10 +57,16 @@
                     <li class="right" id="phoneRight"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
-            <ul class="none-border" onclick="changeMail()">
-                <a href="javascript:void(0)">
+            <ul >
+                <a href="javascript:void(0)" onclick="changeMail()">
                     <li id="mail"><spring:message code="safe.safe.bangdingmail"/></li>
                     <li class="right" id="emalRight"><i class="icon iconfont">&#xe62c;</i></li>
+                </a>
+            </ul>
+            <ul class="none-border" >
+                <a href="javascript:void(0)" onclick="changePay()">
+                    <li id="pay"><spring:message code="safe.safe.bangdingpay"/></li>
+                    <li class="right" id="payRight"><i class="icon iconfont">&#xe62c;</i></li>
                 </a>
             </ul>
         </div>
@@ -72,11 +78,13 @@
     var isEmail;
     var isPhone;
     var isPassword;
+    var isPay;
     $(function() {
         if(${isLogin=="1"}){
             var email = "${email}";
             var password = "${password}";
             var mobilePhone = "${mobilePhone}";
+            var paypsd = "${payPsd}";
             if(email == "" || email == null){
                 $("#emalRight").html("<spring:message code="safe.safe.mailTip"/>"+"<i class='icon iconfont'>&#xe62c;</i>");
                 $("#mail").html("<spring:message code="safe.safe.bangdingmail"/>");
@@ -109,6 +117,13 @@
                 $("#phone").html("<spring:message code="safe.safe.xiugaiphone"/>");
                 isPhone = 1;
             }
+            if(paypsd == "0"){
+                $("#pay").html("<spring:message code="safe.safe.bangdingpay"/>");
+                isPay = 0;
+            }else {
+                $("#pay").html("<spring:message code="safe.safe.xiugaipay"/>");
+                isPay = 1;
+            }
         }
     })
     function retLeft(){
@@ -119,7 +134,7 @@
 //        var c = confirm("是否有密码");
         var uid = "${UID}"
         if (isPassword == true) {
-            var tourl = "<%=path%>/safe/changepsd?uid="+uid;
+            var tourl = "<%=path%>/safe/changepsd";
             window.location.href=tourl;
         }else {
             var tourl = "<%=path%>/safe/checkphone?jump=psd&phone="+"${mobilePhone}";
@@ -144,6 +159,15 @@
             window.location.href = tourl;
         } else {
             var tourl = "<%=path%>/safe/changephone?phoneTitle=<spring:message code="safe.safe.bangding"/>";
+            window.location.href = tourl;
+        }
+    }
+    function changePay() {
+        if (isPay == true) {
+            var tourl = "<%=path%>/safe/checkphone?jump=pay&phone="+"${mobilePhone}";
+            window.location.href = tourl;
+        } else {
+            var tourl = "<%=path%>/safe/checkphone?jump=pay&phone="+"${mobilePhone}";
             window.location.href = tourl;
         }
     }

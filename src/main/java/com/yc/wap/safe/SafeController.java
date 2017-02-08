@@ -105,7 +105,7 @@ public class SafeController extends BaseController {
         }
         log.info("safe-changepsd invoked");
 
-        String uid = request.getParameter("uid");
+        String uid = (String) session.getAttribute("UID"+"");
         request.setAttribute("uid",uid);
         return "safe/changepsd";
     }

@@ -1,8 +1,9 @@
 package com.yc.wap.login;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import com.yc.wap.system.utils.ConfigUtil;
 import com.yc.wap.system.utils.MD5Util;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -29,13 +30,13 @@ public class KingHttpUtil {
 	
 	public static JSONObject loginToKing(String username, String password){
 		String param = getCommonParam()+"&username="+username+"&password="+ MD5Util.md5(password);
-		JSONObject jsonObj = JSONObject.fromObject(sendPost(loginInterface, param));
+		JSONObject jsonObj = JSONObject.parseObject(sendPost(loginInterface, param));
 		return jsonObj;
 	}
 	
 	public static JSONObject loginCheckToKing(String ck){
 		String param = "ck="+ck;
-		JSONObject jsonObj = JSONObject.fromObject(sendPost(loginCheckInterface, param));
+		JSONObject jsonObj = JSONObject.parseObject(sendPost(loginCheckInterface, param));
 		return jsonObj;
 	}
 	

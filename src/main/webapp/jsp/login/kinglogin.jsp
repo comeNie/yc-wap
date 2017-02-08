@@ -74,7 +74,7 @@
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 </body>
 <script>
-    var hidenFlag;//验证码隐藏标识
+    var hidenFlag = 0;//验证码隐藏标识
     var isHiden = 1;    //验证码隐藏
     $(function(){
         $("#translateGif").hide();
@@ -158,7 +158,7 @@
                     }
                     hidenFlag ++;
                     localStorage.setItem("kingisHiden",hidenFlag);
-//                    showCode();
+                    showCode();
                 }
 
             },
@@ -175,7 +175,7 @@
                     $("#codeLabel").html("<spring:message code="safe.safesuccess.failNet"/>");
                     $("#codeLabel").css("display", "block");
                 }
-//                showCode();
+                showCode();
             },
             beforeSend: function () {
             },
