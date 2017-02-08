@@ -69,6 +69,9 @@
             </div>
         </section>
     </div>
+    <div>
+        <a onclick="changeCheckType()">切换验证方式</a>
+    </div>
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
@@ -77,6 +80,7 @@
 </body>
 </html>
 <script>
+    var value;  //本页验证的值,手机号或邮箱
     $(document).ready(function() {
 
         $("#leftRe").click(function() {
@@ -87,27 +91,55 @@
     $(function() {
         $("#codeid").val("");
         var mobilePhone = "${phone}";
+        var mail = "${mail}";
         $("#getnumber").removeAttr("disabled");
         $("#getnumber").attr("class","btn bnt-yzm");
         $("#getnumber").attr("onclick", "getnumberonclick()");
         $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
-
+        value = mobilePhone;
         var s = "${jump}";
         if (s == "mail") {
+            value = mail;
             $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckMail"/>");
             $("#navtitle").html("<spring:message code="safe.checkphone.checkMail"/>");
-            var index = mobilePhone.indexOf("@");
-            var email1 = mobilePhone.slice(0,index-1);
-            var email2 = mobilePhone.slice(index+2,mobilePhone.length);
+            var index = mail.indexOf("@");
+            var email1 = mail.slice(0,index-1);
+            var email2 = mail.slice(index+2,mail.length);
             var hideMail = email1+"***"+email2;
-            $("#phone").html(hideMail)
+            $("#phone").html(hideMail);
         }else {
+
+            $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
+            $("#navtitle").html("<spring:message code="safe.checkphone.title"/>");
             var myphone1=mobilePhone.substr(0,3);
             var myphone2=mobilePhone.substr(7,4);
             var hidePhone=myphone1+"****"+myphone2;
-            $("#phone").html(hidePhone)
+            $("#phone").html(hidePhone);
         }
     })
+    //切换验证方式
+    function changeCheckType(){
+        var mobilePhone = "${phone}";
+        var mail = "${mail}";
+        if (value == "${phone}"){
+            value = mail;
+            $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckMail"/>");
+            $("#navtitle").html("<spring:message code="safe.checkphone.checkMail"/>");
+            var index = mail.indexOf("@");
+            var email1 = mail.slice(0,index-1);
+            var email2 = mail.slice(index+2,mail.length);
+            var hideMail = email1+"***"+email2;
+            $("#phone").html(hideMail);
+        }else {
+            value = mobilePhone;
+            $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
+            $("#navtitle").html("<spring:message code="safe.checkphone.title"/>");
+            var myphone1=mobilePhone.substr(0,3);
+            var myphone2=mobilePhone.substr(7,4);
+            var hidePhone=myphone1+"****"+myphone2;
+            $("#phone").html(hidePhone);
+        }
+    }
     function confirmBtn() {
 //        校验验证码为空
         var code = $("#codeid").val();
@@ -127,7 +159,7 @@
             type = 2
         }
         Loading.ShowLoading();
-        checkCode(code,type,"${phone}");
+        checkCode(code,type,value);
 
     }
     function checkCode(code,type,userinfo){
@@ -149,13 +181,16 @@
                     //跳转
                     var s = "${jump}";
                     if (s=="psd"){
-                        var tourl = "<%=path%>/safe/installpsd?code="+code;
+                        var tourl = "<%=path%>/safe/installpsd?jump=psd&code="+code;
                         window.location.href=tourl;
                     }else if(s == "mail") {
                         var tourl = "<%=path%>/safe/changemail?mailTitle=<spring:message code="safe.checkphone.change_jump"/>";
                         window.location.href=tourl;
                     }else if(s == "phone") {
                         var tourl = "<%=path%>/safe/changephone?phoneTitle=<spring:message code="safe.checkphone.change_jump"/>";
+                        window.location.href=tourl;
+                    }else if (s == "pay") {
+                        var tourl = "<%=path%>/safe/installpsd?jump=pay&code="+code;
                         window.location.href=tourl;
                     }
                     Loading.HideLoading();
@@ -193,7 +228,7 @@
             timeout: 30000,
             data: {
                 type: type,
-                info:"${phone}",
+                info:value,
                 uid:${UID},
                 domain:"${domainname}"
             },

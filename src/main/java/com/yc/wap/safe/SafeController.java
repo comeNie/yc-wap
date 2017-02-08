@@ -6,6 +6,7 @@ import com.ai.paas.ipaas.ccs.IConfigClient;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
+import com.ai.slp.balance.api.accountmaintain.param.AccountUpdateParam;
 import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
 import com.ai.yc.common.api.country.param.CountryRequest;
 import com.ai.yc.common.api.country.param.CountryResponse;
@@ -25,6 +26,9 @@ import com.ai.yc.ucenter.api.members.param.get.UcMembersGetResponse;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersActiveRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeRequest;
 import com.ai.yc.ucenter.api.members.param.opera.UcMembersGetOperationcodeResponse;
+import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
+import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
+import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yc.wap.system.base.BaseController;
@@ -64,6 +68,7 @@ public class SafeController extends BaseController {
     private IGnCountrySV iGnCountrySV = DubboConsumerFactory.getService(IGnCountrySV.class);
     private IUcMembersOperationSV iUcMembersOperationSV = DubboConsumerFactory.getService(IUcMembersOperationSV.class);
     private IAccountMaintainSV iAccountMaintainSV = DubboConsumerFactory.getService(IAccountMaintainSV.class);
+    private IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
     /**
      * 安全设置界面
      * @return
@@ -78,13 +83,15 @@ public class SafeController extends BaseController {
             return "login/login";
         }
         String uidStr = (String) session.getAttribute("UID");
-        String email1 = (String) session.getAttribute("email");
-        String password = (String) session.getAttribute("password");
+        String email = (String) session.getAttribute("email");
         String mobilePhone = (String) session.getAttribute("mobilePhone");
+        String password = (String) session.getAttribute("password");
+        Integer payPsd = (Integer) session.getAttribute("payPsd");
         request.setAttribute("UID",uidStr);
-        request.setAttribute("email",email1);
+        request.setAttribute("email",email);
         request.setAttribute("password",password);
         request.setAttribute("mobilePhone",mobilePhone);
+        request.setAttribute("payPsd",payPsd);
         log.info("safe-safe invoked");
         log.info("----------密码"+password);
         return "safe/safe";
@@ -182,8 +189,12 @@ public class SafeController extends BaseController {
             request.setAttribute("to", "login");
             return "login/login";
         }
+        String jump = request.getParameter("jump");
+        request.setAttribute("jump",jump);
         String code = request.getParameter("code");
         request.setAttribute("code",code);
+        String uidStr = (String) session.getAttribute("UID");
+        request.setAttribute("uid",uidStr);
         log.info("safe-installpsd invoked");
         return "safe/installpsd";
     }
@@ -206,8 +217,10 @@ public class SafeController extends BaseController {
 
         String jump = request.getParameter("jump");
         request.setAttribute("jump",jump);
-        String phone = request.getParameter("phone");
-        request.setAttribute("phone",phone);
+        String mobilePhone = (String) session.getAttribute("mobilePhone");
+        request.setAttribute("phone",mobilePhone);
+        String email = (String) session.getAttribute("email");
+        request.setAttribute("mail",email);
 
         return "safe/checkphone";
     }
@@ -819,5 +832,47 @@ public class SafeController extends BaseController {
         log.info("===========code:" + str);
         session.setAttribute("certCode", str);
         return "";
+    }
+
+    /**
+     * 设置支付密码
+     */
+    @RequestMapping (value = "sendpaypsd")
+    public @ResponseBody Object sendpaypsd(){
+        MsgBean result = new MsgBean();
+        String payPsd = request.getParameter("paypsd");
+        AccountUpdateParam updateParam = new AccountUpdateParam();
+
+
+        String UID = (String) session.getAttribute("UID");
+        try {
+            //获取accountid
+            SearchYCUserRequest userRequest = new SearchYCUserRequest();
+            userRequest.setUserId(UID);
+            YCUserInfoResponse infoResponse = iycUserServiceSV.searchYCUserInfo(userRequest);
+            Long AccountId = infoResponse.getAccountId();
+
+            //获取用户登录密码, 为了与支付密码对比不相同
+            UcMembersGetRequest membersGetRequest = new UcMembersGetRequest();
+            membersGetRequest.setTenantId(Constants.TENANTID);
+            membersGetRequest.setGetmode(Constants.GetUserMode.UserID);
+            membersGetRequest.setUsername(UID);
+            UcMembersGetResponse membersGetResponse = iUcMembersSV.ucGetMember(membersGetRequest);
+            String password = (String) membersGetResponse.getDate().get("password");
+            String salt =membersGetResponse.getDate().get("salt").toString();
+            if(MD5Util.md5(payPsd.concat(salt)).equals(password)){
+                result.put("msg","不能与登录密码相同");
+                result.put("status","0");
+                return result.returnMsg();
+            }
+            log.info(membersGetResponse);
+            updateParam.setTenantId(Constants.TENANTID);
+            updateParam.setAcctId(AccountId);
+            updateParam.setPayPassword(payPsd);
+            iAccountMaintainSV.updateAccount(updateParam);
+        }catch (Exception e){
+            log.error("支付密码这里"+e.getMessage());
+        }
+        return result.returnMsg();
     }
 }

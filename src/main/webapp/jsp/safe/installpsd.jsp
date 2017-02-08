@@ -35,7 +35,7 @@
         <nav class="wap-second-nav">
             <ul>
                 <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-                <li><spring:message code="safe.installpsd.navi_li"/></li>
+                <li id="naviLi"><spring:message code="safe.installpsd.navi_li"/></li>
             </ul>
 
         </nav>
@@ -76,6 +76,15 @@
         });
         Loading.HideLoading();
     });
+    $(function () {
+        var s = "${jump}";
+        if (s == "psd"){
+            $("#naviLi").html("<spring:message code="safe.installpsd.navi_li"/>")
+        }else {
+            $("#naviLi").html("<spring:message code="safe.installpsd.navi_liPay"/>")
+
+        }
+    })
     function confirmBtn() {
         var newpsd = $("#newPsdID").val();
         var confirmpsd = $("#confirmPsdID").val();
@@ -87,14 +96,14 @@
         }else {
             $("#newLable").css("display","none");
         }
-        var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
-        if (!t.test(newpsd)){
-            $("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");
-            $("#newLable").css("display","block");
-            return;
-        }else {
-            $("#newLable").css("display","none");
-        }
+        <%--var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/--%>
+        <%--if (!t.test(newpsd)){--%>
+            <%--$("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");--%>
+            <%--$("#newLable").css("display","block");--%>
+            <%--return;--%>
+        <%--}else {--%>
+            <%--$("#newLable").css("display","none");--%>
+        <%--}--%>
 //        确认密码
         if(confirmpsd == null || confirmpsd == "") {
             $("#confirmLable").html("<spring:message code="safe.changepsd.alert_newPsd"/>");
@@ -111,7 +120,11 @@
         }else {
             $("#confirmLable").css("display","none");
         }
-        editPsd(newpsd);
+        if ("${jump}" == "psd"){
+            editPsd(newpsd);
+        }else {
+            setPayPsd(newpsd);
+        }
     }
     function editPsd(newpsd){
         $.ajax({
@@ -131,6 +144,40 @@
                     $("#confirmLable").css("display", "none");
             //        跳转
                     var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.safe.shezhemima"/>";
+                    window.location.href=tourl;
+                } else {
+                    $("#confirmLable").html(data.msg);
+                    $("#confirmLable").css("display", "block");
+                }
+            },
+            error: function () {
+                $("#confirmLable").html("<spring:message code="safe.safesuccess.failNet"/>");
+                $("#confirmLable").css("display", "block");
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
+    }
+    function setPayPsd(newpsd){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/sendpaypsd",
+            modal: true,
+            timeout: 30000,
+            data: {
+                paypsd: newpsd,
+
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#confirmLable").css("display", "none");
+            //        跳转
+                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.safe.shezhepay"/>";
                     window.location.href=tourl;
                 } else {
                     $("#confirmLable").html(data.msg);

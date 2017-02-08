@@ -137,7 +137,7 @@
             var tourl = "<%=path%>/safe/changepsd";
             window.location.href=tourl;
         }else {
-            var tourl = "<%=path%>/safe/checkphone?jump=psd&phone="+"${mobilePhone}";
+            var tourl = "<%=path%>/safe/checkphone?jump=psd";
             window.location.href=tourl;
         }
     }
@@ -145,7 +145,7 @@
 //        var c = confirm("是否已验证邮箱");
 
         if (isEmail == true) {
-            var tourl = "<%=path%>/safe/checkphone?jump=mail&phone="+"${email}";
+            var tourl = "<%=path%>/safe/checkphone?jump=mail";
             window.location.href = tourl;
         } else {
             var tourl = "<%=path%>/safe/changemail?mailTitle=<spring:message code="safe.safe.bangding"/>";
@@ -155,7 +155,7 @@
     function changePhone() {
 //        var c = confirm("是否已验证手机号");
         if (isPhone == true) {
-            var tourl = "<%=path%>/safe/checkphone?jump=phone&phone="+"${mobilePhone}";
+            var tourl = "<%=path%>/safe/checkphone?jump=phone";
             window.location.href = tourl;
         } else {
             var tourl = "<%=path%>/safe/changephone?phoneTitle=<spring:message code="safe.safe.bangding"/>";
@@ -164,10 +164,10 @@
     }
     function changePay() {
         if (isPay == true) {
-            var tourl = "<%=path%>/safe/checkphone?jump=pay&phone="+"${mobilePhone}";
+            var tourl = "<%=path%>/safe/changepsd";
             window.location.href = tourl;
         } else {
-            var tourl = "<%=path%>/safe/checkphone?jump=pay&phone="+"${mobilePhone}";
+            var tourl = "<%=path%>/safe/checkphone?jump=pay";
             window.location.href = tourl;
         }
     }
