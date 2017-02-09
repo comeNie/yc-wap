@@ -10,6 +10,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@page import="java.util.regex.Matcher" %>
 <%@page import="java.util.regex.Pattern" %>
+<%@ page import="com.ai.paas.ipaas.i18n.ResWebBundle" %>
 <%!
     private String androidReg = "\\bandroid|Nexus\\b";
     private String iosReg = "ip(hone|od|ad)";
@@ -56,6 +57,8 @@
     request.setAttribute("AppUrl", AppUrl);
     request.setAttribute("WapUrl", "http://m.yeecloud.com");
     request.setAttribute("PcUrl", "http://www.yeecloud.com/");
+    ResWebBundle rb = new ResWebBundle();
+    System.out.print("----------------:"+rb.getDefaultLocale().toString());
 %>
 <html>
 <head>
@@ -83,7 +86,7 @@
             <li><a href="javascript:window.location.href='<%=path%>/aboutus'"><spring:message code="all.project.public.footer.about"/></a>|
                 <a href="javascript:window.location.href='<%=path%>/tident'"><spring:message code="all.project.public.footer.find"/></a>|
                 <a href="javascript:window.location.href='<%=path%>/feedback'"><spring:message code="all.project.public.footer.idea"/></a>|
-                <a href="javascript:void(0)"><spring:message code="all.project.public.footer.language"/></a></li>
+                <a href="javascript:void(0)" onclick="if('<%=rb.getDefaultLocale().toString()%>' == 'en_US'){changeLang('zh_CN')}else {changeLang('en_US')}"><spring:message code="all.project.public.footer.language"/></a></li>
             <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
             <%--若多语言不可用，就改控制器进入jsp--%>
             <li class="ash">京ICP备13002826号-7</li>
@@ -92,3 +95,30 @@
 </section>
 </body>
 </html>
+<script>
+    $(function(){
+        console.log("${rb.getDefaultLocale()}");
+    })
+    function changeLang(localeEl){
+        // var toLang = localeEl.value;
+        var toLang = localeEl;
+        if (window.console){
+            console.log("the new lange is "+toLang);
+        }
+        var nowUrl = window.location.href;
+        var lInd = nowUrl.indexOf("lang=");
+        //已存在
+        if (lInd>0){
+            var i = nowUrl.indexOf("&",lInd);
+            var endStr = i>0?nowUrl.substring(i):"";
+            nowUrl = nowUrl.substring(0,lInd)+"lang="+toLang+endStr;
+        }//不存在
+        else if(nowUrl.indexOf("?")>0){
+            nowUrl = nowUrl + "&lang="+toLang;
+        }else {
+            nowUrl = nowUrl + "?lang="+toLang;
+        }
+
+        window.location.replace(nowUrl);//刷新当前页面
+    }
+</script>
