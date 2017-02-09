@@ -498,7 +498,7 @@
             success: function (data) {
                 if (data.status == 1) {
                     $("#fastphoneidLabel").css("display", "none");
-                    fastwait = 60;
+                    fastwait = 120;
                     fastCuntDown();
                 } else {
                     $("#fastphoneidLabel").html(data.msg);
@@ -517,7 +517,7 @@
             }
         });
     }
-    var fastwait = 60;
+    var fastwait = 120;
     function fastCuntDown() {
         if (fastwait == 0) {
             $("#fastgetnumber").removeAttr("disabled");
@@ -526,7 +526,7 @@
 
             $("#fastgetnumber").attr("class", "btn bnt-yzm");
             //p.html("如果您在1分钟内没有收到验证码，请检查您填写的手机号码是否正确或重新发送");
-            fastwait = 60;
+            fastwait = 120;
         } else {
             var txtStr = fastwait + '<spring:message code="login.login.chongxinhuoqu"/>';
             $("#fastgetnumber").html(txtStr);

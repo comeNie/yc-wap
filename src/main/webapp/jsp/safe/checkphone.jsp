@@ -70,7 +70,7 @@
         </section>
     </div>
     <div>
-        <a onclick="changeCheckType()">切换验证方式</a>
+        <a id="tipCheck" onclick="changeCheckType()">通过已验证邮箱验证</a>
     </div>
 
     <%--底部視圖--%>
@@ -96,49 +96,63 @@
         $("#getnumber").attr("class","btn bnt-yzm");
         $("#getnumber").attr("onclick", "getnumberonclick()");
         $("#getnumber").html("<spring:message code="safe.checkphone.yzm_input"/>");//改变按钮中value的值
-        value = mobilePhone;
-        var s = "${jump}";
-        if (s == "mail") {
-            value = mail;
-            $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckMail"/>");
-            $("#navtitle").html("<spring:message code="safe.checkphone.checkMail"/>");
-            var index = mail.indexOf("@");
-            var email1 = mail.slice(0,index-1);
-            var email2 = mail.slice(index+2,mail.length);
-            var hideMail = email1+"***"+email2;
-            $("#phone").html(hideMail);
-        }else {
+        if(mobilePhone == ""){
+            chgMail(mail);
 
-            $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
-            $("#navtitle").html("<spring:message code="safe.checkphone.title"/>");
-            var myphone1=mobilePhone.substr(0,3);
-            var myphone2=mobilePhone.substr(7,4);
-            var hidePhone=myphone1+"****"+myphone2;
-            $("#phone").html(hidePhone);
+        }else if (mail == ""){
+            chgPhone(mobilePhone);
+
+        }else {
+            if ("${jump}" == "mail") {
+                chgMail(mail);
+            }else {
+                chgPhone(mobilePhone);
+            }
         }
+
     })
     //切换验证方式
     function changeCheckType(){
+
         var mobilePhone = "${phone}";
         var mail = "${mail}";
-        if (value == "${phone}"){
-            value = mail;
-            $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckMail"/>");
-            $("#navtitle").html("<spring:message code="safe.checkphone.checkMail"/>");
-            var index = mail.indexOf("@");
-            var email1 = mail.slice(0,index-1);
-            var email2 = mail.slice(index+2,mail.length);
-            var hideMail = email1+"***"+email2;
-            $("#phone").html(hideMail);
+        if(mobilePhone == ""){
+            $("#tipCheck").html("您目前还未验证过手机号");
+
+        }else if (mail == ""){
+            $("#tipCheck").html("您目前还未验证过邮箱");
+
         }else {
-            value = mobilePhone;
-            $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
-            $("#navtitle").html("<spring:message code="safe.checkphone.title"/>");
-            var myphone1=mobilePhone.substr(0,3);
-            var myphone2=mobilePhone.substr(7,4);
-            var hidePhone=myphone1+"****"+myphone2;
-            $("#phone").html(hidePhone);
+            wait = 0;
+            if (value == "${phone}"){
+                chgMail(mail);
+            }else {
+                chgPhone(mobilePhone)
+            }
         }
+
+
+    }
+    //手机号验证界面
+    function chgPhone(mobilePhone){
+        value = mobilePhone;
+        $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
+        $("#navtitle").html("<spring:message code="safe.checkphone.title"/>");
+        var myphone1=mobilePhone.substr(0,3);
+        var myphone2=mobilePhone.substr(7,4);
+        var hidePhone=myphone1+"****"+myphone2;
+        $("#phone").html(hidePhone);
+    }
+    //邮箱验证界面
+    function chgMail(mail){
+        value = mail;
+        $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckMail"/>");
+        $("#navtitle").html("<spring:message code="safe.checkphone.checkMail"/>");
+        var index = mail.indexOf("@");
+        var email1 = mail.slice(0,index-1);
+        var email2 = mail.slice(index+2,mail.length);
+        var hideMail = email1+"***"+email2;
+        $("#phone").html(hideMail);
     }
     function confirmBtn() {
 //        校验验证码为空

@@ -46,11 +46,11 @@
                 <div class="set-int">
                     <ul>
                         <li>
-                            <p><input id="newPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input1"/>" autocomplete="off"></p>
+                            <p><input id="newPsdID" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input1"/>" autocomplete="off"></p>
                             <label id="newLable"></label>
                         </li>
                         <li>
-                            <p><input id="confirmPsdID" type="text" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input2"/>" autocomplete="off"></p>
+                            <p><input id="confirmPsdID" type="password" class="input input-large" placeholder="<spring:message code="safe.installpsd.large_input2"/>" autocomplete="off"></p>
                             <label id="confirmLable"></label>
                         </li>
                         <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.installpsd.nextbtn"/></a></li>
