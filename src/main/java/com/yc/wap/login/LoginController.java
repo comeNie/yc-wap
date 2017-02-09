@@ -1,7 +1,6 @@
 package com.yc.wap.login;
 
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -102,11 +101,11 @@ public class LoginController extends BaseController {
         if(kingObject!=null && kingObject.get("error_code")!=null){
             errorCode = kingObject.getString("error_code");
             if(errorCode.equals("10006")){
-                msg = "用户名不存在";
+                msg = rb.getMessage("loginCtrl.kinguserNotExit");
             }else if(errorCode.equals("100010")){
-                msg = "密码错误";
+                msg = rb.getMessage("loginCtrl.kingpsdError");
             }else{
-                msg = "用户名或密码错误";
+                msg = rb.getMessage("loginCtrl.kingpsdOrUserError");
             }
             result.put("msg",msg);
             result.put("status","0");

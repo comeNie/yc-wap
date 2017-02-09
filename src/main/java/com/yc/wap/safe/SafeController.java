@@ -7,6 +7,9 @@ import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 import com.ai.paas.ipaas.util.StringUtil;
 import com.ai.slp.balance.api.accountmaintain.interfaces.IAccountMaintainSV;
 import com.ai.slp.balance.api.accountmaintain.param.AccountUpdateParam;
+import com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV;
+import com.ai.slp.balance.api.accountquery.param.AccountIdParam;
+import com.ai.slp.balance.api.accountquery.param.AccountInfoVo;
 import com.ai.yc.common.api.country.interfaces.IGnCountrySV;
 import com.ai.yc.common.api.country.param.CountryRequest;
 import com.ai.yc.common.api.country.param.CountryResponse;
@@ -35,10 +38,7 @@ import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 
-import com.yc.wap.system.utils.AiPassUitl;
-import com.yc.wap.system.utils.ImageCodeUtil;
-import com.yc.wap.system.utils.MD5Util;
-import com.yc.wap.system.utils.RegexUtils;
+import com.yc.wap.system.utils.*;
 
 import com.yc.wap.system.utils.send.SendEmailRequest;
 import com.yc.wap.system.utils.send.SmsSenderUtil;
@@ -69,6 +69,7 @@ public class SafeController extends BaseController {
     private IUcMembersOperationSV iUcMembersOperationSV = DubboConsumerFactory.getService(IUcMembersOperationSV.class);
     private IAccountMaintainSV iAccountMaintainSV = DubboConsumerFactory.getService(IAccountMaintainSV.class);
     private IYCUserServiceSV iycUserServiceSV = DubboConsumerFactory.getService(IYCUserServiceSV.class);
+    private IAccountQuerySV iAccountQuerySV = DubboConsumerFactory.getService(IAccountQuerySV.class);
     /**
      * 安全设置界面
      * @return
@@ -111,7 +112,8 @@ public class SafeController extends BaseController {
             return "login/login";
         }
         log.info("safe-changepsd invoked");
-
+        String jump = request.getParameter("jump");
+        request.setAttribute("jump",jump);
         String uid = (String) session.getAttribute("UID"+"");
         request.setAttribute("uid",uid);
         return "safe/changepsd";
@@ -825,13 +827,12 @@ public class SafeController extends BaseController {
      * @throws IOException
      */
     @RequestMapping (value = "getpiccode")
-    public @ResponseBody Object getpiccode(HttpServletResponse response) throws IOException {
+    public void getpiccode(HttpServletResponse response) throws IOException {
         ImageCodeUtil util = new ImageCodeUtil();
         String str= util.creatCode(120,41,5,20,response.getOutputStream());
         // 将认证码存入SESSION
         log.info("===========code:" + str);
         session.setAttribute("certCode", str);
-        return "";
     }
 
     /**
@@ -841,9 +842,10 @@ public class SafeController extends BaseController {
     public @ResponseBody Object sendpaypsd(){
         MsgBean result = new MsgBean();
         String payPsd = request.getParameter("paypsd");
+        String oldpaypsd = request.getParameter("oldpaypsd");
         AccountUpdateParam updateParam = new AccountUpdateParam();
 
-
+        payPsd = MD5Util.md5(payPsd);
         String UID = (String) session.getAttribute("UID");
         try {
             //获取accountid
@@ -860,18 +862,37 @@ public class SafeController extends BaseController {
             UcMembersGetResponse membersGetResponse = iUcMembersSV.ucGetMember(membersGetRequest);
             String password = (String) membersGetResponse.getDate().get("password");
             String salt =membersGetResponse.getDate().get("salt").toString();
-            if(MD5Util.md5(payPsd.concat(salt)).equals(password)){
-                result.put("msg","不能与登录密码相同");
+            String equalPayPsd = MD5Util.md5(payPsd.concat(salt));
+            if(equalPayPsd.equals(password)){
+                result.put("msg",rb.getMessage("loginCtrl.payPsdButong"));
                 result.put("status","0");
                 return result.returnMsg();
+            }
+            if (oldpaypsd != "" && oldpaypsd != null){
+
+    //            //获取旧支付密码
+                AccountIdParam req = new AccountIdParam();
+                req.setTenantId(Constants.TENANTID);
+                req.setAccountId(AccountId);
+                AccountInfoVo resp = iAccountQuerySV.queryAccontById(req);
+                String oldPsd = resp.getPayPassword();
+                if (!oldPsd.equals(MD5Util.md5(oldpaypsd))){
+                    log.info("支付密码不一致");
+                    result.put("msg",rb.getMessage("loginCtrl.payPsdError"));
+                    result.put("status","0");
+                    return result.returnMsg();
+                }
             }
             log.info(membersGetResponse);
             updateParam.setTenantId(Constants.TENANTID);
             updateParam.setAcctId(AccountId);
             updateParam.setPayPassword(payPsd);
             iAccountMaintainSV.updateAccount(updateParam);
+            session.setAttribute("payPsd",1);
         }catch (Exception e){
             log.error("支付密码这里"+e.getMessage());
+            result.put("msg",rb.getMessage("loginCtrl.payPsdFail"));
+            result.put("status","0");
         }
         return result.returnMsg();
     }

@@ -151,12 +151,11 @@
             $("#phonetips").css("display","none");
         }
 //        校验验证码
-        var s = "${jump}";
         var type;
-        if (s == "mail") {
-            type = 5;
+        if (value == "${phone}"){
+            type = 2;
         }else {
-            type = 2
+            type = 5
         }
         Loading.ShowLoading();
         checkCode(code,type,value);
@@ -208,13 +207,11 @@
         });
     }
     function getnumberonclick(){
-
-        var s = "${jump}";
         var type;
-        if (s == "mail") {
-            type = 5;
+        if (value == "${phone}"){
+            type = 2;
         }else {
-            type = 2
+            type = 5
         }
         Loading.ShowLoading();
         getTestCode(type);

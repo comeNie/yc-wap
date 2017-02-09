@@ -134,7 +134,7 @@
 //        var c = confirm("是否有密码");
         var uid = "${UID}"
         if (isPassword == true) {
-            var tourl = "<%=path%>/safe/changepsd";
+            var tourl = "<%=path%>/safe/changepsd?jump=psd";
             window.location.href=tourl;
         }else {
             var tourl = "<%=path%>/safe/checkphone?jump=psd";
@@ -164,7 +164,7 @@
     }
     function changePay() {
         if (isPay == true) {
-            var tourl = "<%=path%>/safe/changepsd";
+            var tourl = "<%=path%>/safe/changepsd?jump=pay";
             window.location.href = tourl;
         } else {
             var tourl = "<%=path%>/safe/checkphone?jump=pay";

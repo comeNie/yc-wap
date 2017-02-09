@@ -93,12 +93,12 @@
                         <p><spring:message code="center.mySafe"/></p>
                     </li>
                 </a>
-                <%--<a href="javascript:void(0)">--%>
-                    <%--<li>--%>
-                        <%--<p><img src="<%=path%>/ui/images/icon-12.jpg" /></p>--%>
-                        <%--<p><spring:message code="center.myIntegral"/></p>--%>
-                    <%--</li>--%>
-                <%--</a>--%>
+                <a href="javascript:window.location.href='<%=path%>/center/integral'">
+                    <li>
+                        <p><img src="<%=path%>/ui/images/icon-12.jpg" /></p>
+                        <p><spring:message code="center.myIntegral"/></p>
+                    </li>
+                </a>
             </ul>
         </section>
 

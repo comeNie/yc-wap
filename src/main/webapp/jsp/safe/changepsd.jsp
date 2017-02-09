@@ -35,7 +35,7 @@
         <nav class="wap-second-nav">
             <ul>
                 <a href="javascript:"><i class="icon iconfont left" id="leftRe">&#xe626;</i></a>
-                <li><spring:message code="safe.changepsd.title"/></li>
+                <li id="naviLi"><spring:message code="safe.changepsd.title"/></li>
             </ul>
 
         </nav>
@@ -78,10 +78,19 @@
        });
         Loading.HideLoading();
     });
+    $(function(){
+        var s = "${jump}";
+        if (s == "psd"){
+            $("#naviLi").html("<spring:message code="safe.changepsd.title"/>");
+        }else {
+            $("#naviLi").html("<spring:message code="safe.changepsd.titlePay"/>");
+        }
+    })
     function finishChange() {
         var oldpsd = $("#oldPsdID").val();
         var newpsd = $("#newPsdID").val();
         var confirmpsd = $("#confirmPsdID").val();
+        var s = "${jump}";
 //        原密码
         if(oldpsd == null || oldpsd == ""){
             $("#oldLable").html("<spring:message code="safe.changepsd.alert_oldPsd"/>");
@@ -98,15 +107,18 @@
         }else {
             $("#newLable").css("display","none");
         }
-//        var t = /^[0-9a-zA-Z]{6,16}$/;
-        var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
-        if (!t.test(newpsd)){
-            $("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");
-            $("#newLable").css("display","block");
-            return;
-        }else {
-            $("#newLable").css("display","none");
+
+        if (s == "psd"){
+            var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
+            if (!t.test(newpsd)){
+                $("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+                $("#newLable").css("display","block");
+                return;
+            }else {
+                $("#newLable").css("display","none");
+            }
         }
+//        var t = /^[0-9a-zA-Z]{6,16}$/;
         if (oldpsd == newpsd){
             $("#newLable").html("<spring:message code="safe.changepsd.cannot_same"/>");
             $("#newLable").css("display","block");
@@ -131,7 +143,12 @@
             $("#confirmLable").css("display","none");
         }
         Loading.ShowLoading();
-        checkChange(oldpsd,newpsd);
+        var s = "${jump}";
+        if (s == "psd"){
+            checkChange(oldpsd,newpsd);
+        }else {
+            checkPayPsd(oldpsd,newpsd);
+        }
 
     }
     function checkChange(oldLable,newLable){
@@ -151,6 +168,36 @@
                 if (data.status == 1) {
                     $("#confirmLable").css("display", "none");
                     var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.title"/>";
+                    window.location.href=tourl;
+                    Loading.HideLoading();
+                } else {
+                    $("#confirmLable").html(data.msg);
+                    $("#confirmLable").css("display", "block");
+                    Loading.HideLoading();
+                }
+            },
+            error: function () {
+                $("#confirmLable").html("<spring:message code="safe.safesuccess.failNet"/>");
+                $("#confirmLable").css("display", "block");
+                Loading.HideLoading();
+            }
+        });
+    }
+    function checkPayPsd(oldLable,newLable){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/safe/sendpaypsd",
+            modal: true,
+            timeout: 30000,
+            data: {
+                paypsd: newLable,
+                oldpaypsd:oldLable
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    $("#confirmLable").css("display", "none");
+                    var tourl = "<%=path%>/safe/safesuccess?name=<spring:message code="safe.changepsd.titlePay"/>";
                     window.location.href=tourl;
                     Loading.HideLoading();
                 } else {
