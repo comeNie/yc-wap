@@ -165,11 +165,13 @@ public class OrderController extends BaseController {
         String OrderId = request.getParameter("OrderId");
         String reasonDesc = "Wap取消订单";
         String operId = (String) session.getAttribute("UID");
+        String userName = (String) session.getAttribute("username");
 
         OrderCancelRequest req = new OrderCancelRequest();
         req.setOperId(operId);
         req.setReasonDesc(reasonDesc);
         req.setOrderId(Long.parseLong(OrderId));
+        req.setOperName(userName);
         log.info("OrderCancelParams: " + com.alibaba.fastjson.JSONArray.toJSONString(req));
         try {
             BaseResponse resp = iOrderCancelSV.handCancelNoPayOrder(req);
@@ -479,6 +481,7 @@ public class OrderController extends BaseController {
             String newFileName = URLDecoder.decode(fileName,"utf-8");
             fileName = new String(newFileName.getBytes("utf-8"), "ISO-8859-1");
         } catch (UnsupportedEncodingException e) {
+            log.info("下载文件异常：", e);
             e.printStackTrace();
         }
         log.info("DownloadFileName: " + fileName + ", DownloadFileId: " + fileId);
@@ -494,6 +497,7 @@ public class OrderController extends BaseController {
             os.close();
         } catch (Exception e) {
             log.info("下载文件异常：", e);
+            e.printStackTrace();
         }
     }
 }
