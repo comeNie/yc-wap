@@ -15,6 +15,7 @@ import com.ai.yc.order.api.orderpay.param.*;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.SearchYCUserRequest;
 import com.ai.yc.user.api.userservice.param.YCUserInfoResponse;
+import com.alibaba.fastjson.JSON;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -123,7 +124,7 @@ public class PayController extends BaseController {
 
         Double _Amount = Double.valueOf(orderAmount) * 1000;
 
-        log.info("-----PayResult-----");
+        log.info("-----WAP支付异步通知--PayResult-----");
         log.info("orderId: " + orderId);
         log.info("payStates: " + payStates);
         log.info("orderAmount: " + orderAmount);
@@ -131,11 +132,13 @@ public class PayController extends BaseController {
         log.info("outOrderId: " + outOrderId);
         log.info("notifyTime: " + notifyTime);
         log.info("uid: " + uid);
-        log.info("-----PayResult-----");
+        log.info("-----WAP支付异步通知--PayResult-----");
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmss");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        log.info("-----WAP支付异步通知--开始获取timezone-----");
         TimeZone tz = TimeZone.getTimeZone(ZoneContextHolder.getZone());
+        log.info("-----WAP支付异步通知--结束获取timezone-----tz="+tz+"; tzJSON="+JSON.toJSONString(tz));
         sdf1.setTimeZone(tz);
         sdf2.setTimeZone(tz);
         Timestamp ts = Timestamp.valueOf(sdf2.format(sdf1.parse(notifyTime)));
@@ -143,9 +146,13 @@ public class PayController extends BaseController {
         if (payStates.equals("00")) {
             String orderIndex = orderId.substring(0, 3);
             if (orderIndex.equals("901")) {
+            	log.info("-----WAP支付异步通知--开始执行BalanceRecharge方法 orderId="+orderId);
                 BalanceRecharge(orderId, orderAmount, payOrgCode, uid);
+                log.info("-----WAP支付异步通知--结束执行BalanceRecharge方法 orderId="+orderId);
             } else {
+            	log.info("-----WAP支付异步通知--开始执行OrderPayFinished方法 orderId="+orderId);
                 OrderPayFinished(orderId, payOrgCode, _Amount.longValue(), outOrderId, ts, uid);
+                log.info("-----WAP支付异步通知--结束执行OrderPayFinished方法 orderId="+orderId);
             }
         }
         return "payResult";
