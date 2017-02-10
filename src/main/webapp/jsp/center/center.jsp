@@ -53,7 +53,7 @@
                         <img src="${userurl}">
                     </c:if>
                 </li>
-                <li id="nameLi"></li>
+                <li onclick="reloadThisPage()"></li>
                 <%--<li>普通会员</li>--%>
             </ul>
         </section>
@@ -118,10 +118,10 @@
         }else {
             Loading.HideLoading();
         }
-        $("#nameLi").click(function(){
-            window.location.reload();
-        });
     })
+    function reloadThisPage(){
+        window.location.reload();
+    }
     function retLeft(){
         window.history.go(-1);
     }

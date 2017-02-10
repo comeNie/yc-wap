@@ -104,7 +104,7 @@
         <!--转换语言-->
         <section class="testing">
             <p>
-                <select tabindex="5" class="select testing-select" id="source-lan">
+                <select tabindex="5" class="select testing-select" id="source-lan" onchange="sourceChg()">
                     <%--自动检测--%>
                     <c:if test="${pageContext.response.locale == 'zh_CN'}">
                         <option value="auto"><spring:message code="start.jianceCH"/></option>
@@ -127,7 +127,7 @@
             </p>
 
             <p>
-                <select class="select testing-select" id="target-lan">
+                <select class="select testing-select" id="target-lan" onchange="targetChg()">
                     <c:if test="${pageContext.response.locale != 'zh_CN'}">
                         <%--中文简体--%>
                         <option value="zh" selected><spring:message code="start.zh"/></option>
@@ -150,7 +150,7 @@
         </section>
         <!--翻译内容-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" id="chick-int" placeholder="<spring:message code="start.fanyiPlaceholder"/>"></textarea>
+            <textarea class="textarea textarea-large" onfocus="textFocus()" id="chick-int" placeholder="<spring:message code="start.fanyiPlaceholder"/>"></textarea>
             <a hrel="javascript:void(0)" onclick="clearFuc()"><i class="icon iconfont" id="clear" hidden>&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
@@ -264,7 +264,8 @@
             }
         });
 //        监听输入的文本内容
-        $("#chick-int").bind("input propertychange", function () {
+        var textVi = document.getElementById("chick-int");
+        textVi.addEventListener("input",function(){
             var landetec = $("#chick-int").val();
             if(isEmojiCharacter(landetec)){
                 autoTip("<spring:message code="start.tipBiaoqing"/>");
@@ -279,28 +280,26 @@
             }
         });
 
-//        翻译源内容文本框获取焦点
-        $("#chick-int").focus(function () {
-            $("#results").hide();
-            $('#chick-btn').show();
-            $('#wrapper-hide').hide();
-            $("#clear").show();
-            $("#release-showbj").hide();
-            $("#release-btn").hide();
-            getBlur = 1;
-        });
-
-        //对应语言对事件
-        $("#target-lan").bind("change",function(){
-            goTranslate();
-        });
-        //源语言对事件
-        $("#source-lan").bind("change",function(){
-            languagePair($("#source-lan").val())
-            goTranslate();
-        });
     });
-
+    //源语言对事件
+    function sourceChg(){
+        languagePair($("#source-lan").val())
+        goTranslate();
+    }
+    //对应语言对事件
+    function targetChg(){
+        goTranslate();
+    }
+    //翻译源内容文本框获取焦点
+    function textFocus(){
+        $("#results").hide();
+        $('#chick-btn').show();
+        $('#wrapper-hide').hide();
+        $("#clear").show();
+        $("#release-showbj").hide();
+        $("#release-btn").hide();
+        getBlur = 1;
+    }
     //清除按鈕
     function clearFuc() {
         if ($("#chick-int").val() == "") {
