@@ -63,11 +63,8 @@
                             <p class="yzm"><a id="getnumber" onclick="getnumberonclick()"class="btn bnt-yzm"><spring:message code="safe.checkphone.yzm_input"/></a></p>
                             <label id="phonetips"></label>
                         </li>
-                        <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
-
-                    </ul>
-                    <ul>
-                        <li class="small-h tis"><a class="blue" id="tipCheck" onclick="changeCheckType()"></a></li>
+                        <li class="small-h"><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
+                        <li class="tis blue" id="tipCheck" onclick="changeCheckType()"></li>
                     </ul>
                 </div>
             </div>
@@ -119,14 +116,14 @@
         var mobilePhone = "${phone}";
         var mail = "${mail}";
         if(mobilePhone == ""){
-            $("#tipCheck").attr("class","red");
+            $("#tipCheck").attr("class","tis red");
             $("#tipCheck").html("<spring:message code="safe.checkphone.notCheckPhone"/>");
 
         }else if (mail == ""){
             $("#tipCheck").html("<spring:message code="safe.checkphone.notCheckMail"/>");
-            $("#tipCheck").attr("class","red");
+            $("#tipCheck").attr("class","tis red");
         }else {
-            $("#tipCheck").attr("class","blue");
+            $("#tipCheck").attr("class","tis blue");
             wait = 0;
             if (value == "${phone}"){
                 chgMail(mail);
