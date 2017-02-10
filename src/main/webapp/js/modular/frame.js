@@ -9,17 +9,17 @@
 //    })
 // });
 //关闭历史纪录
-$(function(){
-$(".history-list .right i").click(function () {
-	$(this).parents('.history-list li').hide();
-	});
-	}); 
-//关闭历史纪录
-$(function(){
-$(".history-list .right .btn").click(function () {
-	$(this).parents('.history-list li').hide();
-	});
-	}); 	
+//$(function(){
+//$(".history-list .right i").click(function () {
+//	$(this).parents('.history-list li').hide();
+//	});
+//	});
+////关闭历史纪录
+//$(function(){
+//$(".history-list .right .btn").click(function () {
+//	$(this).parents('.history-list li').hide();
+//	});
+//	});
 //二级菜单下拉
 // $(function () {
 //     var st = 100;
@@ -50,7 +50,7 @@ $('.login-tab ul li a').click(function(){
    $('#tab2').show();
    $('#tab1').hide();
    }
-  }); 
+  });
 });
 
 

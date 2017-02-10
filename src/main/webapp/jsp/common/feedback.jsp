@@ -51,7 +51,7 @@
                 <li class="tow">
                     <p><spring:message code="feedback.phone"/></p>
                     <p><input class="input phone-input"></p>
-                    <%--<label>请输入正确的手机号</label>--%>
+                    <label>请输入正确的手机号</label>
                 </li>
             </ul>
         </section>
@@ -60,6 +60,5 @@
         <p><spring:message code="feedback.zixun"/></p>
         <a href="javascript:void (0)" class="btn submit-btn btn-blue" ><spring:message code="feedback.submit"/></a>
     </section>
-
 </body>
 </html>
