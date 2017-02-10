@@ -78,16 +78,51 @@
         </section>
         <div class="testing-title">
             <p><spring:message code="written.content.content"/></p>
+            <p class="right" id="backText" style="display: none"><a href="javascript:ChangeUpload(false)">返回</a></p>
         </div>
+
+        <!--附件上传框-->
+        <div class="enclosure" id="uploadText" style="display: none">
+            <p><input type="text" class="enclosure-input" placeholder="请浏览选择上传文件，文件大小限10M。" disabled></p>
+            <p><a href="javascript:ChooseFile()">浏览</a></p>
+        </div>
+
+        <!--附件列表-->
+        <section class="history" style="display:none">
+            <div class="history-list">
+                <ul>
+                    <a href="javascript:">
+                        <li>
+                            <p><i class="icon iconfont">&#xe601;</i></p>
+                            <p class="word-large">上传二十文件名称上传文件名称上传文件名称.docx</p>
+                            <p class="right"><input type="button" class="btn btn-red btn-mini" value="删除"></p>
+                        </li>
+                    </a>
+                </ul>
+            </div>
+        </section>
+
         <!--文字翻译-->
-        <section class="translation-content">
+        <section class="translation-content" id="textInput">
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
                       placeholder="<spring:message code="written.content.number"/>"></textarea>
             <a href="javascript:inputClear()" id="clearIcon" style="display: none"><i class="icon iconfont">&#xe618;</i></a>
         </section>
-        <div class="testing-title" style="display: none">
-            <p><spring:message code="written.content.upload1"/><a href="javascript:" id="upload"><spring:message code="written.content.upload2"/></a></p>
+
+        <!--附件上传-->
+        <div class="testing-title" id="toUpload">
+            <p>
+                <spring:message code="written.content.upload1"/>
+                <a href="javascript:ChangeUpload(true)"><spring:message code="written.content.upload2"/></a>
+            </p>
         </div>
+
+        <div class="testing-title" id="uploadFileText" style="display: none">
+            <p>
+                <a href="javascript:ChooseFile()"><spring:message code="written.content.upload2"/></a>
+            </p>
+        </div>
+
         <div class="choice-list">
             <ul>
                 <li>
@@ -257,6 +292,26 @@
             DetectLanguage(Content, true);
         });
     });
+
+    function ChooseFile() {
+
+    }
+
+    function ChangeUpload(show) {
+        if (show) {
+            $("#backText").css("display", "block");
+            $("#uploadText").css("display", "block");
+            $("#uploadFileText").css("display", "block");
+            $("#textInput").css("display", "none");
+            $("#toUpload").css("display", "none");
+        } else {
+            $("#backText").css("display", "none");
+            $("#uploadText").css("display", "none");
+            $("#uploadFileText").css("display", "none");
+            $("#textInput").css("display", "block");
+            $("#toUpload").css("display", "block");
+        }
+    }
 
     function GetLanguageShow() {
         var DualList = ${DualList};
