@@ -150,8 +150,8 @@
         </section>
         <!--翻译内容-->
         <section class="translation-content">
-            <textarea class="textarea textarea-large" name="chick-int" id="chick-int" placeholder="<spring:message code="start.fanyiPlaceholder"/>"></textarea>
-            <a hrel="javascript:void(0)"><i class="icon iconfont" id="clear" hidden>&#xe618;</i></a>
+            <textarea class="textarea textarea-large" id="chick-int" placeholder="<spring:message code="start.fanyiPlaceholder"/>"></textarea>
+            <a hrel="javascript:void(0)" onclick="clearFuc()"><i class="icon iconfont" id="clear" hidden>&#xe618;</i></a>
         </section>
         <!--翻译按钮-->
         <section class="translate-btn" id="chick-btn">
@@ -191,7 +191,7 @@
 
         </section>
         <!--banner-->
-        <section class="banner"><a href="javascript:void (0)" onclick="toWritten()"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
+        <section class="banner"><a href="javascript:window.location.href='<%=path%>/written'"><img src="<%=path%>/ui/images/banner-1.png"></a></section>
         <section class="banner"><a href="javascript:void (0)"><img src="<%=path%>/ui/images/banner-2.png"></a></section>
 
     </section>
@@ -256,12 +256,6 @@
     });
     $(document).ready(function () {
 
-//        document.getElementsByTagName("body")[0].onscroll=function(){
-//            var rbtn=document.getElementById('index-btnshow');
-//            if(document.getElementsByTagName("body")[0].scrollTop>10){
-//                rbtn.style.display='block';
-//            }
-//        }
         $(window).scroll(function(e){
             p = $(this).scrollTop();
             var rbtn=document.getElementById('index-btnshow');
@@ -295,25 +289,6 @@
             $("#release-btn").hide();
             getBlur = 1;
         });
-        //清除
-        $("#clear").click(function(){
-            if ($("#chick-int").val() == ""){
-                location.reload();
-            }
-            if (IsTranslated == true) {
-                $("#results").hide();
-                $("#btn-translate").show();
-                $("#chick-int").focus();
-                IsTranslated = false;
-            } else {
-                $("#chick-int").val("");
-            }
-        });
-
-//        跳转到笔译下单
-//        $("#banner1").click(function () {
-//
-//        });
 
         //对应语言对事件
         $("#target-lan").bind("change",function(){
@@ -325,8 +300,20 @@
             goTranslate();
         });
     });
-    function toWritten(){
-        window.location.href = "<%=path%>/written";
+
+    //清除按鈕
+    function clearFuc() {
+        if ($("#chick-int").val() == "") {
+            location.reload();
+        }
+        if (IsTranslated == true) {
+            $("#results").hide();
+            $("#btn-translate").show();
+            $("#chick-int").focus();
+            IsTranslated = false;
+        } else {
+            $("#chick-int").val("");
+        }
     }
     //检测文本长度
     function checkLength(landetec) {
