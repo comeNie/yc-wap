@@ -137,7 +137,8 @@ public class PayController extends BaseController {
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmss");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         log.info("-----WAP支付异步通知--开始获取timezone-----");
-        TimeZone tz = TimeZone.getTimeZone(ZoneContextHolder.getZone());
+//        TimeZone tz = TimeZone.getTimeZone(ZoneContextHolder.getZone());
+        TimeZone tz = TimeZone.getTimeZone("GMT+8");
         log.info("-----WAP支付异步通知--结束获取timezone-----tz="+tz+"; tzJSON="+JSON.toJSONString(tz));
         sdf1.setTimeZone(tz);
         sdf2.setTimeZone(tz);
