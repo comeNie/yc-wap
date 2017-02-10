@@ -56,7 +56,7 @@
             </ul>
         </section>
     </div>
-    <section class="add-btn">
+    <section class="add-btn big-add-btn">
         <p><spring:message code="feedback.zixun"/></p>
         <a href="javascript:void (0)" class="btn submit-btn btn-blue" ><spring:message code="feedback.submit"/></a>
     </section>

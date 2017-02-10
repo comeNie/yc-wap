@@ -150,6 +150,7 @@
 .input-medium{width:11.5rem;height:1.92rem;border:none;background:none;padding-left:0.34rem;color:#666;font-size:0.55rem;line-height:1.92rem;float:right}
 .add-btn{width:100%;margin:-1.7rem auto 0rem;padding:0 0.64rem 0.34rem;float:left;text-align:center;}
 .add-btn p{margin-bottom:0.5rem;}
+.big-add-btn{margin:-3.4rem auto 0rem;}
 .newly-select{width:13rem;height:1.49rem;border:none;font-size:0.55rem;appearance:none;padding:0 0.29rem;-moz-appearance:none;-webkit-appearance:none;
  background:url(../../images/icon-s.png) no-repeat scroll right  #fff;background-size:0.64rem 0.24rem;border-radius:0.21rem;color:#666}
 .order-list ul .iphone{/*margin-left:1.4rem;*/}
@@ -232,6 +233,11 @@
 .set-int{width:100%;float:left;margin-top:0.5rem;}
 .set-int ul{width:100%;display: inline-block;}
 .set-int ul li{width:100%;float:left;height:2.64rem;}
+.set-int ul .small-h{height:2rem;}
+.set-int ul .tis{width:100%;float:left;text-align:right;height:2rem;}
+.set-int ul .blue{color:#1780e3}
+.set-int ul .red{color:#ff4949}
+
 .set-int ul li p{float:left;position:relative;}
 .set-int ul li .yzm{float:right}
 .set-int ul li label{width:100%;float:left;color:#ff4949;font-size:0.42rem;margin-top:0.1rem;/*margin-left:0.2rem;*/}
@@ -384,7 +390,7 @@
 .personal-tab ul .none-border{border-right:none}
 .personal-list{width:100%;float:left;height:3.3rem;border-bottom:1px solid #c4c4c4;border-top:1px solid #c4c4c4;background:#fff;margin-top:0.42rem;}
 .personal-list ul{width:100%;float:left}
-.personal-list ul li{float:left;width:5.33rem;text-align: center;}
+.personal-list ul li{float:left;width:4rem;text-align: center;}
 .personal-list ul li p{margin-top:0.32rem;}
 .personal-list ul li img{width:1.57rem;height:1.57rem;}
 .personal-list ul  a{color:#666;font-size:0.42rem}

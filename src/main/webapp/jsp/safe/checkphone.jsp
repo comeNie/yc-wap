@@ -64,14 +64,16 @@
                             <label id="phonetips"></label>
                         </li>
                         <li><a class="btn submit-btn btn-blue" href="javascript:void(0)" onclick="confirmBtn()"><spring:message code="safe.checkphone.nextbtn"/></a></li>
+
+                    </ul>
+                    <ul>
+                        <li class="small-h tis"><a class="blue" id="tipCheck" onclick="changeCheckType()"></a></li>
                     </ul>
                 </div>
             </div>
         </section>
     </div>
-    <div>
-        <a id="tipCheck" onclick="changeCheckType()">通过已验证邮箱验证</a>
-    </div>
+
 
     <%--底部視圖--%>
     <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
@@ -117,12 +119,14 @@
         var mobilePhone = "${phone}";
         var mail = "${mail}";
         if(mobilePhone == ""){
-            $("#tipCheck").html("您目前还未验证过手机号");
+            $("#tipCheck").attr("class","red");
+            $("#tipCheck").html("<spring:message code="safe.checkphone.notCheckPhone"/>");
 
         }else if (mail == ""){
-            $("#tipCheck").html("您目前还未验证过邮箱");
-
+            $("#tipCheck").html("<spring:message code="safe.checkphone.notCheckMail"/>");
+            $("#tipCheck").attr("class","red");
         }else {
+            $("#tipCheck").attr("class","blue");
             wait = 0;
             if (value == "${phone}"){
                 chgMail(mail);
@@ -138,6 +142,7 @@
         value = mobilePhone;
         $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckPhone"/>");
         $("#navtitle").html("<spring:message code="safe.checkphone.title"/>");
+        $("#tipCheck").html("<spring:message code="safe.checkphone.userMailCheck"/>");
         var myphone1=mobilePhone.substr(0,3);
         var myphone2=mobilePhone.substr(7,4);
         var hidePhone=myphone1+"****"+myphone2;
@@ -148,6 +153,7 @@
         value = mail;
         $("#ptitle").html("<spring:message code="safe.checkphone.hadcheckMail"/>");
         $("#navtitle").html("<spring:message code="safe.checkphone.checkMail"/>");
+        $("#tipCheck").html("<spring:message code="safe.checkphone.userPhoneCheck"/>");
         var index = mail.indexOf("@");
         var email1 = mail.slice(0,index-1);
         var email2 = mail.slice(index+2,mail.length);

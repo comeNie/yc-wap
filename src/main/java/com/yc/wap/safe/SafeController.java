@@ -332,6 +332,27 @@ public class SafeController extends BaseController {
         res.setNewpw(newpw);
         res.setUid(u);
         try {
+
+            //获取accountid
+            SearchYCUserRequest userRequest = new SearchYCUserRequest();
+            userRequest.setUserId(uid);
+            YCUserInfoResponse infoResponse = iycUserServiceSV.searchYCUserInfo(userRequest);
+            Long AccountId = infoResponse.getAccountId();
+            if (AccountId > 0){
+                //判断是否与支付密码相同
+                AccountIdParam idParam = new AccountIdParam();
+                idParam.setTenantId(Constants.TENANTID);
+                idParam.setAccountId(AccountId);
+                AccountInfoVo infoVo = iAccountQuerySV.queryAccontById(idParam);
+                String payPsd = infoVo.getPayPassword();
+                if (payPsd != null && payPsd != ""){
+                    if (newpw.equals(payPsd)){
+                        result.put("msg",rb.getMessage("safeCtrl.psdCanotEqualPay"));
+                        result.put("status","0");
+                        return result.returnMsg();
+                    }
+                }
+            }
             UcMembersResponse resp = iUcMembersSV.ucEditPassword(res);
             ResponseCode responseCode = resp.getCode();
             log.info("--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
@@ -861,7 +882,7 @@ public class SafeController extends BaseController {
             membersGetRequest.setUsername(UID);
             UcMembersGetResponse membersGetResponse = iUcMembersSV.ucGetMember(membersGetRequest);
             String password = (String) membersGetResponse.getDate().get("password");
-            String salt =membersGetResponse.getDate().get("salt").toString();
+            String salt = membersGetResponse.getDate().get("salt").toString();
             String equalPayPsd = MD5Util.md5(payPsd.concat(salt));
             if(equalPayPsd.equals(password)){
                 result.put("msg",rb.getMessage("loginCtrl.payPsdButong"));
