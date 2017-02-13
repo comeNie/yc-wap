@@ -23,10 +23,13 @@
     <link href="<%=path%>/ui/css/modular/global.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/modular.css" rel="stylesheet" type="text/css"/>
     <link href="<%=path%>/ui/css/modular/frame.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="<%=path%>/webuploader/webuploader.css">
     <script type="text/javascript" src="<%=path%>/js/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
+    <script type="text/javascript" src="<%=path%>/webuploader/webuploader.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/common/upload.js"></script>
     <%@ include file="../common/timezone.jsp" %>
 </head>
 <body>
@@ -84,7 +87,7 @@
         <!--附件上传框-->
         <div class="enclosure" id="uploadText" style="display: none">
             <p><input type="text" class="enclosure-input" placeholder="请浏览选择上传文件，文件大小限10M。" disabled></p>
-            <p><a href="javascript:ChooseFile()">浏览</a></p>
+            <p><a  href="javascript:ChooseFile()">浏览</a></p>
         </div>
 
         <!--附件列表-->
@@ -118,8 +121,8 @@
         </div>
 
         <div class="testing-title" id="uploadFileText" style="display: none">
-            <p>
-                <a href="javascript:ChooseFile()"><spring:message code="written.content.upload2"/></a>
+            <p> 
+                <a id="selectFile" href="javascript:ChooseFile()"><spring:message code="written.content.upload2"/></a>
             </p>
         </div>
 
@@ -211,6 +214,7 @@
     var EnglishCn = "";
     var oldContent = "";
     var notSupportChecked = false;
+    var _base = "<%=path%>";
 
     $(function () {
 
@@ -294,6 +298,12 @@
     });
 
     function ChooseFile() {
+//        var file = $("input[type='file']");
+//        if (file != null && file.length > 0) {
+//            $("input[type='file'] :first").click()
+//        }
+//        upload._uploadFile();
+        upload._uploadFile();
 
     }
 
