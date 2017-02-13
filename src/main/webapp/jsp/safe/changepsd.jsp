@@ -108,15 +108,13 @@
             $("#newLable").css("display","none");
         }
 
-        if (s == "psd"){
-            var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
-            if (!t.test(newpsd)){
-                $("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");
-                $("#newLable").css("display","block");
-                return;
-            }else {
-                $("#newLable").css("display","none");
-            }
+        var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
+        if (!t.test(newpsd)){
+            $("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+            $("#newLable").css("display","block");
+            return;
+        }else {
+            $("#newLable").css("display","none");
         }
 //        var t = /^[0-9a-zA-Z]{6,16}$/;
         if (oldpsd == newpsd){

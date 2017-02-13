@@ -45,7 +45,13 @@
             <ul>
                 <li class="one">
                     <p><spring:message code="feedback.questiontype"/></p>
-                    <p class="right"><select class="select feedback-select"><option><spring:message code="feedback.wapSuggest"/></option></select></p>
+                    <p class="right">
+                        <select class="select feedback-select">
+                            <option><spring:message code="feedback.wapSuggest"/></option>
+                            <option><spring:message code="feedback.guzhang"/></option>
+                            <option><spring:message code="feedback.zixunBangzhu"/></option>
+                        </select>
+                    </p>
                 </li>
                 <li><textarea class="textarea feedback-textarea"></textarea></li>
                 <li class="tow">

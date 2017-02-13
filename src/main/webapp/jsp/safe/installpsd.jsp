@@ -96,14 +96,14 @@
         }else {
             $("#newLable").css("display","none");
         }
-        <%--var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/--%>
-        <%--if (!t.test(newpsd)){--%>
-            <%--$("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");--%>
-            <%--$("#newLable").css("display","block");--%>
-            <%--return;--%>
-        <%--}else {--%>
-            <%--$("#newLable").css("display","none");--%>
-        <%--}--%>
+        var t = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/
+        if (!t.test(newpsd)){
+            $("#newLable").html("<spring:message code="safe.changepsd.alert_newLength"/>");
+            $("#newLable").css("display","block");
+            return;
+        }else {
+            $("#newLable").css("display","none");
+        }
 //        确认密码
         if(confirmpsd == null || confirmpsd == "") {
             $("#confirmLable").html("<spring:message code="safe.changepsd.alert_newPsd"/>");
