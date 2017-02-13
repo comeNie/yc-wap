@@ -2,7 +2,10 @@ package com.yc.wap.written;
 
 import com.ai.opt.base.exception.BusinessException;
 import com.ai.opt.base.exception.SystemException;
+import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
+import com.ai.opt.sdk.web.model.ResponseData;
+import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
 import com.ai.yc.common.api.sysdomain.interfaces.IQuerySysDomainSV;
 import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListReq;
 import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListRes;
@@ -35,7 +38,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -535,6 +542,37 @@ public class WrittenController extends BaseController {
     @RequestMapping(value = "PayResult")
     public String PayResult() {
         return "written/payresult";
+    }
+
+    /**
+     * 目前是单文件上传，返回文件id
+     *
+     * @param request
+     * @throws IllegalStateException
+     * @throws IOException
+     * @author mimw
+     */
+    @RequestMapping("/uploadFile")
+    @ResponseBody
+    public String uploadFile(HttpServletRequest request) throws IOException {
+        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
+
+        log.info("----------uploadFile----------");
+
+        IDSSClient client = DSSClientFactory.getDSSClient("order-file-dss");
+        // 文件上传的请求
+        MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
+        // 获取请求的参数
+        MultipartFile mFile = mRequest.getFile("file");
+        String fileId = "";
+        if (mFile.getSize() != 0 && !"".equals(mFile.getName())) {
+            fileId = client.save(mFile.getBytes(), mFile.getOriginalFilename());
+            log.info("FileName: " + mFile.getOriginalFilename() + ", FileSize: " + mFile.getSize() + ", FileId: " + fileId);
+        }
+        resData.setData(fileId);
+
+        String tmp = com.alibaba.fastjson.JSONObject.toJSONString(resData);
+        return tmp;
     }
 
 }
