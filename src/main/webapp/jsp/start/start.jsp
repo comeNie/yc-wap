@@ -152,7 +152,7 @@
         <section class="translation-content">
             <textarea class="textarea textarea-large" onfocus="textFocus()" id="chick-int" placeholder="<spring:message code="start.fanyiPlaceholder"/>"></textarea>
             <a hrel="javascript:void(0)" onclick="clearFuc()"><i class="icon iconfont" id="clear" hidden>&#xe618;</i></a>
-            <label><spring:message code="start.hadShuru"/><span id="wordSpan"></span><spring:message code="start.hadWord"/></label>
+            <label><spring:message code="start.hadShuru"/><span id="wordSpan">0</span><spring:message code="start.hadWord"/></label>
         </section>
         <!--翻译按钮-->
         <section class="translate-btn" id="chick-btn" >

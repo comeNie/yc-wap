@@ -46,25 +46,87 @@
                 <li class="one">
                     <p><spring:message code="feedback.questiontype"/></p>
                     <p class="right">
-                        <select class="select feedback-select">
+                        <select class="select feedback-select" id="selectVal">
                             <option><spring:message code="feedback.wapSuggest"/></option>
                             <option><spring:message code="feedback.guzhang"/></option>
                             <option><spring:message code="feedback.zixunBangzhu"/></option>
                         </select>
                     </p>
                 </li>
-                <li><textarea class="textarea feedback-textarea"></textarea></li>
+                <li><textarea class="textarea feedback-textarea" id="questionText"></textarea></li>
                 <li class="tow">
                     <p><spring:message code="feedback.phone"/></p>
-                    <p><input class="input phone-input"></p>
-                    <label>请输入正确的手机号</label>
+                    <p><input class="input phone-input" id="phone"></p>
+                    <label id="errorTip"></label>
                 </li>
             </ul>
         </section>
     </div>
     <section class="add-btn big-add-btn">
         <p><spring:message code="feedback.zixun"/></p>
-        <a href="javascript:void (0)" class="btn submit-btn btn-blue" ><spring:message code="feedback.submit"/></a>
+        <a href="javascript:void (0)" onclick="checkAction()" class="btn submit-btn btn-blue" ><spring:message code="feedback.submit"/></a>
     </section>
+
+    <%--loading--%>
+    <%--<jsp:include page="/jsp/common/loading.jsp" flush="true"/>--%>
 </body>
 </html>
+<script>
+
+    function checkAction(){
+        var selectVal = $("#selectVal").val();
+        var questionText = $("#questionText").val();
+        var phone = $("#phone").val();
+        if (questionText == "" || questionText == null){
+            $("#errorTip").html("<spring:message code="feedback.textError"/>");
+
+            return;
+        }else {
+            $("#errorTip").html("");
+        }
+        if (phone == "" || phone == null){
+            $("#errorTip").html("<spring:message code="feedback.phoneNull"/>");
+            return;
+        }else {
+            $("#errorTip").html("");
+        }
+        var t = /^[0-9]*$/;
+        if(!t.test(phone)){
+            $("#errorTip").html("<spring:message code="feedback.phoneError"/>");
+            return;
+        }else {
+            $("#errorTip").html("");
+        }
+        goSubmit(questionText,phone,selectVal);
+    }
+    function goSubmit(text,phone,selectVal){
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/feedback/submitfeedback",
+            modal: true,
+            showBusi: false,
+            timeout: 30000,
+            data: {
+                text:text,
+                phone:phone,
+                type:selectVal
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    window.location.href = '<%=path%>/feedbacksuccess';
+                } else {
+
+                }
+            },
+            error: function () {
+            },
+            beforeSend: function () {
+//                Loading.ShowLoading();
+            },
+            complete: function () {
+//                Loading.HideLoading();
+            }
+        });
+    }
+</script>
