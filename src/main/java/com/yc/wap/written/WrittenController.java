@@ -229,6 +229,8 @@ public class WrittenController extends BaseController {
         String DomainVal = request.getParameter("DomainVal");
         String TransLvVal = request.getParameter("TransLvVal");
         String Detail = request.getParameter("Detail");
+
+        String translateType = request.getParameter("translateType");
         boolean isExpress = false;
         if (Express.equals("Y")) {
             isExpress = true;
@@ -261,6 +263,7 @@ public class WrittenController extends BaseController {
                 WrittenContextJSON.put("valuationWay", valuationWay);
                 WrittenContextJSON.put("currencyUnit", currencyUnit);
                 WrittenContextJSON.put("Detail", Detail);
+                WrittenContextJSON.put("translateType", translateType);
                 session.setAttribute("WrittenContextJSON", WrittenContextJSON);
 
                 JSONObject WrittenShowJSON = new JSONObject();
@@ -465,7 +468,7 @@ public class WrittenController extends BaseController {
         reqBaseInfo.setOrderType(Constants.OrderSubmission.PERSONAL);
         reqBaseInfo.setBusiType(Constants.OrderSubmission.NROMAL);
         reqBaseInfo.setTranslateName(WrittenContextJSON.getString("Detail"));
-        reqBaseInfo.setTranslateType(Constants.OrderSubmission.QUICK);
+        reqBaseInfo.setTranslateType(WrittenContextJSON.getString("translateType"));
         reqBaseInfo.setSubFlag(Constants.OrderSubmission.AUTO);
         reqBaseInfo.setUserType(Constants.OrderSubmission.USER);
         reqBaseInfo.setUserId(UserId);

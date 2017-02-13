@@ -1,3 +1,5 @@
+<%--suppress ALL --%>
+<%--suppress ALL --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
@@ -31,6 +33,7 @@
     <script type="text/javascript" src="<%=path%>/webuploader/webuploader.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/upload.js"></script>
     <%@ include file="../common/timezone.jsp" %>
+
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -85,24 +88,14 @@
         </div>
 
         <!--附件上传框-->
-        <div class="enclosure" id="uploadText" style="display: none">
+        <div class="enclosure" id="selectFile" style="display: none">
             <p><input type="text" class="enclosure-input" placeholder="请浏览选择上传文件，文件大小限10M。" disabled></p>
-            <p><a  href="javascript:ChooseFile()">浏览</a></p>
+            <p><a href="javascript:ChooseFile()">浏览</a></p>
         </div>
 
         <!--附件列表-->
-        <section class="history" style="display:none">
-            <div class="history-list">
-                <ul>
-                    <a href="javascript:">
-                        <li>
-                            <p><i class="icon iconfont">&#xe601;</i></p>
-                            <p class="word-large">上传二十文件名称上传文件名称上传文件名称.docx</p>
-                            <p class="right"><input type="button" class="btn btn-red btn-mini" value="删除"></p>
-                        </li>
-                    </a>
-                </ul>
-            </div>
+        <section class="history" id="fileList" style="display:none">
+            <div class="history-list" id="fileListShow"></div>
         </section>
 
         <!--文字翻译-->
@@ -121,8 +114,8 @@
         </div>
 
         <div class="testing-title" id="uploadFileText" style="display: none">
-            <p> 
-                <a id="selectFile" href="javascript:ChooseFile()"><spring:message code="written.content.upload2"/></a>
+            <p>
+                <a href="javascript:ChooseFile()"><spring:message code="written.content.upload2"/></a>
             </p>
         </div>
 
@@ -201,7 +194,7 @@
 <!--底部-->
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
-
+<div id="uploadFileButton"></div>
 </body>
 </html>
 
@@ -215,6 +208,8 @@
     var oldContent = "";
     var notSupportChecked = false;
     var _base = "<%=path%>";
+    var translateType = "0";
+    var fileSaveId = "";
 
     $(function () {
 
@@ -298,26 +293,27 @@
     });
 
     function ChooseFile() {
-//        var file = $("input[type='file']");
-//        if (file != null && file.length > 0) {
-//            $("input[type='file'] :first").click()
-//        }
-//        upload._uploadFile();
-        upload._uploadFile();
-
+        var file = $("input[type='file']");
+        if (file != null && file.length > 0) {
+            $("input[type='file'] :first").click();
+        }
     }
 
     function ChangeUpload(show) {
         if (show) {
+            translateType = "1";
             $("#backText").css("display", "block");
-            $("#uploadText").css("display", "block");
-            $("#uploadFileText").css("display", "block");
+            $("#selectFile").css("display", "block");
+            $("#uploadFileText").css("display", "none");
             $("#textInput").css("display", "none");
             $("#toUpload").css("display", "none");
+            upload._uploadFile();
         } else {
+            translateType = "0";
             $("#backText").css("display", "none");
-            $("#uploadText").css("display", "none");
+            $("#selectFile").css("display", "none");
             $("#uploadFileText").css("display", "none");
+            $("#fileList").css("display", "none");
             $("#textInput").css("display", "block");
             $("#toUpload").css("display", "block");
         }
@@ -656,7 +652,8 @@
                 TransLvId: TransLvId,
                 TransLvVal: TransLvVal,
                 Express: Express,
-                Detail: Detail
+                Detail: Detail,
+                translateType: translateType
             },
             success: function (data) {
                 if (data.status == 1) {
