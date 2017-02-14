@@ -11,6 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta property="wb:webmaster" content="d8bcb31352dcbeda" />
     <title><spring:message code="start.title"/></title>
     <link href="<%=path%>/ui/css/bootstrap/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="<%=path%>/ui/css/iconfont.css" rel="stylesheet" type="text/css">
