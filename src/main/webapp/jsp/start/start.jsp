@@ -315,10 +315,9 @@
     }
     //检测文本长度
     function checkLength(landetec) {
-        var lengthT = count(escape(landetec))
+        var lengthT = count(escape(landetec));
         $("#wordSpan").html(lengthT);
         if (lengthT > 2000){
-            <%--autoTip("<spring:message code="start.surpassWord"/>"+t+"<spring:message code="start.word"/>");--%>
             return false;
         }else {
             return true;
@@ -333,7 +332,8 @@
         timer = window.setInterval(function(){
             $("#eject-mask").fadeOut(200);
             $("#prompt").slideUp(200);
-            clearInterval(timer);
+            window.clearTimeout(timer);
+            window.clearInterval(timer);
         },1000);
     }
     //播放声音
@@ -467,6 +467,9 @@
             return;
         }
         if(!checkLength(textStr)){
+            var lengthT = count(escape(textStr));
+            var t = lengthT - 2000;
+            autoTip("<spring:message code="start.surpassWord"/>" + t + "<spring:message code="start.word"/>");
             return;
         }
         var source = $("#source-lan").val();
