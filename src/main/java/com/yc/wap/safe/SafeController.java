@@ -816,7 +816,7 @@ public class SafeController extends BaseController {
         try {
             UcMembersResponse resp = iUcMembersOperationSV.ucActiveMember(res);
             ResponseCode responseCode = resp.getCode();
-            log.info("--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
+            log.info("验证码返回code--------code:"+ responseCode.getCodeMessage() + responseCode.getCodeNumber());
             if (responseCode.getCodeNumber() == 1){
                 Map m = resp.getDate();
                 log.info(m);
