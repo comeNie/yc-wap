@@ -30,10 +30,7 @@
     <script type="text/javascript" src="<%=path%>/js/modular/global.js"></script>
     <script type="text/javascript" src="<%=path%>/js/modular/frame.js"></script>
     <script type="text/javascript" src="<%=path%>/js/common/wordcount.js"></script>
-    <script type="text/javascript" src="<%=path%>/webuploader/webuploader.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/common/upload.js"></script>
     <%@ include file="../common/timezone.jsp" %>
-
 </head>
 <body>
 <div class="wrapper-big" id="body">
@@ -194,7 +191,9 @@
 <!--底部-->
 <jsp:include page="/jsp/common/bottom.jsp" flush="true"/>
 <jsp:include page="/jsp/common/loading.jsp" flush="true"/>
-<div id="uploadFileButton"></div>
+<form id="uploadForm">
+    <input type="file" name="file" id="fileInput" style="display: none" onchange="SubmitFile()">
+</form>
 </body>
 </html>
 
@@ -210,6 +209,8 @@
     var _base = "<%=path%>";
     var translateType = "0";
     var fileSaveId = "";
+    var uploaded = false;
+    var fileCount = 0;
 
     $(function () {
 
@@ -279,6 +280,17 @@
         });
 
         $("#submit").bind("click", function () {
+            if (translateType == 1) {
+                if (!uploaded) {
+                    $("#EjectTitle").html("请上传附件");
+                    $('#eject-mask').fadeIn(100);
+                    $('#prompt').slideDown(100);
+                    return;
+                }
+                Loading.ShowLoading();
+                saveContent("", "1");
+                return;
+            }
             var Content = $("#chick-int").val();
             if (isEmojiCharacter(Content)) {
                 $("#EjectTitle").html("请勿输入特殊字符及表情符号");
@@ -286,28 +298,75 @@
                 $('#prompt').slideDown(100);
                 return;
             }
-
             Loading.ShowLoading();
             DetectLanguage(Content, true);
         });
     });
 
     function ChooseFile() {
-        var file = $("input[type='file']");
-        if (file != null && file.length > 0) {
-            $("input[type='file'] :first").click();
+        $("#fileInput").trigger("click");
+    }
+
+    function RemoveFile(obj) {
+        var $o = $(obj);
+        fileCount = fileCount - 1;
+        if (fileCount == 0) {
+            $("#selectFile").css("display", "block");
+            $("#fileList").css("display", "none");
+            $("#uploadFileText").css("display", "none");
+            uploaded = false;
         }
+//        var fileId = $o.parents('ul').attr("fileId");
+        $o.parents('ul').remove();
+    }
+
+    function SubmitFile() {
+        if (document.getElementById("fileInput").value == "") {
+            return;
+        }
+        var form = new FormData(document.getElementById("uploadForm"));
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "<%=path%>/written/uploadFile",
+            cache: false,
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log(data.fileId + ", " + data.fileName);
+                uploaded = true;
+                fileCount = fileCount + 1;
+                $("#fileList").css("display", "block");
+                $("#uploadFileText").css("display", "block");
+                $("#selectFile").css("display", "none");
+                $("#fileListShow").append('<ul fileid="' + data.fileId + '" filename="' + data.fileName + '"><a href="javascript:"><li><p><i class="icon iconfont">&#xe601;</i></p><p class="word-large">' + data.fileName + '</p><p class="right"><input type="button" class="btn btn-red btn-mini" value="删除" onclick="RemoveFile(this)"></p></li></a></ul>')
+                document.getElementById("fileInput").value = "";
+            },
+            error: function (data) {
+
+            },
+            beforeSend: function () {
+                Loading.ShowLoading();
+            },
+            complete: function () {
+                Loading.HideLoading();
+            }
+        });
     }
 
     function ChangeUpload(show) {
         if (show) {
             translateType = "1";
             $("#backText").css("display", "block");
-            $("#selectFile").css("display", "block");
-            $("#uploadFileText").css("display", "none");
             $("#textInput").css("display", "none");
             $("#toUpload").css("display", "none");
-            upload._uploadFile();
+            if (uploaded) {
+                $("#fileList").css("display", "block");
+                $("#uploadFileText").css("display", "block");
+            } else {
+                $("#selectFile").css("display", "block");
+            }
         } else {
             translateType = "0";
             $("#backText").css("display", "none");
@@ -587,6 +646,29 @@
     }
 
     function saveContent(Content, ContentLength) {
+        var Detail = "";
+        var fileList = {};
+        //翻译类型
+        if (translateType == "1") {
+            //文档翻译
+            $("#fileListShow ul").each(function () {
+                fileList[$(this).attr("fileId")] = $(this).attr("fileName");
+                if (Detail == "") {
+                    var name = $(this).attr("fileName");
+                    if (name.length > 15) {
+                        Detail = name.substring(0, 15) + "......";
+                    } else {
+                        Detail = name;
+                    }
+                }
+            })
+        } else {
+            if (Content.length > 15) {
+                Detail = Content.substring(0, 15) + "......";
+            } else {
+                Detail = Content;
+            }
+        }
         //语言对
         var DualId = $("#dualTarget").val();
         var targetCn = "";
@@ -627,12 +709,7 @@
         if ($("#quick").attr("value") == "1") {
             Express = "Y";
         }
-        var Detail = "";
-        if (Content.length > 15) {
-            Detail = Content.substring(0, 15) + "......";
-        } else {
-            Detail = Content;
-        }
+
         $.ajax({
             async: true,
             type: "POST",
@@ -653,7 +730,8 @@
                 TransLvVal: TransLvVal,
                 Express: Express,
                 Detail: Detail,
-                translateType: translateType
+                translateType: translateType,
+                fileList: JSON.stringify(fileList)
             },
             success: function (data) {
                 if (data.status == 1) {

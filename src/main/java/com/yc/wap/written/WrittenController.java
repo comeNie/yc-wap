@@ -231,6 +231,8 @@ public class WrittenController extends BaseController {
         String Detail = request.getParameter("Detail");
 
         String translateType = request.getParameter("translateType");
+        String fileList = request.getParameter("fileList");
+
         boolean isExpress = false;
         if (Express.equals("Y")) {
             isExpress = true;
@@ -264,6 +266,7 @@ public class WrittenController extends BaseController {
                 WrittenContextJSON.put("currencyUnit", currencyUnit);
                 WrittenContextJSON.put("Detail", Detail);
                 WrittenContextJSON.put("translateType", translateType);
+                WrittenContextJSON.put("fileList", fileList);
                 session.setAttribute("WrittenContextJSON", WrittenContextJSON);
 
                 JSONObject WrittenShowJSON = new JSONObject();
@@ -448,6 +451,24 @@ public class WrittenController extends BaseController {
         Timestamp Time = new Timestamp(System.currentTimeMillis());
         String UserId = (String) session.getAttribute("UID");
         String userName = (String) session.getAttribute("username");
+        String translateType = WrittenContextJSON.getString("translateType");
+
+        List<FileInfo> fileList = new ArrayList<FileInfo>();
+        if (translateType.equals(Constants.OrderType.DOC)) {
+            String files = WrittenContextJSON.getString("fileList");
+            JSONObject fileListJson = JSONObject.fromObject(files);
+
+            Iterator it = fileListJson.keys();
+            while (it.hasNext()) {
+                FileInfo f = new FileInfo();
+                String key = String.valueOf(it.next());
+                String value = (String) fileListJson.get(key);
+                f.setFileName(value);
+                f.setFileSaveId(key);
+                fileList.add(f);
+            }
+        }
+        log.info("onSubmitfileList: " + com.alibaba.fastjson.JSONArray.toJSONString(fileList));
 
         LanguagePairInfo languagePairInfo = new LanguagePairInfo();
         languagePairInfo.setLanguagePairId(WrittenContextJSON.getString("DualId"));
@@ -468,7 +489,7 @@ public class WrittenController extends BaseController {
         reqBaseInfo.setOrderType(Constants.OrderSubmission.PERSONAL);
         reqBaseInfo.setBusiType(Constants.OrderSubmission.NROMAL);
         reqBaseInfo.setTranslateName(WrittenContextJSON.getString("Detail"));
-        reqBaseInfo.setTranslateType(WrittenContextJSON.getString("translateType"));
+        reqBaseInfo.setTranslateType(translateType);
         reqBaseInfo.setSubFlag(Constants.OrderSubmission.AUTO);
         reqBaseInfo.setUserType(Constants.OrderSubmission.USER);
         reqBaseInfo.setUserId(UserId);
@@ -482,11 +503,15 @@ public class WrittenController extends BaseController {
         reqProductInfo.setFieldCode(WrittenContextJSON.getString("DomainId"));
         reqProductInfo.setIsSetType("N");
         reqProductInfo.setIsUrgent(WrittenContextJSON.getString("Express"));
-        reqProductInfo.setNeedTranslateInfo(WrittenContextJSON.getString("Content"));
         reqProductInfo.setStartTime(Time);
         reqProductInfo.setEndTime(Time);
         reqProductInfo.setLanguagePairInfoList(LanguagePair);
         reqProductInfo.setTranslateLevelInfoList(TranslateLevel);
+        if (translateType.equals(Constants.OrderType.DOC)) {
+            reqProductInfo.setFileInfoList(fileList);
+        } else if (translateType.equals(Constants.OrderType.QUICK)) {
+            reqProductInfo.setNeedTranslateInfo(WrittenContextJSON.getString("Content"));
+        }
 
         FeeInfo reqFeeInfo = new FeeInfo();
         reqFeeInfo.setCurrencyUnit("1");
@@ -557,25 +582,23 @@ public class WrittenController extends BaseController {
      */
     @RequestMapping("/uploadFile")
     @ResponseBody
-    public String uploadFile(HttpServletRequest request) throws IOException {
-        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
-
+    public Object uploadFile(HttpServletRequest request) throws IOException {
         log.info("----------uploadFile----------");
-
+        MsgBean result = new MsgBean();
+        ResponseData<String> resData = new ResponseData<>(ResponseData.AJAX_STATUS_SUCCESS, "OK");
         IDSSClient client = DSSClientFactory.getDSSClient("order-file-dss");
-        // 文件上传的请求
+
         MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest) request;
-        // 获取请求的参数
         MultipartFile mFile = mRequest.getFile("file");
+
         String fileId = "";
         if (mFile.getSize() != 0 && !"".equals(mFile.getName())) {
             fileId = client.save(mFile.getBytes(), mFile.getOriginalFilename());
             log.info("FileName: " + mFile.getOriginalFilename() + ", FileSize: " + mFile.getSize() + ", FileId: " + fileId);
         }
-        resData.setData(fileId);
-
-        String tmp = com.alibaba.fastjson.JSONObject.toJSONString(resData);
-        return tmp;
+        result.put("fileId", fileId);
+        result.put("fileName", mFile.getOriginalFilename());
+        return result.returnMsg();
     }
 
 }
