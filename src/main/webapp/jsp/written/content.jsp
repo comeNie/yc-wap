@@ -144,15 +144,17 @@
                     <p class="word"><spring:message code="written.content.service"/></p>
                     <p>
                         <select id="otherServ" class="select testing-select-small" onchange="ServerChange()" disabled>
-                            <option otherServId="N">无增值服务</option>
-                            <%--<option otherServId="Y">需排版</option>--%>
+                            <option otherServId="N">无排版</option>
+                            <option otherServId="Y">需排版</option>
                         </select>
                         <span>|</span>
                     </p>
                     <p class="p-mr" id="otherService" style="display: none">
                         <select id="otherServi" class="select testing-select-small">
-                            <option>Excel</option>
-                            <option>Word</option>
+                            <option typeTrans="0">无格式转化</option>
+                            <option typeTrans="1">Excel</option>
+                            <option typeTrans="1">Word</option>
+                            <option typeTrans="1">Pdf</option>
                         </select>
                         <span>|</span>
                     </p>
@@ -367,6 +369,7 @@
             } else {
                 $("#selectFile").css("display", "block");
             }
+            $("#otherServ").removeAttr("disabled");
         } else {
             translateType = "0";
             $("#backText").css("display", "none");
@@ -375,6 +378,14 @@
             $("#fileList").css("display", "none");
             $("#textInput").css("display", "block");
             $("#toUpload").css("display", "block");
+            $("#otherServ").attr("disabled", "disabled");
+            $("#otherServ").children('option').each(function () {
+                var temp_value = $(this).attr("otherServId");
+                if (temp_value == "N") {
+                    $(this)[0].selected = true;
+                }
+            });
+            ServerChange();
         }
     }
 
@@ -710,6 +721,10 @@
         if ($("#quick").attr("value") == "1") {
             Express = "Y";
         }
+        //格式排版
+        var setType = $("#otherServ").find("option:selected").attr("otherServId");
+        var typeTrans = $("#otherServi").find("option:selected").attr("typeTrans");
+        var typeTransVal = $("#otherServi").val();
 
         $.ajax({
             async: true,
@@ -732,7 +747,10 @@
                 Express: Express,
                 Detail: Detail,
                 translateType: translateType,
-                fileList: fileListString
+                fileList: fileListString,
+                setType: setType,
+                typeTrans: typeTrans,
+                typeTransVal: typeTransVal
             },
             success: function (data) {
                 if (data.status == 1) {
