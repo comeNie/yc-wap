@@ -662,6 +662,7 @@
                     }
                 }
             })
+            var fileListString = JSON.stringify(fileList);
         } else {
             if (Content.length > 15) {
                 Detail = Content.substring(0, 15) + "......";
@@ -731,7 +732,7 @@
                 Express: Express,
                 Detail: Detail,
                 translateType: translateType,
-                fileList: JSON.stringify(fileList)
+                fileList: fileListString
             },
             success: function (data) {
                 if (data.status == 1) {
