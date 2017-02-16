@@ -100,6 +100,7 @@
             <textarea class="textarea textarea-large" name="chick-int" id="chick-int"
                       placeholder="<spring:message code="written.content.number"/>"></textarea>
             <a href="javascript:inputClear()" id="clearIcon" style="display: none"><i class="icon iconfont">&#xe618;</i></a>
+            <label>已输入<span id="numberCount">0</span>字，最多可输入2000字</label>
         </section>
 
         <!--附件上传-->
@@ -245,11 +246,13 @@
 
         $("#chick-int").on("input propertychange", function () {
             var Content = $("#chick-int").val();
+            var TextNumber = count(escape(Content));
             if (Content == "") {
                 $("#clearIcon").css("display", "none");
             } else {
                 $("#clearIcon").css("display", "block");
             }
+            $("#numberCount").html(TextNumber);
         });
 
         $("#pQuick").click(function () {
