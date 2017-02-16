@@ -413,15 +413,17 @@
                 $("#fileList").css("display", "block");
                 $("#selectFile").css("display", "none");
                 $("#fileListShow").append('<ul fileid="' + data.fileId + '" filename="' + data.fileName + '"><a href="javascript:"><li><p><i class="icon iconfont">&#xe601;</i></p><p class="word-large">' + data.fileName + '</p><p class="right"><input type="button" class="btn btn-red btn-mini" value="删除" onclick="RemoveFile(this)"></p></li></a></ul>')
-                document.getElementById("fileInput").value = "";
             },
             error: function (data) {
-
+                $("#EjectTitle").html("上传失败，请重试");
+                $('#eject-mask').fadeIn(100);
+                $('#prompt').slideDown(100);
             },
             beforeSend: function () {
                 Loading.ShowLoading();
             },
             complete: function () {
+                document.getElementById("fileInput").value = "";
                 Loading.HideLoading();
             }
         });
