@@ -232,6 +232,7 @@ public class WrittenController extends BaseController {
 
         String translateType = request.getParameter("translateType");
         String fileList = request.getParameter("fileList");
+        fileList = fileList.replaceAll("\r|\n", " ");
 
         boolean isExpress = false;
         if (Express.equals("Y")) {
