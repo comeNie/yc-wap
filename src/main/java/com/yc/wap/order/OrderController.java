@@ -500,4 +500,9 @@ public class OrderController extends BaseController {
             e.printStackTrace();
         }
     }
+
+    @RequestMapping(value = "orderEvaluation")
+    public String orderEvaluation() {
+        return "order/evaluation";
+    }
 }
