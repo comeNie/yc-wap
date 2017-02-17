@@ -79,8 +79,8 @@
         <div class="evaluate-list">
             <div class="evaluate-list-word">评价内容：</div>
             <div class="evaluate-list-te">
-                <textarea id="message" class="textarea evaluate-textarea" placeholder="点击输入评价" maxlength="200">
-                </textarea>
+                <textarea id="message" class="textarea evaluate-textarea" placeholder="点击输入评价"
+                          maxlength="200"></textarea>
             </div>
         </div>
     </section>
