@@ -230,8 +230,15 @@ public class WrittenController extends BaseController {
         String TransLvVal = request.getParameter("TransLvVal");
         String Detail = request.getParameter("Detail");
 
+        String setType = request.getParameter("setType");
+        String typeTrans = request.getParameter("typeTrans");
+        String typeTransVal = request.getParameter("typeTransVal");
+
         String translateType = request.getParameter("translateType");
         String fileList = request.getParameter("fileList");
+        if (fileList != null && !fileList.equals("")) {
+            fileList = fileList.replaceAll("\r|\n", " ");
+        }
 
         boolean isExpress = false;
         if (Express.equals("Y")) {
@@ -267,6 +274,9 @@ public class WrittenController extends BaseController {
                 WrittenContextJSON.put("Detail", Detail);
                 WrittenContextJSON.put("translateType", translateType);
                 WrittenContextJSON.put("fileList", fileList);
+                WrittenContextJSON.put("setType", setType);
+                WrittenContextJSON.put("typeTrans", typeTrans);
+                WrittenContextJSON.put("typeTransVal", typeTransVal);
                 session.setAttribute("WrittenContextJSON", WrittenContextJSON);
 
                 JSONObject WrittenShowJSON = new JSONObject();
@@ -501,7 +511,6 @@ public class WrittenController extends BaseController {
         reqProductInfo.setTranslateSum(WrittenContextJSON.getLong("ContentLength"));
         reqProductInfo.setUseCode(WrittenContextJSON.getString("PurposeId"));
         reqProductInfo.setFieldCode(WrittenContextJSON.getString("DomainId"));
-        reqProductInfo.setIsSetType("N");
         reqProductInfo.setIsUrgent(WrittenContextJSON.getString("Express"));
         reqProductInfo.setStartTime(Time);
         reqProductInfo.setEndTime(Time);
@@ -509,8 +518,13 @@ public class WrittenController extends BaseController {
         reqProductInfo.setTranslateLevelInfoList(TranslateLevel);
         if (translateType.equals(Constants.OrderType.DOC)) {
             reqProductInfo.setFileInfoList(fileList);
+            reqProductInfo.setIsSetType(WrittenContextJSON.getString("setType"));
+            if (WrittenContextJSON.getString("typeTrans").equals("1")) {
+                reqProductInfo.setTypeDesc(WrittenContextJSON.getString("typeTransVal"));
+            }
         } else if (translateType.equals(Constants.OrderType.QUICK)) {
             reqProductInfo.setNeedTranslateInfo(WrittenContextJSON.getString("Content"));
+            reqProductInfo.setIsSetType("N");
         }
 
         FeeInfo reqFeeInfo = new FeeInfo();
