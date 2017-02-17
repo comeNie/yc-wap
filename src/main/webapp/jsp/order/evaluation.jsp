@@ -168,16 +168,9 @@
             }
         }
         console.log(quality + speed + attitude);
-        if (quality == "" || speed == "" || attitude == "") {
-            $("#EjectTitle").html("请评价");
-            $('#eject-mask').fadeIn(100);
-            $('#prompt').slideDown(100);
-            return;
-        }
-
         console.log(msg);
-        if (msg == null || msg == "") {
-            $("#EjectTitle").html("请输入评价内容");
+        if (quality == "" || speed == "" || attitude == "" || msg == "" || msg == null) {
+            $("#EjectTitle").html("请完整填写评价内容后再提交评价");
             $('#eject-mask').fadeIn(100);
             $('#prompt').slideDown(100);
             return;

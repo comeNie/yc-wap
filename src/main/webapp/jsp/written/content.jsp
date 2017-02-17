@@ -45,7 +45,6 @@
             <div class="prompt-confirm-btn">
                 <a class="btn btn-white" id="prompt-btn"><spring:message code="written.content.confirm"/></a>
             </div>
-
         </div>
         <div class="mask" id="eject-mask"></div>
     </div>
@@ -216,7 +215,9 @@
     var fileCount = 0;
 
     $(function () {
-
+        if (${uploadShow == 'none'}) {
+            $("#toUpload").css("display", "none");
+        }
     });
 
     $(document).ready(function () {
@@ -335,7 +336,7 @@
             var fileend = filepath.substring(filepath.indexOf("."));
             if (filetypes && filetypes.length > 0) {
                 for (var i = 0; i < filetypes.length; i++) {
-                    if (filetypes[i] == fileend) {
+                    if (filetypes[i] == fileend.toLowerCase()) {
                         isnext = true;
                         break;
                     }
