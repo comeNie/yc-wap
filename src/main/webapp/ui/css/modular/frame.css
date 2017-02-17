@@ -1,5 +1,5 @@
 /**公告**/
-.notice{width:100%;height:0.85rem;background:#f7f7f7;text-align: center;line-height:0.85rem;position: absolute;}
+.notice{width:100%;height:0.85rem;background:#f7f7f7;text-align: center;line-height:0.85rem;position: absolute;top:0;z-index:9999;float:left}
 .notice p{font-size:0.46rem;color:#999}
 .notice label{position:absolute;top:-0.05rem;right:0;font-size:0.46rem;color:#999;cursor:pointer;}
 /**导航**/
@@ -34,6 +34,7 @@
 .footer ul .ash{color:#999}
 /**二级导航**/
 .wap-second-nav{width:100%;float:left;height:1.87rem;background:#1780e3;position:relative;}
+.wap-second-navStary{width:100%;float:left;height:1.87rem;background:#1780e3;position:relative;margin-top:0.85rem;}
 .wap-second-nav ul{width:100%;float:left;}
 .wap-second-nav ul li{width:100%;text-align: center;line-height:1.87rem;font-size:0.70rem;color:#fff}
 .wap-second-nav ul i{font-size:0.85rem;color:#fff;cursor:pointer;}
@@ -51,6 +52,7 @@
 .testing p span{position:absolute;top:0.3rem;right:1.42rem;color:#c4c4c4;font-size:0.52rem}
 .index-footer-big{height:5.12rem;margin:-5.4rem auto 0;}
 .testing p span{position:absolute;top:0.38rem;right:1.42rem;color:#c4c4c4;font-size:0.52rem}
+    .textarea-large{width:100%;border:none;height:3.5rem;background:none;padding: 0.1rem 0.75rem 0 0.5rem;font-size:0.64rem;word-break:break-all;color:#666;outline:none;resize:none;}
 }
 @media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone5 */
 .login-btn{width:1.57rem;height:1rem;}

@@ -17,7 +17,8 @@
     request.setAttribute("index", index);
     request.setAttribute("show", show);
     request.setAttribute("isLogin", session.getAttribute("isLogin"));
-
+    String type = request.getParameter("type");
+    request.setAttribute("type", type);
     response.setHeader("Pragma", "No-cache");
     response.setHeader("Cache-Control", "no-cache");
     response.setDateHeader("Expires", 0);
@@ -28,7 +29,12 @@
 <head>
 </head>
 <body>
-<nav class="wap-second-nav">
+<c:if test="${type == 1}">
+    <nav class="wap-second-navStary">
+</c:if>
+<c:if test="${type != 1}">
+    <nav class="wap-second-nav">
+</c:if>
     <ul>
         <c:if test="${index==1}">
             <c:if test="${isLogin==null || isLogin=='0'}">

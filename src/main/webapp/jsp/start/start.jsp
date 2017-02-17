@@ -85,21 +85,14 @@
 </div>
 <!--弹出框结束-->
 <div class="wrapper-big"><!--包含除底部外的所有层-->
-    <%--<section class="notice" style="display: none">--%>
-        <%--<p>公告信息等等等等</p>--%>
+    <%--<section class="notice">--%>
+        <%--<p><marquee>公告信息等等等等</marquee></p>--%>
         <%--<label><i class="icon iconfont">&#xe618;</i></label>--%>
     <%--</section>--%>
-    <%--<nav class="wap-nav">--%>
-    <%--<ul>--%>
-    <%--<li class="logo"><img src="<%=path%>/ui/images/logo.png" /></li>--%>
-    <%--<li class="right">--%>
-    <%--&lt;%&ndash;<input type="button" class="btn login-btn" value="登录" id="btn-login">&ndash;%&gt;--%>
-    <%--<a href="javascript:window.location.href='<%=path%>/login/login'" class="btn login-btn" id="btn-login">登录</a>--%>
-    <%--</li>--%>
-    <%--</ul>--%>
-    <%--</nav>--%>
+
     <jsp:include page="/jsp/common/pophead.jsp" flush="true">
         <jsp:param name="Index" value="1"/>
+        <jsp:param name="type" value="0"/>
     </jsp:include>
     <section class="index-wrapper">
         <!--转换语言-->
@@ -171,7 +164,7 @@
                     <img src="<%=path%>/ui/images/loading_back.gif" id="loading" style="display:none;">
                     <img src="<%=path%>/ui/images/voice.gif" id="soundGif" style="display:none;">
                 </a>
-                <%--<a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>--%>
+                <a href="javascript:void(0)" id="share-icon"><i class="icon iconfont">&#xe61c;</i></a>
                 <audio src="" controls="controls" id="audioPlay" hidden>
                     Your browser does not support audio tag
                 </audio>
