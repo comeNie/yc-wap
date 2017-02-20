@@ -39,14 +39,16 @@
 <%
     String path = request.getContextPath();
     String userAgent = request.getHeader("USER-AGENT").toLowerCase();
-    String AppUrl = "http://m.yeecloud.com";
+    String AppUrl;
     String Classes = request.getParameter("class");
     System.out.println("userAgent: " + userAgent);
 
-    if (Android(userAgent)) {
-        AppUrl = "http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt";
-    } else if (IOS(userAgent)) {
+    if (IOS(userAgent)) {
         AppUrl = "https://itunes.apple.com/cn/app/zhao-fan-yi-findyee/id1017302386?mt=8";
+        request.setAttribute("uploadShow", "none");
+    } else {
+        AppUrl = "http://android.myapp.com/myapp/detail.htm?apkName=cn.com.gtcom.ydt";
+        request.setAttribute("uploadShow", "show");
     }
 
     if (Classes != null && !Classes.equals("")) {
@@ -58,7 +60,7 @@
     request.setAttribute("WapUrl", "http://m.yeecloud.com");
     request.setAttribute("PcUrl", "http://www.yeecloud.com/");
     ResWebBundle rb = new ResWebBundle();
-    System.out.print("----------------:"+rb.getDefaultLocale().toString());
+    System.out.print("DefaultLocale: " + rb.getDefaultLocale().toString());
 %>
 <html>
 <head>
@@ -83,10 +85,15 @@
     </section>
     <footer class="footer">
         <ul>
-            <li><a href="javascript:window.location.href='<%=path%>/aboutus'"><spring:message code="all.project.public.footer.about"/></a>|
-                <a href="javascript:window.location.href='<%=path%>/tident'"><spring:message code="all.project.public.footer.find"/></a>|
-                <a href="javascript:window.location.href='<%=path%>/feedback'"><spring:message code="all.project.public.footer.idea"/></a>|
-                <a href="javascript:void(0)" onclick="if('<%=rb.getDefaultLocale().toString()%>' == 'en_US'){changeLang('zh_CN')}else {changeLang('en_US')}"><spring:message code="all.project.public.footer.language"/></a></li>
+            <li><a href="javascript:window.location.href='<%=path%>/aboutus'"><spring:message
+                    code="all.project.public.footer.about"/></a>|
+                <a href="javascript:window.location.href='<%=path%>/tident'"><spring:message
+                        code="all.project.public.footer.find"/></a>|
+                <a href="javascript:window.location.href='<%=path%>/feedback'"><spring:message
+                        code="all.project.public.footer.idea"/></a>|
+                <a href="javascript:void(0)"
+                   onclick="if('<%=rb.getDefaultLocale().toString()%>' == 'en_US'){changeLang('zh_CN')}else {changeLang('en_US')}"><spring:message
+                        code="all.project.public.footer.language"/></a></li>
             <li class="ash"><spring:message code="all.project.public.footer.title"/></li>
             <%--若多语言不可用，就改控制器进入jsp--%>
             <li class="ash">京ICP备13002826号-7</li>
@@ -96,27 +103,27 @@
 </body>
 </html>
 <script>
-    $(function(){
+    $(function () {
         console.log("${rb.getDefaultLocale()}");
     })
-    function changeLang(localeEl){
+    function changeLang(localeEl) {
         // var toLang = localeEl.value;
         var toLang = localeEl;
-        if (window.console){
-            console.log("the new lange is "+toLang);
+        if (window.console) {
+            console.log("the new lange is " + toLang);
         }
         var nowUrl = window.location.href;
         var lInd = nowUrl.indexOf("lang=");
         //已存在
-        if (lInd>0){
-            var i = nowUrl.indexOf("&",lInd);
-            var endStr = i>0?nowUrl.substring(i):"";
-            nowUrl = nowUrl.substring(0,lInd)+"lang="+toLang+endStr;
+        if (lInd > 0) {
+            var i = nowUrl.indexOf("&", lInd);
+            var endStr = i > 0 ? nowUrl.substring(i) : "";
+            nowUrl = nowUrl.substring(0, lInd) + "lang=" + toLang + endStr;
         }//不存在
-        else if(nowUrl.indexOf("?")>0){
-            nowUrl = nowUrl + "&lang="+toLang;
-        }else {
-            nowUrl = nowUrl + "?lang="+toLang;
+        else if (nowUrl.indexOf("?") > 0) {
+            nowUrl = nowUrl + "&lang=" + toLang;
+        } else {
+            nowUrl = nowUrl + "?lang=" + toLang;
         }
 
         window.location.replace(nowUrl);//刷新当前页面
