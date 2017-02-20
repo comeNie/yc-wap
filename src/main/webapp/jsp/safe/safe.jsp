@@ -71,7 +71,17 @@
             </ul>
         </div>
     </section>
-
+    <div class="eject-big">
+        <div class="prompt" id="prompt">
+            <div class="prompt-title"><spring:message code="start.tishi"/></div>
+            <div class="prompt-confirm beyond-confirm">
+                <ul>
+                    <li id="EjectTitle"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mask" id="eject-mask"></div>
+    </div>
 </body>
 </html>
 <script>
@@ -137,6 +147,10 @@
             var tourl = "<%=path%>/safe/changepsd?jump=psd";
             window.location.href=tourl;
         }else {
+            if (("${email}" == "" || "${email}" == null) && ("${mobilePhone}" == "" || "${mobilePhone}" == null) ){
+                autoTip("<spring:message code="safe.safe.notBind"/>");
+                return;
+            }
             var tourl = "<%=path%>/safe/checkphone?jump=psd";
             window.location.href=tourl;
         }
@@ -167,8 +181,24 @@
             var tourl = "<%=path%>/safe/changepsd?jump=pay";
             window.location.href = tourl;
         } else {
+            if (("${email}" == "" || "${email}" == null) && ("${mobilePhone}" == "" || "${mobilePhone}" == null) ){
+                autoTip("<spring:message code="safe.safe.notBind"/>");
+                return;
+            }
             var tourl = "<%=path%>/safe/checkphone?jump=pay";
             window.location.href = tourl;
         }
+    }
+    var timer;
+    function autoTip(txt){
+        $("#EjectTitle").html(txt);
+        $('#eject-mask').fadeIn(100);
+        $("#prompt").slideDown(100);
+        timer = window.setInterval(function(){
+            $("#eject-mask").fadeOut(200);
+            $("#prompt").slideUp(200);
+            window.clearTimeout(timer);
+            window.clearInterval(timer);
+        },1000);
     }
 </script>
