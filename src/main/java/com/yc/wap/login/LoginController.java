@@ -1,8 +1,10 @@
 package com.yc.wap.login;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV;
@@ -10,6 +12,9 @@ import com.ai.slp.balance.api.accountquery.param.AccountIdParam;
 import com.ai.slp.balance.api.accountquery.param.AccountInfoVo;
 import com.ai.yc.user.api.userservice.param.*;
 import com.alibaba.fastjson.JSONObject;
+import com.baidu.api.Baidu;
+import com.baidu.api.BaiduApiException;
+import com.baidu.api.BaiduOAuthException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -28,6 +33,7 @@ import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
 import com.yc.wap.system.utils.MD5Util;
+import weibo4j.model.WeiboException;
 
 /**
  * Created by ldy on 2016/11/8.
@@ -73,6 +79,7 @@ public class LoginController extends BaseController {
         MsgBean result = new MsgBean();
         return "login/findfail";
     }
+
     /**
      * 金山登录
      */
@@ -117,6 +124,33 @@ public class LoginController extends BaseController {
         return result.returnMsg();
     }
     /**
+     * 新浪微博登录
+     */
+    @RequestMapping(value = "weibochecklogin")
+    public @ResponseBody Object weibochecklogin() throws IOException, WeiboException {
+        MsgBean result = new MsgBean();
+        SinaWeiboUtil.doWeiboCode();
+        return  result.returnMsg();
+    }
+    /**
+     * QQ登录
+     */
+    @RequestMapping(value = "qqchecklogin")
+    public @ResponseBody Object qqchecklogin(HttpServletResponse response) throws IOException {
+        MsgBean result = new MsgBean();
+        QQUtil.doPost(request,response);
+        return  result.returnMsg();
+    }
+    /**
+     * 百度登录
+     */
+    @RequestMapping(value = "baiduchecklogin")
+    public @ResponseBody Object baiduchecklogin(HttpServletResponse response) throws ServletException, IOException, BaiduApiException, BaiduOAuthException {
+        MsgBean result = new MsgBean();
+        BaiduUtil.doPost(request,response);
+        return  result.returnMsg();
+    }
+    /**
      * 登录验证
      */
     @RequestMapping(value = "checklogin")
@@ -126,7 +160,6 @@ public class LoginController extends BaseController {
         MsgBean result = new MsgBean();
         String checkCode = request.getParameter("code");//图文验证码
         if (checkCode != null && checkCode != ""){
-
             String sessionCode = (String) session.getAttribute("certCode");
             if (!checkCode.toUpperCase().equals(sessionCode.toUpperCase())){
                 result.put("status","2");

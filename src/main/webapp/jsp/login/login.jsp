@@ -151,10 +151,10 @@
             </div>
             <div class="other-login-icon">
                 <ul>
-                    <li class="none-ml"><a href="javascript:void(0)" onclick="goKingLogin()"><img src="<%=path%>/ui/images/iocn-4.png" /></a></li>
-                    <li><a href="javascript:void(0)"><img src="<%=path%>/ui/images/iocn-5.png" /></a></li>
-                    <li><a href="javascript:void(0)"><img src="<%=path%>/ui/images/iocn-6.png" /></a></li>
-                    <li><a href="javascript:void(0)"><img src="<%=path%>/ui/images/iocn-7.png" /></a></li>
+                    <li class="none-ml"><a href="javascript:window.location.href = '<%=path%>/login/kingchecklogin'"><img src="<%=path%>/ui/images/iocn-4.png" /></a></li>
+                    <li><a href="javascript:window.location.href = '<%=path%>/login/baiduchecklogin'"><img src="<%=path%>/ui/images/iocn-5.png" /></a></li>
+                    <li><a href="javascript:window.location.href = '<%=path%>/login/qqchecklogin'"><img src="<%=path%>/ui/images/iocn-6.png" /></a></li>
+                    <li><a href="javascript:window.location.href = '<%=path%>/login/weibochecklogin'"><img src="<%=path%>/ui/images/iocn-7.png" /></a></li>
                     <li><a href="javascript:void(0)"><img src="<%=path%>/ui/images/iocn-8.png" /></a></li>
                 </ul>
             </div>
@@ -408,11 +408,7 @@
         var tourl = "<%=path%>/login/findpsd";
         window.location.href = tourl;
     }
-    //跳转金山登录
-    function goKingLogin(){
-        var tourl = "<%=path%>/login/kinglogin";
-        window.location.href = tourl;
-    }
+
     function registJump() {
         $("#loginDiv").hide();
         $("#registerDiv").show();
