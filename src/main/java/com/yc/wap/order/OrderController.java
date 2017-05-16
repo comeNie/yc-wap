@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -283,11 +284,12 @@ public class OrderController extends BaseController {
             }
 
             ///// Discount /////
-            String discountSum = OrderFee.getDiscountSum();
+            String discountSumStr = "";
+            BigDecimal discountSum = OrderFee.getDiscountSum();
             if (discountSum == null || discountSum.equals("")) {
-                discountSum = "";
+                discountSumStr = "";
             } else {
-                discountSum = discountSum + rb.getMessage("order.detail.zhe");
+                discountSumStr = discountSum + rb.getMessage("order.detail.zhe");
             }
 
             ///// OrderPrice /////
@@ -386,7 +388,7 @@ public class OrderController extends BaseController {
             ParamJson.put("takeDay", takeDay);
             ParamJson.put("Remark", Remark);
             ParamJson.put("Remark1", Remark1);
-            ParamJson.put("discountSum", discountSum);
+            ParamJson.put("discountSum", discountSumStr);
             ParamJson.put("contactName", contactName);
             ParamJson.put("contactTel", contactTel);
             ParamJson.put("contactEmail", contactEmail);
