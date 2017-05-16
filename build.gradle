@@ -127,7 +127,7 @@ dependencies {
 
     //查询用户基本信息数据
     compile "com.ai.yc.user:userservice:1.0-SNAPSHOT"
-
+    compile fileTree(dir: "lib", include: '*.jar')
 }
 
 def getUedTemplate = task("getUedTemplate", type: com.ai.runner.gradle.plugin.jar.APIJarProcessTask) {
