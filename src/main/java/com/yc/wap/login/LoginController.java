@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ai.opt.sdk.util.StringUtil;
 import com.ai.slp.balance.api.accountquery.interfaces.IAccountQuerySV;
 import com.ai.slp.balance.api.accountquery.param.AccountIdParam;
 import com.ai.slp.balance.api.accountquery.param.AccountInfoVo;
@@ -215,7 +216,7 @@ public class LoginController extends BaseController {
                 }
             }
         }catch (Exception e){
-            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            log.error("我要看异常~~~~~~~~~~~~~~~~~~~" + e.getMessage(),e);
             result.put("status","0");
             result.put("msg",rb.getMessage("loginCtrl.loginFail"));
         }
@@ -263,7 +264,7 @@ public class LoginController extends BaseController {
         } catch (Exception e) {
             result.put("status","0");
             result.put("msg",rb.getMessage("loginCtrl.registerFail"));
-            log.info("我要看异常~~~~~~~~~~~~~~~~~~~" + e + e.getMessage());
+            log.error("我要看异常~~~~~~~~~~~~~~~~~~~" + e.getMessage(),e);
         }
         return result.returnMsg();
     }
@@ -315,11 +316,11 @@ public class LoginController extends BaseController {
     	//long startTimeQryUser = System.currentTimeMillis();
     	//log.info("开始查询客户信息,当前时间戳:"+startTimeQryUser);
     	IYCUserServiceSV userSv=DubboConsumerFactory.getService(IYCUserServiceSV.class);
-    	//YCUserInfoResponse userResp= userSv.searchYCUserInfo(userReq);
+    	YCUserInfoResponse userResp= userSv.searchYCUserInfo(userReq);
     	//long endTimeQryUser = System.currentTimeMillis();
     	//log.info("结束查询客户信息,当前时间戳:"+endTimeQryUser+"，耗时:"+(endTimeQryUser-startTimeQryUser)+"毫秒");
     	
-    	//if(userResp==null||StringUtil.isBlank(userResp.getUserId())){
+    	if(userResp==null|| StringUtil.isBlank(userResp.getUserId())){
     		long startTimeCompleteUser = System.currentTimeMillis();
     		log.info("开始更新或补全客户信息,当前时间戳:"+startTimeCompleteUser);
     		//说明客户信息不存在，需要依据登录信息创建默认的客户信息
@@ -345,10 +346,10 @@ public class LoginController extends BaseController {
     			log.info("结束更新或补全客户信息FAILURE");
     		}
     		
-//    	}
-//    	else{
-//    		log.info("客户存在，不需补全");
-//    	}
+    	}
+    	else{
+    		log.info("客户存在，不需补全");
+    	}
     	
      	long endTime = System.currentTimeMillis();
         log.info("=====结束populateUsrUserInfo,客户信息补全,当前时间戳:"+endTime+"，耗时:"+(endTime-startTime)+"毫秒");

@@ -6,6 +6,9 @@ import com.ai.opt.sdk.components.dss.DSSClientFactory;
 import com.ai.opt.sdk.dubbo.util.DubboConsumerFactory;
 import com.ai.opt.sdk.web.model.ResponseData;
 import com.ai.paas.ipaas.dss.base.interfaces.IDSSClient;
+import com.ai.yc.common.api.cachekey.model.SysDomain;
+import com.ai.yc.common.api.cachekey.model.SysDuad;
+import com.ai.yc.common.api.cachekey.model.SysPurpose;
 import com.ai.yc.common.api.sysdomain.interfaces.IQuerySysDomainSV;
 import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListReq;
 import com.ai.yc.common.api.sysdomain.param.QuerySysDomainListRes;
@@ -25,6 +28,7 @@ import com.ai.yc.order.api.ordersubmission.interfaces.IOrderSubmissionSV;
 import com.ai.yc.order.api.ordersubmission.param.*;
 import com.ai.yc.user.api.userservice.interfaces.IYCUserServiceSV;
 import com.ai.yc.user.api.userservice.param.*;
+import com.yc.wap.service.CacheServcie;
 import com.yc.wap.system.base.BaseController;
 import com.yc.wap.system.base.MsgBean;
 import com.yc.wap.system.constants.Constants;
@@ -35,6 +39,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,7 +60,8 @@ import java.util.*;
 @RequestMapping(value = "written")
 public class WrittenController extends BaseController {
     private Log log = LogFactory.getLog(WrittenController.class);
-
+    @Autowired
+    CacheServcie cacheServcie;
     private IQuerySysDuadSV iQuerySysDuadSV = DubboConsumerFactory.getService(IQuerySysDuadSV.class);
     private IQuerySysPurposeSV iQuerySysPurposeSV = DubboConsumerFactory.getService(IQuerySysPurposeSV.class);
     private IQuerySysDomainSV iQuerySysDomainSV = DubboConsumerFactory.getService(IQuerySysDomainSV.class);
@@ -68,12 +74,14 @@ public class WrittenController extends BaseController {
         String Language = rb.getDefaultLocale().toString();
 
         List<SysDuadVo> DualList = GetDualList(Constants.OrderType.DOC, Language);
-        List<SysPurposeVo> PurposeList = GetPurposeList(Language);
-        List<SysDomainVo> DomainList = GetDomainList(Language);
+
+//        List<SysDuad> sysDuadList = cacheServcie.getAllDuad(null,Constants.OrderType.DOC);
+        List<SysPurpose> purposeList = cacheServcie.getAllPurpose(rb.getDefaultLocale());
+        List<SysDomain> domainList = cacheServcie.getAllDomain(rb.getDefaultLocale());
 
         log.info("GetDualListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(DualList));
-        log.info("GetPurposeListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(PurposeList));
-        log.info("GetDomainListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(DomainList));
+        log.info("GetPurposeListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(purposeList));
+        log.info("GetDomainListReturn: " + com.alibaba.fastjson.JSONArray.toJSONString(domainList));
 
         ListSortUtil<SysDuadVo> sortList = new ListSortUtil<>();
         sortList.sort(DualList, "duadId", "asc");
@@ -154,8 +162,8 @@ public class WrittenController extends BaseController {
         request.setAttribute("DualMapEn", DualMapEn);
         request.setAttribute("DualJsonEn", DualJsonEn);
         request.setAttribute("DualList", com.alibaba.fastjson.JSONArray.toJSONString(DualList));
-        request.setAttribute("PurposeList", PurposeList);
-        request.setAttribute("DomainList", DomainList);
+        request.setAttribute("PurposeList", purposeList);
+        request.setAttribute("DomainList", domainList);
 
         request.setAttribute("contentJson", contentJson);
 

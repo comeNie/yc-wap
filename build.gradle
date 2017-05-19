@@ -105,7 +105,8 @@ dependencies {
     //yc
     compile "com.ai.yc.ucenter:members:1.1.1-SNAPSHOT"
     compile "com.ai.yc.common:country:1.0-SNAPSHOT"
-
+    //公共缓存
+    compile 'com.ai.yc.common:cachekey:1.0-SNAPSHOT'
     compile "com.ai.yc.common:sysduad:1.0-SNAPSHOT"
     compile "com.ai.yc.common:syspurpose:1.0-SNAPSHOT"
     compile "com.ai.yc.common:sysdomain:1.0-SNAPSHOT"
